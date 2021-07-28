@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:whatado/screens/entry/signup.dart';
+import 'package:whatado/screens/entry/choose_interests.dart';
+import 'package:whatado/screens/entry/login.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignupScreen extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _LoginScreenState();
+  State<StatefulWidget> createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<StatefulWidget> {
+class _SignupScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
   bool passwordHidden = true;
+  bool confirmPasswordHidden = true;
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +37,24 @@ class _LoginScreenState extends State<StatefulWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Welcome, honey!',
+                            Text('Sign Up',
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w600)),
                             SizedBox(height: 35),
                             TextFormField(
                               decoration: InputDecoration(
                                 isDense: true,
-                                hintText: 'Email or Username',
+                                hintText: 'Name',
+                                hintStyle: TextStyle(fontSize: 13),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 12),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              decoration: InputDecoration(
+                                isDense: true,
+                                hintText: 'Email',
                                 hintStyle: TextStyle(fontSize: 13),
                                 contentPadding:
                                     EdgeInsets.symmetric(vertical: 12),
@@ -68,35 +80,49 @@ class _LoginScreenState extends State<StatefulWidget> {
                                     EdgeInsets.symmetric(vertical: 12),
                               ),
                             ),
-                            const SizedBox(height: 10),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                child: Text(
-                                  'Forgot Password?',
+                            const SizedBox(height: 20),
+                            TextFormField(
+                              obscureText: confirmPasswordHidden,
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                      !confirmPasswordHidden
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      size: 20),
+                                  onPressed: () => setState(
+                                      () => passwordHidden = !passwordHidden),
                                 ),
-                                onPressed: () => null,
+                                isDense: true,
+                                hintText: 'Confirm Password',
+                                hintStyle: TextStyle(fontSize: 13),
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 12),
                               ),
                             ),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 25),
                             RoundedArrowButton(
                               onPressed: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (ctx) => SignupScreen())),
-                              text: "Sign In",
+                                      builder: (ctx) =>
+                                          ChooseInterestsScreen())),
+                              text: "Sign Up",
                             ),
                             Spacer(),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text('New User?'),
+                                Text('Already have an account?'),
                                 TextButton(
                                   child: Text(
-                                    'Create an account.',
+                                    'Sign in.',
                                     style: TextStyle(color: Colors.red[300]),
                                   ),
-                                  onPressed: () => null,
+                                  onPressed: () => Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (ctx) => LoginScreen())),
                                 ),
                               ],
                             ),
