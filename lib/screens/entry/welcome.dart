@@ -6,8 +6,8 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Container(
-            child: Stack(children: [
+        body: Stack(children: [
+      // background image
       Opacity(
         opacity: 0.2,
         child: Container(
@@ -17,50 +17,46 @@ class WelcomeScreen extends StatelessWidget {
               fit: BoxFit.cover),
         ),
       ),
-      Container(
-        height: MediaQuery.of(context).size.height,
+
+      // front page elements. all padded 30 horizontally
+      // slogan text
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(height: 50),
           Image.network(
               "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
               height: 100),
           SizedBox(height: 20),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
-                    child: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(text: 'Putting the '),
-                          TextSpan(
-                            text: 'social ',
-                            style:
-                                TextStyle(fontSize: 20, color: Colors.red[300]),
-                          ),
-                          TextSpan(text: 'back in social media.'),
-                        ],
-                        style: TextStyle(fontSize: 20, color: Colors.black),
-                      ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: RichText(
+                textAlign: TextAlign.center,
+                text: TextSpan(
+                  children: [
+                    TextSpan(text: 'Putting the '),
+                    TextSpan(
+                      text: 'social ',
+                      style: TextStyle(fontSize: 20, color: Colors.red[300]),
                     ),
-                  ),
+                    TextSpan(text: 'back in social media.'),
+                  ],
+                  style: TextStyle(fontSize: 20, color: Colors.black),
                 ),
-                RoundedArrowButton(
-                  onPressed: () => Navigator.push(context,
-                      MaterialPageRoute(builder: (ctx) => LoginScreen())),
-                  text: "Let's Go!",
-                ),
-              ],
+              ),
             ),
+          ),
+          // continue arrow button @ bottom
+          Spacer(),
+          RoundedArrowButton(
+            onPressed: () => Navigator.push(
+                context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
+            text: "Let's Go!",
           ),
           SizedBox(height: 30)
         ]),
       ),
-    ])));
+    ]));
   }
 }
