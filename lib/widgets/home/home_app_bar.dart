@@ -2,24 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/home_state.dart';
 
-class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
-  final Function turnPage;
-  HomeAppBar({required this.turnPage});
-  @override
-  State<StatefulWidget> createState() => _HomeAppBarState();
-
+class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(56.0);
-}
 
-class _HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     Color? iconColor(int pageNo) =>
         homeState.appBarPageNo == pageNo ? Colors.white : Colors.grey[350];
     void turnPage(int newPageNo) {
-      widget.turnPage(newPageNo, homeState.appBarPageNo);
+      homeState.turnPage(newPageNo);
     }
 
     return AppBar(
@@ -49,6 +42,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     width: 70,
                     height: 42,
                     decoration: BoxDecoration(
+                      boxShadow: kElevationToShadow[4],
                       color: Colors.red[300],
                       borderRadius: BorderRadius.circular(100),
                     ),

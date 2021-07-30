@@ -4,31 +4,7 @@ import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/home/home_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  PageController? pageController;
-
-  @override
-  void initState() {
-    pageController = PageController();
-    super.initState();
-  }
-
-  void turnPage(int newPageNo, int oldPageNo) {
-    if ((oldPageNo - newPageNo).abs() == 1) {
-      pageController
-          ?.animateToPage(newPageNo,
-              duration: Duration(milliseconds: 200), curve: Curves.easeInOut)
-          .then((_) => setState(() {}));
-    } else {
-      pageController?.jumpToPage(newPageNo);
-    }
-  }
-
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeState>(
@@ -36,10 +12,10 @@ class _HomeScreenState extends State<HomeScreen> {
         builder: (context, _) {
           final homeState = Provider.of<HomeState>(context);
           return Scaffold(
-              appBar: HomeAppBar(turnPage: turnPage),
+              appBar: HomeAppBar(),
               body: PageView(
                 onPageChanged: (pageNo) => homeState.setAppBarPage(pageNo),
-                controller: pageController,
+                controller: homeState.pageController,
                 children: [
                   Container(),
                   Container(color: Colors.grey[200]),
