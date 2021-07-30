@@ -9,31 +9,23 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController pageController = PageController();
   int selectedIndex = 0;
+  int currentPageNo = 0;
   double x = 0.0;
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
   void turnPage(int pageNo, double offset) async {
-    if (pageController.hasClients) {
-      if ((pageController.page! - pageNo).abs() == 1) {
-        pageController
-            .animateToPage(pageNo,
-                duration: Duration(milliseconds: 200), curve: Curves.easeInOut)
-            .then((_) => setState(() {}));
-      } else {
-        pageController.jumpToPage(pageNo);
-      }
-      setState(() => x = offset);
+    if ((currentPageNo - pageNo).abs() == 1) {
+      pageController
+          .animateToPage(pageNo,
+              duration: Duration(milliseconds: 200), curve: Curves.easeInOut)
+          .then((_) => setState(() {}));
+    } else {
+      pageController.jumpToPage(pageNo);
     }
+    setState(() => x = offset);
   }
 
   Color? iconColor(int pageNo) =>
-      pageController.hasClients && pageController.page == pageNo
-          ? Colors.white
-          : Colors.grey[350];
+      currentPageNo == pageNo ? Colors.white : Colors.grey[350];
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +94,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
         body: PageView(
+          onPageChanged: (pageNo) => setState(() {
+            x = pageNo * 60;
+            currentPageNo = pageNo;
+          }),
           controller: pageController,
           children: [
             Container(),
