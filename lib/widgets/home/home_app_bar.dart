@@ -1,13 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:whatado/state/home_state.dart';
 
-class HomeAppBar extends StatefulWidget {
+class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
+  final Function turnPage;
+  HomeAppBar({required this.turnPage});
   @override
   State<StatefulWidget> createState() => _HomeAppBarState();
+
+  @override
+  Size get preferredSize => Size.fromHeight(56.0);
 }
 
 class _HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
+    final homeState = Provider.of<HomeState>(context);
+    Color? iconColor(int pageNo) =>
+        homeState.appBarPageNo == pageNo ? Colors.white : Colors.grey[350];
+    void turnPage(int newPageNo) {
+      widget.turnPage(newPageNo, homeState.appBarPageNo);
+    }
+
     return AppBar(
       leadingWidth: 150,
       backgroundColor: Colors.grey[50],
@@ -29,7 +43,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               children: [
                 AnimatedPositioned(
                   top: 0,
-                  left: 0, //x,
+                  left: 60.0 * homeState.appBarPageNo,
                   duration: Duration(milliseconds: 200),
                   child: Container(
                     width: 70,
@@ -46,27 +60,27 @@ class _HomeAppBarState extends State<HomeAppBar> {
                   children: [
                     IconButton(
                         padding: EdgeInsets.only(left: 20),
-                        onPressed: () => null, //turnPage(0, 0.0),
+                        onPressed: () => turnPage(0),
                         icon: Icon(
                           Icons.public_outlined,
                           size: 30,
-                          // color: iconColor(0),
+                          color: iconColor(0),
                         )),
                     IconButton(
                         padding: EdgeInsets.symmetric(horizontal: 0),
-                        onPressed: () => null, //turnPage(1, 60.0),
+                        onPressed: () => turnPage(1),
                         icon: Icon(
                           Icons.event_available_outlined,
                           size: 30,
-                          // color: iconColor(1),
+                          color: iconColor(1),
                         )),
                     IconButton(
                         padding: EdgeInsets.only(right: 20),
-                        onPressed: () => null, //turnPage(2, 120.0),
+                        onPressed: () => turnPage(2),
                         icon: Icon(
                           Icons.forum_outlined,
                           size: 30,
-                          // color: iconColor(2),
+                          color: iconColor(2),
                         ))
                   ],
                 ),
