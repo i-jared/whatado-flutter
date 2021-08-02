@@ -1,34 +1,52 @@
 import 'package:flutter/material.dart';
 
 class HomeState extends ChangeNotifier {
-  int appBarPageNo;
-  int bottomBarPageNo;
-  PageController pageController;
-  HomeState()
-      : appBarPageNo = 0,
-        bottomBarPageNo = 0,
-        pageController = PageController();
+  int _appBarPageNo;
+  int _bottomBarPageNo;
+  int _selectedDateIndex;
 
-  void setAppBarPage(int newPageNo) {
-    this.appBarPageNo = newPageNo;
+  PageController homePageController;
+
+  HomeState()
+      : _appBarPageNo = 0,
+        _bottomBarPageNo = 0,
+        _selectedDateIndex = 0,
+        homePageController = PageController();
+
+  int get appBarPageNo => _appBarPageNo;
+  set appBarPageNo(int newPageNo) {
+    _appBarPageNo = newPageNo;
     notifyListeners();
   }
 
-  void setBottomPage(int newPageNo) {
-    this.bottomBarPageNo = newPageNo;
+  int get bottomBarPageNo => _bottomBarPageNo;
+  set bottomBarPageNo(int newPageNo) {
+    _bottomBarPageNo = newPageNo;
+    notifyListeners();
+  }
+
+  int get selectedDateIndex => _selectedDateIndex;
+  set selectedDateIndex(int beginDateIndex) {
+    _selectedDateIndex = beginDateIndex;
     notifyListeners();
   }
 
   void turnPage(int newPageNo) {
     if ((this.appBarPageNo - newPageNo).abs() == 1) {
       this
-          .pageController
+          .homePageController
           .animateToPage(newPageNo,
               duration: Duration(milliseconds: 200), curve: Curves.easeInOut)
           .then((_) => notifyListeners());
     } else {
-      pageController.jumpToPage(newPageNo);
+      homePageController.jumpToPage(newPageNo);
     }
     notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    homePageController.dispose();
+    super.dispose();
   }
 }

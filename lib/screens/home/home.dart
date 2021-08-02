@@ -18,12 +18,12 @@ class HomeScreen extends StatelessWidget {
           return Scaffold(
               appBar: HomeAppBar(),
               body: PageView(
-                onPageChanged: (pageNo) => homeState.setAppBarPage(pageNo),
-                controller: homeState.pageController,
+                onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
+                controller: homeState.homePageController,
                 children: [AllEvents(), MyEvents(), MyForums()],
               ),
               bottomNavigationBar: MyNavigationBar(
-                indexSetState: (pageNo) => homeState.setBottomPage(pageNo),
+                indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
                 selectedIndex: homeState.bottomBarPageNo,
               ));
         });
