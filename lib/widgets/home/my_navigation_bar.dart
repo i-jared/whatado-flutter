@@ -9,7 +9,10 @@ class MyNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) => Container(
         padding: EdgeInsets.symmetric(horizontal: 50),
         width: MediaQuery.of(context).size.width,
-        height: 75,
+        height: 50,
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(color: Colors.grey[200] ?? Colors.grey))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

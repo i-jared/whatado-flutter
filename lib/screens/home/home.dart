@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/home/all_events.dart';
+import 'package:whatado/screens/home/my_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/home/home_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
@@ -17,11 +18,14 @@ class HomeScreen extends StatelessWidget {
           final homeState = Provider.of<HomeState>(context);
           return Scaffold(
               appBar: HomeAppBar(),
-              body: PageView(
-                onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
-                controller: homeState.homePageController,
-                children: [AllEvents(), MyEvents(), MyForums()],
-              ),
+              body: homeState.bottomBarPageNo == 0
+                  ? PageView(
+                      onPageChanged: (pageNo) =>
+                          homeState.appBarPageNo = pageNo,
+                      controller: homeState.homePageController,
+                      children: [AllEvents(), MyEvents(), MyForums()],
+                    )
+                  : MyProfile(),
               bottomNavigationBar: MyNavigationBar(
                 indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
                 selectedIndex: homeState.bottomBarPageNo,

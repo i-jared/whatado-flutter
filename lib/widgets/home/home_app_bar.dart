@@ -4,7 +4,7 @@ import 'package:whatado/state/home_state.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
-  Size get preferredSize => Size.fromHeight(56.0);
+  Size get preferredSize => Size.fromHeight(50.0);
 
   @override
   Widget build(BuildContext context) {
@@ -15,10 +15,16 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       homeState.turnPage(newPageNo);
     }
 
+    final switcherHeight = 42.0;
+    final switcherMargin = (preferredSize.height - switcherHeight) / 2;
+
     return AppBar(
       leadingWidth: 150,
       backgroundColor: Colors.grey[50],
-      elevation: 0.0,
+      elevation: homeState.allEventsScrollController.hasClients &&
+              homeState.allEventsScrollController.offset > 10
+          ? 1.0
+          : 0.0,
       leading: Padding(
         padding: EdgeInsets.only(left: 10),
         child: Image.network(
@@ -28,7 +34,11 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Container(
             width: 190,
-            margin: EdgeInsets.only(right: 30, top: 7, bottom: 7),
+            margin: EdgeInsets.only(
+              right: 30,
+              top: switcherMargin,
+              bottom: switcherMargin,
+            ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(50),
             ),
@@ -40,9 +50,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                   duration: Duration(milliseconds: 200),
                   child: Container(
                     width: 70,
-                    height: 42,
+                    height: switcherHeight,
                     decoration: BoxDecoration(
-                      boxShadow: kElevationToShadow[4],
+                      boxShadow: kElevationToShadow[2],
                       color: Colors.red[300],
                       borderRadius: BorderRadius.circular(100),
                     ),
