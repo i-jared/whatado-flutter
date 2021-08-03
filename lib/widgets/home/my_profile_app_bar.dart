@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/screens/home/edit_my_profile.dart';
+import 'package:whatado/screens/home/settings.dart';
 import 'package:whatado/state/home_state.dart';
 
 class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -52,7 +53,8 @@ class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: IconButton(
           icon:
               Icon(Icons.settings_outlined, color: Colors.grey[850], size: 30),
-          onPressed: () => null,
+          onPressed: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Settings())),
         ),
       ),
       actions: [

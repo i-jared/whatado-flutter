@@ -52,7 +52,12 @@ class _EditMyProfileState extends State<EditMyProfile> {
               radius: 60,
               backgroundImage: NetworkImage(widget.user.imageUrl),
             )),
-            SizedBox(height: sectionSpacing),
+            Center(
+                child: TextButton(
+                    onPressed: () => null,
+                    child: Text('CHANGE PROFILE IMAGE',
+                        style: TextStyle(color: Colors.red[300])))),
+            SizedBox(height: headingSpacing),
             Text('BIO', style: headingStyle),
             SizedBox(height: headingSpacing),
             TextFormField(
@@ -132,7 +137,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
                 ),
               ],
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 150),
           ],
         ),
       )),
