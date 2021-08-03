@@ -4,8 +4,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/widgets/events/event_display.dart';
 import 'package:whatado/widgets/home/calendar_selector.dart';
-import 'package:whatado/widgets/home/events/event_display.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 
 class AllEvents extends StatelessWidget {

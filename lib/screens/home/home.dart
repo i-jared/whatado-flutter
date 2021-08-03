@@ -5,11 +5,19 @@ import 'package:whatado/screens/home/my_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/home/home_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
+import 'package:whatado/widgets/home/my_profile_app_bar.dart';
 
 import 'my_events.dart';
 import 'my_forums.dart';
 
 class HomeScreen extends StatelessWidget {
+  PreferredSizeWidget? getAppBar(int pageNo) {
+    if (pageNo == 0)
+      return HomeAppBar();
+    else
+      return MyProfileAppBar();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeState>(
@@ -17,7 +25,7 @@ class HomeScreen extends StatelessWidget {
         builder: (context, _) {
           final homeState = Provider.of<HomeState>(context);
           return Scaffold(
-              appBar: HomeAppBar(),
+              appBar: getAppBar(homeState.bottomBarPageNo),
               body: homeState.bottomBarPageNo == 0
                   ? PageView(
                       onPageChanged: (pageNo) =>

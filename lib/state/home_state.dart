@@ -10,6 +10,7 @@ class HomeState extends ChangeNotifier {
   RefreshController refreshController;
   PageController homePageController;
   ScrollController allEventsScrollController;
+  ScrollController myProfileScrollController;
   bool _allEventsAtTop;
 
   HomeState()
@@ -19,6 +20,7 @@ class HomeState extends ChangeNotifier {
         _allEventsAtTop = true,
         homePageController = PageController(),
         allEventsScrollController = ScrollController(),
+        myProfileScrollController = ScrollController(),
         refreshController = RefreshController(initialRefresh: false) {
     allEventsScrollController.addListener(() {
       if (allEventsScrollController.offset <= 10 && !_allEventsAtTop) {
