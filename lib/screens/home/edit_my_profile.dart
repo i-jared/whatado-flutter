@@ -39,7 +39,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
         (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) /
             3.0;
     return Scaffold(
-      appBar: EditMyProfileAppBar(),
+      appBar: SavingAppBar(title: 'Edit Profile', onSave: () => null),
       body: SingleChildScrollView(
           child: Padding(
         padding: EdgeInsets.symmetric(horizontal: padding),
