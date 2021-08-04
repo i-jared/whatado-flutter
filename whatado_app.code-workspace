@@ -1,0 +1,30 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "tasks": {
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "build_runner_dev",
+        "command": "dart",
+        "type": "shell",
+        "args": ["scripts/build_graphql.dart", "https://api.whatado.io/get_schema"]
+      }
+    ]
+  },
+  "launch": {
+    "configurations": [
+      {
+        "name": "debug_dev",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/main.dart",
+        "preLaunchTask": "build_runner_dev"
+      }
+    ],
+    "compounds": []
+  }
+}

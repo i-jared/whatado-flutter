@@ -17,6 +17,13 @@ dependencies:
   flutter_lorem: ^2.0.0
   expandable_text: ^2.2.0
   pull_to_refresh: ^2.0.0
+  artemis: '^7.0.0-beta.3'
+  json_annotation: ^4.0.1
+  equatable: ^2.0.0
+  gql: '>=0.12.3 <1.0.0'
+  graphql_flutter: ^5.0.0
+  http: ^0.13.1
+  build_runner: ^2.0.1
 
 dev_dependencies:
   flutter_test:

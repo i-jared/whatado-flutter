@@ -7,7 +7,7 @@ import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/interests/input_interest_bubble.dart';
 
 class EditMyProfile extends StatefulWidget {
-  User user;
+  final User user;
   EditMyProfile({required this.user});
   @override
   State<StatefulWidget> createState() => _EditMyProfileState();
