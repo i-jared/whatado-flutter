@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:whatado/screens/entry/welcome.dart';
+import 'package:whatado/services/startup.dart';
 
-void main() {
+void main() async {
+  Startup.initDependencies();
+  await Hive.initFlutter();
   runApp(MyApp());
 }
 
