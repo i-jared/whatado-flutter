@@ -1,11 +1,28 @@
+import 'dart:convert';
+
+import 'package:whatado/constants.dart';
+import 'package:whatado/services/service_provider.dart';
+
 class AuthenticationService {
-  void invalidateAccessToken(String tokenToInvalidate) {
-    // TODO: delete token from local storage.
-    // TODO: make sure it's gone
+  void forgetTokens() async {
+    await localStorageService.deleteRefreshToken();
+    await localStorageService.deleteAccessToken();
   }
 
-  String getToken() {
-    return '';
-    // TODO: get token from local storage
+  String? getRefreshToken() => localStorageService.refreshToken;
+  String? getAccessToken() => localStorageService.accessToken;
+  Future<String?> requestNewAccessToken() async {
+    final response = await httpClientService.postAuthenticated(
+        whatadoRefreshUrl, getRefreshToken() ?? '');
+    final responseJson = jsonDecode(response.body);
+    if (responseJson['ok'] == false) {
+      return null;
+    }
+    final refreshToken = responseJson['refreshToken'];
+    final accessToken = responseJson['accessToken'];
+    graphqlClientService.updateAuth(accessToken);
+    localStorageService.refreshToken = refreshToken;
+    localStorageService.accessToken = accessToken;
+    return accessToken;
   }
 }

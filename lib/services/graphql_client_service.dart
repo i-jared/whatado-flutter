@@ -1,21 +1,23 @@
 import 'package:artemis/schema/graphql_query.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:json_annotation/json_annotation.dart' as json;
+import 'package:whatado/constants.dart';
 import 'package:whatado/services/service_provider.dart';
 
 class GraphqlClientService {
-  late GraphQLClient _client;
+  GraphQLClient? _client;
   late HttpLink _httpLink;
   late AuthLink _authLink;
   late Link _link;
 
   GraphqlClientService() {
-    _httpLink = HttpLink('https://api.whatado.io/graphql');
-    _authLink =
-        AuthLink(getToken: () => 'Bearer'); // TODO: get token from storage
+    final storedAccessToken = authenticationService.getAccessToken() ?? '';
+    _httpLink = HttpLink(whatadoGqlUrl);
+    _authLink = AuthLink(getToken: () => 'Bearer $storedAccessToken');
     _link = _authLink.concat(_httpLink);
-    _client =
-        GraphQLClient(link: _link, cache: GraphQLCache(store: HiveStore()));
+    _client = GraphQLClient(
+        link: _link,
+        cache: GraphQLCache(store: HiveStore(localStorageService.box)));
   }
 
   void updateAuth(String accessToken) {
@@ -26,11 +28,27 @@ class GraphqlClientService {
   }
 
   Future<QueryResult>
+      mutate<Q extends GraphQLQuery<T, U>, T, U extends json.JsonSerializable>(
+          final Q q) async {
+    Future<QueryResult>? _mutate() {
+      return _client?.mutate(
+        MutationOptions(
+          document: q.document,
+          variables: q.variables?.toJson() ?? {},
+          fetchPolicy: FetchPolicy.noCache,
+        ),
+      );
+    }
+
+    return await sendWithReauthenticate(_mutate);
+  }
+
+  Future<QueryResult>
       query<Q extends GraphQLQuery<T, U>, T, U extends json.JsonSerializable>(
     final Q q,
   ) async {
-    Future<QueryResult> _query() {
-      return _client.query(
+    Future<QueryResult>? _query() {
+      return _client?.query(
         QueryOptions(
           document: q.document,
           variables: q.variables?.toJson() ?? {},
@@ -39,28 +57,31 @@ class GraphqlClientService {
       );
     }
 
-    final event = await _query();
+    return await sendWithReauthenticate(_query);
+  }
+
+  Future<QueryResult> sendWithReauthenticate(Future? Function() fx) async {
+    final event = await fx();
     if (event.hasException) {
       final unauthorized = _checkIsUnauthorized(event);
       if (unauthorized) {
-        // TODO: get refresh token;
-        // TODO: request new access token;
-        // TODO: success -> retry query
-        // TODO: failure -> return original response
-        final token = authenticationService.getToken();
-        authenticationService.invalidateAccessToken(token);
-        return await _query();
+        final accessToken = await authenticationService.requestNewAccessToken();
+        if (accessToken != null) {
+          return await fx();
+        } else {
+          return event;
+        }
       }
     }
     return event;
   }
 
   // check if user is authorized to make request.
-  // TODO: make sure this matches my server responses
-  bool _checkIsUnauthorized(QueryResult event) =>
-      event.hasException &&
-      event.exception?.graphqlErrors.any((element) =>
-              element.extensions != null &&
-              element.extensions?['code'] == 'AUTH_NOT_AUTHORIZED') ==
-          true;
+  bool _checkIsUnauthorized(QueryResult event) {
+    return event.hasException &&
+        event.exception?.graphqlErrors.any((element) =>
+                element.extensions != null &&
+                element.extensions?['code'] == 'UNAUTHENTICATED') ==
+            true;
+  }
 }

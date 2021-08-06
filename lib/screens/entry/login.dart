@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
+import 'package:whatado/providers/graphql/login_query.dart';
 import 'package:whatado/screens/entry/signup.dart';
+import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
@@ -11,6 +14,11 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  late bool loading = false;
+  String? emailError;
+  String? passwordError;
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +43,27 @@ class _LoginScreenState extends State<StatefulWidget> {
                         style: TextStyle(
                             fontSize: 25, fontWeight: FontWeight.w600)),
                     SizedBox(height: 35),
-                    MyTextField(hintText: 'Email or Username'),
+                    MyTextField(
+                      validator: (val) {
+                        String pattern =
+                            r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
+                        RegExp regExp = new RegExp(pattern);
+                        if (val == null || !regExp.hasMatch(val))
+                          return 'please enter a valid email';
+                      },
+                      hintText: 'Email or Username',
+                      controller: emailController,
+                      errorText: emailError,
+                    ),
                     const SizedBox(height: 20),
-                    MyPasswordField(hintText: 'Password'),
+                    MyPasswordField(
+                      validator: (val) => val == null || val.length < 6
+                          ? 'password must be at least 6 characters'
+                          : null,
+                      hintText: 'Password',
+                      controller: passwordController,
+                      errorText: passwordError,
+                    ),
                     const SizedBox(height: 10),
                     Align(
                       alignment: Alignment.centerRight,
@@ -50,22 +76,23 @@ class _LoginScreenState extends State<StatefulWidget> {
                     ),
                     const SizedBox(height: 10),
                     RoundedArrowButton(
-                      onPressed: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (ctx) => SignupScreen())),
+                      onPressed: loading ? () => null : attemptSignIn,
                       text: "Sign In",
                     ),
+                    SizedBox(height: 30),
+                    if (loading)
+                      Center(child: CircularProgressIndicator(value: null)),
                     Spacer(),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('New User?'),
                         TextButton(
-                          child: Text(
-                            'Create an account.',
-                            style: TextStyle(color: Colors.red[300]),
-                          ),
-                          onPressed: () => null,
-                        ),
+                            child: Text(
+                              'Create an account.',
+                              style: TextStyle(color: Colors.red[300]),
+                            ),
+                            onPressed: () async {}),
                       ],
                     ),
                     SizedBox(height: 40)
@@ -73,5 +100,34 @@ class _LoginScreenState extends State<StatefulWidget> {
             ),
           ]),
         ));
+  }
+
+  void attemptSignIn() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        emailError = null;
+        passwordError = null;
+        loading = true;
+      });
+      // TODO: move this to a query provider
+      final loginMutation = LoginGqlQuery();
+      final res = await loginMutation.login(
+          email: emailController.text, password: passwordController.text);
+      setState(() => loading = false);
+      if (res.ok) {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (ctx) => SignupScreen()));
+      } else {
+        setState(() {
+          emailError = res.errors?.firstWhere(
+              (element) => element['field'] == 'email',
+              orElse: () => {})['message'];
+          passwordError = res.errors?.firstWhere(
+              (element) => element['field'] == 'password',
+              orElse: () => {})['message'];
+        });
+        passwordController.clear();
+      }
+    }
   }
 }

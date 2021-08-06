@@ -1,17 +1,16 @@
-
-mutation login($email: String!, $password: String!) {
-    login {
-        nodes {
-            ...User
-        }
-        errors {
-            field
-            message
-        }
-        jwt {
-            accessToken
-            refreshToken
-        }
-        ok
+mutation login($userInput: UserInput!) {
+  login(options: $userInput) {
+    ok
+    nodes {
+      id
     }
+    errors {
+      field
+      message
+    }
+    jwt {
+      accessToken
+      refreshToken
+    }
+  }
 }

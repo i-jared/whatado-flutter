@@ -1,0 +1,30 @@
+query events {
+  events {
+    nodes {
+      id
+      createdAt
+      updatedAt
+      title
+      description
+      creator {
+        id
+      }
+      time
+      location
+      pictureUrl
+      wannago {
+        id
+      }
+      relatedInterests {
+        id
+      }
+      forum {
+        id
+      }
+      filterLocation
+      filterRadius
+      filterGender
+      filterAge
+    }
+  }
+}

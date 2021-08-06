@@ -8,21 +8,34 @@
     "version": "2.0.0",
     "tasks": [
       {
-        "label": "build_runner_dev",
+        "label": "build_runner_prod",
         "command": "dart",
         "type": "shell",
         "args": ["scripts/build_graphql.dart", "https://api.whatado.io/get_schema"]
+      },
+      {
+        "label": "build_runner_local_dev",
+        "command": "dart",
+        "type": "shell",
+        "args": ["scripts/build_graphql.dart", "http://192.168.86.148:4000/get_schema"]
       }
     ]
   },
   "launch": {
     "configurations": [
       {
-        "name": "debug_dev",
+        "name": "debug_prod",
         "request": "launch",
         "type": "dart",
         "program": "lib/main.dart",
-        "preLaunchTask": "build_runner_dev"
+        "preLaunchTask": "build_runner_prod"
+      },
+      {
+        "name": "debug_local_dev",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/dev_main.dart",
+        "preLaunchTask": "build_runner_local_dev"
       }
     ],
     "compounds": []

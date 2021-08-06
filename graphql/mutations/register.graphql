@@ -1,16 +1,15 @@
 mutation register($email: String!, $password: String!) {
-    register {
-        nodes {
-            ...User
-        }
-        errors {
-            field
-            message
-        }
-        jwt {
-            accessToken
-            refreshToken
-        }
-        ok
+  register {
+    nodes {
+      id
     }
+    errors {
+      field
+      message
+    }
+    jwt {
+      accessToken
+      refreshToken
+    }
+  }
 }

@@ -9,6 +9,16 @@ targets:
       artemis:
         options:
           schema_mapping:
-            - output: lib/graphql/graphql_api.dart
+            - output: lib/graphql/queries_graphql_api.dart
               schema: graphql/schema.graphql
-              queries_glob: graphql/queries/**graphql
+              queries_glob: graphql/queries/**.graphql
+            - output: lib/graphql/mutations_graphql_api.dart
+              schema: graphql/schema.graphql
+              queries_glob: graphql/mutations/**.graphql
+          scalar_mapping:
+            - custom_parser_import: 'package:whatado/utils/coercers.dart'
+              graphql_type: DateTime
+              dart_type: DateTime
+            - custom_parser_import: 'package:whatado/utils/coercers.dart'
+              graphql_type: DateTime?
+              dart_type: DateTime?
