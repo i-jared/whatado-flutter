@@ -194,6 +194,8 @@ class Register$Mutation$UserApiResponse extends JsonSerializable
           Map<String, dynamic> json) =>
       _$Register$Mutation$UserApiResponseFromJson(json);
 
+  bool? ok;
+
   Register$Mutation$UserApiResponse$User? nodes;
 
   List<Register$Mutation$UserApiResponse$FieldError>? errors;
@@ -201,7 +203,7 @@ class Register$Mutation$UserApiResponse extends JsonSerializable
   Register$Mutation$UserApiResponse$JwtResponse? jwt;
 
   @override
-  List<Object?> get props => [nodes, errors, jwt];
+  List<Object?> get props => [ok, nodes, errors, jwt];
   @override
   Map<String, dynamic> toJson() =>
       _$Register$Mutation$UserApiResponseToJson(this);
@@ -220,6 +222,61 @@ class Register$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [register];
   @override
   Map<String, dynamic> toJson() => _$Register$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForgotPassword$Mutation$BoolApiResponse$FieldError
+    extends JsonSerializable with EquatableMixin {
+  ForgotPassword$Mutation$BoolApiResponse$FieldError();
+
+  factory ForgotPassword$Mutation$BoolApiResponse$FieldError.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForgotPassword$Mutation$BoolApiResponse$FieldErrorFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForgotPassword$Mutation$BoolApiResponse$FieldErrorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForgotPassword$Mutation$BoolApiResponse extends JsonSerializable
+    with EquatableMixin {
+  ForgotPassword$Mutation$BoolApiResponse();
+
+  factory ForgotPassword$Mutation$BoolApiResponse.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForgotPassword$Mutation$BoolApiResponseFromJson(json);
+
+  bool? ok;
+
+  List<ForgotPassword$Mutation$BoolApiResponse$FieldError>? errors;
+
+  @override
+  List<Object?> get props => [ok, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForgotPassword$Mutation$BoolApiResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForgotPassword$Mutation extends JsonSerializable with EquatableMixin {
+  ForgotPassword$Mutation();
+
+  factory ForgotPassword$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$ForgotPassword$MutationFromJson(json);
+
+  late ForgotPassword$Mutation$BoolApiResponse forgotPassword;
+
+  @override
+  List<Object?> get props => [forgotPassword];
+  @override
+  Map<String, dynamic> toJson() => _$ForgotPassword$MutationToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -344,18 +401,16 @@ class LoginMutation extends GraphQLQuery<Login$Mutation, LoginArguments> {
 
 @JsonSerializable(explicitToJson: true)
 class RegisterArguments extends JsonSerializable with EquatableMixin {
-  RegisterArguments({required this.email, required this.password});
+  RegisterArguments({required this.userInput});
 
   @override
   factory RegisterArguments.fromJson(Map<String, dynamic> json) =>
       _$RegisterArgumentsFromJson(json);
 
-  late String email;
-
-  late String password;
+  late UserInput userInput;
 
   @override
-  List<Object?> get props => [email, password];
+  List<Object?> get props => [userInput];
   @override
   Map<String, dynamic> toJson() => _$RegisterArgumentsToJson(this);
 }
@@ -366,15 +421,9 @@ final REGISTER_MUTATION_DOCUMENT = DocumentNode(definitions: [
       name: NameNode(value: 'register'),
       variableDefinitions: [
         VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'email')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'password')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            variable: VariableNode(name: NameNode(value: 'userInput')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'UserInput'), isNonNull: true),
             defaultValue: DefaultValueNode(value: null),
             directives: [])
       ],
@@ -383,9 +432,19 @@ final REGISTER_MUTATION_DOCUMENT = DocumentNode(definitions: [
         FieldNode(
             name: NameNode(value: 'register'),
             alias: null,
-            arguments: [],
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'options'),
+                  value: VariableNode(name: NameNode(value: 'userInput')))
+            ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
               FieldNode(
                   name: NameNode(value: 'nodes'),
                   alias: null,
@@ -459,4 +518,93 @@ class RegisterMutation
   @override
   Register$Mutation parse(Map<String, dynamic> json) =>
       Register$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForgotPasswordArguments extends JsonSerializable with EquatableMixin {
+  ForgotPasswordArguments({required this.email});
+
+  @override
+  factory ForgotPasswordArguments.fromJson(Map<String, dynamic> json) =>
+      _$ForgotPasswordArgumentsFromJson(json);
+
+  late String email;
+
+  @override
+  List<Object?> get props => [email];
+  @override
+  Map<String, dynamic> toJson() => _$ForgotPasswordArgumentsToJson(this);
+}
+
+final FORGOT_PASSWORD_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'forgotPassword'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'email')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'forgotPassword'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'email'),
+                  value: VariableNode(name: NameNode(value: 'email')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class ForgotPasswordMutation
+    extends GraphQLQuery<ForgotPassword$Mutation, ForgotPasswordArguments> {
+  ForgotPasswordMutation({required this.variables});
+
+  @override
+  final DocumentNode document = FORGOT_PASSWORD_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'forgotPassword';
+
+  @override
+  final ForgotPasswordArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  ForgotPassword$Mutation parse(Map<String, dynamic> json) =>
+      ForgotPassword$Mutation.fromJson(json);
 }

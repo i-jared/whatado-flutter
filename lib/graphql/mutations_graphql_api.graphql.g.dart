@@ -149,6 +149,7 @@ Map<String, dynamic> _$Register$Mutation$UserApiResponse$JwtResponseToJson(
 Register$Mutation$UserApiResponse _$Register$Mutation$UserApiResponseFromJson(
     Map<String, dynamic> json) {
   return Register$Mutation$UserApiResponse()
+    ..ok = json['ok'] as bool?
     ..nodes = json['nodes'] == null
         ? null
         : Register$Mutation$UserApiResponse$User.fromJson(
@@ -166,6 +167,7 @@ Register$Mutation$UserApiResponse _$Register$Mutation$UserApiResponseFromJson(
 Map<String, dynamic> _$Register$Mutation$UserApiResponseToJson(
         Register$Mutation$UserApiResponse instance) =>
     <String, dynamic>{
+      'ok': instance.ok,
       'nodes': instance.nodes?.toJson(),
       'errors': instance.errors?.map((e) => e.toJson()).toList(),
       'jwt': instance.jwt?.toJson(),
@@ -182,6 +184,53 @@ Map<String, dynamic> _$Register$MutationToJson(Register$Mutation instance) =>
       'register': instance.register.toJson(),
     };
 
+ForgotPassword$Mutation$BoolApiResponse$FieldError
+    _$ForgotPassword$Mutation$BoolApiResponse$FieldErrorFromJson(
+        Map<String, dynamic> json) {
+  return ForgotPassword$Mutation$BoolApiResponse$FieldError()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$ForgotPassword$Mutation$BoolApiResponse$FieldErrorToJson(
+        ForgotPassword$Mutation$BoolApiResponse$FieldError instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+ForgotPassword$Mutation$BoolApiResponse
+    _$ForgotPassword$Mutation$BoolApiResponseFromJson(
+        Map<String, dynamic> json) {
+  return ForgotPassword$Mutation$BoolApiResponse()
+    ..ok = json['ok'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) =>
+            ForgotPassword$Mutation$BoolApiResponse$FieldError.fromJson(
+                e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$ForgotPassword$Mutation$BoolApiResponseToJson(
+        ForgotPassword$Mutation$BoolApiResponse instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+ForgotPassword$Mutation _$ForgotPassword$MutationFromJson(
+    Map<String, dynamic> json) {
+  return ForgotPassword$Mutation()
+    ..forgotPassword = ForgotPassword$Mutation$BoolApiResponse.fromJson(
+        json['forgotPassword'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$ForgotPassword$MutationToJson(
+        ForgotPassword$Mutation instance) =>
+    <String, dynamic>{
+      'forgotPassword': instance.forgotPassword.toJson(),
+    };
+
 LoginArguments _$LoginArgumentsFromJson(Map<String, dynamic> json) {
   return LoginArguments(
     userInput: UserInput.fromJson(json['userInput'] as Map<String, dynamic>),
@@ -195,13 +244,24 @@ Map<String, dynamic> _$LoginArgumentsToJson(LoginArguments instance) =>
 
 RegisterArguments _$RegisterArgumentsFromJson(Map<String, dynamic> json) {
   return RegisterArguments(
-    email: json['email'] as String,
-    password: json['password'] as String,
+    userInput: UserInput.fromJson(json['userInput'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$RegisterArgumentsToJson(RegisterArguments instance) =>
     <String, dynamic>{
+      'userInput': instance.userInput.toJson(),
+    };
+
+ForgotPasswordArguments _$ForgotPasswordArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return ForgotPasswordArguments(
+    email: json['email'] as String,
+  );
+}
+
+Map<String, dynamic> _$ForgotPasswordArgumentsToJson(
+        ForgotPasswordArguments instance) =>
+    <String, dynamic>{
       'email': instance.email,
-      'password': instance.password,
     };

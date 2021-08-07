@@ -1,5 +1,6 @@
-mutation register($email: String!, $password: String!) {
-  register {
+mutation register($userInput: UserInput!) {
+  register(options: $userInput) {
+    ok
     nodes {
       id
     }

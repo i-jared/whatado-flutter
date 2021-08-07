@@ -21,11 +21,11 @@ class _EditMyProfileState extends State<EditMyProfile> {
 
   @override
   void initState() {
+    super.initState();
     textController = TextEditingController();
     interests = widget.user.interests;
     photoUrls = widget.user.photoUrls;
     bio = widget.user.bio;
-    super.initState();
   }
 
   final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);

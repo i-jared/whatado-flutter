@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/providers/graphql/register_query.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/login.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
+import 'package:whatado/widgets/input/my_password_field.dart';
+import 'package:whatado/widgets/input/my_text_field.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -10,105 +13,102 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
-  bool passwordHidden = true;
-  bool confirmPasswordHidden = true;
+  late bool loading;
+  String? emailError;
+  String? nameError;
+  String? passwordError;
+  late TextEditingController passwordController;
+  late TextEditingController confirmController;
+  late TextEditingController emailController;
+  late TextEditingController nameController;
+
+  @override
+  void initState() {
+    super.initState();
+    passwordController = TextEditingController();
+    confirmController = TextEditingController();
+    emailController = TextEditingController();
+    nameController = TextEditingController();
+
+    loading = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Container(
-            child: Stack(children: [
-          Container(
-            height: MediaQuery.of(context).size.height,
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(height: 50),
-                  Image.network(
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
-                      height: 100),
-                  SizedBox(height: 40),
-                  Expanded(
-                    child: Form(
-                      key: _formKey,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Column(
+        body: Form(
+            key: _formKey,
+            child: LayoutBuilder(
+              builder: (context, constraints) => SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                    minWidth: constraints.maxWidth,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
+                      child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            SizedBox(height: 50),
+                            Center(
+                              child: Image.network(
+                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
+                                  height: 100),
+                            ),
+                            SizedBox(height: 40),
                             Text('Sign Up',
                                 style: TextStyle(
                                     fontSize: 25, fontWeight: FontWeight.w600)),
                             SizedBox(height: 35),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                isDense: true,
-                                hintText: 'Name',
-                                hintStyle: TextStyle(fontSize: 13),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 12),
-                              ),
+                            MyTextField(
+                              hintText: 'Full Name',
+                              controller: nameController,
+                              errorText: nameError,
+                              validator: (val) => val == null || val.length == 0
+                                  ? 'please enter your full name'
+                                  : null,
                             ),
                             const SizedBox(height: 20),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                isDense: true,
-                                hintText: 'Email',
-                                hintStyle: TextStyle(fontSize: 13),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 12),
-                              ),
+                            MyTextField(
+                              hintText: 'Email',
+                              controller: emailController,
+                              errorText: emailError,
+                              validator: (val) {
+                                String pattern =
+                                    r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
+                                RegExp regExp = new RegExp(pattern);
+                                if (val == null || !regExp.hasMatch(val))
+                                  return 'please enter a valid email';
+                              },
                             ),
                             const SizedBox(height: 20),
-                            TextFormField(
-                              obscureText: passwordHidden,
-                              decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                      !passwordHidden
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      size: 20),
-                                  onPressed: () => setState(
-                                      () => passwordHidden = !passwordHidden),
-                                ),
-                                isDense: true,
-                                hintText: 'Password',
-                                hintStyle: TextStyle(fontSize: 13),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 12),
-                              ),
+                            MyPasswordField(
+                              hintText: 'Password',
+                              controller: passwordController,
+                              errorText: passwordError,
+                              validator: (val) => val == null || val.length < 6
+                                  ? 'password must be at least 6 characters'
+                                  : val != confirmController.text
+                                      ? "passwords don't match"
+                                      : null,
                             ),
                             const SizedBox(height: 20),
-                            TextFormField(
-                              obscureText: confirmPasswordHidden,
-                              decoration: InputDecoration(
-                                suffixIcon: IconButton(
-                                  icon: Icon(
-                                      !confirmPasswordHidden
-                                          ? Icons.visibility
-                                          : Icons.visibility_off,
-                                      size: 20),
-                                  onPressed: () => setState(
-                                      () => passwordHidden = !passwordHidden),
-                                ),
-                                isDense: true,
-                                hintText: 'Confirm Password',
-                                hintStyle: TextStyle(fontSize: 13),
-                                contentPadding:
-                                    EdgeInsets.symmetric(vertical: 12),
-                              ),
+                            MyPasswordField(
+                              hintText: 'Confirm Password',
+                              controller: confirmController,
                             ),
                             const SizedBox(height: 25),
                             RoundedArrowButton(
-                              onPressed: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (ctx) =>
-                                          ChooseInterestsScreen())),
+                              onPressed: attemptRegister,
                               text: "Sign Up",
                             ),
+                            SizedBox(height: 30),
+                            if (loading)
+                              Center(
+                                  child:
+                                      CircularProgressIndicator(value: null)),
                             Spacer(),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -119,21 +119,51 @@ class _SignupScreenState extends State<StatefulWidget> {
                                     'Sign in.',
                                     style: TextStyle(color: Colors.red[300]),
                                   ),
-                                  onPressed: () => Navigator.push(
+                                  onPressed: () => Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                           builder: (ctx) => LoginScreen())),
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
+                            SizedBox(height: 40)
+                          ]),
                     ),
                   ),
-                  SizedBox(height: 40)
-                ]),
-          ),
-        ])));
+                ),
+              ),
+            )));
+  }
+
+  void attemptRegister() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() {
+        emailError = null;
+        passwordError = null;
+        loading = true;
+      });
+      final loginMutation = RegisterGqlQuery();
+      final res = await loginMutation.register(
+        email: emailController.text,
+        password: passwordController.text,
+        name: nameController.text,
+      );
+      setState(() => loading = false);
+      if (res.ok) {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (ctx) => ChooseInterestsScreen()));
+      } else {
+        setState(() {
+          emailError = res.errors?.firstWhere(
+              (element) => element['field'] == 'email',
+              orElse: () => {})['message'];
+          passwordError = res.errors?.firstWhere(
+              (element) => element['field'] == 'password',
+              orElse: () => {})['message'];
+        });
+        passwordController.clear();
+        confirmController.clear();
+      }
+    }
   }
 }

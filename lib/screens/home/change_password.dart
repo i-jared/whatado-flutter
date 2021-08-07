@@ -14,10 +14,10 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   void initState() {
+    super.initState();
     currentPasswordController = TextEditingController();
     newPasswordController = TextEditingController();
     confirmNewPasswordController = TextEditingController();
-    super.initState();
   }
 
   @override

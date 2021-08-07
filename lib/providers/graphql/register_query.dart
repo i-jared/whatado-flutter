@@ -5,12 +5,19 @@ import 'package:whatado/models/query_response.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/services/service_provider.dart';
 
-class LoginGqlQuery {
-  Future<MyQueryResponse<User?>> login(
-      {required String email, required String password}) async {
-    final mutation = LoginMutation(
-      variables: LoginArguments(
-        userInput: UserInput(password: password, email: email),
+class RegisterGqlQuery {
+  Future<MyQueryResponse<User?>> register({
+    required String email,
+    required String password,
+    required String name,
+  }) async {
+    final mutation = RegisterMutation(
+      variables: RegisterArguments(
+        userInput: UserInput(
+            password: password,
+            email: email,
+            username: name,
+            birthday: DateTime.now()),
       ),
     );
     final result = await graphqlClientService.mutate(mutation);
@@ -21,7 +28,7 @@ class LoginGqlQuery {
       });
     }
 
-    final root = result.data?['login'];
+    final root = result.data?['register'];
     final data = User.fromGqlData(root?['nodes']);
     final accessToken = root?['jwt']?['accessToken'];
     final refreshToken = root?['jwt']?['refreshToken'];

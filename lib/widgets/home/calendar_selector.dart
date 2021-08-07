@@ -26,6 +26,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
 
   @override
   void initState() {
+    super.initState();
     calendarScrollController = ScrollController();
     final now = DateTime.now();
     final daysLeftThisMonth = daysInMonth(now.year, now.month) - now.day + 1;
@@ -59,7 +60,6 @@ class _CalendarSelectorState extends State<CalendarSelector> {
         setState(() => scrollingMonth = now.month + 3);
       }
     });
-    super.initState();
   }
 
   @override

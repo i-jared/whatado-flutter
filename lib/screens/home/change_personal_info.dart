@@ -19,6 +19,7 @@ class _ChangePersonalInfoState extends State<ChangePersonalInfo> {
 
   @override
   void initState() {
+    super.initState();
     nameController = TextEditingController();
     emailController = TextEditingController();
     phoneController = TextEditingController();
@@ -43,7 +44,6 @@ class _ChangePersonalInfoState extends State<ChangePersonalInfo> {
     nameController.text = user.name;
     emailController.text = user.email;
     phoneController.text = '43522534893';
-    super.initState();
   }
 
   @override
