@@ -31,11 +31,14 @@ class AllEvents extends StatelessWidget {
         5,
         (index) => Event(
             creator: jared,
-            date: DateTime.now(),
+            time: DateTime.now(),
             description: lorem(words: 20, paragraphs: 1),
             imageUrl: imageUrls[index],
             location: '2500 Pennsylvania Ave.',
-            title: lorem(words: 2, paragraphs: 1)));
+            title: lorem(words: 2, paragraphs: 1),
+            createdAt: DateTime.now(),
+            id: index,
+            relatedInterestIds: []));
     ///////////////////////////////////////////
     ///                FAKE DATA            ///
     ///////////////////////////////////////////
