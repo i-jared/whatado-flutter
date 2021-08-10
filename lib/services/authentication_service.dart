@@ -9,6 +9,12 @@ class AuthenticationService {
     await localStorageService.deleteAccessToken();
   }
 
+  void updateTokens(String accessToken, String refreshToken) {
+    localStorageService.refreshToken = refreshToken;
+    localStorageService.accessToken = accessToken;
+    graphqlClientService.updateAuth(accessToken);
+  }
+
   String? getRefreshToken() => localStorageService.refreshToken;
   String? getAccessToken() => localStorageService.accessToken;
   Future<String?> requestNewAccessToken() async {

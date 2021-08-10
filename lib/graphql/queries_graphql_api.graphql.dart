@@ -45,24 +45,6 @@ class Events$Query$EventsApiResponse$Event$Interest extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
-class Events$Query$EventsApiResponse$Event$Forum extends JsonSerializable
-    with EquatableMixin {
-  Events$Query$EventsApiResponse$Event$Forum();
-
-  factory Events$Query$EventsApiResponse$Event$Forum.fromJson(
-          Map<String, dynamic> json) =>
-      _$Events$Query$EventsApiResponse$Event$ForumFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Events$Query$EventsApiResponse$Event$ForumToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class Events$Query$EventsApiResponse$Event extends JsonSerializable
     with EquatableMixin {
   Events$Query$EventsApiResponse$Event();
@@ -98,11 +80,7 @@ class Events$Query$EventsApiResponse$Event extends JsonSerializable
 
   late String pictureUrl;
 
-  late List<Events$Query$EventsApiResponse$Event$User> wannago;
-
   late List<Events$Query$EventsApiResponse$Event$Interest> relatedInterests;
-
-  late Events$Query$EventsApiResponse$Event$Forum forum;
 
   late String filterLocation;
 
@@ -124,9 +102,7 @@ class Events$Query$EventsApiResponse$Event extends JsonSerializable
         time,
         location,
         pictureUrl,
-        wannago,
         relatedInterests,
-        forum,
         filterLocation,
         filterRadius,
         filterGender,
@@ -138,6 +114,26 @@ class Events$Query$EventsApiResponse$Event extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class Events$Query$EventsApiResponse$FieldError extends JsonSerializable
+    with EquatableMixin {
+  Events$Query$EventsApiResponse$FieldError();
+
+  factory Events$Query$EventsApiResponse$FieldError.fromJson(
+          Map<String, dynamic> json) =>
+      _$Events$Query$EventsApiResponse$FieldErrorFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Events$Query$EventsApiResponse$FieldErrorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Events$Query$EventsApiResponse extends JsonSerializable
     with EquatableMixin {
   Events$Query$EventsApiResponse();
@@ -145,10 +141,14 @@ class Events$Query$EventsApiResponse extends JsonSerializable
   factory Events$Query$EventsApiResponse.fromJson(Map<String, dynamic> json) =>
       _$Events$Query$EventsApiResponseFromJson(json);
 
+  bool? ok;
+
   List<Events$Query$EventsApiResponse$Event>? nodes;
 
+  List<Events$Query$EventsApiResponse$FieldError>? errors;
+
   @override
-  List<Object?> get props => [nodes];
+  List<Object?> get props => [ok, nodes, errors];
   @override
   Map<String, dynamic> toJson() => _$Events$Query$EventsApiResponseToJson(this);
 }
@@ -206,6 +206,12 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
               FieldNode(
                   name: NameNode(value: 'nodes'),
                   alias: null,
@@ -274,33 +280,7 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: null),
                     FieldNode(
-                        name: NameNode(value: 'wannago'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
                         name: NameNode(value: 'relatedInterests'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'forum'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -332,6 +312,25 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: null),
                     FieldNode(
                         name: NameNode(value: 'filterAge'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
                         alias: null,
                         arguments: [],
                         directives: [],

@@ -23,8 +23,9 @@ class GraphqlClientService {
   void updateAuth(String accessToken) {
     _authLink = AuthLink(getToken: () => 'Bearer $accessToken');
     _link = _authLink.concat(_httpLink);
-    _client =
-        GraphQLClient(link: _link, cache: GraphQLCache(store: HiveStore()));
+    _client = GraphQLClient(
+        link: _link,
+        cache: GraphQLCache(store: HiveStore(localStorageService.box)));
   }
 
   Future<QueryResult>
@@ -62,11 +63,16 @@ class GraphqlClientService {
 
   Future<QueryResult> sendWithReauthenticate(Future? Function() fx) async {
     final event = await fx();
+    print('query sent');
     if (event.hasException) {
+      print('query has exception');
       final unauthorized = _checkIsUnauthorized(event);
       if (unauthorized) {
+        print('query unauthorized');
         final accessToken = await authenticationService.requestNewAccessToken();
+        print('requested new accesstoken');
         if (accessToken != null) {
+          print('retry query');
           return await fx();
         } else {
           return event;

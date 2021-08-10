@@ -50,18 +50,33 @@ type EventApiResponse {
   ok: Boolean
 }
 
-input EventInput {
+input EventFilterInput {
+  creatorId: [Int!]
   description: String
   filterAge: String
   filterGender: Gender
   filterLocation: String
   filterRadius: Float
   id: Int
-  interestsRelated: [Int!]
   location: String
   pictureUrl: String
+  relatedInterestsIds: [Int!]
   time: DateTime
   title: String
+}
+
+input EventInput {
+  creatorId: [Int!]!
+  description: String!
+  filterAge: String!
+  filterGender: Gender!
+  filterLocation: String!
+  filterRadius: Float!
+  location: String!
+  pictureUrl: String
+  relatedInterestsIds: [Int!]!
+  time: DateTime!
+  title: String!
 }
 
 type EventsApiResponse {
@@ -79,7 +94,7 @@ type FieldError {
 type Forum {
   chats: [Chat!]!
   createdAt: String!
-  event: [Chat!]!
+  event: Event!
   id: Int!
   updatedAt: String!
 }
@@ -105,12 +120,12 @@ type JwtResponse {
 }
 
 type Mutation {
-  createEvent(title: EventInput!): EventApiResponse!
+  createEvent(options: EventInput!): EventApiResponse!
   deleteEvent(id: Float!): BoolApiResponse!
   forgotPassword(email: String!): BoolApiResponse!
   login(options: UserInput!): UserApiResponse!
   register(options: UserInput!): UserApiResponse!
-  updateEvent(options: EventInput!): BoolApiResponse!
+  updateEvent(options: EventFilterInput!): BoolApiResponse!
 }
 
 type Query {

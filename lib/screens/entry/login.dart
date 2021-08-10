@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:whatado/providers/graphql/forgot_password_query.dart';
 import 'package:whatado/providers/graphql/login_query.dart';
 import 'package:whatado/screens/entry/signup.dart';
+import 'package:whatado/screens/home/home.dart';
+import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/bottom_sheet.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -111,8 +112,10 @@ class _LoginScreenState extends State<StatefulWidget> {
           email: emailController.text, password: passwordController.text);
       setState(() => loading = false);
       if (res.ok) {
+        authenticationService.updateTokens(
+            res.accessToken ?? '', res.refreshToken ?? '');
         Navigator.push(
-            context, MaterialPageRoute(builder: (ctx) => SignupScreen()));
+            context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
       } else {
         setState(() {
           emailError = res.errors?.firstWhere(

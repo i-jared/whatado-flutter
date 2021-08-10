@@ -1,9 +1,9 @@
-import 'package:whatado/models/user.dart';
+import 'package:whatado/models/event_user.dart';
 
 class Event {
   int id;
   DateTime createdAt;
-  User creator;
+  EventUser creator;
   String title;
   String description;
   String imageUrl;
@@ -26,7 +26,7 @@ class Event {
     return Event(
       id: data['id'],
       createdAt: DateTime.parse(data['createdAt']),
-      creator: data['email'] ?? '',
+      creator: EventUser.fromGqlData(data['creator']),
       title: data['title'] ?? '',
       imageUrl: data['profilePhotoUrl'] ?? '',
       time: DateTime.parse(data['time']),

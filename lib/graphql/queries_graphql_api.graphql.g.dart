@@ -32,18 +32,6 @@ Map<String, dynamic> _$Events$Query$EventsApiResponse$Event$InterestToJson(
       'id': instance.id,
     };
 
-Events$Query$EventsApiResponse$Event$Forum
-    _$Events$Query$EventsApiResponse$Event$ForumFromJson(
-        Map<String, dynamic> json) {
-  return Events$Query$EventsApiResponse$Event$Forum()..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$Events$Query$EventsApiResponse$Event$ForumToJson(
-        Events$Query$EventsApiResponse$Event$Forum instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
 Events$Query$EventsApiResponse$Event
     _$Events$Query$EventsApiResponse$EventFromJson(Map<String, dynamic> json) {
   return Events$Query$EventsApiResponse$Event()
@@ -57,16 +45,10 @@ Events$Query$EventsApiResponse$Event
     ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
     ..location = json['location'] as String
     ..pictureUrl = json['pictureUrl'] as String
-    ..wannago = (json['wannago'] as List<dynamic>)
-        .map((e) => Events$Query$EventsApiResponse$Event$User.fromJson(
-            e as Map<String, dynamic>))
-        .toList()
     ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
         .map((e) => Events$Query$EventsApiResponse$Event$Interest.fromJson(
             e as Map<String, dynamic>))
         .toList()
-    ..forum = Events$Query$EventsApiResponse$Event$Forum.fromJson(
-        json['forum'] as Map<String, dynamic>)
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -86,10 +68,8 @@ Map<String, dynamic> _$Events$Query$EventsApiResponse$EventToJson(
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
       'pictureUrl': instance.pictureUrl,
-      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'forum': instance.forum.toJson(),
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -129,11 +109,31 @@ const _$GenderEnumMap = {
   Gender.artemisUnknown: 'ARTEMIS_UNKNOWN',
 };
 
+Events$Query$EventsApiResponse$FieldError
+    _$Events$Query$EventsApiResponse$FieldErrorFromJson(
+        Map<String, dynamic> json) {
+  return Events$Query$EventsApiResponse$FieldError()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$Events$Query$EventsApiResponse$FieldErrorToJson(
+        Events$Query$EventsApiResponse$FieldError instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
 Events$Query$EventsApiResponse _$Events$Query$EventsApiResponseFromJson(
     Map<String, dynamic> json) {
   return Events$Query$EventsApiResponse()
+    ..ok = json['ok'] as bool?
     ..nodes = (json['nodes'] as List<dynamic>?)
         ?.map((e) => Events$Query$EventsApiResponse$Event.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => Events$Query$EventsApiResponse$FieldError.fromJson(
             e as Map<String, dynamic>))
         .toList();
 }
@@ -141,7 +141,9 @@ Events$Query$EventsApiResponse _$Events$Query$EventsApiResponseFromJson(
 Map<String, dynamic> _$Events$Query$EventsApiResponseToJson(
         Events$Query$EventsApiResponse instance) =>
     <String, dynamic>{
+      'ok': instance.ok,
       'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
     };
 
 Events$Query _$Events$QueryFromJson(Map<String, dynamic> json) {

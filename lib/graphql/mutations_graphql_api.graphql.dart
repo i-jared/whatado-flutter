@@ -280,6 +280,154 @@ class ForgotPassword$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
+    with EquatableMixin {
+  CreateEvent$Mutation$EventApiResponse$Event();
+
+  factory CreateEvent$Mutation$EventApiResponse$Event.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateEvent$Mutation$EventApiResponse$EventFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateEvent$Mutation$EventApiResponse$EventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation$EventApiResponse$FieldError extends JsonSerializable
+    with EquatableMixin {
+  CreateEvent$Mutation$EventApiResponse$FieldError();
+
+  factory CreateEvent$Mutation$EventApiResponse$FieldError.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateEvent$Mutation$EventApiResponse$FieldErrorFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateEvent$Mutation$EventApiResponse$FieldErrorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation$EventApiResponse extends JsonSerializable
+    with EquatableMixin {
+  CreateEvent$Mutation$EventApiResponse();
+
+  factory CreateEvent$Mutation$EventApiResponse.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateEvent$Mutation$EventApiResponseFromJson(json);
+
+  bool? ok;
+
+  CreateEvent$Mutation$EventApiResponse$Event? nodes;
+
+  List<CreateEvent$Mutation$EventApiResponse$FieldError>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateEvent$Mutation$EventApiResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation extends JsonSerializable with EquatableMixin {
+  CreateEvent$Mutation();
+
+  factory CreateEvent$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CreateEvent$MutationFromJson(json);
+
+  late CreateEvent$Mutation$EventApiResponse createEvent;
+
+  @override
+  List<Object?> get props => [createEvent];
+  @override
+  Map<String, dynamic> toJson() => _$CreateEvent$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventInput extends JsonSerializable with EquatableMixin {
+  EventInput(
+      {required this.creatorId,
+      required this.description,
+      required this.filterAge,
+      required this.filterGender,
+      required this.filterLocation,
+      required this.filterRadius,
+      required this.location,
+      this.pictureUrl,
+      required this.relatedInterestsIds,
+      required this.time,
+      required this.title});
+
+  factory EventInput.fromJson(Map<String, dynamic> json) =>
+      _$EventInputFromJson(json);
+
+  late List<int> creatorId;
+
+  late String description;
+
+  late String filterAge;
+
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender filterGender;
+
+  late String filterLocation;
+
+  late double filterRadius;
+
+  late String location;
+
+  String? pictureUrl;
+
+  late List<int> relatedInterestsIds;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime time;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [
+        creatorId,
+        description,
+        filterAge,
+        filterGender,
+        filterLocation,
+        filterRadius,
+        location,
+        pictureUrl,
+        relatedInterestsIds,
+        time,
+        title
+      ];
+  @override
+  Map<String, dynamic> toJson() => _$EventInputToJson(this);
+}
+
+enum Gender {
+  @JsonValue('BOTH')
+  both,
+  @JsonValue('FEMALE')
+  female,
+  @JsonValue('MALE')
+  male,
+  @JsonValue('ARTEMIS_UNKNOWN')
+  artemisUnknown,
+}
+
+@JsonSerializable(explicitToJson: true)
 class LoginArguments extends JsonSerializable with EquatableMixin {
   LoginArguments({required this.userInput});
 
@@ -607,4 +755,106 @@ class ForgotPasswordMutation
   @override
   ForgotPassword$Mutation parse(Map<String, dynamic> json) =>
       ForgotPassword$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateEventArguments extends JsonSerializable with EquatableMixin {
+  CreateEventArguments({this.eventInput});
+
+  @override
+  factory CreateEventArguments.fromJson(Map<String, dynamic> json) =>
+      _$CreateEventArgumentsFromJson(json);
+
+  final EventInput? eventInput;
+
+  @override
+  List<Object?> get props => [eventInput];
+  @override
+  Map<String, dynamic> toJson() => _$CreateEventArgumentsToJson(this);
+}
+
+final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'createEvent'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventInput')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'EventInput'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'createEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'options'),
+                  value: VariableNode(name: NameNode(value: 'eventInput')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class CreateEventMutation
+    extends GraphQLQuery<CreateEvent$Mutation, CreateEventArguments> {
+  CreateEventMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CREATE_EVENT_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'createEvent';
+
+  @override
+  final CreateEventArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CreateEvent$Mutation parse(Map<String, dynamic> json) =>
+      CreateEvent$Mutation.fromJson(json);
 }

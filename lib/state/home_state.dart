@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/models/event.dart';
+import 'package:whatado/providers/graphql/events_provider.dart';
 
 class HomeState extends ChangeNotifier {
   int _appBarPageNo;
@@ -12,6 +14,8 @@ class HomeState extends ChangeNotifier {
   ScrollController myProfileScrollController;
   bool _allEventsAtTop;
 
+  List<Event>? allEvents;
+
   HomeState()
       : _appBarPageNo = 0,
         _bottomBarPageNo = 0,
@@ -21,6 +25,7 @@ class HomeState extends ChangeNotifier {
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),
         refreshController = RefreshController(initialRefresh: false) {
+    // check if scroll is at top
     allEventsScrollController.addListener(() {
       if (allEventsScrollController.offset <= 10 && !_allEventsAtTop) {
         _allEventsAtTop = true;
@@ -30,6 +35,8 @@ class HomeState extends ChangeNotifier {
         notifyListeners();
       }
     });
+    // get initial events
+    getNewEvents();
   }
 
   @override
@@ -70,9 +77,10 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    refreshController.refreshCompleted();
+  void getNewEvents() async {
+    final query = EventsGqlQuery();
+    final response = await query.events();
+    allEvents = response.data ?? [];
     notifyListeners();
   }
 }
