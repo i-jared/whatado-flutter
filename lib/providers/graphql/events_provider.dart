@@ -19,7 +19,8 @@ class EventsGqlQuery {
 
     final root = result.data?['events'];
     final data = root != null && root['nodes'] != null
-        ? (root?['nodes']).map((event) => Event.fromGqlData(event)).toList()
+        ? List<Event>.from(
+            (root?['nodes']).map((event) => Event.fromGqlData(event)).toList())
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];

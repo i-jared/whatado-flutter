@@ -294,14 +294,14 @@ Map<String, dynamic> _$CreateEvent$MutationToJson(
 
 EventInput _$EventInputFromJson(Map<String, dynamic> json) {
   return EventInput(
-    creatorId:
-        (json['creatorId'] as List<dynamic>).map((e) => e as int).toList(),
+    creatorId: json['creatorId'] as int,
     description: json['description'] as String,
     filterAge: json['filterAge'] as String,
     filterGender: _$enumDecode(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown),
     filterLocation: json['filterLocation'] as String,
     filterRadius: (json['filterRadius'] as num).toDouble(),
+    id: json['id'] as int?,
     location: json['location'] as String,
     pictureUrl: json['pictureUrl'] as String?,
     relatedInterestsIds: (json['relatedInterestsIds'] as List<dynamic>)
@@ -320,6 +320,7 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
+      'id': instance.id,
       'location': instance.location,
       'pictureUrl': instance.pictureUrl,
       'relatedInterestsIds': instance.relatedInterestsIds,

@@ -21,10 +21,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leadingWidth: 150,
       backgroundColor: Colors.grey[50],
-      elevation: homeState.allEventsScrollController.hasClients &&
-              homeState.allEventsScrollController.offset > 10
-          ? 1.0
-          : 0.0,
+      elevation: 1.0,
       leading: Padding(
         padding: EdgeInsets.only(left: 10),
         child: Image.network(

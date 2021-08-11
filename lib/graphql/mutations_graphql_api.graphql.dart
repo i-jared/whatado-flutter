@@ -363,6 +363,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
       required this.filterGender,
       required this.filterLocation,
       required this.filterRadius,
+      this.id,
       required this.location,
       this.pictureUrl,
       required this.relatedInterestsIds,
@@ -372,7 +373,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
   factory EventInput.fromJson(Map<String, dynamic> json) =>
       _$EventInputFromJson(json);
 
-  late List<int> creatorId;
+  late int creatorId;
 
   late String description;
 
@@ -384,6 +385,8 @@ class EventInput extends JsonSerializable with EquatableMixin {
   late String filterLocation;
 
   late double filterRadius;
+
+  int? id;
 
   late String location;
 
@@ -406,6 +409,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
         filterGender,
         filterLocation,
         filterRadius,
+        id,
         location,
         pictureUrl,
         relatedInterestsIds,

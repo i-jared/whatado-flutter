@@ -23,16 +23,22 @@ class Event {
       required this.location});
 
   static Event fromGqlData(Map data) {
+    print(data);
     return Event(
       id: data['id'],
       createdAt: DateTime.parse(data['createdAt']),
       creator: EventUser.fromGqlData(data['creator']),
       title: data['title'] ?? '',
-      imageUrl: data['profilePhotoUrl'] ?? '',
+      imageUrl: data['pictureUrl'] ?? '',
       time: DateTime.parse(data['time']),
-      relatedInterestIds: data['relatedInterests'] ?? '',
+      relatedInterestIds: List<int>.from(
+          data['relatedInterests'].map((obj) => obj['id']).toList() ?? []),
       location: data['location'] ?? [],
       description: data['description'],
+      //filter gender
+      //filter radius
+      //filter age
+      //filter age
     );
   }
 }

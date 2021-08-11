@@ -19,6 +19,42 @@ type Chat {
   updatedAt: DateTime!
 }
 
+type ChatApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: Chat
+  ok: Boolean
+}
+
+input ChatFilterInput {
+  authorId: Int
+  createdAt: String
+  forumId: Int
+  id: Int
+  text: String
+  updatedAt: String
+}
+
+input ChatInput {
+  authorId: Int!
+  forumId: Int!
+  text: String!
+}
+
+type ChatNotification {
+  forum: Forum!
+  id: Int!
+  notifications: Int!
+  user: User!
+}
+
+type ChatsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [Chat!]
+  ok: Boolean
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -50,28 +86,14 @@ type EventApiResponse {
   ok: Boolean
 }
 
-input EventFilterInput {
-  creatorId: [Int!]
-  description: String
-  filterAge: String
-  filterGender: Gender
-  filterLocation: String
-  filterRadius: Float
-  id: Int
-  location: String
-  pictureUrl: String
-  relatedInterestsIds: [Int!]
-  time: DateTime
-  title: String
-}
-
 input EventInput {
-  creatorId: [Int!]!
+  creatorId: Int!
   description: String!
   filterAge: String!
   filterGender: Gender!
   filterLocation: String!
   filterRadius: Float!
+  id: Int
   location: String!
   pictureUrl: String
   relatedInterestsIds: [Int!]!
@@ -97,6 +119,21 @@ type Forum {
   event: Event!
   id: Int!
   updatedAt: String!
+  userNotifications: [ChatNotification!]!
+}
+
+type ForumApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: Forum
+  ok: Boolean
+}
+
+type ForumsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [Forum!]
+  ok: Boolean
 }
 
 enum Gender {
@@ -110,8 +147,41 @@ type Interest {
   description: String!
   id: Int!
   peopleInterested: [User!]!
+  relatedEvents: [Event!]!
   title: String!
   updatedAt: String!
+}
+
+type InterestApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: Interest
+  ok: Boolean
+}
+
+input InterestFilterInput {
+  createdAt: String
+  description: String
+  id: Int
+  peopleInterestedIds: [Int!]
+  relatedEventsIds: [Int!]
+  title: String
+  updatedAt: String
+}
+
+input InterestInput {
+  description: String!
+  id: Int
+  peopleInterestedIds: [Int!]!
+  relatedEventsIds: [Int!]!
+  title: String!
+}
+
+type InterestsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [Interest!]
+  ok: Boolean
 }
 
 type JwtResponse {
@@ -120,24 +190,37 @@ type JwtResponse {
 }
 
 type Mutation {
+  createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
+  createInterest(options: InterestInput!): InterestApiResponse!
+  deleteChat(id: Float!): BoolApiResponse!
   deleteEvent(id: Float!): BoolApiResponse!
+  deleteInterest(id: Float!): BoolApiResponse!
   forgotPassword(email: String!): BoolApiResponse!
   login(options: UserInput!): UserApiResponse!
   register(options: UserInput!): UserApiResponse!
-  updateEvent(options: EventFilterInput!): BoolApiResponse!
+  updateChat(options: ChatFilterInput!): BoolApiResponse!
+  updateEvent(options: EventInput!): BoolApiResponse!
+  updateInterest(options: InterestFilterInput!): BoolApiResponse!
 }
 
 type Query {
+  chat(id: Float!): ChatApiResponse!
+  chats(options: ChatFilterInput!): ChatsApiResponse!
   event(id: Float!): Event
   events: EventsApiResponse!
+  forum(id: Float!): ForumApiResponse!
+  getForumsByEventId(ids: Int!): ForumsApiResponse!
   hello: String!
+  interest(id: Float!): InterestApiResponse!
+  interests(options: InterestFilterInput!): InterestsApiResponse!
   me: UserApiResponse
   users: UsersApiResponse!
 }
 
 type User {
   birthday: DateTime!
+  chatNotifications: [ChatNotification!]!
   createdAt: DateTime!
   email: String!
   id: Int!

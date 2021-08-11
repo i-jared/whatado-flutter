@@ -13,7 +13,7 @@ class AllEvents extends StatelessWidget {
 
     return SmartRefresher(
       controller: homeState.refreshController,
-      onRefresh: homeState.getNewEvents,
+      onRefresh: homeState.allEventsRefresh,
       child: ListView(
         key: PageStorageKey(0),
         controller: homeState.allEventsScrollController,

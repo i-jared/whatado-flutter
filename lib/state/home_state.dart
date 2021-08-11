@@ -26,15 +26,15 @@ class HomeState extends ChangeNotifier {
         myProfileScrollController = ScrollController(),
         refreshController = RefreshController(initialRefresh: false) {
     // check if scroll is at top
-    allEventsScrollController.addListener(() {
-      if (allEventsScrollController.offset <= 10 && !_allEventsAtTop) {
-        _allEventsAtTop = true;
-        notifyListeners();
-      } else if (allEventsScrollController.offset > 10 && _allEventsAtTop) {
-        _allEventsAtTop = false;
-        notifyListeners();
-      }
-    });
+    // allEventsScrollController.addListener(() {
+    // if (allEventsScrollController.offset <= 10 && !_allEventsAtTop) {
+    // _allEventsAtTop = true;
+    // notifyListeners();
+    // } else if (allEventsScrollController.offset > 10 && _allEventsAtTop) {
+    // _allEventsAtTop = false;
+    // notifyListeners();
+    // }
+    // });
     // get initial events
     getNewEvents();
   }
@@ -77,10 +77,19 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getNewEvents() async {
+  Future<void> getNewEvents() async {
     final query = EventsGqlQuery();
     final response = await query.events();
     allEvents = response.data ?? [];
     notifyListeners();
+  }
+
+  Future<void> allEventsRefresh() async {
+    try {
+      await getNewEvents();
+      refreshController.refreshCompleted();
+    } catch (e) {
+      refreshController.refreshFailed();
+    }
   }
 }
