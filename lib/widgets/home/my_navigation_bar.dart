@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:graphql_flutter/graphql_flutter.dart';
+import 'package:whatado/widgets/home/subscription_test.dart';
 
 class MyNavigationBar extends StatelessWidget {
   final Function indexSetState;
@@ -27,7 +29,8 @@ class MyNavigationBar extends StatelessWidget {
             ),
             IconButton(
               padding: EdgeInsets.zero,
-              onPressed: () => null,
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SubscriptionTest())),
               icon: Icon(Icons.add_circle, size: 50, color: Colors.red[300]),
             ),
             IconButton(

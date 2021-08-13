@@ -9,6 +9,8 @@ query events {
       description
       creator {
         id
+        profilePhotoUrl
+        username
       }
       time
       location

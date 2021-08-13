@@ -190,6 +190,7 @@ type JwtResponse {
 }
 
 type Mutation {
+  changeUsername(username: String!): BoolApiResponse!
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
   createInterest(options: InterestInput!): InterestApiResponse!
@@ -197,6 +198,7 @@ type Mutation {
   deleteEvent(id: Float!): BoolApiResponse!
   deleteInterest(id: Float!): BoolApiResponse!
   forgotPassword(email: String!): BoolApiResponse!
+  helloMutation(message: String!): Boolean!
   login(options: UserInput!): UserApiResponse!
   register(options: UserInput!): UserApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
@@ -214,8 +216,12 @@ type Query {
   hello: String!
   interest(id: Float!): InterestApiResponse!
   interests(options: InterestFilterInput!): InterestsApiResponse!
-  me: UserApiResponse
   users: UsersApiResponse!
+}
+
+type Subscription {
+  helloSubscription: String!
+  me: String!
 }
 
 type User {

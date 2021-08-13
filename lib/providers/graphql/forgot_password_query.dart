@@ -20,7 +20,6 @@ class ForgotPasswordGqlQuery {
       });
     }
 
-    print('jcl $result');
     final root = result.data?['forgotPassword'];
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];

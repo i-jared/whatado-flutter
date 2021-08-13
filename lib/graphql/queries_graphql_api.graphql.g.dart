@@ -10,13 +10,18 @@ part of 'queries_graphql_api.graphql.dart';
 Events$Query$EventsApiResponse$Event$User
     _$Events$Query$EventsApiResponse$Event$UserFromJson(
         Map<String, dynamic> json) {
-  return Events$Query$EventsApiResponse$Event$User()..id = json['id'] as int;
+  return Events$Query$EventsApiResponse$Event$User()
+    ..id = json['id'] as int
+    ..profilePhotoUrl = json['profilePhotoUrl'] as String
+    ..username = json['username'] as String;
 }
 
 Map<String, dynamic> _$Events$Query$EventsApiResponse$Event$UserToJson(
         Events$Query$EventsApiResponse$Event$User instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'profilePhotoUrl': instance.profilePhotoUrl,
+      'username': instance.username,
     };
 
 Events$Query$EventsApiResponse$Event$Interest

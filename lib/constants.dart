@@ -3,6 +3,9 @@ import 'package:whatado/services/environment_config.dart';
 String get whatadoGqlUrl => EnvironmentConfig.flavor == PROD
     ? 'https://api.whatado.io/graphql'
     : "http://192.168.86.148:4000/graphql";
+String get whatadoWsUrl => EnvironmentConfig.flavor == PROD
+    ? 'ws://api.whatado.io/ws'
+    : "ws://192.168.86.148:4000/graphql";
 String get whatadoRefreshUrl => EnvironmentConfig.flavor == PROD
     ? 'https://api.whatado.io/refresh_token'
     : "http://192.168.86.148:4000/refresh_token";

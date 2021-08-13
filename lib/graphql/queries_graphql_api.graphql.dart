@@ -19,8 +19,12 @@ class Events$Query$EventsApiResponse$Event$User extends JsonSerializable
 
   late int id;
 
+  late String profilePhotoUrl;
+
+  late String username;
+
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, profilePhotoUrl, username];
   @override
   Map<String, dynamic> toJson() =>
       _$Events$Query$EventsApiResponse$Event$UserToJson(this);
@@ -256,6 +260,18 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: SelectionSetNode(selections: [
                           FieldNode(
                               name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
                               alias: null,
                               arguments: [],
                               directives: [],

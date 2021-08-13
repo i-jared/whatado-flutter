@@ -12,6 +12,9 @@ targets:
             - output: lib/graphql/queries_graphql_api.dart
               schema: graphql/schema.graphql
               queries_glob: graphql/queries/**.graphql
+            - output: lib/graphql/subscriptions_graphql_api.dart
+              schema: graphql/schema.graphql
+              queries_glob: graphql/subscriptions/**.graphql
             - output: lib/graphql/mutations_graphql_api.dart
               schema: graphql/schema.graphql
               queries_glob: graphql/mutations/**.graphql

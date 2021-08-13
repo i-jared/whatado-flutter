@@ -10,7 +10,6 @@ class EventDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(event.imageUrl);
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

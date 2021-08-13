@@ -23,7 +23,6 @@ class Event {
       required this.location});
 
   static Event fromGqlData(Map data) {
-    print(data);
     return Event(
       id: data['id'],
       createdAt: DateTime.parse(data['createdAt']),
