@@ -184,6 +184,15 @@ Map<String, dynamic> _$ForgotPassword$MutationToJson(
       'forgotPassword': instance.forgotPassword.toJson(),
     };
 
+Hello$Mutation _$Hello$MutationFromJson(Map<String, dynamic> json) {
+  return Hello$Mutation()..helloMutation = json['helloMutation'] as bool;
+}
+
+Map<String, dynamic> _$Hello$MutationToJson(Hello$Mutation instance) =>
+    <String, dynamic>{
+      'helloMutation': instance.helloMutation,
+    };
+
 Login$Mutation$UserApiResponse$User
     _$Login$Mutation$UserApiResponse$UserFromJson(Map<String, dynamic> json) {
   return Login$Mutation$UserApiResponse$User()..id = json['id'] as int;
@@ -386,6 +395,17 @@ Map<String, dynamic> _$ForgotPasswordArgumentsToJson(
         ForgotPasswordArguments instance) =>
     <String, dynamic>{
       'email': instance.email,
+    };
+
+HelloArguments _$HelloArgumentsFromJson(Map<String, dynamic> json) {
+  return HelloArguments(
+    message: json['message'] as String,
+  );
+}
+
+Map<String, dynamic> _$HelloArgumentsToJson(HelloArguments instance) =>
+    <String, dynamic>{
+      'message': instance.message,
     };
 
 LoginArguments _$LoginArgumentsFromJson(Map<String, dynamic> json) {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:whatado/widgets/home/subscription_test.dart';
 
 class MyNavigationBar extends StatelessWidget {

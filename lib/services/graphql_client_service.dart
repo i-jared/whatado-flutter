@@ -84,11 +84,15 @@ class GraphqlClientService {
 
   Future<QueryResult> sendWithReauthenticate(Future? Function() fx) async {
     final event = await fx();
+    print("sent first request");
     if (event.hasException) {
       final unauthorized = _checkIsUnauthorized(event);
+      print("exception. unauthorized: $unauthorized");
       if (unauthorized) {
         final accessToken = await authenticationService.requestNewAccessToken();
+        print("requested new access token");
         if (accessToken != null) {
+          print("resubmitting request");
           return await fx();
         } else {
           return event;

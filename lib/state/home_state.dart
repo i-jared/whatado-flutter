@@ -12,7 +12,6 @@ class HomeState extends ChangeNotifier {
   PageController homePageController;
   ScrollController allEventsScrollController;
   ScrollController myProfileScrollController;
-  bool _allEventsAtTop;
 
   List<Event>? allEvents;
 
@@ -20,7 +19,6 @@ class HomeState extends ChangeNotifier {
       : _appBarPageNo = 0,
         _bottomBarPageNo = 0,
         _selectedDateIndex = 0,
-        _allEventsAtTop = true,
         homePageController = PageController(),
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),

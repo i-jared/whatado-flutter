@@ -205,6 +205,21 @@ class ForgotPassword$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Hello$Mutation extends JsonSerializable with EquatableMixin {
+  Hello$Mutation();
+
+  factory Hello$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$Hello$MutationFromJson(json);
+
+  late bool helloMutation;
+
+  @override
+  List<Object?> get props => [helloMutation];
+  @override
+  Map<String, dynamic> toJson() => _$Hello$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Login$Mutation$UserApiResponse$User extends JsonSerializable
     with EquatableMixin {
   Login$Mutation$UserApiResponse$User();
@@ -620,6 +635,68 @@ class ForgotPasswordMutation
   @override
   ForgotPassword$Mutation parse(Map<String, dynamic> json) =>
       ForgotPassword$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class HelloArguments extends JsonSerializable with EquatableMixin {
+  HelloArguments({required this.message});
+
+  @override
+  factory HelloArguments.fromJson(Map<String, dynamic> json) =>
+      _$HelloArgumentsFromJson(json);
+
+  late String message;
+
+  @override
+  List<Object?> get props => [message];
+  @override
+  Map<String, dynamic> toJson() => _$HelloArgumentsToJson(this);
+}
+
+final HELLO_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'hello'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'message')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'helloMutation'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'message'),
+                  value: VariableNode(name: NameNode(value: 'message')))
+            ],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class HelloMutation extends GraphQLQuery<Hello$Mutation, HelloArguments> {
+  HelloMutation({required this.variables});
+
+  @override
+  final DocumentNode document = HELLO_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'hello';
+
+  @override
+  final HelloArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Hello$Mutation parse(Map<String, dynamic> json) =>
+      Hello$Mutation.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)
