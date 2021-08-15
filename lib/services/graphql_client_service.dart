@@ -14,7 +14,10 @@ class GraphqlClientService {
   GraphqlClientService() {
     final storedAccessToken = authenticationService.getAccessToken() ?? '';
     _httpLink = HttpLink(whatadoGqlUrl);
-    _wsLink = WebSocketLink(whatadoWsUrl);
+    _wsLink = WebSocketLink(whatadoWsUrl,
+        config: SocketClientConfig(autoReconnect: true, initialPayload: {
+          "headers": {"Authorization": 'Bearer $storedAccessToken'}
+        }));
     _authLink = AuthLink(getToken: () => 'Bearer $storedAccessToken');
     _link = _authLink.split(
         (request) => request.isSubscription, _wsLink, _httpLink);
