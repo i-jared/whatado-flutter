@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatado/widgets/home/edit_my_profile_app_bar.dart';
+import 'package:whatado/widgets/home/appbars/edit_my_profile_app_bar.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
 
 class ChangePassword extends StatefulWidget {

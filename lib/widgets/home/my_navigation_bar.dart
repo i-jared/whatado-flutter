@@ -23,14 +23,14 @@ class MyNavigationBar extends StatelessWidget {
               icon: Icon(
                 Icons.home_outlined,
                 size: 35,
-                color: selectedIndex == 0 ? Colors.red[300] : Colors.grey[850],
+                color: selectedIndex == 0 ? Color(0xffe85c3f) : Colors.grey[850],
               ),
             ),
             IconButton(
               padding: EdgeInsets.zero,
               onPressed: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => SubscriptionTest())),
-              icon: Icon(Icons.add_circle, size: 50, color: Colors.red[300]),
+              icon: Icon(Icons.add_circle, size: 50, color: Color(0xffe85c3f)),
             ),
             IconButton(
               padding: EdgeInsets.zero,
@@ -38,7 +38,7 @@ class MyNavigationBar extends StatelessWidget {
               icon: Icon(
                 Icons.person_outline,
                 size: 35,
-                color: selectedIndex == 1 ? Colors.red[300] : Colors.grey[850],
+                color: selectedIndex == 1 ? Color(0xffe85c3f) : Colors.grey[850],
               ),
             ),
           ],

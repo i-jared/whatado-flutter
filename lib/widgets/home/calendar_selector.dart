@@ -85,7 +85,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
               width: monthWidth,
               height: double.infinity,
               decoration: BoxDecoration(
-                  color: Colors.red[300],
+                  color: Color(0xffe85c3f),
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(50),
                       bottomRight: Radius.circular(50))),
@@ -134,7 +134,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                                         height: 7,
                                         width: 7,
                                         decoration: BoxDecoration(
-                                            color: Colors.red[300],
+                                            color: Color(0xffe85c3f),
                                             borderRadius:
                                                 BorderRadius.circular(5))),
                                   )

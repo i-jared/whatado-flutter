@@ -24,9 +24,7 @@ class WelcomeScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
           SizedBox(height: 50),
-          Image.network(
-              "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
-              height: 100),
+          Image.asset('assets/text_logo.png', height: 100),
           SizedBox(height: 20),
           Center(
             child: Padding(
@@ -38,7 +36,7 @@ class WelcomeScreen extends StatelessWidget {
                     TextSpan(text: 'Putting the '),
                     TextSpan(
                       text: 'social ',
-                      style: TextStyle(fontSize: 20, color: Colors.red[300]),
+                      style: TextStyle(fontSize: 20, color: Color(0xffe85c3f)),
                     ),
                     TextSpan(text: 'back in social media.'),
                   ],

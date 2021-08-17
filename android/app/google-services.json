@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "851868943324",
+    "project_id": "whatado",
+    "storage_bucket": "whatado.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:851868943324:android:ed494b40680b52250dc519",
+        "android_client_info": {
+          "package_name": "io.whatado"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "851868943324-kp067jk46v2ht7om7vb3k84jlq3r9uo1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCpXhm191vPRVIYCZpCumKwnAZ9_rEZB6g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "851868943324-kp067jk46v2ht7om7vb3k84jlq3r9uo1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

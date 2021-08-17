@@ -33,9 +33,7 @@ class _LoginScreenState extends State<StatefulWidget> {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               SizedBox(height: 50),
               Center(
-                child: Image.network(
-                    "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
-                    height: 100),
+                child: Image.asset("assets/text_logo.png", height: 100),
               ),
               SizedBox(height: 40),
               Text('Log In',
@@ -88,7 +86,7 @@ class _LoginScreenState extends State<StatefulWidget> {
                   TextButton(
                       child: Text(
                         'Create an account.',
-                        style: TextStyle(color: Colors.red[300]),
+                        style: TextStyle(color: Color(0xffe85c3f)),
                       ),
                       onPressed: () => Navigator.pushReplacement(context,
                           MaterialPageRoute(builder: (ctx) => SignupScreen()))),

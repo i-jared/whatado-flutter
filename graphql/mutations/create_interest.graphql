@@ -1,0 +1,12 @@
+mutation createInterest($interestInput: InterestInput) {
+  createInterest(options: $interestInput) {
+    ok
+    nodes {
+      id
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

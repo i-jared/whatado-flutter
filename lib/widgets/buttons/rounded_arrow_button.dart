@@ -15,7 +15,7 @@ class RoundedArrowButton extends StatelessWidget {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
           elevation: MaterialStateProperty.all(30),
           fixedSize: MaterialStateProperty.all(Size(double.infinity, 50)),
-          backgroundColor: MaterialStateProperty.all(Colors.red[300])),
+          backgroundColor: MaterialStateProperty.all(Color(0xffe85c3f))),
       child: Stack(
         children: [
           Center(child: Text(text)),

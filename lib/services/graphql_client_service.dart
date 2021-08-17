@@ -28,6 +28,13 @@ class GraphqlClientService {
 
   void updateAuth(String accessToken) {
     _authLink = AuthLink(getToken: () => 'Bearer $accessToken');
+    _wsLink = WebSocketLink(whatadoWsUrl,
+        config: SocketClientConfig(
+            autoReconnect: false,
+            inactivityTimeout: const Duration(minutes: 3),
+            initialPayload: {
+              "headers": {"Authorization": 'Bearer $accessToken'}
+            }));
     _link = _authLink.split(
         (request) => request.isSubscription, _wsLink, _httpLink);
     _client = GraphQLClient(
@@ -87,15 +94,11 @@ class GraphqlClientService {
 
   Future<QueryResult> sendWithReauthenticate(Future? Function() fx) async {
     final event = await fx();
-    print("sent first request");
     if (event.hasException) {
       final unauthorized = _checkIsUnauthorized(event);
-      print("exception. unauthorized: $unauthorized");
       if (unauthorized) {
         final accessToken = await authenticationService.requestNewAccessToken();
-        print("requested new access token");
         if (accessToken != null) {
-          print("resubmitting request");
           return await fx();
         } else {
           return event;

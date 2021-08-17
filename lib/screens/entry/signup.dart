@@ -53,8 +53,7 @@ class _SignupScreenState extends State<StatefulWidget> {
                           children: [
                             SizedBox(height: 50),
                             Center(
-                              child: Image.network(
-                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
+                              child: Image.asset('assets/text_logo.png',
                                   height: 100),
                             ),
                             SizedBox(height: 40),
@@ -117,7 +116,7 @@ class _SignupScreenState extends State<StatefulWidget> {
                                 TextButton(
                                   child: Text(
                                     'Sign in.',
-                                    style: TextStyle(color: Colors.red[300]),
+                                    style: TextStyle(color: Color(0xffe85c3f)),
                                   ),
                                   onPressed: () => Navigator.pushReplacement(
                                       context,

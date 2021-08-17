@@ -150,6 +150,110 @@ class EventInput extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CreateInterest$Mutation$InterestApiResponse$Interest
+    extends JsonSerializable with EquatableMixin {
+  CreateInterest$Mutation$InterestApiResponse$Interest();
+
+  factory CreateInterest$Mutation$InterestApiResponse$Interest.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateInterest$Mutation$InterestApiResponse$InterestFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateInterest$Mutation$InterestApiResponse$InterestToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateInterest$Mutation$InterestApiResponse$FieldError
+    extends JsonSerializable with EquatableMixin {
+  CreateInterest$Mutation$InterestApiResponse$FieldError();
+
+  factory CreateInterest$Mutation$InterestApiResponse$FieldError.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateInterest$Mutation$InterestApiResponse$FieldErrorFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateInterest$Mutation$InterestApiResponse$FieldErrorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateInterest$Mutation$InterestApiResponse extends JsonSerializable
+    with EquatableMixin {
+  CreateInterest$Mutation$InterestApiResponse();
+
+  factory CreateInterest$Mutation$InterestApiResponse.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateInterest$Mutation$InterestApiResponseFromJson(json);
+
+  bool? ok;
+
+  CreateInterest$Mutation$InterestApiResponse$Interest? nodes;
+
+  List<CreateInterest$Mutation$InterestApiResponse$FieldError>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateInterest$Mutation$InterestApiResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateInterest$Mutation extends JsonSerializable with EquatableMixin {
+  CreateInterest$Mutation();
+
+  factory CreateInterest$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CreateInterest$MutationFromJson(json);
+
+  late CreateInterest$Mutation$InterestApiResponse createInterest;
+
+  @override
+  List<Object?> get props => [createInterest];
+  @override
+  Map<String, dynamic> toJson() => _$CreateInterest$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class InterestInput extends JsonSerializable with EquatableMixin {
+  InterestInput(
+      {required this.description,
+      this.id,
+      required this.peopleInterestedIds,
+      required this.relatedEventsIds,
+      required this.title});
+
+  factory InterestInput.fromJson(Map<String, dynamic> json) =>
+      _$InterestInputFromJson(json);
+
+  late String description;
+
+  int? id;
+
+  late List<int> peopleInterestedIds;
+
+  late List<int> relatedEventsIds;
+
+  late String title;
+
+  @override
+  List<Object?> get props =>
+      [description, id, peopleInterestedIds, relatedEventsIds, title];
+  @override
+  Map<String, dynamic> toJson() => _$InterestInputToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class ForgotPassword$Mutation$BoolApiResponse$FieldError
     extends JsonSerializable with EquatableMixin {
   ForgotPassword$Mutation$BoolApiResponse$FieldError();
@@ -546,6 +650,108 @@ class CreateEventMutation
   @override
   CreateEvent$Mutation parse(Map<String, dynamic> json) =>
       CreateEvent$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateInterestArguments extends JsonSerializable with EquatableMixin {
+  CreateInterestArguments({this.interestInput});
+
+  @override
+  factory CreateInterestArguments.fromJson(Map<String, dynamic> json) =>
+      _$CreateInterestArgumentsFromJson(json);
+
+  final InterestInput? interestInput;
+
+  @override
+  List<Object?> get props => [interestInput];
+  @override
+  Map<String, dynamic> toJson() => _$CreateInterestArgumentsToJson(this);
+}
+
+final CREATE_INTEREST_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'createInterest'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'interestInput')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'InterestInput'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'createInterest'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'options'),
+                  value: VariableNode(name: NameNode(value: 'interestInput')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class CreateInterestMutation
+    extends GraphQLQuery<CreateInterest$Mutation, CreateInterestArguments> {
+  CreateInterestMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CREATE_INTEREST_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'createInterest';
+
+  @override
+  final CreateInterestArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CreateInterest$Mutation parse(Map<String, dynamic> json) =>
+      CreateInterest$Mutation.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)

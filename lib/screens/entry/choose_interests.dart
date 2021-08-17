@@ -71,10 +71,10 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                 IconButton(
                                   padding: EdgeInsets.zero,
                                   icon: Icon(Icons.add_circle,
-                                      color: Colors.red[300], size: 50),
+                                      color: Color(0xffe85c3f), size: 50),
                                   onPressed: () {
                                     setupState.addCustomInterest(
-                                        Interest(name: textController.text));
+                                        Interest(id: 1, name: textController.text));
                                     textController.clear();
                                   },
                                 ),

@@ -3,9 +3,9 @@ import 'package:provider/provider.dart';
 import 'package:whatado/screens/home/all_events.dart';
 import 'package:whatado/screens/home/my_profile.dart';
 import 'package:whatado/state/home_state.dart';
-import 'package:whatado/widgets/home/home_app_bar.dart';
+import 'package:whatado/widgets/home/appbars/home_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
-import 'package:whatado/widgets/home/my_profile_app_bar.dart';
+import 'package:whatado/widgets/home/appbars/my_profile_app_bar.dart';
 
 import 'my_events.dart';
 import 'my_forums.dart';

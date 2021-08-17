@@ -52,7 +52,7 @@ class EventDisplay extends StatelessWidget {
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),
                         backgroundColor:
-                            MaterialStateProperty.all(Colors.red[300])),
+                            MaterialStateProperty.all(Color(0xffe85c3f))),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

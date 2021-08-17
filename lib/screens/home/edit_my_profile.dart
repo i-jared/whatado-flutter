@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
-import 'package:whatado/widgets/home/edit_my_profile_app_bar.dart';
+import 'package:whatado/widgets/home/appbars/edit_my_profile_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/interests/input_interest_bubble.dart';
 
@@ -56,7 +56,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
                 child: TextButton(
                     onPressed: () => null,
                     child: Text('CHANGE PROFILE IMAGE',
-                        style: TextStyle(color: Colors.red[300])))),
+                        style: TextStyle(color: Color(0xffe85c3f))))),
             SizedBox(height: headingSpacing),
             Text('BIO', style: headingStyle),
             SizedBox(height: headingSpacing),
@@ -73,9 +73,9 @@ class _EditMyProfileState extends State<EditMyProfile> {
                   TextButton(
                       onPressed: () => null,
                       child: Row(children: [
-                        Icon(Icons.add, color: Colors.red[300]),
+                        Icon(Icons.add, color: Color(0xffe85c3f)),
                         Text('ADD PHOTOS',
-                            style: TextStyle(color: Colors.red[300]))
+                            style: TextStyle(color: Color(0xffe85c3f)))
                       ])),
               ],
             ),
@@ -128,9 +128,9 @@ class _EditMyProfileState extends State<EditMyProfile> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   icon:
-                      Icon(Icons.add_circle, color: Colors.red[300], size: 50),
+                      Icon(Icons.add_circle, color: Color(0xffe85c3f), size: 50),
                   onPressed: () {
-                    interests.add(Interest(name: textController!.text));
+                    interests.add(Interest(id: 1, name: textController!.text));
                     setState(() => interests = interests);
                     textController!.clear();
                   },

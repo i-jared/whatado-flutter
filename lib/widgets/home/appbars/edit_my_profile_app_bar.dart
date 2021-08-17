@@ -20,7 +20,7 @@ class SavingAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
           child: TextButton(
-              child: Text('SAVE', style: TextStyle(color: Colors.red[300])),
+              child: Text('SAVE', style: TextStyle(color: Color(0xffe85c3f))),
               onPressed: onSave),
         ),
       ],

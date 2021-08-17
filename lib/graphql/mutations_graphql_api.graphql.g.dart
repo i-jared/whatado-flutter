@@ -137,6 +137,96 @@ const _$GenderEnumMap = {
   Gender.artemisUnknown: 'ARTEMIS_UNKNOWN',
 };
 
+CreateInterest$Mutation$InterestApiResponse$Interest
+    _$CreateInterest$Mutation$InterestApiResponse$InterestFromJson(
+        Map<String, dynamic> json) {
+  return CreateInterest$Mutation$InterestApiResponse$Interest()
+    ..id = json['id'] as int;
+}
+
+Map<String, dynamic>
+    _$CreateInterest$Mutation$InterestApiResponse$InterestToJson(
+            CreateInterest$Mutation$InterestApiResponse$Interest instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+        };
+
+CreateInterest$Mutation$InterestApiResponse$FieldError
+    _$CreateInterest$Mutation$InterestApiResponse$FieldErrorFromJson(
+        Map<String, dynamic> json) {
+  return CreateInterest$Mutation$InterestApiResponse$FieldError()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic>
+    _$CreateInterest$Mutation$InterestApiResponse$FieldErrorToJson(
+            CreateInterest$Mutation$InterestApiResponse$FieldError instance) =>
+        <String, dynamic>{
+          'field': instance.field,
+          'message': instance.message,
+        };
+
+CreateInterest$Mutation$InterestApiResponse
+    _$CreateInterest$Mutation$InterestApiResponseFromJson(
+        Map<String, dynamic> json) {
+  return CreateInterest$Mutation$InterestApiResponse()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] == null
+        ? null
+        : CreateInterest$Mutation$InterestApiResponse$Interest.fromJson(
+            json['nodes'] as Map<String, dynamic>)
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) =>
+            CreateInterest$Mutation$InterestApiResponse$FieldError.fromJson(
+                e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$CreateInterest$Mutation$InterestApiResponseToJson(
+        CreateInterest$Mutation$InterestApiResponse instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+CreateInterest$Mutation _$CreateInterest$MutationFromJson(
+    Map<String, dynamic> json) {
+  return CreateInterest$Mutation()
+    ..createInterest = CreateInterest$Mutation$InterestApiResponse.fromJson(
+        json['createInterest'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$CreateInterest$MutationToJson(
+        CreateInterest$Mutation instance) =>
+    <String, dynamic>{
+      'createInterest': instance.createInterest.toJson(),
+    };
+
+InterestInput _$InterestInputFromJson(Map<String, dynamic> json) {
+  return InterestInput(
+    description: json['description'] as String,
+    id: json['id'] as int?,
+    peopleInterestedIds: (json['peopleInterestedIds'] as List<dynamic>)
+        .map((e) => e as int)
+        .toList(),
+    relatedEventsIds: (json['relatedEventsIds'] as List<dynamic>)
+        .map((e) => e as int)
+        .toList(),
+    title: json['title'] as String,
+  );
+}
+
+Map<String, dynamic> _$InterestInputToJson(InterestInput instance) =>
+    <String, dynamic>{
+      'description': instance.description,
+      'id': instance.id,
+      'peopleInterestedIds': instance.peopleInterestedIds,
+      'relatedEventsIds': instance.relatedEventsIds,
+      'title': instance.title,
+    };
+
 ForgotPassword$Mutation$BoolApiResponse$FieldError
     _$ForgotPassword$Mutation$BoolApiResponse$FieldErrorFromJson(
         Map<String, dynamic> json) {
@@ -382,6 +472,21 @@ Map<String, dynamic> _$CreateEventArgumentsToJson(
         CreateEventArguments instance) =>
     <String, dynamic>{
       'eventInput': instance.eventInput?.toJson(),
+    };
+
+CreateInterestArguments _$CreateInterestArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return CreateInterestArguments(
+    interestInput: json['interestInput'] == null
+        ? null
+        : InterestInput.fromJson(json['interestInput'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$CreateInterestArgumentsToJson(
+        CreateInterestArguments instance) =>
+    <String, dynamic>{
+      'interestInput': instance.interestInput?.toJson(),
     };
 
 ForgotPasswordArguments _$ForgotPasswordArgumentsFromJson(

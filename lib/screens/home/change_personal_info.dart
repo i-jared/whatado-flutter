@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
-import 'package:whatado/widgets/home/edit_my_profile_app_bar.dart';
+import 'package:whatado/widgets/home/appbars/edit_my_profile_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 
 class ChangePersonalInfo extends StatefulWidget {
@@ -31,7 +31,7 @@ class _ChangePersonalInfoState extends State<ChangePersonalInfo> {
           'https://i.guim.co.uk/img/media/7f461faef1a1f1601fca37eb6e865e248ca7f791/50_0_1133_680/master/1133.jpg?width=445&quality=45&auto=format&fit=max&dpr=2&s=75e943e1cc536746aa58839c49175512',
       name: 'Jared Lambert',
       interests: ['Cooking', 'Games', 'Health', 'Traveling', 'Photography']
-          .map((name) => Interest(name: name))
+          .map((name) => Interest(id: 1, name: name))
           .toList(),
       bio: lorem(words: 20, paragraphs: 1),
       photoUrls: [

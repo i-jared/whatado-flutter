@@ -26,7 +26,7 @@ class SetupState extends ChangeNotifier {
       'Games',
       'Fashion',
       'Health'
-    ].map((val) => Interest(name: val)).toList());
+    ].map((val) => Interest(id: 1, name: val)).toList());
   }
 
   void addInterest(Interest interest) {

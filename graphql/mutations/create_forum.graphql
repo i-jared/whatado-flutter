@@ -1,0 +1,12 @@
+mutation createForum($forumInput: ForumInput) {
+  createForum(options: $forumInput) {
+    ok
+    nodes {
+      id
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

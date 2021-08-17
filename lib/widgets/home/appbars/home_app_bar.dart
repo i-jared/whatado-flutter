@@ -17,16 +17,13 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     final switcherHeight = 42.0;
     final switcherMargin = (preferredSize.height - switcherHeight) / 2;
-
     return AppBar(
       leadingWidth: 150,
       backgroundColor: Colors.grey[50],
       elevation: 1.0,
       leading: Padding(
         padding: EdgeInsets.only(left: 10),
-        child: Image.network(
-          "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
-        ),
+        child: Image.asset("assets/text_logo.png"),
       ),
       actions: [
         Container(
@@ -50,7 +47,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
                     height: switcherHeight,
                     decoration: BoxDecoration(
                       boxShadow: kElevationToShadow[2],
-                      color: Colors.red[300],
+                      color: Color(0xffe85c3f),
                       borderRadius: BorderRadius.circular(100),
                     ),
                   ),
