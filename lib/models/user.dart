@@ -18,8 +18,7 @@ class User {
     this.interests = const [],
   });
 
-  static User? fromGqlData(Map? data) {
-    if (data == null || data.isEmpty) return null;
+  factory User.fromGqlData(Map data) {
     return User(
       id: data['id'],
       email: data['email'] ?? '',

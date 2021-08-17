@@ -8,10 +8,10 @@ import 'package:whatado/services/startup.dart';
 import 'package:flutter/services.dart';
 
 Future<void> run(String flavor) async {
-  await Firebase.initializeApp();
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-
+  
+  await Firebase.initializeApp();
   await Hive.initFlutter('whatado');
   await Hive.openBox('whatado');
   Startup.initDependencies();

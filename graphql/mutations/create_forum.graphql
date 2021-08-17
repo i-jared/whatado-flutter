@@ -1,5 +1,5 @@
-mutation createForum($forumInput: ForumInput) {
-  createForum(options: $forumInput) {
+mutation createForum($eventId: Int) {
+  createForum(eventId: $eventId) {
     ok
     nodes {
       id

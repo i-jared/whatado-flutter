@@ -193,6 +193,7 @@ type Mutation {
   changeUsername(username: String!): BoolApiResponse!
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
+  createForum(eventId: Int!): ForumApiResponse!
   createInterest(options: InterestInput!): InterestApiResponse!
   deleteChat(id: Float!): BoolApiResponse!
   deleteEvent(id: Float!): BoolApiResponse!
