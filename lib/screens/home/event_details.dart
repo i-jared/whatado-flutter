@@ -27,7 +27,7 @@ class _EventDetailsState extends State<EventDetails> {
     final sectionSpacing = 35.0;
     final circleSpacing = 10.0;
     final dateFormat = DateFormat('dd MMMM, yyyy HH:mm');
-    final circleRadius = MediaQuery.of(context).size.width - padding*2 - circleSpacing*2;
+    final circleRadius = (MediaQuery.of(context).size.width - padding*2.0 - circleSpacing*2.0)/6.0;
     final urls = [
       widget.event.creator.imageUrl,
       widget.event.creator.imageUrl,
@@ -80,20 +80,20 @@ class _EventDetailsState extends State<EventDetails> {
                   ? [
                       ...urls
                           .map((url) => CircleAvatar(
-                              radius: 50, backgroundImage: NetworkImage(url)))
+                              radius: circleRadius, backgroundImage: NetworkImage(url)))
                           .toList()
                           .take(5),
                       InkWell(
                           onTap: () => setState(() => expanded = !expanded),
                           child: CircleAvatar(
-                            radius: 50,
+                            radius: circleRadius,
                             child: Text('+${urls.length - 5}', style: TextStyle(fontSize: 28)),
                             backgroundColor: Colors.grey[200],
                           ))
                     ]
                   : urls
                       .map((url) => CircleAvatar(
-                          radius: 50, backgroundImage: NetworkImage(url)))
+                          radius: circleRadius, backgroundImage: NetworkImage(url)))
                       .toList(),
             )
           ]),

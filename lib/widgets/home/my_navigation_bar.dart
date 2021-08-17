@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatado/widgets/home/subscription_test.dart';
+import 'package:whatado/screens/home/add_event.dart';
 
 class MyNavigationBar extends StatelessWidget {
   final Function indexSetState;
@@ -29,7 +29,7 @@ class MyNavigationBar extends StatelessWidget {
             IconButton(
               padding: EdgeInsets.zero,
               onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => SubscriptionTest())),
+                  MaterialPageRoute(builder: (context) => AddEvent())),
               icon: Icon(Icons.add_circle, size: 50, color: Color(0xffe85c3f)),
             ),
             IconButton(
