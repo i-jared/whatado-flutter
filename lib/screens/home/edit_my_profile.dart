@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
-import 'package:whatado/widgets/home/appbars/edit_my_profile_app_bar.dart';
+import 'package:whatado/widgets/appbars/edit_my_profile_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/interests/input_interest_bubble.dart';
 

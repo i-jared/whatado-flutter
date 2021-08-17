@@ -2,6 +2,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/screens/home/event_details.dart';
 
 class EventDisplay extends StatelessWidget {
   final Event event;
@@ -47,7 +48,10 @@ class EventDisplay extends StatelessWidget {
                       style: TextStyle(fontSize: 16, color: Colors.grey)),
                 ]),
                 ElevatedButton(
-                    onPressed: () => null,
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EventDetails(event: event))),
                     style: ButtonStyle(
                         shape: MaterialStateProperty.all(RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50))),

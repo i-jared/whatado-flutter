@@ -22,9 +22,9 @@ class MyProfile extends StatelessWidget {
   ///             FAKE DATA          ////
   ///                                ////
   final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+  final headingSpacing = 10.0;
   final padding = 30.0;
   final imageSpacing = 10.0;
-  final headingSpacing = 10.0;
   final sectionSpacing = 30.0;
   @override
   Widget build(BuildContext context) {

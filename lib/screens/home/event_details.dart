@@ -1,0 +1,102 @@
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:whatado/models/event.dart';
+import 'package:whatado/widgets/appbars/default_app_bar.dart';
+
+class EventDetails extends StatefulWidget {
+  final Event event;
+  EventDetails({required this.event});
+
+  @override
+  State<StatefulWidget> createState() => _EventDetailsState();
+}
+
+class _EventDetailsState extends State<EventDetails> {
+  late bool expanded;
+  @override
+  void initState() {
+    super.initState();
+    expanded = false;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+    final headingSpacing = 10.0;
+    final padding = 30.0;
+    final sectionSpacing = 35.0;
+    final circleSpacing = 10.0;
+    final dateFormat = DateFormat('dd MMMM, yyyy HH:mm');
+    final circleRadius = MediaQuery.of(context).size.width - padding*2 - circleSpacing*2;
+    final urls = [
+      widget.event.creator.imageUrl,
+      widget.event.creator.imageUrl,
+      widget.event.creator.imageUrl,
+      widget.event.creator.imageUrl,
+      widget.event.creator.imageUrl,
+      widget.event.creator.imageUrl,
+      widget.event.creator.imageUrl,
+      widget.event.creator.imageUrl,
+    ];
+    return Scaffold(
+        appBar: DefaultAppBar(title: widget.event.title),
+        body: SingleChildScrollView(
+            child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            SizedBox(height: sectionSpacing),
+            Text('DESCRIPTION', style: headingStyle),
+            SizedBox(height: headingSpacing),
+            Text(widget.event.description),
+            SizedBox(height: sectionSpacing),
+            Text('LOCATION', style: headingStyle),
+            SizedBox(height: headingSpacing),
+            Text(widget.event.location),
+            SizedBox(height: sectionSpacing),
+            Text('TIME', style: headingStyle),
+            SizedBox(height: headingSpacing),
+            Text(dateFormat.format(widget.event.time)),
+            SizedBox(height: sectionSpacing),
+            Text('ORGANIZER', style: headingStyle),
+            SizedBox(height: headingSpacing),
+            Row(
+              children: [
+                CircleAvatar(
+                  radius: 20,
+                  backgroundImage: NetworkImage(widget.event.creator.imageUrl),
+                ),
+                SizedBox(width: 20),
+                Text(widget.event.creator.name)
+              ],
+            ),
+            SizedBox(height: sectionSpacing),
+            Text('ATTENDEES', style: headingStyle),
+            SizedBox(height: headingSpacing),
+            Wrap(
+              spacing: circleSpacing,
+              runSpacing: circleSpacing,
+              children: !expanded && urls.length > 5
+                  ? [
+                      ...urls
+                          .map((url) => CircleAvatar(
+                              radius: 50, backgroundImage: NetworkImage(url)))
+                          .toList()
+                          .take(5),
+                      InkWell(
+                          onTap: () => setState(() => expanded = !expanded),
+                          child: CircleAvatar(
+                            radius: 50,
+                            child: Text('+${urls.length - 5}', style: TextStyle(fontSize: 28)),
+                            backgroundColor: Colors.grey[200],
+                          ))
+                    ]
+                  : urls
+                      .map((url) => CircleAvatar(
+                          radius: 50, backgroundImage: NetworkImage(url)))
+                      .toList(),
+            )
+          ]),
+        )));
+  }
+}

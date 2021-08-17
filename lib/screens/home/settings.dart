@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatado/screens/home/change_password.dart';
 import 'package:whatado/screens/home/change_personal_info.dart';
-import 'package:whatado/widgets/home/appbars/default_app_bar.dart';
+import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/settings/settings_item.dart';
 
 class Settings extends StatelessWidget {
