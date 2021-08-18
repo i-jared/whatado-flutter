@@ -137,6 +137,67 @@ const _$GenderEnumMap = {
   Gender.artemisUnknown: 'ARTEMIS_UNKNOWN',
 };
 
+CreateForum$Mutation$ForumApiResponse$Forum
+    _$CreateForum$Mutation$ForumApiResponse$ForumFromJson(
+        Map<String, dynamic> json) {
+  return CreateForum$Mutation$ForumApiResponse$Forum()..id = json['id'] as int;
+}
+
+Map<String, dynamic> _$CreateForum$Mutation$ForumApiResponse$ForumToJson(
+        CreateForum$Mutation$ForumApiResponse$Forum instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+CreateForum$Mutation$ForumApiResponse$FieldError
+    _$CreateForum$Mutation$ForumApiResponse$FieldErrorFromJson(
+        Map<String, dynamic> json) {
+  return CreateForum$Mutation$ForumApiResponse$FieldError()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$CreateForum$Mutation$ForumApiResponse$FieldErrorToJson(
+        CreateForum$Mutation$ForumApiResponse$FieldError instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+CreateForum$Mutation$ForumApiResponse
+    _$CreateForum$Mutation$ForumApiResponseFromJson(Map<String, dynamic> json) {
+  return CreateForum$Mutation$ForumApiResponse()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] == null
+        ? null
+        : CreateForum$Mutation$ForumApiResponse$Forum.fromJson(
+            json['nodes'] as Map<String, dynamic>)
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => CreateForum$Mutation$ForumApiResponse$FieldError.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$CreateForum$Mutation$ForumApiResponseToJson(
+        CreateForum$Mutation$ForumApiResponse instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+CreateForum$Mutation _$CreateForum$MutationFromJson(Map<String, dynamic> json) {
+  return CreateForum$Mutation()
+    ..createForum = CreateForum$Mutation$ForumApiResponse.fromJson(
+        json['createForum'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$CreateForum$MutationToJson(
+        CreateForum$Mutation instance) =>
+    <String, dynamic>{
+      'createForum': instance.createForum.toJson(),
+    };
+
 CreateInterest$Mutation$InterestApiResponse$Interest
     _$CreateInterest$Mutation$InterestApiResponse$InterestFromJson(
         Map<String, dynamic> json) {
@@ -460,67 +521,6 @@ Map<String, dynamic> _$Register$MutationToJson(Register$Mutation instance) =>
       'register': instance.register.toJson(),
     };
 
-CreateForum$Mutation$ForumApiResponse$Forum
-    _$CreateForum$Mutation$ForumApiResponse$ForumFromJson(
-        Map<String, dynamic> json) {
-  return CreateForum$Mutation$ForumApiResponse$Forum()..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$CreateForum$Mutation$ForumApiResponse$ForumToJson(
-        CreateForum$Mutation$ForumApiResponse$Forum instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-CreateForum$Mutation$ForumApiResponse$FieldError
-    _$CreateForum$Mutation$ForumApiResponse$FieldErrorFromJson(
-        Map<String, dynamic> json) {
-  return CreateForum$Mutation$ForumApiResponse$FieldError()
-    ..field = json['field'] as String?
-    ..message = json['message'] as String;
-}
-
-Map<String, dynamic> _$CreateForum$Mutation$ForumApiResponse$FieldErrorToJson(
-        CreateForum$Mutation$ForumApiResponse$FieldError instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-CreateForum$Mutation$ForumApiResponse
-    _$CreateForum$Mutation$ForumApiResponseFromJson(Map<String, dynamic> json) {
-  return CreateForum$Mutation$ForumApiResponse()
-    ..ok = json['ok'] as bool?
-    ..nodes = json['nodes'] == null
-        ? null
-        : CreateForum$Mutation$ForumApiResponse$Forum.fromJson(
-            json['nodes'] as Map<String, dynamic>)
-    ..errors = (json['errors'] as List<dynamic>?)
-        ?.map((e) => CreateForum$Mutation$ForumApiResponse$FieldError.fromJson(
-            e as Map<String, dynamic>))
-        .toList();
-}
-
-Map<String, dynamic> _$CreateForum$Mutation$ForumApiResponseToJson(
-        CreateForum$Mutation$ForumApiResponse instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.toJson(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-CreateForum$Mutation _$CreateForum$MutationFromJson(Map<String, dynamic> json) {
-  return CreateForum$Mutation()
-    ..createForum = CreateForum$Mutation$ForumApiResponse.fromJson(
-        json['createForum'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$CreateForum$MutationToJson(
-        CreateForum$Mutation instance) =>
-    <String, dynamic>{
-      'createForum': instance.createForum.toJson(),
-    };
-
 CreateEventArguments _$CreateEventArgumentsFromJson(Map<String, dynamic> json) {
   return CreateEventArguments(
     eventInput: json['eventInput'] == null
@@ -533,6 +533,18 @@ Map<String, dynamic> _$CreateEventArgumentsToJson(
         CreateEventArguments instance) =>
     <String, dynamic>{
       'eventInput': instance.eventInput?.toJson(),
+    };
+
+CreateForumArguments _$CreateForumArgumentsFromJson(Map<String, dynamic> json) {
+  return CreateForumArguments(
+    eventId: json['eventId'] as int?,
+  );
+}
+
+Map<String, dynamic> _$CreateForumArgumentsToJson(
+        CreateForumArguments instance) =>
+    <String, dynamic>{
+      'eventId': instance.eventId,
     };
 
 CreateInterestArguments _$CreateInterestArgumentsFromJson(
@@ -594,16 +606,4 @@ RegisterArguments _$RegisterArgumentsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$RegisterArgumentsToJson(RegisterArguments instance) =>
     <String, dynamic>{
       'userInput': instance.userInput.toJson(),
-    };
-
-CreateForumArguments _$CreateForumArgumentsFromJson(Map<String, dynamic> json) {
-  return CreateForumArguments(
-    eventId: json['eventId'] as int?,
-  );
-}
-
-Map<String, dynamic> _$CreateForumArgumentsToJson(
-        CreateForumArguments instance) =>
-    <String, dynamic>{
-      'eventId': instance.eventId,
     };

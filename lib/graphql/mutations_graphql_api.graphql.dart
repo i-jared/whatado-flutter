@@ -150,6 +150,81 @@ class EventInput extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CreateForum$Mutation$ForumApiResponse$Forum extends JsonSerializable
+    with EquatableMixin {
+  CreateForum$Mutation$ForumApiResponse$Forum();
+
+  factory CreateForum$Mutation$ForumApiResponse$Forum.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateForum$Mutation$ForumApiResponse$ForumFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateForum$Mutation$ForumApiResponse$ForumToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateForum$Mutation$ForumApiResponse$FieldError extends JsonSerializable
+    with EquatableMixin {
+  CreateForum$Mutation$ForumApiResponse$FieldError();
+
+  factory CreateForum$Mutation$ForumApiResponse$FieldError.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateForum$Mutation$ForumApiResponse$FieldErrorFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateForum$Mutation$ForumApiResponse$FieldErrorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateForum$Mutation$ForumApiResponse extends JsonSerializable
+    with EquatableMixin {
+  CreateForum$Mutation$ForumApiResponse();
+
+  factory CreateForum$Mutation$ForumApiResponse.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateForum$Mutation$ForumApiResponseFromJson(json);
+
+  bool? ok;
+
+  CreateForum$Mutation$ForumApiResponse$Forum? nodes;
+
+  List<CreateForum$Mutation$ForumApiResponse$FieldError>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateForum$Mutation$ForumApiResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateForum$Mutation extends JsonSerializable with EquatableMixin {
+  CreateForum$Mutation();
+
+  factory CreateForum$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CreateForum$MutationFromJson(json);
+
+  late CreateForum$Mutation$ForumApiResponse createForum;
+
+  @override
+  List<Object?> get props => [createForum];
+  @override
+  Map<String, dynamic> toJson() => _$CreateForum$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class CreateInterest$Mutation$InterestApiResponse$Interest
     extends JsonSerializable with EquatableMixin {
   CreateInterest$Mutation$InterestApiResponse$Interest();
@@ -539,81 +614,6 @@ class Register$Mutation extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$Register$MutationToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation$ForumApiResponse$Forum extends JsonSerializable
-    with EquatableMixin {
-  CreateForum$Mutation$ForumApiResponse$Forum();
-
-  factory CreateForum$Mutation$ForumApiResponse$Forum.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateForum$Mutation$ForumApiResponse$ForumFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateForum$Mutation$ForumApiResponse$ForumToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation$ForumApiResponse$FieldError extends JsonSerializable
-    with EquatableMixin {
-  CreateForum$Mutation$ForumApiResponse$FieldError();
-
-  factory CreateForum$Mutation$ForumApiResponse$FieldError.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateForum$Mutation$ForumApiResponse$FieldErrorFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateForum$Mutation$ForumApiResponse$FieldErrorToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation$ForumApiResponse extends JsonSerializable
-    with EquatableMixin {
-  CreateForum$Mutation$ForumApiResponse();
-
-  factory CreateForum$Mutation$ForumApiResponse.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateForum$Mutation$ForumApiResponseFromJson(json);
-
-  bool? ok;
-
-  CreateForum$Mutation$ForumApiResponse$Forum? nodes;
-
-  List<CreateForum$Mutation$ForumApiResponse$FieldError>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateForum$Mutation$ForumApiResponseToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation extends JsonSerializable with EquatableMixin {
-  CreateForum$Mutation();
-
-  factory CreateForum$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$CreateForum$MutationFromJson(json);
-
-  late CreateForum$Mutation$ForumApiResponse createForum;
-
-  @override
-  List<Object?> get props => [createForum];
-  @override
-  Map<String, dynamic> toJson() => _$CreateForum$MutationToJson(this);
-}
-
 enum Gender {
   @JsonValue('BOTH')
   both,
@@ -725,6 +725,107 @@ class CreateEventMutation
   @override
   CreateEvent$Mutation parse(Map<String, dynamic> json) =>
       CreateEvent$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateForumArguments extends JsonSerializable with EquatableMixin {
+  CreateForumArguments({this.eventId});
+
+  @override
+  factory CreateForumArguments.fromJson(Map<String, dynamic> json) =>
+      _$CreateForumArgumentsFromJson(json);
+
+  final int? eventId;
+
+  @override
+  List<Object?> get props => [eventId];
+  @override
+  Map<String, dynamic> toJson() => _$CreateForumArgumentsToJson(this);
+}
+
+final CREATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'createForum'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'createForum'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'eventId'),
+                  value: VariableNode(name: NameNode(value: 'eventId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class CreateForumMutation
+    extends GraphQLQuery<CreateForum$Mutation, CreateForumArguments> {
+  CreateForumMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CREATE_FORUM_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'createForum';
+
+  @override
+  final CreateForumArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CreateForum$Mutation parse(Map<String, dynamic> json) =>
+      CreateForum$Mutation.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1219,105 +1320,4 @@ class RegisterMutation
   @override
   Register$Mutation parse(Map<String, dynamic> json) =>
       Register$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateForumArguments extends JsonSerializable with EquatableMixin {
-  CreateForumArguments({this.eventId});
-
-  @override
-  factory CreateForumArguments.fromJson(Map<String, dynamic> json) =>
-      _$CreateForumArgumentsFromJson(json);
-
-  final int? eventId;
-
-  @override
-  List<Object?> get props => [eventId];
-  @override
-  Map<String, dynamic> toJson() => _$CreateForumArgumentsToJson(this);
-}
-
-final CREATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'createForum'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'eventId')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'createForum'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'eventId'),
-                  value: VariableNode(name: NameNode(value: 'eventId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ])),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class CreateForumMutation
-    extends GraphQLQuery<CreateForum$Mutation, CreateForumArguments> {
-  CreateForumMutation({required this.variables});
-
-  @override
-  final DocumentNode document = CREATE_FORUM_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'createForum';
-
-  @override
-  final CreateForumArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  CreateForum$Mutation parse(Map<String, dynamic> json) =>
-      CreateForum$Mutation.fromJson(json);
 }

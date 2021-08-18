@@ -1,4 +1,4 @@
-package com.example.whatado
+package io.whatado
 
 import io.flutter.embedding.android.FlutterActivity
 
