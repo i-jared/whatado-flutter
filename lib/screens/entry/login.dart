@@ -112,8 +112,10 @@ class _LoginScreenState extends State<StatefulWidget> {
       if (res.ok) {
         authenticationService.updateTokens(
             res.accessToken ?? '', res.refreshToken ?? '');
-        Navigator.push(
-            context, MaterialPageRoute(builder: (ctx) => HomeScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (ctx) => HomeScreen()),
+            (route) => false);
       } else {
         setState(() {
           emailError = res.errors?.firstWhere(

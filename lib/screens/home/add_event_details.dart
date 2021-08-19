@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/widgets/appbars/add_event_details_app_bar.dart';
 
 class AddEventDetails extends StatefulWidget {
   @override
@@ -8,6 +9,6 @@ class AddEventDetails extends StatefulWidget {
 class _AddEventDetailsState extends State<AddEventDetails> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(appBar: AddEventDetailsAppBar(), body: Container());
   }
 }

@@ -22,7 +22,8 @@ class LoginGqlQuery {
     }
 
     final root = result.data?['login'];
-    final data = User.fromGqlData(root?['nodes']);
+    final data =
+        root?['nodes'] != null ? User.fromGqlData(root?['nodes']) : null;
     final accessToken = root?['jwt']?['accessToken'];
     final refreshToken = root?['jwt']?['refreshToken'];
     final ok = root?['ok'] ?? false;

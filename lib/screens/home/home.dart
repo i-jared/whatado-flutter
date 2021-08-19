@@ -20,24 +20,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<HomeState>(
-        create: (_) => HomeState(),
-        builder: (context, _) {
-          final homeState = Provider.of<HomeState>(context);
-          return Scaffold(
-              appBar: getAppBar(homeState.bottomBarPageNo),
-              body: homeState.bottomBarPageNo == 0
-                  ? PageView(
-                      onPageChanged: (pageNo) =>
-                          homeState.appBarPageNo = pageNo,
-                      controller: homeState.homePageController,
-                      children: [AllEvents(), MyEvents(), MyForums()],
-                    )
-                  : MyProfile(),
-              bottomNavigationBar: MyNavigationBar(
-                indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
-                selectedIndex: homeState.bottomBarPageNo,
-              ));
-        });
+    final homeState = Provider.of<HomeState>(context);
+    return Scaffold(
+        appBar: getAppBar(homeState.bottomBarPageNo),
+        body: homeState.bottomBarPageNo == 0
+            ? PageView(
+                onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
+                controller: homeState.homePageController,
+                children: [AllEvents(), MyEvents(), MyForums()],
+              )
+            : MyProfile(),
+        bottomNavigationBar: MyNavigationBar(
+          indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
+          selectedIndex: homeState.bottomBarPageNo,
+        ));
   }
 }
