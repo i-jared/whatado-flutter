@@ -5,11 +5,13 @@ class MyTextField extends StatelessWidget {
   final String? errorText;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final int maxLines;
   MyTextField({
     required this.hintText,
     this.controller,
     this.errorText,
     this.validator,
+    this.maxLines = 1
   });
 
   @override
@@ -17,6 +19,7 @@ class MyTextField extends StatelessWidget {
     return TextFormField(
       validator: validator,
       controller: controller,
+      maxLines: maxLines,
       decoration: InputDecoration(
         errorText: errorText,
         isDense: true,

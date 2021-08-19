@@ -86,6 +86,7 @@ class _AddEventState extends State<AddEvent> {
                           builder: (context, snapshot) {
                             if (snapshot.data == null) return Container();
                             final bytes = snapshot.data as Uint8List;
+
                             return FadeIn(
                                 key: ValueKey(snapshot.data),
                                 duration: Duration(milliseconds: 200),
@@ -100,7 +101,7 @@ class _AddEventState extends State<AddEvent> {
               flex: 1,
               fit: FlexFit.tight,
               child: Container(
-                  color: Colors.white,
+                  color: Colors.grey[50],
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: Row(
@@ -127,15 +128,15 @@ class _AddEventState extends State<AddEvent> {
                   : loading
                       ? Center(child: CircularProgressIndicator())
                       : Container(
-                          color: Colors.white,
+                          color: Colors.grey[50],
                           child: GridView.count(
                               crossAxisSpacing: 1.0,
                               mainAxisSpacing: 1.0,
                               crossAxisCount: 4,
                               children: loadedAssets
                                   .map((assetMap) => InkWell(
-                                      onTap: () => setState(() =>
-                                          addEventState.selectedImage = assetMap['asset']),
+                                      onTap: () => setState(() => addEventState
+                                          .selectedImage = assetMap['asset']),
                                       child: Stack(
                                         fit: StackFit.expand,
                                         children: [
