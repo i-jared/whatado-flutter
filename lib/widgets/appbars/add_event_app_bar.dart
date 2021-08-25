@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/screens/add_event/add_event_details.dart';
+import 'package:whatado/state/add_event_state.dart';
 
 class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -7,6 +9,9 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final eventState = Provider.of<AddEventState>(context);
+    bool ready = !eventState.textMode ||
+        (eventState.textMode && eventState.textModeController.text.isNotEmpty);
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
       backgroundColor: Colors.grey[50],
@@ -18,9 +23,15 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
           child: TextButton(
-              child: Text('NEXT', style: TextStyle(color: Color(0xffe85c3f))),
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddEventDetails()))),
+              child: Text('NEXT',
+                  style: TextStyle(
+                      color: !ready ? Colors.grey : Color(0xffe85c3f))),
+              onPressed: !ready
+                  ? null
+                  : () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddEventDetails()))),
         ),
       ],
       centerTitle: true,

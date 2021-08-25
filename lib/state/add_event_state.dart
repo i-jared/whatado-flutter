@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:image/image.dart';
+import 'package:whatado/models/interest.dart';
 
 class AddEventState extends ChangeNotifier {
   PhotoViewController photoController;
@@ -13,14 +14,76 @@ class AddEventState extends ChangeNotifier {
   TextEditingController locationController;
   TextEditingController dateController;
   TextEditingController timeController;
+  TextEditingController textModeController;
+  TextEditingController addInterestController;
   AssetEntity? _selectedImage;
   double _filterAgeStart;
+  double _filterAgeEnd;
   bool _textMode;
+
+  final popularInterests = [
+    Interest(id: 1, name: 'bball'),
+    Interest(id: 2, name: 'ping pong'),
+    Interest(id: 3, name: 'running'),
+    Interest(id: 4, name: 'another'),
+    Interest(id: 5, name: 'interest')
+  ];
+
+  List<Interest> customInterests = [];
+  List<Interest> selectedInterests = [];
+
+  void addInterest(Interest interest) {
+    selectedInterests.add(interest);
+    notifyListeners();
+  }
+
+  void removeInterest(Interest interest) {
+    selectedInterests.remove(interest);
+    notifyListeners();
+  }
+
+  void addCustomInterest(Interest interest) {
+    customInterests.add(interest);
+    notifyListeners();
+  }
+
+  void removeCustomInterest(Interest interest) {
+    customInterests.remove(interest);
+    notifyListeners();
+  }
+  // TODO: add real interest data
+
+  AddEventState()
+      : photoController = PhotoViewController(),
+        titleController = TextEditingController(),
+        descriptionController = TextEditingController(),
+        locationController = TextEditingController(),
+        dateController = TextEditingController(),
+        timeController = TextEditingController(),
+        textModeController = TextEditingController(),
+        addInterestController = TextEditingController(),
+        _filterAgeEnd = 40,
+        _filterAgeStart = 18,
+        _textMode = false {
+    titleController.addListener(() => notifyListeners());
+    descriptionController.addListener(() => notifyListeners());
+    locationController.addListener(() => notifyListeners());
+    dateController.addListener(() => notifyListeners());
+    timeController.addListener(() => notifyListeners());
+    textModeController.addListener(() => notifyListeners());
+  }
 
   bool get textMode => _textMode;
 
   set textMode(bool textMode) {
     _textMode = textMode;
+    notifyListeners();
+  }
+
+  double get filterAgeEnd => _filterAgeEnd;
+
+  set filterAgeEnd(double filterAgeEnd) {
+    _filterAgeEnd = filterAgeEnd;
     notifyListeners();
   }
 
@@ -31,39 +94,12 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
-  double _filterAgeEnd;
-
-  double get filterAgeEnd => _filterAgeEnd;
-
-  set filterAgeEnd(double filterAgeEnd) {
-    _filterAgeEnd = filterAgeEnd;
-    notifyListeners();
-  }
-
   AssetEntity? get selectedImage => _selectedImage;
 
   set selectedImage(AssetEntity? selectedImage) {
     _selectedImage = selectedImage;
     notifyListeners();
   }
-
-  get ready {
-    return timeController.text.isNotEmpty &&
-        dateController.text.isNotEmpty &&
-        locationController.text.isNotEmpty &&
-        (textMode || titleController.text.isNotEmpty);
-  }
-
-  AddEventState()
-      : photoController = PhotoViewController(),
-        titleController = TextEditingController(),
-        descriptionController = TextEditingController(),
-        locationController = TextEditingController(),
-        dateController = TextEditingController(),
-        timeController = TextEditingController(),
-        _filterAgeEnd = 40,
-        _filterAgeStart = 18,
-        _textMode = false;
 
   Future<Uint8List> cropImage(double deviceWidth) async {
     if (_selectedImage == null) return Uint8List.fromList([]);

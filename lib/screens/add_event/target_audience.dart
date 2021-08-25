@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/models/interest.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
+import 'package:whatado/widgets/input/my_text_field.dart';
+import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
+import 'package:whatado/widgets/interests/interest_wrap.dart';
 
 class TargetAudience extends StatefulWidget {
   @override
@@ -69,7 +73,49 @@ class _TargetAudienceState extends State<TargetAudience> {
                     eventState.filterAgeEnd = values.end;
                     eventState.filterAgeStart = values.start;
                   }),
+              SizedBox(height: sectionSpacing),
+              Text('INTERESTS', style: headingStyle),
               SizedBox(height: headingSpacing),
+              InterestWrap(
+                interests: eventState.popularInterests,
+                selectedInterests: eventState.selectedInterests,
+                onSelected: (bool notSelected, Interest interest) {
+                  if (notSelected) {
+                    eventState.addInterest(interest);
+                  } else {
+                    eventState.removeInterest(interest);
+                  }
+                },
+              ),
+              SizedBox(height: headingSpacing),
+              Row(
+                children: [
+                  Expanded(
+                    child: MyTextField(
+                      hintText: 'Add your interest here...',
+                      controller: eventState.addInterestController,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  IconButton(
+                    padding: EdgeInsets.zero,
+                    icon: Icon(Icons.add_circle_outline,
+                        color: Color(0xffe85c3f), size: 35),
+                    onPressed: () {
+                      eventState.addCustomInterest(Interest(
+                          id: 1, name: eventState.addInterestController.text));
+                      eventState.addInterestController.clear();
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 15),
+              InputInterestWrap(
+                customInterests: eventState.customInterests,
+                onDeleted: (Interest interest) =>
+                    eventState.removeCustomInterest(interest),
+              ),
+              SizedBox(height: sectionSpacing),
               SizedBox(height: sectionSpacing),
             ],
           ),

@@ -52,8 +52,16 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                     fontSize: 25, fontWeight: FontWeight.w600)),
                             SizedBox(height: 10),
                             InterestWrap(
-                              interests: setupState.popularInterests,
-                            ),
+                                interests: setupState.popularInterests,
+                                selectedInterests: setupState.selectedInterests,
+                                onSelected:
+                                    (bool notSelected, Interest interest) {
+                                  if (notSelected) {
+                                    setupState.addInterest(interest);
+                                  } else {
+                                    setupState.removeInterest(interest);
+                                  }
+                                }),
                             SizedBox(height: 35),
                             Text('Add interests',
                                 style: TextStyle(
@@ -70,11 +78,11 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                 const SizedBox(width: 10),
                                 IconButton(
                                   padding: EdgeInsets.zero,
-                                  icon: Icon(Icons.add_circle,
-                                      color: Color(0xffe85c3f), size: 50),
+                                  icon: Icon(Icons.add_circle_outline,
+                                      color: Color(0xffe85c3f), size: 35),
                                   onPressed: () {
-                                    setupState.addCustomInterest(
-                                        Interest(id: 1, name: textController.text));
+                                    setupState.addCustomInterest(Interest(
+                                        id: 1, name: textController.text));
                                     textController.clear();
                                   },
                                 ),
@@ -82,7 +90,11 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                             ),
                             const SizedBox(height: 15),
                             InputInterestWrap(
-                                customInterests: setupState.customInterests),
+                              customInterests: setupState.customInterests,
+                              onDeleted: (Interest interest) {
+                                setupState.removeCustomInterest(interest);
+                              },
+                            ),
                             const SizedBox(height: 50),
                             Spacer(),
                             Center(

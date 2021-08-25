@@ -41,13 +41,22 @@ class _AddEventDetailsState extends State<AddEventDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (!eventState.textMode) SizedBox(height: sectionSpacing),
+              if (!eventState.textMode) Text('TITLE', style: headingStyle),
+              if (!eventState.textMode) SizedBox(height: headingSpacing),
+              if (!eventState.textMode)
+                MyTextField(
+                  hintText: 'Add title',
+                  controller: eventState.titleController,
+                  maxLength: 25,
+                ),
               SizedBox(height: sectionSpacing),
               Text('DESCRIPTION', style: headingStyle),
               SizedBox(height: headingSpacing),
               MyTextField(
                 hintText: 'Add description',
                 controller: eventState.descriptionController,
-                maxLines: 4,
+                maxLines: null,
               ),
               SizedBox(height: sectionSpacing),
               Text('GROUP SIZE', style: headingStyle),
@@ -84,14 +93,14 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                   Flexible(
                     child: MyTextField(
                       hintText: 'Date',
-                      controller: eventState.locationController,
+                      controller: eventState.dateController,
                     ),
                   ),
                   SizedBox(width: 20),
                   Flexible(
                     child: MyTextField(
                       hintText: 'Time',
-                      controller: eventState.locationController,
+                      controller: eventState.timeController,
                     ),
                   ),
                 ],
@@ -110,7 +119,8 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                               fontSize: 18, color: Color(0xffe85c3f))),
                       Icon(Icons.arrow_forward_ios, color: Color(0xffe85c3f))
                     ],
-                  ))
+                  )),
+              SizedBox(height: sectionSpacing),
             ],
           ),
         )));
