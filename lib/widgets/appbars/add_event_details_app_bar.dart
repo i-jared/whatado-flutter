@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:whatado/state/add_event_state.dart';
 
 class AddEventDetailsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -7,6 +9,7 @@ class AddEventDetailsAppBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
+    final eventState = Provider.of<AddEventState>(context);
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
       backgroundColor: Colors.grey[50],
@@ -17,8 +20,10 @@ class AddEventDetailsAppBar extends StatelessWidget
             padding: const EdgeInsets.only(right: 15.0),
             child: TextButton(
                 child: Text('SAVE', style: TextStyle(color: Color(0xffe85c3f))),
-                onPressed: () =>
-                    Navigator.popUntil(context, (route) => route.isFirst))),
+                onPressed: !eventState.ready
+                    ? () => null
+                    : () =>
+                        Navigator.popUntil(context, (route) => route.isFirst))),
       ],
       centerTitle: true,
       elevation: 0.0,

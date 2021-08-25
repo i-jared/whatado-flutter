@@ -187,6 +187,161 @@ class HelloQuery$Query extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$HelloQuery$QueryToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class Me$Query$UserApiResponse$User$Interest extends JsonSerializable
+    with EquatableMixin {
+  Me$Query$UserApiResponse$User$Interest();
+
+  factory Me$Query$UserApiResponse$User$Interest.fromJson(
+          Map<String, dynamic> json) =>
+      _$Me$Query$UserApiResponse$User$InterestFromJson(json);
+
+  late int id;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [id, title];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Me$Query$UserApiResponse$User$InterestToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$UserApiResponse$User$Event extends JsonSerializable
+    with EquatableMixin {
+  Me$Query$UserApiResponse$User$Event();
+
+  factory Me$Query$UserApiResponse$User$Event.fromJson(
+          Map<String, dynamic> json) =>
+      _$Me$Query$UserApiResponse$User$EventFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Me$Query$UserApiResponse$User$EventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$UserApiResponse$User$ChatNotification extends JsonSerializable
+    with EquatableMixin {
+  Me$Query$UserApiResponse$User$ChatNotification();
+
+  factory Me$Query$UserApiResponse$User$ChatNotification.fromJson(
+          Map<String, dynamic> json) =>
+      _$Me$Query$UserApiResponse$User$ChatNotificationFromJson(json);
+
+  late int notifications;
+
+  @override
+  List<Object?> get props => [notifications];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Me$Query$UserApiResponse$User$ChatNotificationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$UserApiResponse$User extends JsonSerializable
+    with EquatableMixin {
+  Me$Query$UserApiResponse$User();
+
+  factory Me$Query$UserApiResponse$User.fromJson(Map<String, dynamic> json) =>
+      _$Me$Query$UserApiResponse$UserFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String email;
+
+  late bool verified;
+
+  late String username;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime birthday;
+
+  late List<Me$Query$UserApiResponse$User$Interest> interests;
+
+  late List<Me$Query$UserApiResponse$User$Event> myEvents;
+
+  late List<Me$Query$UserApiResponse$User$ChatNotification> chatNotifications;
+
+  @override
+  List<Object?> get props => [
+        id,
+        profilePhotoUrl,
+        email,
+        verified,
+        username,
+        birthday,
+        interests,
+        myEvents,
+        chatNotifications
+      ];
+  @override
+  Map<String, dynamic> toJson() => _$Me$Query$UserApiResponse$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$UserApiResponse$FieldError extends JsonSerializable
+    with EquatableMixin {
+  Me$Query$UserApiResponse$FieldError();
+
+  factory Me$Query$UserApiResponse$FieldError.fromJson(
+          Map<String, dynamic> json) =>
+      _$Me$Query$UserApiResponse$FieldErrorFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Me$Query$UserApiResponse$FieldErrorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$UserApiResponse extends JsonSerializable with EquatableMixin {
+  Me$Query$UserApiResponse();
+
+  factory Me$Query$UserApiResponse.fromJson(Map<String, dynamic> json) =>
+      _$Me$Query$UserApiResponseFromJson(json);
+
+  bool? ok;
+
+  Me$Query$UserApiResponse$User? nodes;
+
+  List<Me$Query$UserApiResponse$FieldError>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$Me$Query$UserApiResponseToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query extends JsonSerializable with EquatableMixin {
+  Me$Query();
+
+  factory Me$Query.fromJson(Map<String, dynamic> json) =>
+      _$Me$QueryFromJson(json);
+
+  late Me$Query$UserApiResponse me;
+
+  @override
+  List<Object?> get props => [me];
+  @override
+  Map<String, dynamic> toJson() => _$Me$QueryToJson(this);
+}
+
 enum Gender {
   @JsonValue('BOTH')
   both,
@@ -401,4 +556,149 @@ class HelloQueryQuery extends GraphQLQuery<HelloQuery$Query, JsonSerializable> {
   @override
   HelloQuery$Query parse(Map<String, dynamic> json) =>
       HelloQuery$Query.fromJson(json);
+}
+
+final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'me'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'me'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'profilePhotoUrl'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'email'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'verified'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'username'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'birthday'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'interests'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'title'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'myEvents'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'chatNotifications'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'notifications'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ]))
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class MeQuery extends GraphQLQuery<Me$Query, JsonSerializable> {
+  MeQuery();
+
+  @override
+  final DocumentNode document = ME_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'me';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  Me$Query parse(Map<String, dynamic> json) => Me$Query.fromJson(json);
 }

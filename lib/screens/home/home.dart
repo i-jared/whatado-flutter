@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/home/all_events.dart';
-import 'package:whatado/screens/home/my_profile.dart';
+import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/appbars/home_app_bar.dart';
 import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';

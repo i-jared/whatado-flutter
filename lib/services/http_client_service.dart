@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:http/http.dart' as http;
 
 class HttpClientService {
@@ -8,7 +6,10 @@ class HttpClientService {
     client = http.Client();
   }
 
-  Future<http.Response> postAuthenticated(String url, String token) async =>
-      await client.post(Uri.parse(url),
-          headers: {HttpHeaders.authorizationHeader: token});
+  Future<http.Response> postAuthenticated(String url, String token) async {
+    print('post authenticated');
+
+    return await client
+        .post(Uri.parse(url), headers: {'authorization': 'Bearer $token'});
+  }
 }

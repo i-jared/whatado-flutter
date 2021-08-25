@@ -1,0 +1,27 @@
+query me {
+    me {
+        ok
+        nodes {
+            id
+            profilePhotoUrl
+            email
+            verified
+            username
+            birthday
+            interests {
+                id
+                title
+            }
+            myEvents {
+                id
+            }
+            chatNotifications {
+                notifications
+            }
+        }
+        errors {
+            field
+            message
+        }
+    }
+}

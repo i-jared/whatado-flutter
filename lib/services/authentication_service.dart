@@ -15,12 +15,12 @@ class AuthenticationService {
     graphqlClientService.updateAuth(accessToken);
   }
 
-  String? getRefreshToken() => localStorageService.refreshToken;
-  String? getAccessToken() => localStorageService.accessToken;
   Future<String?> requestNewAccessToken() async {
+    print('token not null: ${localStorageService.refreshToken != null}');
     final response = await httpClientService.postAuthenticated(
-        whatadoRefreshUrl, getRefreshToken() ?? '');
+        whatadoRefreshUrl, localStorageService.refreshToken ?? '');
     final responseJson = jsonDecode(response.body);
+    print('response: $responseJson');
     if (responseJson['ok'] == false) {
       return null;
     }

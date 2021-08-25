@@ -78,7 +78,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
     final double width = MediaQuery.of(context).size.width;
     final now = DateTime.now();
     return Container(
-        height: 56,
+        height: 40,
         child: Row(
           children: [
             Container(

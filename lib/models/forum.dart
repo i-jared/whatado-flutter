@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/chat_notification.dart';
 import 'package:whatado/models/event.dart';

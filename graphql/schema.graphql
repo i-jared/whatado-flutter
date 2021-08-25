@@ -217,12 +217,13 @@ type Query {
   hello: String!
   interest(id: Float!): InterestApiResponse!
   interests(options: InterestFilterInput!): InterestsApiResponse!
+  me: UserApiResponse!
   users: UsersApiResponse!
 }
 
 type Subscription {
   helloSubscription: String!
-  me: String!
+  me_sub: String!
 }
 
 type User {

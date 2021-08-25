@@ -170,3 +170,126 @@ Map<String, dynamic> _$HelloQuery$QueryToJson(HelloQuery$Query instance) =>
     <String, dynamic>{
       'hello': instance.hello,
     };
+
+Me$Query$UserApiResponse$User$Interest
+    _$Me$Query$UserApiResponse$User$InterestFromJson(
+        Map<String, dynamic> json) {
+  return Me$Query$UserApiResponse$User$Interest()
+    ..id = json['id'] as int
+    ..title = json['title'] as String;
+}
+
+Map<String, dynamic> _$Me$Query$UserApiResponse$User$InterestToJson(
+        Me$Query$UserApiResponse$User$Interest instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+    };
+
+Me$Query$UserApiResponse$User$Event
+    _$Me$Query$UserApiResponse$User$EventFromJson(Map<String, dynamic> json) {
+  return Me$Query$UserApiResponse$User$Event()..id = json['id'] as int;
+}
+
+Map<String, dynamic> _$Me$Query$UserApiResponse$User$EventToJson(
+        Me$Query$UserApiResponse$User$Event instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+Me$Query$UserApiResponse$User$ChatNotification
+    _$Me$Query$UserApiResponse$User$ChatNotificationFromJson(
+        Map<String, dynamic> json) {
+  return Me$Query$UserApiResponse$User$ChatNotification()
+    ..notifications = json['notifications'] as int;
+}
+
+Map<String, dynamic> _$Me$Query$UserApiResponse$User$ChatNotificationToJson(
+        Me$Query$UserApiResponse$User$ChatNotification instance) =>
+    <String, dynamic>{
+      'notifications': instance.notifications,
+    };
+
+Me$Query$UserApiResponse$User _$Me$Query$UserApiResponse$UserFromJson(
+    Map<String, dynamic> json) {
+  return Me$Query$UserApiResponse$User()
+    ..id = json['id'] as int
+    ..profilePhotoUrl = json['profilePhotoUrl'] as String
+    ..email = json['email'] as String
+    ..verified = json['verified'] as bool
+    ..username = json['username'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String)
+    ..interests = (json['interests'] as List<dynamic>)
+        .map((e) => Me$Query$UserApiResponse$User$Interest.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..myEvents = (json['myEvents'] as List<dynamic>)
+        .map((e) => Me$Query$UserApiResponse$User$Event.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..chatNotifications = (json['chatNotifications'] as List<dynamic>)
+        .map((e) => Me$Query$UserApiResponse$User$ChatNotification.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$Me$Query$UserApiResponse$UserToJson(
+        Me$Query$UserApiResponse$User instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'profilePhotoUrl': instance.profilePhotoUrl,
+      'email': instance.email,
+      'verified': instance.verified,
+      'username': instance.username,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+      'interests': instance.interests.map((e) => e.toJson()).toList(),
+      'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
+      'chatNotifications':
+          instance.chatNotifications.map((e) => e.toJson()).toList(),
+    };
+
+Me$Query$UserApiResponse$FieldError
+    _$Me$Query$UserApiResponse$FieldErrorFromJson(Map<String, dynamic> json) {
+  return Me$Query$UserApiResponse$FieldError()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$Me$Query$UserApiResponse$FieldErrorToJson(
+        Me$Query$UserApiResponse$FieldError instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+Me$Query$UserApiResponse _$Me$Query$UserApiResponseFromJson(
+    Map<String, dynamic> json) {
+  return Me$Query$UserApiResponse()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] == null
+        ? null
+        : Me$Query$UserApiResponse$User.fromJson(
+            json['nodes'] as Map<String, dynamic>)
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => Me$Query$UserApiResponse$FieldError.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$Me$Query$UserApiResponseToJson(
+        Me$Query$UserApiResponse instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+Me$Query _$Me$QueryFromJson(Map<String, dynamic> json) {
+  return Me$Query()
+    ..me =
+        Me$Query$UserApiResponse.fromJson(json['me'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$Me$QueryToJson(Me$Query instance) => <String, dynamic>{
+      'me': instance.me.toJson(),
+    };

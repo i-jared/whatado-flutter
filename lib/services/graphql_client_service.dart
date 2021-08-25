@@ -12,7 +12,7 @@ class GraphqlClientService {
   late Link _link;
 
   GraphqlClientService() {
-    final storedAccessToken = authenticationService.getAccessToken() ?? '';
+    final storedAccessToken = localStorageService.accessToken ?? '';
     _httpLink = HttpLink(whatadoGqlUrl);
     _wsLink = WebSocketLink(whatadoWsUrl,
         config: SocketClientConfig(autoReconnect: true, initialPayload: {

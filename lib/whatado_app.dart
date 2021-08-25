@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/screens/entry/welcome.dart';
+import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/environment_config.dart';
+import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/services/startup.dart';
 import 'package:flutter/services.dart';
 import 'package:whatado/state/add_event_state.dart';
@@ -20,11 +23,26 @@ Future<void> run(String flavor) async {
   Startup.initDependencies();
 
   EnvironmentConfig.initFlavor(flavor);
-
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool loading = true;
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) async {
+      await loginService.attemptAutoLogin();
+      setState(() => loading = false);
+    });
+    SchedulerBinding.instance!.scheduleForcedFrame();
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshConfiguration(
@@ -52,7 +70,15 @@ class MyApp extends StatelessWidget {
               900: Color(0xFF000000),
             },
           )),
-          home: WelcomeScreen(),
+          home: loading
+              ? Container(
+                  color: Colors.grey[50],
+                  child: Center(
+                    child: Image.asset('assets/logo_badge.png'),
+                  ))
+              : loginService.loggedIn
+                  ? HomeScreen()
+                  : WelcomeScreen(),
         ),
       ),
     );

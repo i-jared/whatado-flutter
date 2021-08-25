@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatado/screens/home/add_event_details.dart';
+import 'package:whatado/screens/add_event/add_event_details.dart';
 
 class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override

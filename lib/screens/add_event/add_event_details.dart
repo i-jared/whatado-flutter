@@ -1,10 +1,10 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/screens/add_event/target_audience.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/widgets/appbars/add_event_details_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
+import 'package:whatado/widgets/interests/interest_bubble.dart';
 
 class AddEventDetails extends StatefulWidget {
   @override
@@ -12,6 +12,20 @@ class AddEventDetails extends StatefulWidget {
 }
 
 class _AddEventDetailsState extends State<AddEventDetails> {
+  final sizes = [
+    {'Any': Colors.red},
+    {'Small (2-4)': Colors.orange},
+    {'Med (5-8)': Colors.yellow[600]},
+    {'Big (9-20)': Colors.green},
+    {'Huge (21+)': Colors.blue}
+  ];
+  String? selectedSize;
+  @override
+  void initState() {
+    super.initState();
+    selectedSize = 'Any';
+  }
+
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
@@ -38,7 +52,23 @@ class _AddEventDetailsState extends State<AddEventDetails> {
               SizedBox(height: sectionSpacing),
               Text('GROUP SIZE', style: headingStyle),
               SizedBox(height: headingSpacing),
-              // TODO: something like interest chips to choose group size
+              Wrap(
+                runSpacing: 0.0,
+                spacing: 10.0,
+                children: sizes
+                    .map((size) => InterestBubble(
+                        text: size.keys.first,
+                        selected: selectedSize == size.keys.first,
+                        selectedColor: size.values.first,
+                        onSelected: (notSelected) {
+                          if (notSelected) {
+                            setState(() => selectedSize = size.keys.first);
+                          } else {
+                            setState(() => selectedSize = null);
+                          }
+                        }))
+                    .toList(),
+              ),
               SizedBox(height: sectionSpacing),
               Text('LOCATION', style: headingStyle),
               SizedBox(height: headingSpacing),
@@ -68,7 +98,10 @@ class _AddEventDetailsState extends State<AddEventDetails> {
               ),
               SizedBox(height: sectionSpacing),
               TextButton(
-                  onPressed: () => null,
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TargetAudience())),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -14,7 +14,6 @@ class AddEvent extends StatefulWidget {
 }
 
 class _AddEventState extends State<AddEvent> {
-  bool textMode = false;
   bool loading = true;
   late int page;
   late List<Map<String, dynamic>> loadedAssets;
@@ -28,11 +27,12 @@ class _AddEventState extends State<AddEvent> {
   }
 
   void initPhotos() async {
-    final addEventState = Provider.of<AddEventState>(context, listen: false);
+    final eventState = Provider.of<AddEventState>(context, listen: false);
     var result = await PhotoManager.requestPermissionExtend();
     // TODO configure iOS app for firebase and photomanager
+    // TODO configure iOS splash screen?
     if (result.isAuth) {
-      setState(() => textMode = false);
+      eventState.textMode = false;
       final albums = await PhotoManager.getAssetPathList(onlyAll: true);
       final album = albums.first;
       final recentAssets = await album.getAssetListPaged(page, 20);
@@ -42,22 +42,22 @@ class _AddEventState extends State<AddEvent> {
                   {"asset": asset, "thumb": await asset.thumbData})
               .toList());
 
-      addEventState.selectedImage = recentAssets.first;
+      eventState.selectedImage = recentAssets.first;
       setState(() {
         loadedAssets = tempLoadedAssets;
         page = 20;
         loading = false;
       });
     } else
-      setState(() {
-        textMode = true;
-        loading = false;
-      });
+      eventState.textMode = true;
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final addEventState = Provider.of<AddEventState>(context);
+    final eventState = Provider.of<AddEventState>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AddEventAppBar(),
@@ -66,7 +66,7 @@ class _AddEventState extends State<AddEvent> {
           Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width,
-              child: textMode
+              child: eventState.textMode
                   ? Center(
                       child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30.0),
@@ -82,7 +82,7 @@ class _AddEventState extends State<AddEvent> {
                   : loading
                       ? Container()
                       : FutureBuilder(
-                          future: addEventState.selectedImage?.originBytes,
+                          future: eventState.selectedImage?.originBytes,
                           builder: (context, snapshot) {
                             if (snapshot.data == null) return Container();
                             final bytes = snapshot.data as Uint8List;
@@ -91,7 +91,7 @@ class _AddEventState extends State<AddEvent> {
                                 key: ValueKey(snapshot.data),
                                 duration: Duration(milliseconds: 200),
                                 child: PhotoView(
-                                    controller: addEventState.photoController,
+                                    controller: eventState.photoController,
                                     minScale: PhotoViewComputedScale.covered,
                                     backgroundDecoration:
                                         BoxDecoration(color: Colors.grey[200]),
@@ -108,22 +108,26 @@ class _AddEventState extends State<AddEvent> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         IconButton(
-                            color: textMode ? Color(0xffe85c3f) : null,
+                            color:
+                                eventState.textMode ? Color(0xffe85c3f) : null,
                             icon: Icon(Icons.text_fields_outlined),
                             iconSize: 30,
-                            onPressed: () => setState(() => textMode = true)),
+                            onPressed: () =>
+                                setState(() => eventState.textMode = true)),
                         IconButton(
-                            color: !textMode ? Color(0xffe85c3f) : null,
+                            color:
+                                !eventState.textMode ? Color(0xffe85c3f) : null,
                             icon: Icon(Icons.camera_alt_outlined),
                             iconSize: 30,
-                            onPressed: () => setState(() => textMode = false))
+                            onPressed: () =>
+                                setState(() => eventState.textMode = false))
                       ],
                     ),
                   ))),
           Flexible(
               fit: FlexFit.tight,
               flex: 5,
-              child: textMode
+              child: eventState.textMode
                   ? Container()
                   : loading
                       ? Center(child: CircularProgressIndicator())
@@ -135,14 +139,14 @@ class _AddEventState extends State<AddEvent> {
                               crossAxisCount: 4,
                               children: loadedAssets
                                   .map((assetMap) => InkWell(
-                                      onTap: () => setState(() => addEventState
+                                      onTap: () => setState(() => eventState
                                           .selectedImage = assetMap['asset']),
                                       child: Stack(
                                         fit: StackFit.expand,
                                         children: [
                                           Image.memory(assetMap['thumb'],
                                               fit: BoxFit.cover),
-                                          if (addEventState.selectedImage ==
+                                          if (eventState.selectedImage ==
                                               assetMap['asset'])
                                             Opacity(
                                                 opacity: 0.3,

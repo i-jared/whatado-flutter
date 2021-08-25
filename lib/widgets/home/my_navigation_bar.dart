@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatado/screens/home/add_event.dart';
+import 'package:whatado/screens/add_event/add_event.dart';
 
 class MyNavigationBar extends StatelessWidget {
   final Function indexSetState;
@@ -23,14 +23,16 @@ class MyNavigationBar extends StatelessWidget {
               icon: Icon(
                 Icons.home_outlined,
                 size: 35,
-                color: selectedIndex == 0 ? Color(0xffe85c3f) : Colors.grey[850],
+                color:
+                    selectedIndex == 0 ? Color(0xffe85c3f) : Colors.grey[850],
               ),
             ),
             IconButton(
               padding: EdgeInsets.zero,
-              onPressed: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => AddEvent())),
-              icon: Icon(Icons.add_circle, size: 50, color: Color(0xffe85c3f)),
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AddEvent())),
+              icon: Icon(Icons.add_circle_outline,
+                  size: 35, color: Colors.grey[850]), //Color(0xffe85c3f)),
             ),
             IconButton(
               padding: EdgeInsets.zero,
@@ -38,7 +40,8 @@ class MyNavigationBar extends StatelessWidget {
               icon: Icon(
                 Icons.person_outline,
                 size: 35,
-                color: selectedIndex == 1 ? Color(0xffe85c3f) : Colors.grey[850],
+                color:
+                    selectedIndex == 1 ? Color(0xffe85c3f) : Colors.grey[850],
               ),
             ),
           ],
