@@ -49,7 +49,7 @@ Events$Query$EventsApiResponse$Event
         json['creator'] as Map<String, dynamic>)
     ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
     ..location = json['location'] as String
-    ..pictureUrl = json['pictureUrl'] as String
+    ..pictureUrl = json['pictureUrl'] as String?
     ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
         .map((e) => Events$Query$EventsApiResponse$Event$Interest.fromJson(
             e as Map<String, dynamic>))

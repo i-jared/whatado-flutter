@@ -7,8 +7,6 @@ class HttpClientService {
   }
 
   Future<http.Response> postAuthenticated(String url, String token) async {
-    print('post authenticated');
-
     return await client
         .post(Uri.parse(url), headers: {'authorization': 'Bearer $token'});
   }

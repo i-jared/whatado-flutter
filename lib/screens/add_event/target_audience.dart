@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
@@ -19,13 +20,17 @@ class _TargetAudienceState extends State<TargetAudience> {
   final padding = 30.0;
   final sectionSpacing = 35.0;
 
-  String? selectedGender;
-  final genders = ['BOTH', 'GIRLS', 'GUYS'];
+  Gender? selectedGender;
+  final genders = [
+    {'gender': Gender.both, 'text': 'BOTH'},
+    {'gender': Gender.female, 'text': 'GIRLS'},
+    {'gender': Gender.male, 'text': 'GUYS'},
+  ];
 
   @override
   void initState() {
     super.initState();
-    selectedGender = genders.first;
+    selectedGender = genders.first['gender'] as Gender;
   }
 
   @override
@@ -47,11 +52,12 @@ class _TargetAudienceState extends State<TargetAudience> {
                 spacing: 10.0,
                 children: genders
                     .map((gender) => InterestBubble(
-                        text: gender,
-                        selected: selectedGender == gender,
+                        text: gender['text'] as String,
+                        selected: selectedGender == gender['gender'],
                         onSelected: (notSelected) {
                           if (notSelected) {
-                            setState(() => selectedGender = gender);
+                            setState(() =>
+                                selectedGender = gender['gender'] as Gender);
                           } else {
                             setState(() => selectedGender = null);
                           }

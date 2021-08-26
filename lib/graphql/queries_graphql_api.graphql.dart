@@ -82,7 +82,7 @@ class Events$Query$EventsApiResponse$Event extends JsonSerializable
 
   late String location;
 
-  late String pictureUrl;
+  String? pictureUrl;
 
   late List<Events$Query$EventsApiResponse$Event$Interest> relatedInterests;
 

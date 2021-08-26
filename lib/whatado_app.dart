@@ -12,6 +12,7 @@ import 'package:whatado/services/startup.dart';
 import 'package:flutter/services.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/user_state.dart';
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -51,6 +52,7 @@ class _MyAppState extends State<MyApp> {
         providers: [
           ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
           ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
+          ChangeNotifierProvider<UserState>(create: (_) => UserState()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

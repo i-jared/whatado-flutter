@@ -13,12 +13,15 @@ class UserState extends ChangeNotifier {
   }
 
   UserState() {
-    initUser();
+    getUser();
   }
 
-  Future<void> initUser() async {
+  Future<void> getUser() async {
     final query = MeGqlQuery();
     final response = await query.me();
     user = response.data;
+    print(
+        'getUserResponse: ${response.data} ${response.errors} ${response.ok}');
+    notifyListeners();
   }
 }

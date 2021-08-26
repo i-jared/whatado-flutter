@@ -9,6 +9,46 @@ import 'package:whatado/utils/coercers.dart';
 part 'mutations_graphql_api.graphql.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation$EventApiResponse$Event$User extends JsonSerializable
+    with EquatableMixin {
+  CreateEvent$Mutation$EventApiResponse$Event$User();
+
+  factory CreateEvent$Mutation$EventApiResponse$Event$User.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateEvent$Mutation$EventApiResponse$Event$UserFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String username;
+
+  @override
+  List<Object?> get props => [id, profilePhotoUrl, username];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateEvent$Mutation$EventApiResponse$Event$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation$EventApiResponse$Event$Interest
+    extends JsonSerializable with EquatableMixin {
+  CreateEvent$Mutation$EventApiResponse$Event$Interest();
+
+  factory CreateEvent$Mutation$EventApiResponse$Event$Interest.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateEvent$Mutation$EventApiResponse$Event$InterestFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateEvent$Mutation$EventApiResponse$Event$InterestToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
     with EquatableMixin {
   CreateEvent$Mutation$EventApiResponse$Event();
@@ -19,8 +59,60 @@ class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
 
   late int id;
 
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+
+  late String title;
+
+  late String description;
+
+  late CreateEvent$Mutation$EventApiResponse$Event$User creator;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime time;
+
+  late String location;
+
+  String? pictureUrl;
+
+  late List<CreateEvent$Mutation$EventApiResponse$Event$Interest>
+      relatedInterests;
+
+  late String filterLocation;
+
+  late double filterRadius;
+
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender filterGender;
+
+  late String filterAge;
+
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        title,
+        description,
+        creator,
+        time,
+        location,
+        pictureUrl,
+        relatedInterests,
+        filterLocation,
+        filterRadius,
+        filterGender,
+        filterAge
+      ];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateEvent$Mutation$EventApiResponse$EventToJson(this);
@@ -627,13 +719,13 @@ enum Gender {
 
 @JsonSerializable(explicitToJson: true)
 class CreateEventArguments extends JsonSerializable with EquatableMixin {
-  CreateEventArguments({this.eventInput});
+  CreateEventArguments({required this.eventInput});
 
   @override
   factory CreateEventArguments.fromJson(Map<String, dynamic> json) =>
       _$CreateEventArgumentsFromJson(json);
 
-  final EventInput? eventInput;
+  late EventInput eventInput;
 
   @override
   List<Object?> get props => [eventInput];
@@ -649,7 +741,7 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
         VariableDefinitionNode(
             variable: VariableNode(name: NameNode(value: 'eventInput')),
             type: NamedTypeNode(
-                name: NameNode(value: 'EventInput'), isNonNull: false),
+                name: NameNode(value: 'EventInput'), isNonNull: true),
             defaultValue: DefaultValueNode(value: null),
             directives: [])
       ],
@@ -679,6 +771,110 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: SelectionSetNode(selections: [
                     FieldNode(
                         name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'createdAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'updatedAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'title'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'description'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'creator'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'time'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'location'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'pictureUrl'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'relatedInterests'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'filterLocation'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterRadius'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterGender'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterAge'),
                         alias: null,
                         arguments: [],
                         directives: [],

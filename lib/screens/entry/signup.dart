@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/register_query.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/login.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -134,7 +136,8 @@ class _SignupScreenState extends State<StatefulWidget> {
             )));
   }
 
-  void attemptRegister() async {
+  void attemptRegister(BuildContext context) async {
+    final userState = Provider.of<UserState>(context);
     if (_formKey.currentState!.validate()) {
       setState(() {
         emailError = null;
@@ -149,6 +152,7 @@ class _SignupScreenState extends State<StatefulWidget> {
       );
       setState(() => loading = false);
       if (res.ok) {
+        userState.getUser();
         Navigator.push(context,
             MaterialPageRoute(builder: (ctx) => ChooseInterestsScreen()));
       } else {

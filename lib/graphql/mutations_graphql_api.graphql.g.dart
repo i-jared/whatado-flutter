@@ -7,17 +7,115 @@ part of 'mutations_graphql_api.graphql.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+CreateEvent$Mutation$EventApiResponse$Event$User
+    _$CreateEvent$Mutation$EventApiResponse$Event$UserFromJson(
+        Map<String, dynamic> json) {
+  return CreateEvent$Mutation$EventApiResponse$Event$User()
+    ..id = json['id'] as int
+    ..profilePhotoUrl = json['profilePhotoUrl'] as String
+    ..username = json['username'] as String;
+}
+
+Map<String, dynamic> _$CreateEvent$Mutation$EventApiResponse$Event$UserToJson(
+        CreateEvent$Mutation$EventApiResponse$Event$User instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'profilePhotoUrl': instance.profilePhotoUrl,
+      'username': instance.username,
+    };
+
+CreateEvent$Mutation$EventApiResponse$Event$Interest
+    _$CreateEvent$Mutation$EventApiResponse$Event$InterestFromJson(
+        Map<String, dynamic> json) {
+  return CreateEvent$Mutation$EventApiResponse$Event$Interest()
+    ..id = json['id'] as int;
+}
+
+Map<String, dynamic>
+    _$CreateEvent$Mutation$EventApiResponse$Event$InterestToJson(
+            CreateEvent$Mutation$EventApiResponse$Event$Interest instance) =>
+        <String, dynamic>{
+          'id': instance.id,
+        };
+
 CreateEvent$Mutation$EventApiResponse$Event
     _$CreateEvent$Mutation$EventApiResponse$EventFromJson(
         Map<String, dynamic> json) {
-  return CreateEvent$Mutation$EventApiResponse$Event()..id = json['id'] as int;
+  return CreateEvent$Mutation$EventApiResponse$Event()
+    ..id = json['id'] as int
+    ..createdAt = fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+    ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+    ..title = json['title'] as String
+    ..description = json['description'] as String
+    ..creator = CreateEvent$Mutation$EventApiResponse$Event$User.fromJson(
+        json['creator'] as Map<String, dynamic>)
+    ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
+    ..location = json['location'] as String
+    ..pictureUrl = json['pictureUrl'] as String?
+    ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+        .map((e) =>
+            CreateEvent$Mutation$EventApiResponse$Event$Interest.fromJson(
+                e as Map<String, dynamic>))
+        .toList()
+    ..filterLocation = json['filterLocation'] as String
+    ..filterRadius = (json['filterRadius'] as num).toDouble()
+    ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
+        unknownValue: Gender.artemisUnknown)
+    ..filterAge = json['filterAge'] as String;
 }
 
 Map<String, dynamic> _$CreateEvent$Mutation$EventApiResponse$EventToJson(
         CreateEvent$Mutation$EventApiResponse$Event instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'title': instance.title,
+      'description': instance.description,
+      'creator': instance.creator.toJson(),
+      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
+      'location': instance.location,
+      'pictureUrl': instance.pictureUrl,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'filterLocation': instance.filterLocation,
+      'filterRadius': instance.filterRadius,
+      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterAge': instance.filterAge,
     };
+
+K _$enumDecode<K, V>(
+  Map<K, V> enumValues,
+  Object? source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError(
+      'A value must be provided. Supported values: '
+      '${enumValues.values.join(', ')}',
+    );
+  }
+
+  return enumValues.entries.singleWhere(
+    (e) => e.value == source,
+    orElse: () {
+      if (unknownValue == null) {
+        throw ArgumentError(
+          '`$source` is not one of the supported values: '
+          '${enumValues.values.join(', ')}',
+        );
+      }
+      return MapEntry(unknownValue, enumValues.values.first);
+    },
+  ).key;
+}
+
+const _$GenderEnumMap = {
+  Gender.both: 'BOTH',
+  Gender.female: 'FEMALE',
+  Gender.male: 'MALE',
+  Gender.artemisUnknown: 'ARTEMIS_UNKNOWN',
+};
 
 CreateEvent$Mutation$EventApiResponse$FieldError
     _$CreateEvent$Mutation$EventApiResponse$FieldErrorFromJson(
@@ -103,39 +201,6 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'title': instance.title,
     };
-
-K _$enumDecode<K, V>(
-  Map<K, V> enumValues,
-  Object? source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError(
-      'A value must be provided. Supported values: '
-      '${enumValues.values.join(', ')}',
-    );
-  }
-
-  return enumValues.entries.singleWhere(
-    (e) => e.value == source,
-    orElse: () {
-      if (unknownValue == null) {
-        throw ArgumentError(
-          '`$source` is not one of the supported values: '
-          '${enumValues.values.join(', ')}',
-        );
-      }
-      return MapEntry(unknownValue, enumValues.values.first);
-    },
-  ).key;
-}
-
-const _$GenderEnumMap = {
-  Gender.both: 'BOTH',
-  Gender.female: 'FEMALE',
-  Gender.male: 'MALE',
-  Gender.artemisUnknown: 'ARTEMIS_UNKNOWN',
-};
 
 CreateForum$Mutation$ForumApiResponse$Forum
     _$CreateForum$Mutation$ForumApiResponse$ForumFromJson(
@@ -523,16 +588,14 @@ Map<String, dynamic> _$Register$MutationToJson(Register$Mutation instance) =>
 
 CreateEventArguments _$CreateEventArgumentsFromJson(Map<String, dynamic> json) {
   return CreateEventArguments(
-    eventInput: json['eventInput'] == null
-        ? null
-        : EventInput.fromJson(json['eventInput'] as Map<String, dynamic>),
+    eventInput: EventInput.fromJson(json['eventInput'] as Map<String, dynamic>),
   );
 }
 
 Map<String, dynamic> _$CreateEventArgumentsToJson(
         CreateEventArguments instance) =>
     <String, dynamic>{
-      'eventInput': instance.eventInput?.toJson(),
+      'eventInput': instance.eventInput.toJson(),
     };
 
 CreateForumArguments _$CreateForumArgumentsFromJson(Map<String, dynamic> json) {

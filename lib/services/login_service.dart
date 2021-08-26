@@ -6,9 +6,7 @@ class LoginService {
   LoginService() : loggedIn = false;
 
   Future<bool> attemptAutoLogin() async {
-    print('requesting');
     final response = await authenticationService.requestNewAccessToken();
-    print('requested: ${response != null}');
     if (response != null) {
       loggedIn = true;
       return true;

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/login_query.dart';
 import 'package:whatado/screens/entry/signup.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/bottom_sheet.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -72,7 +74,7 @@ class _LoginScreenState extends State<StatefulWidget> {
               ),
               const SizedBox(height: 10),
               RoundedArrowButton(
-                onPressed: loading ? () => null : attemptSignIn,
+                onPressed: loading ? () => null : () => attemptSignIn(context),
                 text: "Sign In",
               ),
               SizedBox(height: 30),
@@ -98,7 +100,8 @@ class _LoginScreenState extends State<StatefulWidget> {
         ));
   }
 
-  void attemptSignIn() async {
+  void attemptSignIn(BuildContext context) async {
+    final userState = Provider.of<UserState>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       setState(() {
         emailError = null;
@@ -112,6 +115,7 @@ class _LoginScreenState extends State<StatefulWidget> {
       if (res.ok) {
         authenticationService.updateTokens(
             res.accessToken ?? '', res.refreshToken ?? '');
+        userState.getUser();
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (ctx) => HomeScreen()),

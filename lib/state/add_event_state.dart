@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:image/image.dart';
+import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/interest.dart';
 
 class AddEventState extends ChangeNotifier {
@@ -16,10 +17,15 @@ class AddEventState extends ChangeNotifier {
   TextEditingController timeController;
   TextEditingController textModeController;
   TextEditingController addInterestController;
+  Gender _selectedGender;
   AssetEntity? _selectedImage;
+
   double _filterAgeStart;
   double _filterAgeEnd;
   bool _textMode;
+  bool _loading;
+  bool _failed;
+  bool _succeeded;
 
   final popularInterests = [
     Interest(id: 1, name: 'bball'),
@@ -64,13 +70,45 @@ class AddEventState extends ChangeNotifier {
         addInterestController = TextEditingController(),
         _filterAgeEnd = 40,
         _filterAgeStart = 18,
-        _textMode = false {
+        _textMode = false,
+        _selectedGender = Gender.both,
+        _loading = false,
+        _succeeded = false,
+        _failed = false {
     titleController.addListener(() => notifyListeners());
     descriptionController.addListener(() => notifyListeners());
     locationController.addListener(() => notifyListeners());
     dateController.addListener(() => notifyListeners());
     timeController.addListener(() => notifyListeners());
     textModeController.addListener(() => notifyListeners());
+  }
+
+  bool get succeeded => _succeeded;
+
+  set succeeded(bool succeeded) {
+    _succeeded = succeeded;
+    notifyListeners();
+  }
+
+  bool get failed => _failed;
+
+  set failed(bool failed) {
+    _failed = failed;
+    notifyListeners();
+  }
+
+  bool get loading => _loading;
+
+  set loading(bool loading) {
+    _loading = loading;
+    notifyListeners();
+  }
+
+  Gender get selectedGender => _selectedGender;
+
+  set selectedGender(Gender selectedGender) {
+    _selectedGender = selectedGender;
+    notifyListeners();
   }
 
   bool get textMode => _textMode;
@@ -101,7 +139,19 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Uint8List> cropImage(double deviceWidth) async {
+  void clear() {
+    photoController.reset();
+    _selectedImage = null;
+    titleController.clear();
+    descriptionController.clear();
+    locationController.clear();
+    dateController.clear();
+    timeController.clear();
+    textModeController.clear();
+    addInterestController.clear();
+  }
+
+  Future<Uint8List> cropResizeImage(double deviceWidth) async {
     if (_selectedImage == null) return Uint8List.fromList([]);
     final width = _selectedImage!.width;
     final height = _selectedImage!.height;
@@ -127,6 +177,7 @@ class AddEventState extends ChangeNotifier {
       width - right - left,
       height - top - bottom,
     );
-    return Uint8List.fromList(encodePng(face));
+    final resizedFace = copyResize(face, height: 700, width: 700);
+    return Uint8List.fromList(encodePng(resizedFace));
   }
 }

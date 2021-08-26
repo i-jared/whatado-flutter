@@ -71,7 +71,7 @@ type Event {
   forum: Forum!
   id: Int!
   location: String!
-  pictureUrl: String!
+  pictureUrl: String
   relatedInterests: [Interest!]!
   time: DateTime!
   title: String!

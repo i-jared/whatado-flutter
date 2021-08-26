@@ -1,26 +1,28 @@
 import 'package:whatado/models/event_user.dart';
 
+// TODO: make events just hold ids... extend class for models with full member data
 class Event {
   int id;
   DateTime createdAt;
   EventUser creator;
   String title;
   String description;
-  String imageUrl;
+  String? imageUrl;
   DateTime time;
   String location;
   List<int> relatedInterestIds;
 
-  Event(
-      {required this.id,
-      required this.createdAt,
-      required this.creator,
-      required this.title,
-      required this.description,
-      required this.imageUrl,
-      required this.time,
-      required this.relatedInterestIds,
-      required this.location});
+  Event({
+    required this.id,
+    required this.createdAt,
+    required this.creator,
+    required this.title,
+    required this.description,
+    required this.time,
+    required this.relatedInterestIds,
+    required this.location,
+    this.imageUrl,
+  });
 
   static Event fromGqlData(Map data) {
     return Event(

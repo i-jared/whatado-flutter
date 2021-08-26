@@ -99,6 +99,8 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                             Spacer(),
                             Center(
                               child: RoundedArrowButton(
+                                // TODO: use/create real interests
+                                // TODO: edit and save user (add interests)
                                 onPressed: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(

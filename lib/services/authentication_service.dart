@@ -16,11 +16,9 @@ class AuthenticationService {
   }
 
   Future<String?> requestNewAccessToken() async {
-    print('token not null: ${localStorageService.refreshToken != null}');
     final response = await httpClientService.postAuthenticated(
         whatadoRefreshUrl, localStorageService.refreshToken ?? '');
     final responseJson = jsonDecode(response.body);
-    print('response: $responseJson');
     if (responseJson['ok'] == false) {
       return null;
     }
