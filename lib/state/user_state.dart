@@ -20,8 +20,6 @@ class UserState extends ChangeNotifier {
     final query = MeGqlQuery();
     final response = await query.me();
     user = response.data;
-    print(
-        'getUserResponse: ${response.data} ${response.errors} ${response.ok}');
     notifyListeners();
   }
 }

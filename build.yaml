@@ -12,12 +12,15 @@ targets:
             - output: lib/graphql/queries_graphql_api.dart
               schema: graphql/schema.graphql
               queries_glob: graphql/queries/**.graphql
+              naming_scheme: pathedWithFields
             - output: lib/graphql/subscriptions_graphql_api.dart
               schema: graphql/schema.graphql
               queries_glob: graphql/subscriptions/**.graphql
+              naming_scheme: pathedWithFields
             - output: lib/graphql/mutations_graphql_api.dart
               schema: graphql/schema.graphql
               queries_glob: graphql/mutations/**.graphql
+              naming_scheme: pathedWithFields
           scalar_mapping:
             - custom_parser_import: 'package:whatado/utils/coercers.dart'
               graphql_type: DateTime

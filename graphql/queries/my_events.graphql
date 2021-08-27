@@ -1,5 +1,5 @@
-query events {
-  events {
+query myEvents {
+  myEvents {
     ok
     nodes {
       id
@@ -11,12 +11,6 @@ query events {
         id
         profilePhotoUrl
         username
-      }
-      wannago {
-        id
-      }
-      invited {
-        id
       }
       time
       location

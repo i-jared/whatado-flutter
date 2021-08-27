@@ -9,13 +9,13 @@ import 'package:whatado/utils/coercers.dart';
 part 'mutations_graphql_api.graphql.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$EventApiResponse$Event$User extends JsonSerializable
+class CreateEvent$Mutation$CreateEvent$Nodes$Creator extends JsonSerializable
     with EquatableMixin {
-  CreateEvent$Mutation$EventApiResponse$Event$User();
+  CreateEvent$Mutation$CreateEvent$Nodes$Creator();
 
-  factory CreateEvent$Mutation$EventApiResponse$Event$User.fromJson(
+  factory CreateEvent$Mutation$CreateEvent$Nodes$Creator.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$EventApiResponse$Event$UserFromJson(json);
+      _$CreateEvent$Mutation$CreateEvent$Nodes$CreatorFromJson(json);
 
   late int id;
 
@@ -27,17 +27,17 @@ class CreateEvent$Mutation$EventApiResponse$Event$User extends JsonSerializable
   List<Object?> get props => [id, profilePhotoUrl, username];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$EventApiResponse$Event$UserToJson(this);
+      _$CreateEvent$Mutation$CreateEvent$Nodes$CreatorToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$EventApiResponse$Event$Interest
-    extends JsonSerializable with EquatableMixin {
-  CreateEvent$Mutation$EventApiResponse$Event$Interest();
+class CreateEvent$Mutation$CreateEvent$Nodes$Wannago extends JsonSerializable
+    with EquatableMixin {
+  CreateEvent$Mutation$CreateEvent$Nodes$Wannago();
 
-  factory CreateEvent$Mutation$EventApiResponse$Event$Interest.fromJson(
+  factory CreateEvent$Mutation$CreateEvent$Nodes$Wannago.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$EventApiResponse$Event$InterestFromJson(json);
+      _$CreateEvent$Mutation$CreateEvent$Nodes$WannagoFromJson(json);
 
   late int id;
 
@@ -45,17 +45,53 @@ class CreateEvent$Mutation$EventApiResponse$Event$Interest
   List<Object?> get props => [id];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$EventApiResponse$Event$InterestToJson(this);
+      _$CreateEvent$Mutation$CreateEvent$Nodes$WannagoToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
+class CreateEvent$Mutation$CreateEvent$Nodes$Invited extends JsonSerializable
     with EquatableMixin {
-  CreateEvent$Mutation$EventApiResponse$Event();
+  CreateEvent$Mutation$CreateEvent$Nodes$Invited();
 
-  factory CreateEvent$Mutation$EventApiResponse$Event.fromJson(
+  factory CreateEvent$Mutation$CreateEvent$Nodes$Invited.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$EventApiResponse$EventFromJson(json);
+      _$CreateEvent$Mutation$CreateEvent$Nodes$InvitedFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateEvent$Mutation$CreateEvent$Nodes$InvitedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests
+    extends JsonSerializable with EquatableMixin {
+  CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests();
+
+  factory CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
+    with EquatableMixin {
+  CreateEvent$Mutation$CreateEvent$Nodes();
+
+  factory CreateEvent$Mutation$CreateEvent$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateEvent$Mutation$CreateEvent$NodesFromJson(json);
 
   late int id;
 
@@ -73,7 +109,11 @@ class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
 
   late String description;
 
-  late CreateEvent$Mutation$EventApiResponse$Event$User creator;
+  late CreateEvent$Mutation$CreateEvent$Nodes$Creator creator;
+
+  late List<CreateEvent$Mutation$CreateEvent$Nodes$Wannago> wannago;
+
+  late List<CreateEvent$Mutation$CreateEvent$Nodes$Invited> invited;
 
   @JsonKey(
       fromJson: fromGraphQLDateTimeToDartDateTime,
@@ -84,7 +124,7 @@ class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
 
   String? pictureUrl;
 
-  late List<CreateEvent$Mutation$EventApiResponse$Event$Interest>
+  late List<CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests>
       relatedInterests;
 
   late String filterLocation;
@@ -104,6 +144,8 @@ class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
         title,
         description,
         creator,
+        wannago,
+        invited,
         time,
         location,
         pictureUrl,
@@ -115,17 +157,17 @@ class CreateEvent$Mutation$EventApiResponse$Event extends JsonSerializable
       ];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$EventApiResponse$EventToJson(this);
+      _$CreateEvent$Mutation$CreateEvent$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$EventApiResponse$FieldError extends JsonSerializable
+class CreateEvent$Mutation$CreateEvent$Errors extends JsonSerializable
     with EquatableMixin {
-  CreateEvent$Mutation$EventApiResponse$FieldError();
+  CreateEvent$Mutation$CreateEvent$Errors();
 
-  factory CreateEvent$Mutation$EventApiResponse$FieldError.fromJson(
+  factory CreateEvent$Mutation$CreateEvent$Errors.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$EventApiResponse$FieldErrorFromJson(json);
+      _$CreateEvent$Mutation$CreateEvent$ErrorsFromJson(json);
 
   String? field;
 
@@ -135,29 +177,29 @@ class CreateEvent$Mutation$EventApiResponse$FieldError extends JsonSerializable
   List<Object?> get props => [field, message];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$EventApiResponse$FieldErrorToJson(this);
+      _$CreateEvent$Mutation$CreateEvent$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$EventApiResponse extends JsonSerializable
+class CreateEvent$Mutation$CreateEvent extends JsonSerializable
     with EquatableMixin {
-  CreateEvent$Mutation$EventApiResponse();
+  CreateEvent$Mutation$CreateEvent();
 
-  factory CreateEvent$Mutation$EventApiResponse.fromJson(
+  factory CreateEvent$Mutation$CreateEvent.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$EventApiResponseFromJson(json);
+      _$CreateEvent$Mutation$CreateEventFromJson(json);
 
   bool? ok;
 
-  CreateEvent$Mutation$EventApiResponse$Event? nodes;
+  CreateEvent$Mutation$CreateEvent$Nodes? nodes;
 
-  List<CreateEvent$Mutation$EventApiResponse$FieldError>? errors;
+  List<CreateEvent$Mutation$CreateEvent$Errors>? errors;
 
   @override
   List<Object?> get props => [ok, nodes, errors];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$EventApiResponseToJson(this);
+      _$CreateEvent$Mutation$CreateEventToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -167,7 +209,7 @@ class CreateEvent$Mutation extends JsonSerializable with EquatableMixin {
   factory CreateEvent$Mutation.fromJson(Map<String, dynamic> json) =>
       _$CreateEvent$MutationFromJson(json);
 
-  late CreateEvent$Mutation$EventApiResponse createEvent;
+  late CreateEvent$Mutation$CreateEvent createEvent;
 
   @override
   List<Object?> get props => [createEvent];
@@ -185,11 +227,13 @@ class EventInput extends JsonSerializable with EquatableMixin {
       required this.filterLocation,
       required this.filterRadius,
       this.id,
+      required this.invitedIds,
       required this.location,
       this.pictureUrl,
       required this.relatedInterestsIds,
       required this.time,
-      required this.title});
+      required this.title,
+      required this.wannagoIds});
 
   factory EventInput.fromJson(Map<String, dynamic> json) =>
       _$EventInputFromJson(json);
@@ -209,6 +253,8 @@ class EventInput extends JsonSerializable with EquatableMixin {
 
   int? id;
 
+  late List<int> invitedIds;
+
   late String location;
 
   String? pictureUrl;
@@ -222,6 +268,8 @@ class EventInput extends JsonSerializable with EquatableMixin {
 
   late String title;
 
+  late List<int> wannagoIds;
+
   @override
   List<Object?> get props => [
         creatorId,
@@ -231,24 +279,26 @@ class EventInput extends JsonSerializable with EquatableMixin {
         filterLocation,
         filterRadius,
         id,
+        invitedIds,
         location,
         pictureUrl,
         relatedInterestsIds,
         time,
-        title
+        title,
+        wannagoIds
       ];
   @override
   Map<String, dynamic> toJson() => _$EventInputToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation$ForumApiResponse$Forum extends JsonSerializable
+class CreateForum$Mutation$CreateForum$Nodes extends JsonSerializable
     with EquatableMixin {
-  CreateForum$Mutation$ForumApiResponse$Forum();
+  CreateForum$Mutation$CreateForum$Nodes();
 
-  factory CreateForum$Mutation$ForumApiResponse$Forum.fromJson(
+  factory CreateForum$Mutation$CreateForum$Nodes.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateForum$Mutation$ForumApiResponse$ForumFromJson(json);
+      _$CreateForum$Mutation$CreateForum$NodesFromJson(json);
 
   late int id;
 
@@ -256,17 +306,17 @@ class CreateForum$Mutation$ForumApiResponse$Forum extends JsonSerializable
   List<Object?> get props => [id];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateForum$Mutation$ForumApiResponse$ForumToJson(this);
+      _$CreateForum$Mutation$CreateForum$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation$ForumApiResponse$FieldError extends JsonSerializable
+class CreateForum$Mutation$CreateForum$Errors extends JsonSerializable
     with EquatableMixin {
-  CreateForum$Mutation$ForumApiResponse$FieldError();
+  CreateForum$Mutation$CreateForum$Errors();
 
-  factory CreateForum$Mutation$ForumApiResponse$FieldError.fromJson(
+  factory CreateForum$Mutation$CreateForum$Errors.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateForum$Mutation$ForumApiResponse$FieldErrorFromJson(json);
+      _$CreateForum$Mutation$CreateForum$ErrorsFromJson(json);
 
   String? field;
 
@@ -276,29 +326,29 @@ class CreateForum$Mutation$ForumApiResponse$FieldError extends JsonSerializable
   List<Object?> get props => [field, message];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateForum$Mutation$ForumApiResponse$FieldErrorToJson(this);
+      _$CreateForum$Mutation$CreateForum$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation$ForumApiResponse extends JsonSerializable
+class CreateForum$Mutation$CreateForum extends JsonSerializable
     with EquatableMixin {
-  CreateForum$Mutation$ForumApiResponse();
+  CreateForum$Mutation$CreateForum();
 
-  factory CreateForum$Mutation$ForumApiResponse.fromJson(
+  factory CreateForum$Mutation$CreateForum.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateForum$Mutation$ForumApiResponseFromJson(json);
+      _$CreateForum$Mutation$CreateForumFromJson(json);
 
   bool? ok;
 
-  CreateForum$Mutation$ForumApiResponse$Forum? nodes;
+  CreateForum$Mutation$CreateForum$Nodes? nodes;
 
-  List<CreateForum$Mutation$ForumApiResponse$FieldError>? errors;
+  List<CreateForum$Mutation$CreateForum$Errors>? errors;
 
   @override
   List<Object?> get props => [ok, nodes, errors];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateForum$Mutation$ForumApiResponseToJson(this);
+      _$CreateForum$Mutation$CreateForumToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -308,7 +358,7 @@ class CreateForum$Mutation extends JsonSerializable with EquatableMixin {
   factory CreateForum$Mutation.fromJson(Map<String, dynamic> json) =>
       _$CreateForum$MutationFromJson(json);
 
-  late CreateForum$Mutation$ForumApiResponse createForum;
+  late CreateForum$Mutation$CreateForum createForum;
 
   @override
   List<Object?> get props => [createForum];
@@ -317,13 +367,13 @@ class CreateForum$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateInterest$Mutation$InterestApiResponse$Interest
-    extends JsonSerializable with EquatableMixin {
-  CreateInterest$Mutation$InterestApiResponse$Interest();
+class CreateInterest$Mutation$CreateInterest$Nodes extends JsonSerializable
+    with EquatableMixin {
+  CreateInterest$Mutation$CreateInterest$Nodes();
 
-  factory CreateInterest$Mutation$InterestApiResponse$Interest.fromJson(
+  factory CreateInterest$Mutation$CreateInterest$Nodes.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateInterest$Mutation$InterestApiResponse$InterestFromJson(json);
+      _$CreateInterest$Mutation$CreateInterest$NodesFromJson(json);
 
   late int id;
 
@@ -331,17 +381,17 @@ class CreateInterest$Mutation$InterestApiResponse$Interest
   List<Object?> get props => [id];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateInterest$Mutation$InterestApiResponse$InterestToJson(this);
+      _$CreateInterest$Mutation$CreateInterest$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateInterest$Mutation$InterestApiResponse$FieldError
-    extends JsonSerializable with EquatableMixin {
-  CreateInterest$Mutation$InterestApiResponse$FieldError();
+class CreateInterest$Mutation$CreateInterest$Errors extends JsonSerializable
+    with EquatableMixin {
+  CreateInterest$Mutation$CreateInterest$Errors();
 
-  factory CreateInterest$Mutation$InterestApiResponse$FieldError.fromJson(
+  factory CreateInterest$Mutation$CreateInterest$Errors.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateInterest$Mutation$InterestApiResponse$FieldErrorFromJson(json);
+      _$CreateInterest$Mutation$CreateInterest$ErrorsFromJson(json);
 
   String? field;
 
@@ -351,29 +401,29 @@ class CreateInterest$Mutation$InterestApiResponse$FieldError
   List<Object?> get props => [field, message];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateInterest$Mutation$InterestApiResponse$FieldErrorToJson(this);
+      _$CreateInterest$Mutation$CreateInterest$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateInterest$Mutation$InterestApiResponse extends JsonSerializable
+class CreateInterest$Mutation$CreateInterest extends JsonSerializable
     with EquatableMixin {
-  CreateInterest$Mutation$InterestApiResponse();
+  CreateInterest$Mutation$CreateInterest();
 
-  factory CreateInterest$Mutation$InterestApiResponse.fromJson(
+  factory CreateInterest$Mutation$CreateInterest.fromJson(
           Map<String, dynamic> json) =>
-      _$CreateInterest$Mutation$InterestApiResponseFromJson(json);
+      _$CreateInterest$Mutation$CreateInterestFromJson(json);
 
   bool? ok;
 
-  CreateInterest$Mutation$InterestApiResponse$Interest? nodes;
+  CreateInterest$Mutation$CreateInterest$Nodes? nodes;
 
-  List<CreateInterest$Mutation$InterestApiResponse$FieldError>? errors;
+  List<CreateInterest$Mutation$CreateInterest$Errors>? errors;
 
   @override
   List<Object?> get props => [ok, nodes, errors];
   @override
   Map<String, dynamic> toJson() =>
-      _$CreateInterest$Mutation$InterestApiResponseToJson(this);
+      _$CreateInterest$Mutation$CreateInterestToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -383,7 +433,7 @@ class CreateInterest$Mutation extends JsonSerializable with EquatableMixin {
   factory CreateInterest$Mutation.fromJson(Map<String, dynamic> json) =>
       _$CreateInterest$MutationFromJson(json);
 
-  late CreateInterest$Mutation$InterestApiResponse createInterest;
+  late CreateInterest$Mutation$CreateInterest createInterest;
 
   @override
   List<Object?> get props => [createInterest];
@@ -421,13 +471,13 @@ class InterestInput extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ForgotPassword$Mutation$BoolApiResponse$FieldError
-    extends JsonSerializable with EquatableMixin {
-  ForgotPassword$Mutation$BoolApiResponse$FieldError();
+class ForgotPassword$Mutation$ForgotPassword$Errors extends JsonSerializable
+    with EquatableMixin {
+  ForgotPassword$Mutation$ForgotPassword$Errors();
 
-  factory ForgotPassword$Mutation$BoolApiResponse$FieldError.fromJson(
+  factory ForgotPassword$Mutation$ForgotPassword$Errors.fromJson(
           Map<String, dynamic> json) =>
-      _$ForgotPassword$Mutation$BoolApiResponse$FieldErrorFromJson(json);
+      _$ForgotPassword$Mutation$ForgotPassword$ErrorsFromJson(json);
 
   String? field;
 
@@ -437,27 +487,27 @@ class ForgotPassword$Mutation$BoolApiResponse$FieldError
   List<Object?> get props => [field, message];
   @override
   Map<String, dynamic> toJson() =>
-      _$ForgotPassword$Mutation$BoolApiResponse$FieldErrorToJson(this);
+      _$ForgotPassword$Mutation$ForgotPassword$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class ForgotPassword$Mutation$BoolApiResponse extends JsonSerializable
+class ForgotPassword$Mutation$ForgotPassword extends JsonSerializable
     with EquatableMixin {
-  ForgotPassword$Mutation$BoolApiResponse();
+  ForgotPassword$Mutation$ForgotPassword();
 
-  factory ForgotPassword$Mutation$BoolApiResponse.fromJson(
+  factory ForgotPassword$Mutation$ForgotPassword.fromJson(
           Map<String, dynamic> json) =>
-      _$ForgotPassword$Mutation$BoolApiResponseFromJson(json);
+      _$ForgotPassword$Mutation$ForgotPasswordFromJson(json);
 
   bool? ok;
 
-  List<ForgotPassword$Mutation$BoolApiResponse$FieldError>? errors;
+  List<ForgotPassword$Mutation$ForgotPassword$Errors>? errors;
 
   @override
   List<Object?> get props => [ok, errors];
   @override
   Map<String, dynamic> toJson() =>
-      _$ForgotPassword$Mutation$BoolApiResponseToJson(this);
+      _$ForgotPassword$Mutation$ForgotPasswordToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -467,7 +517,7 @@ class ForgotPassword$Mutation extends JsonSerializable with EquatableMixin {
   factory ForgotPassword$Mutation.fromJson(Map<String, dynamic> json) =>
       _$ForgotPassword$MutationFromJson(json);
 
-  late ForgotPassword$Mutation$BoolApiResponse forgotPassword;
+  late ForgotPassword$Mutation$ForgotPassword forgotPassword;
 
   @override
   List<Object?> get props => [forgotPassword];
@@ -491,31 +541,26 @@ class Hello$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Login$Mutation$UserApiResponse$User extends JsonSerializable
-    with EquatableMixin {
-  Login$Mutation$UserApiResponse$User();
+class Login$Mutation$Login$Nodes extends JsonSerializable with EquatableMixin {
+  Login$Mutation$Login$Nodes();
 
-  factory Login$Mutation$UserApiResponse$User.fromJson(
-          Map<String, dynamic> json) =>
-      _$Login$Mutation$UserApiResponse$UserFromJson(json);
+  factory Login$Mutation$Login$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$Login$Mutation$Login$NodesFromJson(json);
 
   late int id;
 
   @override
   List<Object?> get props => [id];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Login$Mutation$UserApiResponse$UserToJson(this);
+  Map<String, dynamic> toJson() => _$Login$Mutation$Login$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Login$Mutation$UserApiResponse$FieldError extends JsonSerializable
-    with EquatableMixin {
-  Login$Mutation$UserApiResponse$FieldError();
+class Login$Mutation$Login$Errors extends JsonSerializable with EquatableMixin {
+  Login$Mutation$Login$Errors();
 
-  factory Login$Mutation$UserApiResponse$FieldError.fromJson(
-          Map<String, dynamic> json) =>
-      _$Login$Mutation$UserApiResponse$FieldErrorFromJson(json);
+  factory Login$Mutation$Login$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Login$Mutation$Login$ErrorsFromJson(json);
 
   String? field;
 
@@ -524,18 +569,15 @@ class Login$Mutation$UserApiResponse$FieldError extends JsonSerializable
   @override
   List<Object?> get props => [field, message];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Login$Mutation$UserApiResponse$FieldErrorToJson(this);
+  Map<String, dynamic> toJson() => _$Login$Mutation$Login$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Login$Mutation$UserApiResponse$JwtResponse extends JsonSerializable
-    with EquatableMixin {
-  Login$Mutation$UserApiResponse$JwtResponse();
+class Login$Mutation$Login$Jwt extends JsonSerializable with EquatableMixin {
+  Login$Mutation$Login$Jwt();
 
-  factory Login$Mutation$UserApiResponse$JwtResponse.fromJson(
-          Map<String, dynamic> json) =>
-      _$Login$Mutation$UserApiResponse$JwtResponseFromJson(json);
+  factory Login$Mutation$Login$Jwt.fromJson(Map<String, dynamic> json) =>
+      _$Login$Mutation$Login$JwtFromJson(json);
 
   late String accessToken;
 
@@ -544,30 +586,28 @@ class Login$Mutation$UserApiResponse$JwtResponse extends JsonSerializable
   @override
   List<Object?> get props => [accessToken, refreshToken];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Login$Mutation$UserApiResponse$JwtResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Login$Mutation$Login$JwtToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Login$Mutation$UserApiResponse extends JsonSerializable
-    with EquatableMixin {
-  Login$Mutation$UserApiResponse();
+class Login$Mutation$Login extends JsonSerializable with EquatableMixin {
+  Login$Mutation$Login();
 
-  factory Login$Mutation$UserApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$Login$Mutation$UserApiResponseFromJson(json);
+  factory Login$Mutation$Login.fromJson(Map<String, dynamic> json) =>
+      _$Login$Mutation$LoginFromJson(json);
 
   bool? ok;
 
-  Login$Mutation$UserApiResponse$User? nodes;
+  Login$Mutation$Login$Nodes? nodes;
 
-  List<Login$Mutation$UserApiResponse$FieldError>? errors;
+  List<Login$Mutation$Login$Errors>? errors;
 
-  Login$Mutation$UserApiResponse$JwtResponse? jwt;
+  Login$Mutation$Login$Jwt? jwt;
 
   @override
   List<Object?> get props => [ok, nodes, errors, jwt];
   @override
-  Map<String, dynamic> toJson() => _$Login$Mutation$UserApiResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Login$Mutation$LoginToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -577,7 +617,7 @@ class Login$Mutation extends JsonSerializable with EquatableMixin {
   factory Login$Mutation.fromJson(Map<String, dynamic> json) =>
       _$Login$MutationFromJson(json);
 
-  late Login$Mutation$UserApiResponse login;
+  late Login$Mutation$Login login;
 
   @override
   List<Object?> get props => [login];
@@ -610,13 +650,13 @@ class UserInput extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Register$Mutation$UserApiResponse$User extends JsonSerializable
+class Register$Mutation$Register$Nodes extends JsonSerializable
     with EquatableMixin {
-  Register$Mutation$UserApiResponse$User();
+  Register$Mutation$Register$Nodes();
 
-  factory Register$Mutation$UserApiResponse$User.fromJson(
+  factory Register$Mutation$Register$Nodes.fromJson(
           Map<String, dynamic> json) =>
-      _$Register$Mutation$UserApiResponse$UserFromJson(json);
+      _$Register$Mutation$Register$NodesFromJson(json);
 
   late int id;
 
@@ -624,17 +664,17 @@ class Register$Mutation$UserApiResponse$User extends JsonSerializable
   List<Object?> get props => [id];
   @override
   Map<String, dynamic> toJson() =>
-      _$Register$Mutation$UserApiResponse$UserToJson(this);
+      _$Register$Mutation$Register$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Register$Mutation$UserApiResponse$FieldError extends JsonSerializable
+class Register$Mutation$Register$Errors extends JsonSerializable
     with EquatableMixin {
-  Register$Mutation$UserApiResponse$FieldError();
+  Register$Mutation$Register$Errors();
 
-  factory Register$Mutation$UserApiResponse$FieldError.fromJson(
+  factory Register$Mutation$Register$Errors.fromJson(
           Map<String, dynamic> json) =>
-      _$Register$Mutation$UserApiResponse$FieldErrorFromJson(json);
+      _$Register$Mutation$Register$ErrorsFromJson(json);
 
   String? field;
 
@@ -644,17 +684,16 @@ class Register$Mutation$UserApiResponse$FieldError extends JsonSerializable
   List<Object?> get props => [field, message];
   @override
   Map<String, dynamic> toJson() =>
-      _$Register$Mutation$UserApiResponse$FieldErrorToJson(this);
+      _$Register$Mutation$Register$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Register$Mutation$UserApiResponse$JwtResponse extends JsonSerializable
+class Register$Mutation$Register$Jwt extends JsonSerializable
     with EquatableMixin {
-  Register$Mutation$UserApiResponse$JwtResponse();
+  Register$Mutation$Register$Jwt();
 
-  factory Register$Mutation$UserApiResponse$JwtResponse.fromJson(
-          Map<String, dynamic> json) =>
-      _$Register$Mutation$UserApiResponse$JwtResponseFromJson(json);
+  factory Register$Mutation$Register$Jwt.fromJson(Map<String, dynamic> json) =>
+      _$Register$Mutation$Register$JwtFromJson(json);
 
   late String accessToken;
 
@@ -663,32 +702,28 @@ class Register$Mutation$UserApiResponse$JwtResponse extends JsonSerializable
   @override
   List<Object?> get props => [accessToken, refreshToken];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Register$Mutation$UserApiResponse$JwtResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Register$Mutation$Register$JwtToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Register$Mutation$UserApiResponse extends JsonSerializable
-    with EquatableMixin {
-  Register$Mutation$UserApiResponse();
+class Register$Mutation$Register extends JsonSerializable with EquatableMixin {
+  Register$Mutation$Register();
 
-  factory Register$Mutation$UserApiResponse.fromJson(
-          Map<String, dynamic> json) =>
-      _$Register$Mutation$UserApiResponseFromJson(json);
+  factory Register$Mutation$Register.fromJson(Map<String, dynamic> json) =>
+      _$Register$Mutation$RegisterFromJson(json);
 
   bool? ok;
 
-  Register$Mutation$UserApiResponse$User? nodes;
+  Register$Mutation$Register$Nodes? nodes;
 
-  List<Register$Mutation$UserApiResponse$FieldError>? errors;
+  List<Register$Mutation$Register$Errors>? errors;
 
-  Register$Mutation$UserApiResponse$JwtResponse? jwt;
+  Register$Mutation$Register$Jwt? jwt;
 
   @override
   List<Object?> get props => [ok, nodes, errors, jwt];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Register$Mutation$UserApiResponseToJson(this);
+  Map<String, dynamic> toJson() => _$Register$Mutation$RegisterToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -698,12 +733,221 @@ class Register$Mutation extends JsonSerializable with EquatableMixin {
   factory Register$Mutation.fromJson(Map<String, dynamic> json) =>
       _$Register$MutationFromJson(json);
 
-  late Register$Mutation$UserApiResponse register;
+  late Register$Mutation$Register register;
 
   @override
   List<Object?> get props => [register];
   @override
   Map<String, dynamic> toJson() => _$Register$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation$UpdateEvent$Nodes$Creator extends JsonSerializable
+    with EquatableMixin {
+  UpdateEvent$Mutation$UpdateEvent$Nodes$Creator();
+
+  factory UpdateEvent$Mutation$UpdateEvent$Nodes$Creator.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$CreatorFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String username;
+
+  @override
+  List<Object?> get props => [id, profilePhotoUrl, username];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$CreatorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago extends JsonSerializable
+    with EquatableMixin {
+  UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago();
+
+  factory UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$WannagoFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$WannagoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation$UpdateEvent$Nodes$Invited extends JsonSerializable
+    with EquatableMixin {
+  UpdateEvent$Mutation$UpdateEvent$Nodes$Invited();
+
+  factory UpdateEvent$Mutation$UpdateEvent$Nodes$Invited.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$InvitedFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$InvitedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests
+    extends JsonSerializable with EquatableMixin {
+  UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests();
+
+  factory UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
+    with EquatableMixin {
+  UpdateEvent$Mutation$UpdateEvent$Nodes();
+
+  factory UpdateEvent$Mutation$UpdateEvent$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateEvent$Mutation$UpdateEvent$NodesFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+
+  late String title;
+
+  late String description;
+
+  late UpdateEvent$Mutation$UpdateEvent$Nodes$Creator creator;
+
+  late List<UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago> wannago;
+
+  late List<UpdateEvent$Mutation$UpdateEvent$Nodes$Invited> invited;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime time;
+
+  late String location;
+
+  String? pictureUrl;
+
+  late List<UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests>
+      relatedInterests;
+
+  late String filterLocation;
+
+  late double filterRadius;
+
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender filterGender;
+
+  late String filterAge;
+
+  @override
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        title,
+        description,
+        creator,
+        wannago,
+        invited,
+        time,
+        location,
+        pictureUrl,
+        relatedInterests,
+        filterLocation,
+        filterRadius,
+        filterGender,
+        filterAge
+      ];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation$UpdateEvent$Errors extends JsonSerializable
+    with EquatableMixin {
+  UpdateEvent$Mutation$UpdateEvent$Errors();
+
+  factory UpdateEvent$Mutation$UpdateEvent$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateEvent$Mutation$UpdateEvent$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateEvent$Mutation$UpdateEvent$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation$UpdateEvent extends JsonSerializable
+    with EquatableMixin {
+  UpdateEvent$Mutation$UpdateEvent();
+
+  factory UpdateEvent$Mutation$UpdateEvent.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateEvent$Mutation$UpdateEventFromJson(json);
+
+  bool? ok;
+
+  UpdateEvent$Mutation$UpdateEvent$Nodes? nodes;
+
+  List<UpdateEvent$Mutation$UpdateEvent$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateEvent$Mutation$UpdateEventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEvent$Mutation extends JsonSerializable with EquatableMixin {
+  UpdateEvent$Mutation();
+
+  factory UpdateEvent$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$UpdateEvent$MutationFromJson(json);
+
+  late UpdateEvent$Mutation$UpdateEvent updateEvent;
+
+  @override
+  List<Object?> get props => [updateEvent];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateEvent$MutationToJson(this);
 }
 
 enum Gender {
@@ -819,6 +1063,32 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                               selectionSet: null),
                           FieldNode(
                               name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'wannago'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'invited'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
                               alias: null,
                               arguments: [],
                               directives: [],
@@ -1516,4 +1786,236 @@ class RegisterMutation
   @override
   Register$Mutation parse(Map<String, dynamic> json) =>
       Register$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateEventArguments extends JsonSerializable with EquatableMixin {
+  UpdateEventArguments({required this.eventInput});
+
+  @override
+  factory UpdateEventArguments.fromJson(Map<String, dynamic> json) =>
+      _$UpdateEventArgumentsFromJson(json);
+
+  late EventInput eventInput;
+
+  @override
+  List<Object?> get props => [eventInput];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateEventArgumentsToJson(this);
+}
+
+final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'updateEvent'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventInput')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'EventInput'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'updateEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'options'),
+                  value: VariableNode(name: NameNode(value: 'eventInput')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'createdAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'updatedAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'title'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'description'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'creator'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'wannago'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'invited'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'time'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'location'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'pictureUrl'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'relatedInterests'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'filterLocation'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterRadius'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterGender'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterAge'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class UpdateEventMutation
+    extends GraphQLQuery<UpdateEvent$Mutation, UpdateEventArguments> {
+  UpdateEventMutation({required this.variables});
+
+  @override
+  final DocumentNode document = UPDATE_EVENT_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'updateEvent';
+
+  @override
+  final UpdateEventArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  UpdateEvent$Mutation parse(Map<String, dynamic> json) =>
+      UpdateEvent$Mutation.fromJson(json);
 }

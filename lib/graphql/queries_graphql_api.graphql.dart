@@ -9,13 +9,13 @@ import 'package:whatado/utils/coercers.dart';
 part 'queries_graphql_api.graphql.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class Events$Query$EventsApiResponse$Event$User extends JsonSerializable
+class Events$Query$Events$Nodes$Creator extends JsonSerializable
     with EquatableMixin {
-  Events$Query$EventsApiResponse$Event$User();
+  Events$Query$Events$Nodes$Creator();
 
-  factory Events$Query$EventsApiResponse$Event$User.fromJson(
+  factory Events$Query$Events$Nodes$Creator.fromJson(
           Map<String, dynamic> json) =>
-      _$Events$Query$EventsApiResponse$Event$UserFromJson(json);
+      _$Events$Query$Events$Nodes$CreatorFromJson(json);
 
   late int id;
 
@@ -27,17 +27,17 @@ class Events$Query$EventsApiResponse$Event$User extends JsonSerializable
   List<Object?> get props => [id, profilePhotoUrl, username];
   @override
   Map<String, dynamic> toJson() =>
-      _$Events$Query$EventsApiResponse$Event$UserToJson(this);
+      _$Events$Query$Events$Nodes$CreatorToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Events$Query$EventsApiResponse$Event$Interest extends JsonSerializable
+class Events$Query$Events$Nodes$Wannago extends JsonSerializable
     with EquatableMixin {
-  Events$Query$EventsApiResponse$Event$Interest();
+  Events$Query$Events$Nodes$Wannago();
 
-  factory Events$Query$EventsApiResponse$Event$Interest.fromJson(
+  factory Events$Query$Events$Nodes$Wannago.fromJson(
           Map<String, dynamic> json) =>
-      _$Events$Query$EventsApiResponse$Event$InterestFromJson(json);
+      _$Events$Query$Events$Nodes$WannagoFromJson(json);
 
   late int id;
 
@@ -45,17 +45,51 @@ class Events$Query$EventsApiResponse$Event$Interest extends JsonSerializable
   List<Object?> get props => [id];
   @override
   Map<String, dynamic> toJson() =>
-      _$Events$Query$EventsApiResponse$Event$InterestToJson(this);
+      _$Events$Query$Events$Nodes$WannagoToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Events$Query$EventsApiResponse$Event extends JsonSerializable
+class Events$Query$Events$Nodes$Invited extends JsonSerializable
     with EquatableMixin {
-  Events$Query$EventsApiResponse$Event();
+  Events$Query$Events$Nodes$Invited();
 
-  factory Events$Query$EventsApiResponse$Event.fromJson(
+  factory Events$Query$Events$Nodes$Invited.fromJson(
           Map<String, dynamic> json) =>
-      _$Events$Query$EventsApiResponse$EventFromJson(json);
+      _$Events$Query$Events$Nodes$InvitedFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Events$Query$Events$Nodes$InvitedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Events$Query$Events$Nodes$RelatedInterests extends JsonSerializable
+    with EquatableMixin {
+  Events$Query$Events$Nodes$RelatedInterests();
+
+  factory Events$Query$Events$Nodes$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$Events$Query$Events$Nodes$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Events$Query$Events$Nodes$RelatedInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Events$Query$Events$Nodes extends JsonSerializable with EquatableMixin {
+  Events$Query$Events$Nodes();
+
+  factory Events$Query$Events$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$Events$Query$Events$NodesFromJson(json);
 
   late int id;
 
@@ -73,7 +107,11 @@ class Events$Query$EventsApiResponse$Event extends JsonSerializable
 
   late String description;
 
-  late Events$Query$EventsApiResponse$Event$User creator;
+  late Events$Query$Events$Nodes$Creator creator;
+
+  late List<Events$Query$Events$Nodes$Wannago> wannago;
+
+  late List<Events$Query$Events$Nodes$Invited> invited;
 
   @JsonKey(
       fromJson: fromGraphQLDateTimeToDartDateTime,
@@ -84,7 +122,327 @@ class Events$Query$EventsApiResponse$Event extends JsonSerializable
 
   String? pictureUrl;
 
-  late List<Events$Query$EventsApiResponse$Event$Interest> relatedInterests;
+  late List<Events$Query$Events$Nodes$RelatedInterests> relatedInterests;
+
+  late String filterLocation;
+
+  late double filterRadius;
+
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender filterGender;
+
+  late String filterAge;
+
+  @override
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        title,
+        description,
+        creator,
+        wannago,
+        invited,
+        time,
+        location,
+        pictureUrl,
+        relatedInterests,
+        filterLocation,
+        filterRadius,
+        filterGender,
+        filterAge
+      ];
+  @override
+  Map<String, dynamic> toJson() => _$Events$Query$Events$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Events$Query$Events$Errors extends JsonSerializable with EquatableMixin {
+  Events$Query$Events$Errors();
+
+  factory Events$Query$Events$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Events$Query$Events$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Events$Query$Events$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Events$Query$Events extends JsonSerializable with EquatableMixin {
+  Events$Query$Events();
+
+  factory Events$Query$Events.fromJson(Map<String, dynamic> json) =>
+      _$Events$Query$EventsFromJson(json);
+
+  bool? ok;
+
+  List<Events$Query$Events$Nodes>? nodes;
+
+  List<Events$Query$Events$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$Events$Query$EventsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Events$Query extends JsonSerializable with EquatableMixin {
+  Events$Query();
+
+  factory Events$Query.fromJson(Map<String, dynamic> json) =>
+      _$Events$QueryFromJson(json);
+
+  late Events$Query$Events events;
+
+  @override
+  List<Object?> get props => [events];
+  @override
+  Map<String, dynamic> toJson() => _$Events$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class HelloQuery$Query extends JsonSerializable with EquatableMixin {
+  HelloQuery$Query();
+
+  factory HelloQuery$Query.fromJson(Map<String, dynamic> json) =>
+      _$HelloQuery$QueryFromJson(json);
+
+  late String hello;
+
+  @override
+  List<Object?> get props => [hello];
+  @override
+  Map<String, dynamic> toJson() => _$HelloQuery$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$Me$Nodes$Interests extends JsonSerializable with EquatableMixin {
+  Me$Query$Me$Nodes$Interests();
+
+  factory Me$Query$Me$Nodes$Interests.fromJson(Map<String, dynamic> json) =>
+      _$Me$Query$Me$Nodes$InterestsFromJson(json);
+
+  late int id;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [id, title];
+  @override
+  Map<String, dynamic> toJson() => _$Me$Query$Me$Nodes$InterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$Me$Nodes$MyEvents extends JsonSerializable with EquatableMixin {
+  Me$Query$Me$Nodes$MyEvents();
+
+  factory Me$Query$Me$Nodes$MyEvents.fromJson(Map<String, dynamic> json) =>
+      _$Me$Query$Me$Nodes$MyEventsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$Me$Query$Me$Nodes$MyEventsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$Me$Nodes$ChatNotifications extends JsonSerializable
+    with EquatableMixin {
+  Me$Query$Me$Nodes$ChatNotifications();
+
+  factory Me$Query$Me$Nodes$ChatNotifications.fromJson(
+          Map<String, dynamic> json) =>
+      _$Me$Query$Me$Nodes$ChatNotificationsFromJson(json);
+
+  late int notifications;
+
+  @override
+  List<Object?> get props => [notifications];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Me$Query$Me$Nodes$ChatNotificationsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$Me$Nodes extends JsonSerializable with EquatableMixin {
+  Me$Query$Me$Nodes();
+
+  factory Me$Query$Me$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$Me$Query$Me$NodesFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String email;
+
+  late bool verified;
+
+  late String username;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime birthday;
+
+  late List<Me$Query$Me$Nodes$Interests> interests;
+
+  late List<Me$Query$Me$Nodes$MyEvents> myEvents;
+
+  late List<Me$Query$Me$Nodes$ChatNotifications> chatNotifications;
+
+  @override
+  List<Object?> get props => [
+        id,
+        profilePhotoUrl,
+        email,
+        verified,
+        username,
+        birthday,
+        interests,
+        myEvents,
+        chatNotifications
+      ];
+  @override
+  Map<String, dynamic> toJson() => _$Me$Query$Me$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$Me$Errors extends JsonSerializable with EquatableMixin {
+  Me$Query$Me$Errors();
+
+  factory Me$Query$Me$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Me$Query$Me$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Me$Query$Me$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query$Me extends JsonSerializable with EquatableMixin {
+  Me$Query$Me();
+
+  factory Me$Query$Me.fromJson(Map<String, dynamic> json) =>
+      _$Me$Query$MeFromJson(json);
+
+  bool? ok;
+
+  Me$Query$Me$Nodes? nodes;
+
+  List<Me$Query$Me$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$Me$Query$MeToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Me$Query extends JsonSerializable with EquatableMixin {
+  Me$Query();
+
+  factory Me$Query.fromJson(Map<String, dynamic> json) =>
+      _$Me$QueryFromJson(json);
+
+  late Me$Query$Me me;
+
+  @override
+  List<Object?> get props => [me];
+  @override
+  Map<String, dynamic> toJson() => _$Me$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class MyEvents$Query$MyEvents$Nodes$Creator extends JsonSerializable
+    with EquatableMixin {
+  MyEvents$Query$MyEvents$Nodes$Creator();
+
+  factory MyEvents$Query$MyEvents$Nodes$Creator.fromJson(
+          Map<String, dynamic> json) =>
+      _$MyEvents$Query$MyEvents$Nodes$CreatorFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String username;
+
+  @override
+  List<Object?> get props => [id, profilePhotoUrl, username];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$MyEvents$Query$MyEvents$Nodes$CreatorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class MyEvents$Query$MyEvents$Nodes$RelatedInterests extends JsonSerializable
+    with EquatableMixin {
+  MyEvents$Query$MyEvents$Nodes$RelatedInterests();
+
+  factory MyEvents$Query$MyEvents$Nodes$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$MyEvents$Query$MyEvents$Nodes$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$MyEvents$Query$MyEvents$Nodes$RelatedInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class MyEvents$Query$MyEvents$Nodes extends JsonSerializable
+    with EquatableMixin {
+  MyEvents$Query$MyEvents$Nodes();
+
+  factory MyEvents$Query$MyEvents$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$MyEvents$Query$MyEvents$NodesFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+
+  late String title;
+
+  late String description;
+
+  late MyEvents$Query$MyEvents$Nodes$Creator creator;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime time;
+
+  late String location;
+
+  String? pictureUrl;
+
+  late List<MyEvents$Query$MyEvents$Nodes$RelatedInterests> relatedInterests;
 
   late String filterLocation;
 
@@ -113,18 +471,16 @@ class Events$Query$EventsApiResponse$Event extends JsonSerializable
         filterAge
       ];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Events$Query$EventsApiResponse$EventToJson(this);
+  Map<String, dynamic> toJson() => _$MyEvents$Query$MyEvents$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Events$Query$EventsApiResponse$FieldError extends JsonSerializable
+class MyEvents$Query$MyEvents$Errors extends JsonSerializable
     with EquatableMixin {
-  Events$Query$EventsApiResponse$FieldError();
+  MyEvents$Query$MyEvents$Errors();
 
-  factory Events$Query$EventsApiResponse$FieldError.fromJson(
-          Map<String, dynamic> json) =>
-      _$Events$Query$EventsApiResponse$FieldErrorFromJson(json);
+  factory MyEvents$Query$MyEvents$Errors.fromJson(Map<String, dynamic> json) =>
+      _$MyEvents$Query$MyEvents$ErrorsFromJson(json);
 
   String? field;
 
@@ -133,213 +489,41 @@ class Events$Query$EventsApiResponse$FieldError extends JsonSerializable
   @override
   List<Object?> get props => [field, message];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Events$Query$EventsApiResponse$FieldErrorToJson(this);
+  Map<String, dynamic> toJson() => _$MyEvents$Query$MyEvents$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Events$Query$EventsApiResponse extends JsonSerializable
-    with EquatableMixin {
-  Events$Query$EventsApiResponse();
+class MyEvents$Query$MyEvents extends JsonSerializable with EquatableMixin {
+  MyEvents$Query$MyEvents();
 
-  factory Events$Query$EventsApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$Events$Query$EventsApiResponseFromJson(json);
+  factory MyEvents$Query$MyEvents.fromJson(Map<String, dynamic> json) =>
+      _$MyEvents$Query$MyEventsFromJson(json);
 
   bool? ok;
 
-  List<Events$Query$EventsApiResponse$Event>? nodes;
+  List<MyEvents$Query$MyEvents$Nodes>? nodes;
 
-  List<Events$Query$EventsApiResponse$FieldError>? errors;
+  List<MyEvents$Query$MyEvents$Errors>? errors;
 
   @override
   List<Object?> get props => [ok, nodes, errors];
   @override
-  Map<String, dynamic> toJson() => _$Events$Query$EventsApiResponseToJson(this);
+  Map<String, dynamic> toJson() => _$MyEvents$Query$MyEventsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Events$Query extends JsonSerializable with EquatableMixin {
-  Events$Query();
+class MyEvents$Query extends JsonSerializable with EquatableMixin {
+  MyEvents$Query();
 
-  factory Events$Query.fromJson(Map<String, dynamic> json) =>
-      _$Events$QueryFromJson(json);
+  factory MyEvents$Query.fromJson(Map<String, dynamic> json) =>
+      _$MyEvents$QueryFromJson(json);
 
-  late Events$Query$EventsApiResponse events;
-
-  @override
-  List<Object?> get props => [events];
-  @override
-  Map<String, dynamic> toJson() => _$Events$QueryToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class HelloQuery$Query extends JsonSerializable with EquatableMixin {
-  HelloQuery$Query();
-
-  factory HelloQuery$Query.fromJson(Map<String, dynamic> json) =>
-      _$HelloQuery$QueryFromJson(json);
-
-  late String hello;
+  late MyEvents$Query$MyEvents myEvents;
 
   @override
-  List<Object?> get props => [hello];
+  List<Object?> get props => [myEvents];
   @override
-  Map<String, dynamic> toJson() => _$HelloQuery$QueryToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$UserApiResponse$User$Interest extends JsonSerializable
-    with EquatableMixin {
-  Me$Query$UserApiResponse$User$Interest();
-
-  factory Me$Query$UserApiResponse$User$Interest.fromJson(
-          Map<String, dynamic> json) =>
-      _$Me$Query$UserApiResponse$User$InterestFromJson(json);
-
-  late int id;
-
-  late String title;
-
-  @override
-  List<Object?> get props => [id, title];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Me$Query$UserApiResponse$User$InterestToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$UserApiResponse$User$Event extends JsonSerializable
-    with EquatableMixin {
-  Me$Query$UserApiResponse$User$Event();
-
-  factory Me$Query$UserApiResponse$User$Event.fromJson(
-          Map<String, dynamic> json) =>
-      _$Me$Query$UserApiResponse$User$EventFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Me$Query$UserApiResponse$User$EventToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$UserApiResponse$User$ChatNotification extends JsonSerializable
-    with EquatableMixin {
-  Me$Query$UserApiResponse$User$ChatNotification();
-
-  factory Me$Query$UserApiResponse$User$ChatNotification.fromJson(
-          Map<String, dynamic> json) =>
-      _$Me$Query$UserApiResponse$User$ChatNotificationFromJson(json);
-
-  late int notifications;
-
-  @override
-  List<Object?> get props => [notifications];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Me$Query$UserApiResponse$User$ChatNotificationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$UserApiResponse$User extends JsonSerializable
-    with EquatableMixin {
-  Me$Query$UserApiResponse$User();
-
-  factory Me$Query$UserApiResponse$User.fromJson(Map<String, dynamic> json) =>
-      _$Me$Query$UserApiResponse$UserFromJson(json);
-
-  late int id;
-
-  late String profilePhotoUrl;
-
-  late String email;
-
-  late bool verified;
-
-  late String username;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime birthday;
-
-  late List<Me$Query$UserApiResponse$User$Interest> interests;
-
-  late List<Me$Query$UserApiResponse$User$Event> myEvents;
-
-  late List<Me$Query$UserApiResponse$User$ChatNotification> chatNotifications;
-
-  @override
-  List<Object?> get props => [
-        id,
-        profilePhotoUrl,
-        email,
-        verified,
-        username,
-        birthday,
-        interests,
-        myEvents,
-        chatNotifications
-      ];
-  @override
-  Map<String, dynamic> toJson() => _$Me$Query$UserApiResponse$UserToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$UserApiResponse$FieldError extends JsonSerializable
-    with EquatableMixin {
-  Me$Query$UserApiResponse$FieldError();
-
-  factory Me$Query$UserApiResponse$FieldError.fromJson(
-          Map<String, dynamic> json) =>
-      _$Me$Query$UserApiResponse$FieldErrorFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Me$Query$UserApiResponse$FieldErrorToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$UserApiResponse extends JsonSerializable with EquatableMixin {
-  Me$Query$UserApiResponse();
-
-  factory Me$Query$UserApiResponse.fromJson(Map<String, dynamic> json) =>
-      _$Me$Query$UserApiResponseFromJson(json);
-
-  bool? ok;
-
-  Me$Query$UserApiResponse$User? nodes;
-
-  List<Me$Query$UserApiResponse$FieldError>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() => _$Me$Query$UserApiResponseToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query extends JsonSerializable with EquatableMixin {
-  Me$Query();
-
-  factory Me$Query.fromJson(Map<String, dynamic> json) =>
-      _$Me$QueryFromJson(json);
-
-  late Me$Query$UserApiResponse me;
-
-  @override
-  List<Object?> get props => [me];
-  @override
-  Map<String, dynamic> toJson() => _$Me$QueryToJson(this);
+  Map<String, dynamic> toJson() => _$MyEvents$QueryToJson(this);
 }
 
 enum Gender {
@@ -427,6 +611,32 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                               selectionSet: null),
                           FieldNode(
                               name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'wannago'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'invited'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
                               alias: null,
                               arguments: [],
                               directives: [],
@@ -701,4 +911,179 @@ class MeQuery extends GraphQLQuery<Me$Query, JsonSerializable> {
   List<Object?> get props => [document, operationName];
   @override
   Me$Query parse(Map<String, dynamic> json) => Me$Query.fromJson(json);
+}
+
+final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'myEvents'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'myEvents'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'createdAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'updatedAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'title'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'description'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'creator'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'time'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'location'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'pictureUrl'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'relatedInterests'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'filterLocation'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterRadius'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterGender'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'filterAge'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class MyEventsQuery extends GraphQLQuery<MyEvents$Query, JsonSerializable> {
+  MyEventsQuery();
+
+  @override
+  final DocumentNode document = MY_EVENTS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'myEvents';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  MyEvents$Query parse(Map<String, dynamic> json) =>
+      MyEvents$Query.fromJson(json);
 }

@@ -6,7 +6,8 @@ import 'package:whatado/widgets/events/event_top_bar.dart';
 
 class EventDisplay extends StatelessWidget {
   final Event event;
-  EventDisplay({required this.event});
+  final bool showButton;
+  EventDisplay({required this.event, this.showButton = true});
 
   final padding = 15.0;
   final sectionSpacing = 7.0;
@@ -32,7 +33,7 @@ class EventDisplay extends StatelessWidget {
           SizedBox(height: sectionSpacing),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: padding),
-              child: EventTitle(event: event)),
+              child: EventTitle(event: event, showButton: showButton)),
           SizedBox(height: sectionSpacing),
           Padding(
               padding: EdgeInsets.symmetric(horizontal: padding),

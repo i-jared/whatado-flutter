@@ -83,6 +83,19 @@ class AddEventState extends ChangeNotifier {
     textModeController.addListener(() => notifyListeners());
   }
 
+  @override
+  void dispose() {
+    photoController.dispose();
+    titleController.dispose();
+    descriptionController.dispose();
+    locationController.dispose();
+    dateController.dispose();
+    timeController.dispose();
+    textModeController.dispose();
+    addInterestController.dispose();
+    super.dispose();
+  }
+
   bool get succeeded => _succeeded;
 
   set succeeded(bool succeeded) {
@@ -140,8 +153,11 @@ class AddEventState extends ChangeNotifier {
   }
 
   void clear() {
-    photoController.reset();
     _selectedImage = null;
+    _succeeded = false;
+    _failed = false;
+    _loading = false;
+    photoController.reset();
     titleController.clear();
     descriptionController.clear();
     locationController.clear();

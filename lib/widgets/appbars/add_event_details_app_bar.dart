@@ -56,6 +56,7 @@ class AddEventDetailsAppBar extends StatelessWidget
                     if (!eventState.textMode && downloadUrl == null) {
                       print(
                           'fail: downloadUrl null'); // TODO: report to user failure
+                      eventState.clear();
                       eventState.failed = true;
                       eventState.loading = false;
                       return;
@@ -96,19 +97,21 @@ class AddEventDetailsAppBar extends StatelessWidget
                         title: eventState.textMode
                             ? eventState.textModeController.text
                             : eventState.titleController.text,
+                        wannagoIds: [],
+                        invitedIds: [],
                         // TODO: add group size / tags
                       ));
                       // TODO: report to user success
                       print(response);
                     } catch (e) {
+                      eventState.clear();
                       eventState.failed = true;
                       eventState.loading = false;
                       return;
                     }
-                    eventState.loading = false;
-                    eventState.succeeded = true;
                     eventState.clear();
-                    Navigator.popUntil(context, (route) => route.isFirst);
+                    eventState.succeeded = true;
+                    eventState.loading = false;
                   },
           ),
         ),

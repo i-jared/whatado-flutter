@@ -9,11 +9,13 @@ class HomeState extends ChangeNotifier {
   int _selectedDateIndex;
 
   RefreshController refreshController;
+  RefreshController myEventsRefreshController;
   PageController homePageController;
   ScrollController allEventsScrollController;
   ScrollController myProfileScrollController;
 
   List<Event>? allEvents;
+  List<Event>? myEvents;
 
   HomeState()
       : _appBarPageNo = 0,
@@ -22,7 +24,8 @@ class HomeState extends ChangeNotifier {
         homePageController = PageController(),
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),
-        refreshController = RefreshController(initialRefresh: false) {
+        refreshController = RefreshController(initialRefresh: false),
+        myEventsRefreshController = RefreshController(initialRefresh: false) {
     // check if scroll is at top
     // allEventsScrollController.addListener(() {
     // if (allEventsScrollController.offset <= 10 && !_allEventsAtTop) {
@@ -35,6 +38,7 @@ class HomeState extends ChangeNotifier {
     // });
     // get initial events
     getNewEvents();
+    getMyEvents();
   }
 
   @override
@@ -76,10 +80,26 @@ class HomeState extends ChangeNotifier {
   }
 
   Future<void> getNewEvents() async {
-    final query = EventsGqlQuery();
+    final query = EventsGqlProvider();
     final response = await query.events();
     allEvents = response.data ?? [];
     notifyListeners();
+  }
+
+  Future<void> getMyEvents() async {
+    final query = EventsGqlProvider();
+    final response = await query.myEvents();
+    myEvents = response.data ?? [];
+    notifyListeners();
+  }
+
+  Future<void> myEventsRefresh() async {
+    try {
+      await getMyEvents();
+      myEventsRefreshController.refreshCompleted();
+    } catch (e) {
+      myEventsRefreshController.refreshFailed();
+    }
   }
 
   Future<void> allEventsRefresh() async {
@@ -89,5 +109,11 @@ class HomeState extends ChangeNotifier {
     } catch (e) {
       refreshController.refreshFailed();
     }
+  }
+
+  void updateEvent(Event event) {
+    final int index = allEvents!.indexWhere((val) => val.id == event.id);
+    allEvents![index] = event;
+    notifyListeners();
   }
 }

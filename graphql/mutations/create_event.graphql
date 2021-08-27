@@ -12,6 +12,12 @@ mutation createEvent($eventInput: EventInput!) {
         profilePhotoUrl
         username
       }
+      wannago {
+        id
+      }
+      invited {
+        id
+      }
       time
       location
       pictureUrl

@@ -1,5 +1,5 @@
-query events {
-  events {
+mutation updateEvent($eventInput: EventInput!) {
+  updateEvent(options: $eventInput) {
     ok
     nodes {
       id

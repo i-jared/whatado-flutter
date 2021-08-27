@@ -35,6 +35,13 @@ class _AddEventDetailsState extends State<AddEventDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final eventState = Provider.of<AddEventState>(context);
+    if (eventState.loading)
+      return PostLoading();
+    else if (eventState.failed)
+      return PostFailed();
+    else if (eventState.succeeded) return PostSucceeded();
+
     return Scaffold(
         appBar: AddEventDetailsAppBar(), body: chooseWidget(context));
   }
@@ -46,11 +53,6 @@ class _AddEventDetailsState extends State<AddEventDetails> {
     final padding = 30.0;
     final sectionSpacing = 35.0;
 
-    if (eventState.loading)
-      return PostLoading();
-    else if (eventState.failed)
-      return PostFailed();
-    else if (eventState.succeeded) return PostSucceeded();
     return SingleChildScrollView(
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),

@@ -70,6 +70,7 @@ type Event {
   filterRadius: Float!
   forum: Forum!
   id: Int!
+  invited: [User!]!
   location: String!
   pictureUrl: String
   relatedInterests: [Interest!]!
@@ -94,11 +95,13 @@ input EventInput {
   filterLocation: String!
   filterRadius: Float!
   id: Int
+  invitedIds: [Int!]!
   location: String!
   pictureUrl: String
   relatedInterestsIds: [Int!]!
   time: DateTime!
   title: String!
+  wannagoIds: [Int!]!
 }
 
 type EventsApiResponse {
@@ -203,7 +206,7 @@ type Mutation {
   login(options: UserInput!): UserApiResponse!
   register(options: UserInput!): UserApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
-  updateEvent(options: EventInput!): BoolApiResponse!
+  updateEvent(options: EventInput!): EventApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
 }
 
@@ -218,6 +221,7 @@ type Query {
   interest(id: Float!): InterestApiResponse!
   interests(options: InterestFilterInput!): InterestsApiResponse!
   me: UserApiResponse!
+  myEvents: EventsApiResponse!
   users: UsersApiResponse!
 }
 

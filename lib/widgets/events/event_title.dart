@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
-import 'package:whatado/screens/home/event_details.dart';
+import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/events/join_button.dart';
+import 'package:whatado/widgets/events/leave_button.dart';
 
 class EventTitle extends StatelessWidget {
   final Event event;
-  EventTitle({required this.event});
+  final bool showButton;
+  EventTitle({required this.event, required this.showButton});
 
   final dateFormat = DateFormat('dd MMMM, yyyy');
 
   @override
   Widget build(BuildContext context) {
+    final userState = Provider.of<UserState>(context);
     final textFormat = TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: event.imageUrl!.isNotEmpty ? 22 : 30);
+    if (userState.user == null) return SizedBox.shrink();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -33,26 +39,12 @@ class EventTitle extends StatelessWidget {
                   ],
                 ),
               ),
-              Flexible(
-                flex: 3,
-                child: ElevatedButton(
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => EventDetails(event: event))),
-                    style: ButtonStyle(
-                        shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50))),
-                        backgroundColor:
-                            MaterialStateProperty.all(Color(0xffe85c3f))),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('Join', style: TextStyle(fontSize: 15)),
-                        Icon(Icons.add, size: 15),
-                      ],
-                    )),
-              )
+              if (showButton)
+                Flexible(
+                    flex: 3,
+                    child: !event.wannagoIds.contains(userState.user!.id)
+                        ? JoinButton(event: event)
+                        : LeaveButton(event: event))
             ]),
       ],
     );
