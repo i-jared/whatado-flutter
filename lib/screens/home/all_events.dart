@@ -15,15 +15,22 @@ class AllEvents extends StatelessWidget {
       controller: homeState.refreshController,
       onRefresh: homeState.allEventsRefresh,
       child: ListView(
+        shrinkWrap:
+            (homeState.allEvents != null && homeState.allEvents!.isEmpty),
         key: PageStorageKey(0),
         controller: homeState.allEventsScrollController,
         children: [
           CalendarSelector(width: width),
           if (homeState.allEvents == null)
-            Center(child: CircularProgressIndicator(value: null)),
+            Container(
+                height: MediaQuery.of(context).size.height - 200,
+                child: Center(child: CircularProgressIndicator(value: null))),
           if (homeState.allEvents != null && homeState.allEvents!.isEmpty)
-            Center(
-              child: Text('no events to display :('),
+            Container(
+              height: MediaQuery.of(context).size.height - 200,
+              child: Center(
+                child: Text('no events in your area.. :('),
+              ),
             ),
           if (homeState.allEvents != null && homeState.allEvents!.isNotEmpty)
             ...homeState.allEvents!.map((e) => EventDisplay(event: e)).toList()

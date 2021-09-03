@@ -1,0 +1,19 @@
+mutation createChat($chatInput: ChatInput!) {
+  createChat(options: $chatInput) {
+    ok
+    nodes {
+      id
+      text
+      createdAt
+      author {
+        id
+        username
+        profilePhotoUrl
+      }
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

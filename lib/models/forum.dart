@@ -1,27 +1,28 @@
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/chat_notification.dart';
-import 'package:whatado/models/event.dart';
 
 class Forum {
   int id;
-  List<ChatNotification> userNotifications;
+  ChatNotification userNotification;
   List<Chat> chats;
-  Event event;
+  int eventId;
 
   Forum(
       {required this.id,
-      required this.event,
-      this.userNotifications = const [],
+      required this.eventId,
+      required this.userNotification,
       this.chats = const []});
+
   factory Forum.fromGqlData(Map data) {
     return Forum(
-        event: Event.fromGqlData(data['event']),
         id: data['id'],
-        userNotifications: (data['chatNotifications'] as List)
-            .map((val) => ChatNotification.fromGqlData(val))
-            .toList(),
-        chats: (data['chats'] as List)
-            .map((val) => Chat.fromGqlData(val))
-            .toList());
+        eventId: data['event']['id'],
+        userNotification: ChatNotification.fromGqlData(
+            (data['userNotifications'] as List).first),
+        chats: data['chats'] == null
+            ? []
+            : (data['chats'] as List)
+                .map((val) => Chat.fromGqlData(val))
+                .toList());
   }
 }

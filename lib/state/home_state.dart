@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
+import 'package:whatado/providers/graphql/forums_provider.dart';
 
 class HomeState extends ChangeNotifier {
   int _appBarPageNo;
@@ -16,6 +18,7 @@ class HomeState extends ChangeNotifier {
 
   List<Event>? allEvents;
   List<Event>? myEvents;
+  List<Forum>? myForums;
 
   HomeState()
       : _appBarPageNo = 0,
@@ -38,7 +41,7 @@ class HomeState extends ChangeNotifier {
     // });
     // get initial events
     getNewEvents();
-    getMyEvents();
+    getMyEvents().then((_) => getMyForums());
   }
 
   @override
@@ -93,9 +96,18 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> getMyForums() async {
+    final query = ForumsGqlProvider();
+    final response =
+        await query.myForums(myEvents?.map((event) => event.id).toList() ?? []);
+    myForums = response.data ?? [];
+    notifyListeners();
+  }
+
   Future<void> myEventsRefresh() async {
     try {
       await getMyEvents();
+      await getMyForums();
       myEventsRefreshController.refreshCompleted();
     } catch (e) {
       myEventsRefreshController.refreshFailed();

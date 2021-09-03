@@ -44,6 +44,7 @@ input ChatInput {
 type ChatNotification {
   forum: Forum!
   id: Int!
+  muted: Boolean!
   notifications: Int!
   user: User!
 }
@@ -212,20 +213,23 @@ type Mutation {
 
 type Query {
   chat(id: Float!): ChatApiResponse!
-  chats(options: ChatFilterInput!): ChatsApiResponse!
+  chats(forumId: Int!): ChatsApiResponse!
   event(id: Float!): Event
   events: EventsApiResponse!
   forum(id: Float!): ForumApiResponse!
-  getForumsByEventId(ids: Int!): ForumsApiResponse!
+  forumsByEventId(ids: [Int!]!): ForumsApiResponse!
   hello: String!
   interest(id: Float!): InterestApiResponse!
   interests(options: InterestFilterInput!): InterestsApiResponse!
+  lastChat(forumId: Int!): ChatApiResponse!
   me: UserApiResponse!
   myEvents: EventsApiResponse!
   users: UsersApiResponse!
+  usersById(ids: [Int!]!): UsersApiResponse!
 }
 
 type Subscription {
+  chatSubscription: Chat!
   helloSubscription: String!
   me_sub: String!
 }

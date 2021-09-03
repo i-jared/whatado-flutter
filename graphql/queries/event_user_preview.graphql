@@ -1,0 +1,14 @@
+query eventUserPreview($userIds: [Int!]!) {
+  usersById(ids: $userIds) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes {
+      id
+      profilePhotoUrl
+      username
+    }
+  }
+}

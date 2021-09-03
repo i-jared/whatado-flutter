@@ -1,0 +1,19 @@
+query chats($forumId: Int!) {
+  chats (forumId: $forumId) {
+    ok
+    nodes {
+      id
+      createdAt
+      text
+      author {
+        id
+        profilePhotoUrl
+        username
+      }
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

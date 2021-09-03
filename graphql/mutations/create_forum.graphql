@@ -1,8 +1,11 @@
-mutation createForum($eventId: Int) {
+mutation createForum($eventId: Int!) {
   createForum(eventId: $eventId) {
     ok
     nodes {
       id
+      event {
+        id
+      }
     }
     errors {
       field

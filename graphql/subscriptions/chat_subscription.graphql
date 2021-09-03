@@ -1,0 +1,12 @@
+subscription chat {
+  chatSubscription {
+    id
+    createdAt
+    text
+    author {
+      id
+      profilePhotoUrl
+      username
+    }
+  }
+}

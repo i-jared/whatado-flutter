@@ -12,6 +12,9 @@ query myEvents {
         profilePhotoUrl
         username
       }
+      invited {
+        id
+      }
       time
       location
       pictureUrl

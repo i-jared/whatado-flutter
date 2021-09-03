@@ -208,6 +208,207 @@ class Events$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class EventUserPreview$Query$UsersById$Errors extends JsonSerializable
+    with EquatableMixin {
+  EventUserPreview$Query$UsersById$Errors();
+
+  factory EventUserPreview$Query$UsersById$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$EventUserPreview$Query$UsersById$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$EventUserPreview$Query$UsersById$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventUserPreview$Query$UsersById$Nodes extends JsonSerializable
+    with EquatableMixin {
+  EventUserPreview$Query$UsersById$Nodes();
+
+  factory EventUserPreview$Query$UsersById$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$EventUserPreview$Query$UsersById$NodesFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String username;
+
+  @override
+  List<Object?> get props => [id, profilePhotoUrl, username];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$EventUserPreview$Query$UsersById$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventUserPreview$Query$UsersById extends JsonSerializable
+    with EquatableMixin {
+  EventUserPreview$Query$UsersById();
+
+  factory EventUserPreview$Query$UsersById.fromJson(
+          Map<String, dynamic> json) =>
+      _$EventUserPreview$Query$UsersByIdFromJson(json);
+
+  bool? ok;
+
+  List<EventUserPreview$Query$UsersById$Errors>? errors;
+
+  List<EventUserPreview$Query$UsersById$Nodes>? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$EventUserPreview$Query$UsersByIdToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventUserPreview$Query extends JsonSerializable with EquatableMixin {
+  EventUserPreview$Query();
+
+  factory EventUserPreview$Query.fromJson(Map<String, dynamic> json) =>
+      _$EventUserPreview$QueryFromJson(json);
+
+  late EventUserPreview$Query$UsersById usersById;
+
+  @override
+  List<Object?> get props => [usersById];
+  @override
+  Map<String, dynamic> toJson() => _$EventUserPreview$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumsByEventId$Query$ForumsByEventId$Errors extends JsonSerializable
+    with EquatableMixin {
+  ForumsByEventId$Query$ForumsByEventId$Errors();
+
+  factory ForumsByEventId$Query$ForumsByEventId$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForumsByEventId$Query$ForumsByEventId$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForumsByEventId$Query$ForumsByEventId$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications
+    extends JsonSerializable with EquatableMixin {
+  ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications();
+
+  factory ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotificationsFromJson(
+          json);
+
+  late int id;
+
+  late int notifications;
+
+  late bool muted;
+
+  @override
+  List<Object?> get props => [id, notifications, muted];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotificationsToJson(
+          this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumsByEventId$Query$ForumsByEventId$Nodes$Event extends JsonSerializable
+    with EquatableMixin {
+  ForumsByEventId$Query$ForumsByEventId$Nodes$Event();
+
+  factory ForumsByEventId$Query$ForumsByEventId$Nodes$Event.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForumsByEventId$Query$ForumsByEventId$Nodes$EventFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForumsByEventId$Query$ForumsByEventId$Nodes$EventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumsByEventId$Query$ForumsByEventId$Nodes extends JsonSerializable
+    with EquatableMixin {
+  ForumsByEventId$Query$ForumsByEventId$Nodes();
+
+  factory ForumsByEventId$Query$ForumsByEventId$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForumsByEventId$Query$ForumsByEventId$NodesFromJson(json);
+
+  late int id;
+
+  late List<ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications>
+      userNotifications;
+
+  late ForumsByEventId$Query$ForumsByEventId$Nodes$Event event;
+
+  @override
+  List<Object?> get props => [id, userNotifications, event];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForumsByEventId$Query$ForumsByEventId$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumsByEventId$Query$ForumsByEventId extends JsonSerializable
+    with EquatableMixin {
+  ForumsByEventId$Query$ForumsByEventId();
+
+  factory ForumsByEventId$Query$ForumsByEventId.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForumsByEventId$Query$ForumsByEventIdFromJson(json);
+
+  bool? ok;
+
+  List<ForumsByEventId$Query$ForumsByEventId$Errors>? errors;
+
+  List<ForumsByEventId$Query$ForumsByEventId$Nodes>? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForumsByEventId$Query$ForumsByEventIdToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumsByEventId$Query extends JsonSerializable with EquatableMixin {
+  ForumsByEventId$Query();
+
+  factory ForumsByEventId$Query.fromJson(Map<String, dynamic> json) =>
+      _$ForumsByEventId$QueryFromJson(json);
+
+  late ForumsByEventId$Query$ForumsByEventId forumsByEventId;
+
+  @override
+  List<Object?> get props => [forumsByEventId];
+  @override
+  Map<String, dynamic> toJson() => _$ForumsByEventId$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class HelloQuery$Query extends JsonSerializable with EquatableMixin {
   HelloQuery$Query();
 
@@ -220,6 +421,105 @@ class HelloQuery$Query extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [hello];
   @override
   Map<String, dynamic> toJson() => _$HelloQuery$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LastChat$Query$LastChat$Errors extends JsonSerializable
+    with EquatableMixin {
+  LastChat$Query$LastChat$Errors();
+
+  factory LastChat$Query$LastChat$Errors.fromJson(Map<String, dynamic> json) =>
+      _$LastChat$Query$LastChat$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$LastChat$Query$LastChat$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LastChat$Query$LastChat$Nodes$Author extends JsonSerializable
+    with EquatableMixin {
+  LastChat$Query$LastChat$Nodes$Author();
+
+  factory LastChat$Query$LastChat$Nodes$Author.fromJson(
+          Map<String, dynamic> json) =>
+      _$LastChat$Query$LastChat$Nodes$AuthorFromJson(json);
+
+  late int id;
+
+  late String username;
+
+  late String profilePhotoUrl;
+
+  @override
+  List<Object?> get props => [id, username, profilePhotoUrl];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$LastChat$Query$LastChat$Nodes$AuthorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LastChat$Query$LastChat$Nodes extends JsonSerializable
+    with EquatableMixin {
+  LastChat$Query$LastChat$Nodes();
+
+  factory LastChat$Query$LastChat$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$LastChat$Query$LastChat$NodesFromJson(json);
+
+  late int id;
+
+  late String text;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  late LastChat$Query$LastChat$Nodes$Author author;
+
+  @override
+  List<Object?> get props => [id, text, createdAt, author];
+  @override
+  Map<String, dynamic> toJson() => _$LastChat$Query$LastChat$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LastChat$Query$LastChat extends JsonSerializable with EquatableMixin {
+  LastChat$Query$LastChat();
+
+  factory LastChat$Query$LastChat.fromJson(Map<String, dynamic> json) =>
+      _$LastChat$Query$LastChatFromJson(json);
+
+  bool? ok;
+
+  List<LastChat$Query$LastChat$Errors>? errors;
+
+  LastChat$Query$LastChat$Nodes? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() => _$LastChat$Query$LastChatToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LastChat$Query extends JsonSerializable with EquatableMixin {
+  LastChat$Query();
+
+  factory LastChat$Query.fromJson(Map<String, dynamic> json) =>
+      _$LastChat$QueryFromJson(json);
+
+  late LastChat$Query$LastChat lastChat;
+
+  @override
+  List<Object?> get props => [lastChat];
+  @override
+  Map<String, dynamic> toJson() => _$LastChat$QueryToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -265,8 +565,10 @@ class Me$Query$Me$Nodes$ChatNotifications extends JsonSerializable
 
   late int notifications;
 
+  late bool muted;
+
   @override
-  List<Object?> get props => [notifications];
+  List<Object?> get props => [notifications, muted];
   @override
   Map<String, dynamic> toJson() =>
       _$Me$Query$Me$Nodes$ChatNotificationsToJson(this);
@@ -390,6 +692,24 @@ class MyEvents$Query$MyEvents$Nodes$Creator extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class MyEvents$Query$MyEvents$Nodes$Invited extends JsonSerializable
+    with EquatableMixin {
+  MyEvents$Query$MyEvents$Nodes$Invited();
+
+  factory MyEvents$Query$MyEvents$Nodes$Invited.fromJson(
+          Map<String, dynamic> json) =>
+      _$MyEvents$Query$MyEvents$Nodes$InvitedFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$MyEvents$Query$MyEvents$Nodes$InvitedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class MyEvents$Query$MyEvents$Nodes$RelatedInterests extends JsonSerializable
     with EquatableMixin {
   MyEvents$Query$MyEvents$Nodes$RelatedInterests();
@@ -433,6 +753,8 @@ class MyEvents$Query$MyEvents$Nodes extends JsonSerializable
 
   late MyEvents$Query$MyEvents$Nodes$Creator creator;
 
+  late List<MyEvents$Query$MyEvents$Nodes$Invited> invited;
+
   @JsonKey(
       fromJson: fromGraphQLDateTimeToDartDateTime,
       toJson: fromDartDateTimeToGraphQLDateTime)
@@ -461,6 +783,7 @@ class MyEvents$Query$MyEvents$Nodes extends JsonSerializable
         title,
         description,
         creator,
+        invited,
         time,
         location,
         pictureUrl,
@@ -524,6 +847,101 @@ class MyEvents$Query extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [myEvents];
   @override
   Map<String, dynamic> toJson() => _$MyEvents$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats$Nodes$Author extends JsonSerializable
+    with EquatableMixin {
+  Chats$Query$Chats$Nodes$Author();
+
+  factory Chats$Query$Chats$Nodes$Author.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$Chats$Nodes$AuthorFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String username;
+
+  @override
+  List<Object?> get props => [id, profilePhotoUrl, username];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$Chats$Nodes$AuthorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats$Nodes extends JsonSerializable with EquatableMixin {
+  Chats$Query$Chats$Nodes();
+
+  factory Chats$Query$Chats$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$Chats$NodesFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  late String text;
+
+  late Chats$Query$Chats$Nodes$Author author;
+
+  @override
+  List<Object?> get props => [id, createdAt, text, author];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$Chats$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats$Errors extends JsonSerializable with EquatableMixin {
+  Chats$Query$Chats$Errors();
+
+  factory Chats$Query$Chats$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$Chats$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$Chats$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats extends JsonSerializable with EquatableMixin {
+  Chats$Query$Chats();
+
+  factory Chats$Query$Chats.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$ChatsFromJson(json);
+
+  bool? ok;
+
+  List<Chats$Query$Chats$Nodes>? nodes;
+
+  List<Chats$Query$Chats$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$ChatsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query extends JsonSerializable with EquatableMixin {
+  Chats$Query();
+
+  factory Chats$Query.fromJson(Map<String, dynamic> json) =>
+      _$Chats$QueryFromJson(json);
+
+  late Chats$Query$Chats chats;
+
+  @override
+  List<Object?> get props => [chats];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$QueryToJson(this);
 }
 
 enum Gender {
@@ -736,6 +1154,264 @@ class EventsQuery extends GraphQLQuery<Events$Query, JsonSerializable> {
   Events$Query parse(Map<String, dynamic> json) => Events$Query.fromJson(json);
 }
 
+@JsonSerializable(explicitToJson: true)
+class EventUserPreviewArguments extends JsonSerializable with EquatableMixin {
+  EventUserPreviewArguments({required this.userIds});
+
+  @override
+  factory EventUserPreviewArguments.fromJson(Map<String, dynamic> json) =>
+      _$EventUserPreviewArgumentsFromJson(json);
+
+  late List<int> userIds;
+
+  @override
+  List<Object?> get props => [userIds];
+  @override
+  Map<String, dynamic> toJson() => _$EventUserPreviewArgumentsToJson(this);
+}
+
+final EVENT_USER_PREVIEW_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'eventUserPreview'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'userIds')),
+            type: ListTypeNode(
+                type: NamedTypeNode(
+                    name: NameNode(value: 'Int'), isNonNull: true),
+                isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'usersById'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'ids'),
+                  value: VariableNode(name: NameNode(value: 'userIds')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'profilePhotoUrl'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'username'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class EventUserPreviewQuery
+    extends GraphQLQuery<EventUserPreview$Query, EventUserPreviewArguments> {
+  EventUserPreviewQuery({required this.variables});
+
+  @override
+  final DocumentNode document = EVENT_USER_PREVIEW_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'eventUserPreview';
+
+  @override
+  final EventUserPreviewArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  EventUserPreview$Query parse(Map<String, dynamic> json) =>
+      EventUserPreview$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumsByEventIdArguments extends JsonSerializable with EquatableMixin {
+  ForumsByEventIdArguments({required this.eventIds});
+
+  @override
+  factory ForumsByEventIdArguments.fromJson(Map<String, dynamic> json) =>
+      _$ForumsByEventIdArgumentsFromJson(json);
+
+  late List<int> eventIds;
+
+  @override
+  List<Object?> get props => [eventIds];
+  @override
+  Map<String, dynamic> toJson() => _$ForumsByEventIdArgumentsToJson(this);
+}
+
+final FORUMS_BY_EVENT_ID_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'forumsByEventId'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventIds')),
+            type: ListTypeNode(
+                type: NamedTypeNode(
+                    name: NameNode(value: 'Int'), isNonNull: true),
+                isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'forumsByEventId'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'ids'),
+                  value: VariableNode(name: NameNode(value: 'eventIds')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'userNotifications'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'notifications'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'muted'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
+                        name: NameNode(value: 'event'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ]))
+                  ]))
+            ]))
+      ]))
+]);
+
+class ForumsByEventIdQuery
+    extends GraphQLQuery<ForumsByEventId$Query, ForumsByEventIdArguments> {
+  ForumsByEventIdQuery({required this.variables});
+
+  @override
+  final DocumentNode document = FORUMS_BY_EVENT_ID_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'forumsByEventId';
+
+  @override
+  final ForumsByEventIdArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  ForumsByEventId$Query parse(Map<String, dynamic> json) =>
+      ForumsByEventId$Query.fromJson(json);
+}
+
 final HELLO_QUERY_QUERY_DOCUMENT = DocumentNode(definitions: [
   OperationDefinitionNode(
       type: OperationType.query,
@@ -766,6 +1442,143 @@ class HelloQueryQuery extends GraphQLQuery<HelloQuery$Query, JsonSerializable> {
   @override
   HelloQuery$Query parse(Map<String, dynamic> json) =>
       HelloQuery$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LastChatArguments extends JsonSerializable with EquatableMixin {
+  LastChatArguments({required this.forumId});
+
+  @override
+  factory LastChatArguments.fromJson(Map<String, dynamic> json) =>
+      _$LastChatArgumentsFromJson(json);
+
+  late int forumId;
+
+  @override
+  List<Object?> get props => [forumId];
+  @override
+  Map<String, dynamic> toJson() => _$LastChatArgumentsToJson(this);
+}
+
+final LAST_CHAT_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'lastChat'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'forumId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'lastChat'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'forumId'),
+                  value: VariableNode(name: NameNode(value: 'forumId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'text'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'createdAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'author'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ]))
+                  ]))
+            ]))
+      ]))
+]);
+
+class LastChatQuery extends GraphQLQuery<LastChat$Query, LastChatArguments> {
+  LastChatQuery({required this.variables});
+
+  @override
+  final DocumentNode document = LAST_CHAT_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'lastChat';
+
+  @override
+  final LastChatArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  LastChat$Query parse(Map<String, dynamic> json) =>
+      LastChat$Query.fromJson(json);
 }
 
 final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
@@ -869,6 +1682,12 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: SelectionSetNode(selections: [
                           FieldNode(
                               name: NameNode(value: 'notifications'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'muted'),
                               alias: null,
                               arguments: [],
                               directives: [],
@@ -994,6 +1813,19 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                               selectionSet: null)
                         ])),
                     FieldNode(
+                        name: NameNode(value: 'invited'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ])),
+                    FieldNode(
                         name: NameNode(value: 'time'),
                         alias: null,
                         arguments: [],
@@ -1086,4 +1918,140 @@ class MyEventsQuery extends GraphQLQuery<MyEvents$Query, JsonSerializable> {
   @override
   MyEvents$Query parse(Map<String, dynamic> json) =>
       MyEvents$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ChatsArguments extends JsonSerializable with EquatableMixin {
+  ChatsArguments({required this.forumId});
+
+  @override
+  factory ChatsArguments.fromJson(Map<String, dynamic> json) =>
+      _$ChatsArgumentsFromJson(json);
+
+  late int forumId;
+
+  @override
+  List<Object?> get props => [forumId];
+  @override
+  Map<String, dynamic> toJson() => _$ChatsArgumentsToJson(this);
+}
+
+final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'chats'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'forumId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'chats'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'forumId'),
+                  value: VariableNode(name: NameNode(value: 'forumId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'createdAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'text'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'author'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ]))
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class ChatsQuery extends GraphQLQuery<Chats$Query, ChatsArguments> {
+  ChatsQuery({required this.variables});
+
+  @override
+  final DocumentNode document = CHATS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'chats';
+
+  @override
+  final ChatsArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Chats$Query parse(Map<String, dynamic> json) => Chats$Query.fromJson(json);
 }

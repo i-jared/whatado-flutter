@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatado/models/user.dart';
-import 'package:whatado/providers/graphql/me_query.dart';
+import 'package:whatado/providers/graphql/user_provider.dart';
 
 class UserState extends ChangeNotifier {
   User? _user;
@@ -17,7 +17,7 @@ class UserState extends ChangeNotifier {
   }
 
   Future<void> getUser() async {
-    final query = MeGqlQuery();
+    final query = UserGqlProvider();
     final response = await query.me();
     user = response.data;
     notifyListeners();

@@ -37,7 +37,6 @@ class _SubscriptionTestState extends State<SubscriptionTest> {
                             color: Colors.amber,
                             child: Text(snapshot.data.toString()))),
                   );
-                print('jcl ${snapshot.connectionState}');
                 return Container(height: 100, width: 100, color: Colors.blue);
               }),
           TextButton(
@@ -45,14 +44,8 @@ class _SubscriptionTestState extends State<SubscriptionTest> {
               onPressed: () async {
                 await TestGqlSubscription().mutate();
               }),
-              TextButton(
-              child: Text('cancel it'),
-              onPressed: () async {
-              }),
-              TextButton(
-              child: Text('revive it'),
-              onPressed: () {
-              }),
+          TextButton(child: Text('cancel it'), onPressed: () async {}),
+          TextButton(child: Text('revive it'), onPressed: () {}),
         ],
       ),
     );

@@ -28,10 +28,13 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
                       color: !ready ? Colors.grey : Color(0xffe85c3f))),
               onPressed: !ready
                   ? null
-                  : () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddEventDetails()))),
+                  : () {
+                      eventState.savePhotoInfo();
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddEventDetails()));
+                    }),
         ),
       ],
       centerTitle: true,

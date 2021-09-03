@@ -19,6 +19,9 @@ class AddEventState extends ChangeNotifier {
   TextEditingController addInterestController;
   Gender _selectedGender;
   AssetEntity? _selectedImage;
+  double _scale;
+  double _offsetx;
+  double _offsety;
 
   double _filterAgeStart;
   double _filterAgeEnd;
@@ -74,17 +77,20 @@ class AddEventState extends ChangeNotifier {
         _selectedGender = Gender.both,
         _loading = false,
         _succeeded = false,
-        _failed = false {
+        _failed = false,
+        _scale = 0,
+        _offsetx = 0,
+        _offsety = 0 {
     titleController.addListener(() => notifyListeners());
     descriptionController.addListener(() => notifyListeners());
     locationController.addListener(() => notifyListeners());
     dateController.addListener(() => notifyListeners());
     timeController.addListener(() => notifyListeners());
-    textModeController.addListener(() => notifyListeners());
   }
 
   @override
   void dispose() {
+    print('being disposed');
     photoController.dispose();
     titleController.dispose();
     descriptionController.dispose();
@@ -152,7 +158,14 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void savePhotoInfo() {
+    _scale = photoController.scale!.toDouble();
+    _offsetx = photoController.position.dx;
+    _offsety = photoController.position.dy;
+  }
+
   void clear() {
+    print('being cleard');
     _selectedImage = null;
     _succeeded = false;
     _failed = false;
@@ -169,31 +182,32 @@ class AddEventState extends ChangeNotifier {
 
   Future<Uint8List> cropResizeImage(double deviceWidth) async {
     if (_selectedImage == null) return Uint8List.fromList([]);
-    final width = _selectedImage!.width;
-    final height = _selectedImage!.height;
+    final width = _selectedImage!.orientatedWidth;
+    final height = _selectedImage!.orientatedHeight;
     // resizing image too small doesn't update controller on revert to min size
-    final scale = max(
-        deviceWidth / min(width, height), photoController.scale!.toDouble());
-    final offsetx = photoController.position.dx / scale;
-    final offsety = photoController.position.dy / scale;
+    final scale = max(deviceWidth / min(width, height), _scale);
+    final offsetx = _offsetx / scale;
+    final offsety = _offsety / scale;
     // get positions of TL & BR corners
     final length = deviceWidth / scale;
-    final top = (height / 2.0 - length / 2.0 - offsety).round();
-    final right = (width / 2.0 - length / 2.0 + offsetx).round();
-    final bottom = (height / 2.0 - length / 2.0 + offsety).round();
-    final left = (width / 2.0 - length / 2.0 - offsetx).round();
+    final top = ((height / 2.0) - (length / 2.0) - offsety).round();
+    final right = ((width / 2.0) - (length / 2.0) + offsetx).round();
+    final bottom = ((height / 2.0) - (length / 2.0) + offsety).round();
+    final left = ((width / 2.0) - (length / 2.0) - offsetx).round();
     // crop image and encode it as png
     final rawImage = await _selectedImage!.originBytes;
     final decodedImage = decodeImage(List.from(rawImage ?? []));
     if (decodedImage == null) return Uint8List.fromList([]);
+    final rotatedImage = copyRotate(decodedImage, _selectedImage!.orientation);
     final face = copyCrop(
-      decodedImage,
+      rotatedImage,
       left,
       top,
       width - right - left,
       height - top - bottom,
     );
-    final resizedFace = copyResize(face, height: 700, width: 700);
+    final rerotatedImage = copyRotate(face, -_selectedImage!.orientation);
+    final resizedFace = copyResize(rerotatedImage, height: 700, width: 700);
     return Uint8List.fromList(encodePng(resizedFace));
   }
 }

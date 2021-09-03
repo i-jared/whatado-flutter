@@ -244,16 +244,32 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
       'wannagoIds': instance.wannagoIds,
     };
 
+CreateForum$Mutation$CreateForum$Nodes$Event
+    _$CreateForum$Mutation$CreateForum$Nodes$EventFromJson(
+        Map<String, dynamic> json) {
+  return CreateForum$Mutation$CreateForum$Nodes$Event()..id = json['id'] as int;
+}
+
+Map<String, dynamic> _$CreateForum$Mutation$CreateForum$Nodes$EventToJson(
+        CreateForum$Mutation$CreateForum$Nodes$Event instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
 CreateForum$Mutation$CreateForum$Nodes
     _$CreateForum$Mutation$CreateForum$NodesFromJson(
         Map<String, dynamic> json) {
-  return CreateForum$Mutation$CreateForum$Nodes()..id = json['id'] as int;
+  return CreateForum$Mutation$CreateForum$Nodes()
+    ..id = json['id'] as int
+    ..event = CreateForum$Mutation$CreateForum$Nodes$Event.fromJson(
+        json['event'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$CreateForum$Mutation$CreateForum$NodesToJson(
         CreateForum$Mutation$CreateForum$Nodes instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'event': instance.event.toJson(),
     };
 
 CreateForum$Mutation$CreateForum$Errors
@@ -779,6 +795,104 @@ Map<String, dynamic> _$UpdateEvent$MutationToJson(
       'updateEvent': instance.updateEvent.toJson(),
     };
 
+CreateChat$Mutation$CreateChat$Nodes$Author
+    _$CreateChat$Mutation$CreateChat$Nodes$AuthorFromJson(
+        Map<String, dynamic> json) {
+  return CreateChat$Mutation$CreateChat$Nodes$Author()
+    ..id = json['id'] as int
+    ..username = json['username'] as String
+    ..profilePhotoUrl = json['profilePhotoUrl'] as String;
+}
+
+Map<String, dynamic> _$CreateChat$Mutation$CreateChat$Nodes$AuthorToJson(
+        CreateChat$Mutation$CreateChat$Nodes$Author instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'profilePhotoUrl': instance.profilePhotoUrl,
+    };
+
+CreateChat$Mutation$CreateChat$Nodes
+    _$CreateChat$Mutation$CreateChat$NodesFromJson(Map<String, dynamic> json) {
+  return CreateChat$Mutation$CreateChat$Nodes()
+    ..id = json['id'] as int
+    ..text = json['text'] as String
+    ..createdAt = fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+    ..author = CreateChat$Mutation$CreateChat$Nodes$Author.fromJson(
+        json['author'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$CreateChat$Mutation$CreateChat$NodesToJson(
+        CreateChat$Mutation$CreateChat$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'text': instance.text,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'author': instance.author.toJson(),
+    };
+
+CreateChat$Mutation$CreateChat$Errors
+    _$CreateChat$Mutation$CreateChat$ErrorsFromJson(Map<String, dynamic> json) {
+  return CreateChat$Mutation$CreateChat$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$CreateChat$Mutation$CreateChat$ErrorsToJson(
+        CreateChat$Mutation$CreateChat$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+CreateChat$Mutation$CreateChat _$CreateChat$Mutation$CreateChatFromJson(
+    Map<String, dynamic> json) {
+  return CreateChat$Mutation$CreateChat()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] == null
+        ? null
+        : CreateChat$Mutation$CreateChat$Nodes.fromJson(
+            json['nodes'] as Map<String, dynamic>)
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => CreateChat$Mutation$CreateChat$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$CreateChat$Mutation$CreateChatToJson(
+        CreateChat$Mutation$CreateChat instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+CreateChat$Mutation _$CreateChat$MutationFromJson(Map<String, dynamic> json) {
+  return CreateChat$Mutation()
+    ..createChat = CreateChat$Mutation$CreateChat.fromJson(
+        json['createChat'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$CreateChat$MutationToJson(
+        CreateChat$Mutation instance) =>
+    <String, dynamic>{
+      'createChat': instance.createChat.toJson(),
+    };
+
+ChatInput _$ChatInputFromJson(Map<String, dynamic> json) {
+  return ChatInput(
+    authorId: json['authorId'] as int,
+    forumId: json['forumId'] as int,
+    text: json['text'] as String,
+  );
+}
+
+Map<String, dynamic> _$ChatInputToJson(ChatInput instance) => <String, dynamic>{
+      'authorId': instance.authorId,
+      'forumId': instance.forumId,
+      'text': instance.text,
+    };
+
 CreateEventArguments _$CreateEventArgumentsFromJson(Map<String, dynamic> json) {
   return CreateEventArguments(
     eventInput: EventInput.fromJson(json['eventInput'] as Map<String, dynamic>),
@@ -793,7 +907,7 @@ Map<String, dynamic> _$CreateEventArgumentsToJson(
 
 CreateForumArguments _$CreateForumArgumentsFromJson(Map<String, dynamic> json) {
   return CreateForumArguments(
-    eventId: json['eventId'] as int?,
+    eventId: json['eventId'] as int,
   );
 }
 
@@ -874,4 +988,16 @@ Map<String, dynamic> _$UpdateEventArgumentsToJson(
         UpdateEventArguments instance) =>
     <String, dynamic>{
       'eventInput': instance.eventInput.toJson(),
+    };
+
+CreateChatArguments _$CreateChatArgumentsFromJson(Map<String, dynamic> json) {
+  return CreateChatArguments(
+    chatInput: ChatInput.fromJson(json['chatInput'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$CreateChatArgumentsToJson(
+        CreateChatArguments instance) =>
+    <String, dynamic>{
+      'chatInput': instance.chatInput.toJson(),
     };

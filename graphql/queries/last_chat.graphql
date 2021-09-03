@@ -1,0 +1,19 @@
+query lastChat($forumId: Int!) {
+  lastChat(forumId: $forumId) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes {
+      id
+      text
+      createdAt
+      author {
+        id
+        username
+        profilePhotoUrl
+      }
+    }
+  }
+}

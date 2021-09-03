@@ -13,7 +13,7 @@ class _PostFailedState extends State<PostFailed> {
   @override
   void initState() {
     super.initState();
-    timer = Timer(Duration(seconds: 3), () {
+    timer = Timer(Duration(seconds: 2), () {
       Navigator.popUntil(context, (route) => route.isFirst);
     });
   }

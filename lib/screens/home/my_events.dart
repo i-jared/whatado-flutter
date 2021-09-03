@@ -12,22 +12,25 @@ class MyEvents extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final homeState = Provider.of<HomeState>(context);
 
-    return SmartRefresher(
-      controller: homeState.myEventsRefreshController,
-      onRefresh: homeState.myEventsRefresh,
-      child: ListView(
-        key: PageStorageKey(0),
-        children: [
-          if (homeState.myEvents == null)
-            Center(child: CircularProgressIndicator(value: null)),
-          if (homeState.myEvents != null && homeState.myEvents!.isEmpty)
-            Center(
+    return (homeState.myEvents != null && homeState.myEvents!.isEmpty)
+        ? Container(
+            child: Center(
               child: Text('no events to display :('),
             ),
-          if (homeState.myEvents != null && homeState.myEvents!.isNotEmpty)
-            ...homeState.myEvents!.map((e) => MyEventDisplay(event: e)).toList()
-        ],
-      ),
-    );
+          )
+        : (homeState.myEvents == null)
+            ? Center(child: CircularProgressIndicator(value: null))
+            : SmartRefresher(
+                controller: homeState.myEventsRefreshController,
+                onRefresh: homeState.myEventsRefresh,
+                child: ListView(
+                  key: PageStorageKey(0),
+                  children: [
+                    ...homeState.myEvents!
+                        .map((e) => MyEventDisplay(event: e))
+                        .toList()
+                  ],
+                ),
+              );
   }
 }

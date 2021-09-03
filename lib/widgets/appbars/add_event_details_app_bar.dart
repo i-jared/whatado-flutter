@@ -1,11 +1,14 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/providers/graphql/create_event_query.dart';
+import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
+import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 
 class AddEventDetailsAppBar extends StatelessWidget
@@ -17,6 +20,7 @@ class AddEventDetailsAppBar extends StatelessWidget
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
     final userState = Provider.of<UserState>(context);
+    final homeState = Provider.of<HomeState>(context);
     final ready = eventState.timeController.text.isNotEmpty &&
         eventState.dateController.text.isNotEmpty &&
         eventState.locationController.text.isNotEmpty &&
@@ -39,30 +43,29 @@ class AddEventDetailsAppBar extends StatelessWidget
                 : () async {
                     eventState.loading = true;
                     if (userState.user == null) {
-                      print('fail: user null'); // TODO: report to user failure
+                      print('fail: user null');
                       await userState.getUser();
                     }
 
-                    String? downloadUrl;
-                    // TODO: create custom interests
-                    if (!eventState.textMode) {
-                      downloadUrl = await cloudStorageService.uploadImage(
-                        await eventState
-                            .cropResizeImage(MediaQuery.of(context).size.width),
-                        userState.user!.id,
-                      );
-                    }
-
-                    if (!eventState.textMode && downloadUrl == null) {
-                      print(
-                          'fail: downloadUrl null'); // TODO: report to user failure
-                      eventState.clear();
-                      eventState.failed = true;
-                      eventState.loading = false;
-                      return;
-                    }
-
                     try {
+                      String? downloadUrl;
+                      // TODO: create custom interests
+                      if (!eventState.textMode) {
+                        downloadUrl = await cloudStorageService.uploadImage(
+                          await eventState.cropResizeImage(
+                              MediaQuery.of(context).size.width),
+                          userState.user!.id,
+                        );
+                      }
+
+                      if (!eventState.textMode && downloadUrl == null) {
+                        print('fail: downloadUrl null');
+                        eventState.clear();
+                        eventState.failed = true;
+                        eventState.loading = false;
+                        return;
+                      }
+
                       // frankenstein the time from user input
                       final prefixSplit =
                           eventState.dateController.text.split(" ");
@@ -101,8 +104,8 @@ class AddEventDetailsAppBar extends StatelessWidget
                         invitedIds: [],
                         // TODO: add group size / tags
                       ));
-                      // TODO: report to user success
-                      print(response);
+                      await homeState.getMyEvents();
+                      await homeState.getMyForums();
                     } catch (e) {
                       eventState.clear();
                       eventState.failed = true;
