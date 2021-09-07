@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RoundedArrowButton extends StatelessWidget {
-  final Function onPressed;
+  final Function? onPressed;
   final String text;
   RoundedArrowButton({@required onPressed, @required text})
       : onPressed = onPressed,
@@ -13,9 +13,11 @@ class RoundedArrowButton extends StatelessWidget {
       style: ButtonStyle(
           shape: MaterialStateProperty.all(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
-          elevation: MaterialStateProperty.all(30),
+          elevation: MaterialStateProperty.resolveWith(
+              (states) => onPressed == null ? 0 : 30),
           fixedSize: MaterialStateProperty.all(Size(double.infinity, 50)),
-          backgroundColor: MaterialStateProperty.all(Color(0xffe85c3f))),
+          backgroundColor: MaterialStateProperty.resolveWith((states) =>
+              onPressed == null ? Colors.grey[300] : Color(0xffe85c3f))),
       child: Stack(
         children: [
           Center(child: Text(text)),
@@ -33,7 +35,7 @@ class RoundedArrowButton extends StatelessWidget {
           ),
         ],
       ),
-      onPressed: () => onPressed(),
+      onPressed: onPressed == null ? null : () => onPressed!(),
     );
   }
 }

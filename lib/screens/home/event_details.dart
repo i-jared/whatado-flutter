@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:whatado/models/event.dart';
-import 'package:whatado/widgets/appbars/default_app_bar.dart';
+import 'package:whatado/screens/profile/user_profile.dart';
+import 'package:whatado/widgets/appbars/event_app_bar.dart';
+import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 
 class EventDetails extends StatefulWidget {
   final Event event;
@@ -27,19 +29,13 @@ class _EventDetailsState extends State<EventDetails> {
     final sectionSpacing = 35.0;
     final circleSpacing = 10.0;
     final dateFormat = DateFormat('dd MMMM, yyyy HH:mm');
-    final circleRadius = (MediaQuery.of(context).size.width - padding*2.0 - circleSpacing*2.0)/6.0;
-    final urls = [
-      widget.event.creator.imageUrl,
-      widget.event.creator.imageUrl,
-      widget.event.creator.imageUrl,
-      widget.event.creator.imageUrl,
-      widget.event.creator.imageUrl,
-      widget.event.creator.imageUrl,
-      widget.event.creator.imageUrl,
-      widget.event.creator.imageUrl,
-    ];
+    final circleRadius = (MediaQuery.of(context).size.width -
+            padding * 2.0 -
+            circleSpacing * 2.0) /
+        6.0;
+
     return Scaffold(
-        appBar: DefaultAppBar(title: widget.event.title),
+        appBar: EventAppBar(event: widget.event),
         body: SingleChildScrollView(
             child: Padding(
           padding: EdgeInsets.symmetric(horizontal: padding),
@@ -76,26 +72,50 @@ class _EventDetailsState extends State<EventDetails> {
             Wrap(
               spacing: circleSpacing,
               runSpacing: circleSpacing,
-              children: !expanded && urls.length > 5
+              children: !expanded && widget.event.invited.length > 5
                   ? [
-                      ...urls
-                          .map((url) => CircleAvatar(
-                              radius: circleRadius, backgroundImage: NetworkImage(url)))
+                      ...widget.event.invited
+                          .map((eventUser) => InkWell(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => UserProfile(
+                                            initialUserData: eventUser))),
+                                child: CircleAvatar(
+                                    radius: circleRadius,
+                                    backgroundImage:
+                                        NetworkImage(eventUser.imageUrl)),
+                              ))
                           .toList()
                           .take(5),
                       InkWell(
                           onTap: () => setState(() => expanded = !expanded),
                           child: CircleAvatar(
                             radius: circleRadius,
-                            child: Text('+${urls.length - 5}', style: TextStyle(fontSize: 28)),
+                            child: Text('+${widget.event.invited.length - 5}',
+                                style: TextStyle(fontSize: 28)),
                             backgroundColor: Colors.grey[200],
                           ))
                     ]
-                  : urls
-                      .map((url) => CircleAvatar(
-                          radius: circleRadius, backgroundImage: NetworkImage(url)))
+                  : widget.event.invited
+                      .map((eventUser) => InkWell(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => UserProfile(
+                                        initialUserData: eventUser))),
+                            child: CircleAvatar(
+                                radius: circleRadius,
+                                backgroundImage:
+                                    NetworkImage(eventUser.imageUrl)),
+                          ))
                       .toList(),
-            )
+            ),
+            SizedBox(height: sectionSpacing),
+            RoundedArrowButton(
+                onPressed: null,
+                text: '${widget.event.wannagoIds.length} people wannago'),
+            SizedBox(height: 50),
           ]),
         )));
   }

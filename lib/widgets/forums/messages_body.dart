@@ -12,6 +12,8 @@ class MessagesBody extends StatelessWidget {
           ? Container(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: ListView.builder(
+                  controller: chatState.scrollController,
+                  reverse: true,
                   itemCount: chatState.chats!.length,
                   itemBuilder: (context, i) =>
                       ChatBubble(chat: chatState.chats![i])),

@@ -29,6 +29,31 @@ class UserGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<User>> user(int id) async {
+    final query = UserQuery(variables: UserArguments(id: id));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    print(result);
+    final root = result.data?['user'];
+    final data = root != null && root['nodes'] != null
+        ? User.fromGqlData(root['nodes'])
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<User>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<List<EventUser>>> eventUserPreview(
       List<int> ids) async {
     final query = EventUserPreviewQuery(

@@ -224,6 +224,7 @@ type Query {
   lastChat(forumId: Int!): ChatApiResponse!
   me: UserApiResponse!
   myEvents: EventsApiResponse!
+  user(id: Int!): UserApiResponse!
   users: UsersApiResponse!
   usersById(ids: [Int!]!): UsersApiResponse!
 }
@@ -235,6 +236,7 @@ type Subscription {
 }
 
 type User {
+  bio: String!
   birthday: DateTime!
   chatNotifications: [ChatNotification!]!
   createdAt: DateTime!

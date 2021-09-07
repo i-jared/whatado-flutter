@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/screens/profile/user_profile.dart';
 
 class EventTopBar extends StatelessWidget {
   final Event event;
@@ -8,9 +9,16 @@ class EventTopBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      CircleAvatar(
-        radius: 17,
-        backgroundImage: NetworkImage(event.creator.imageUrl),
+      InkWell(
+        onTap: () => Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    UserProfile(initialUserData: event.creator))),
+        child: CircleAvatar(
+          radius: 17,
+          backgroundImage: NetworkImage(event.creator.imageUrl),
+        ),
       ),
       SizedBox(width: 10),
       Text(event.creator.name,

@@ -5,7 +5,7 @@ String get whatadoGqlUrl => EnvironmentConfig.flavor == PROD
     : "http://192.168.86.148:4000/graphql";
 String get whatadoWsUrl => EnvironmentConfig.flavor == PROD
     ? 'ws://api.whatado.io/ws'
-    : "ws://192.168.1.29:4000/graphql";
+    : "ws://192.168.86.148:4000/graphql";
 String get whatadoRefreshUrl => EnvironmentConfig.flavor == PROD
     ? 'https://api.whatado.io/refresh_token'
     : "http://192.168.86.148:4000/refresh_token";
@@ -16,16 +16,14 @@ String get PROD => "PROD";
 String get LOCAL_DEV => "LOCAL_DEV";
 
 
-//TODO: implement chat stream and queries
 //TODO: implement chatnotifications
 //TODO: implement pushNotifications to update users with new messages or new events invited to
 //TODO: edit event page
-//TODO: user profile page with live data
 //TODO: change profile page
+//TODO: connect interests to live data
 //TODO: make myevents widgets look better
 //TODO: allow reporting and posts
 //TODO: make working calendar selector that defaults to a whole month
-//TODO: connect interests to live data
 //TODO: populate customized feed
 //TODO: fix double loading logo (placeholders or blank screen)
 //TODO: change slidable forum to a little menu or long press popup

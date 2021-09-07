@@ -14,7 +14,7 @@ class Event {
   String location;
   List<int> relatedInterestIds;
   List<int> wannagoIds;
-  List<int> invitedIds;
+  List<EventUser> invited;
 
   Event({
     required this.id,
@@ -27,7 +27,7 @@ class Event {
     required this.location,
     required this.filterGender,
     this.wannagoIds = const [],
-    this.invitedIds = const [],
+    this.invited = const [],
     this.imageUrl,
   });
 
@@ -45,8 +45,9 @@ class Event {
       description: data['description'],
       wannagoIds: List<int>.from(
           data['wannago']?.map((obj) => obj['id']).toList() ?? []),
-      invitedIds: List<int>.from(
-          data['invited']?.map((obj) => obj['id']).toList() ?? []),
+      invited: List<EventUser>.from(
+          data['invited']?.map((obj) => EventUser.fromGqlData(obj)).toList() ??
+              []),
       filterGender: Gender.values.firstWhere((val) {
         return val.toString() ==
             'Gender.' + data['filterGender'].toString().toLowerCase();

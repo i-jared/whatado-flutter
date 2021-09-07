@@ -9,6 +9,101 @@ import 'package:whatado/utils/coercers.dart';
 part 'queries_graphql_api.graphql.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats$Nodes$Author extends JsonSerializable
+    with EquatableMixin {
+  Chats$Query$Chats$Nodes$Author();
+
+  factory Chats$Query$Chats$Nodes$Author.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$Chats$Nodes$AuthorFromJson(json);
+
+  late int id;
+
+  late String profilePhotoUrl;
+
+  late String username;
+
+  @override
+  List<Object?> get props => [id, profilePhotoUrl, username];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$Chats$Nodes$AuthorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats$Nodes extends JsonSerializable with EquatableMixin {
+  Chats$Query$Chats$Nodes();
+
+  factory Chats$Query$Chats$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$Chats$NodesFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  late String text;
+
+  late Chats$Query$Chats$Nodes$Author author;
+
+  @override
+  List<Object?> get props => [id, createdAt, text, author];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$Chats$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats$Errors extends JsonSerializable with EquatableMixin {
+  Chats$Query$Chats$Errors();
+
+  factory Chats$Query$Chats$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$Chats$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$Chats$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query$Chats extends JsonSerializable with EquatableMixin {
+  Chats$Query$Chats();
+
+  factory Chats$Query$Chats.fromJson(Map<String, dynamic> json) =>
+      _$Chats$Query$ChatsFromJson(json);
+
+  bool? ok;
+
+  List<Chats$Query$Chats$Nodes>? nodes;
+
+  List<Chats$Query$Chats$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$Query$ChatsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chats$Query extends JsonSerializable with EquatableMixin {
+  Chats$Query();
+
+  factory Chats$Query.fromJson(Map<String, dynamic> json) =>
+      _$Chats$QueryFromJson(json);
+
+  late Chats$Query$Chats chats;
+
+  @override
+  List<Object?> get props => [chats];
+  @override
+  Map<String, dynamic> toJson() => _$Chats$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Events$Query$Events$Nodes$Creator extends JsonSerializable
     with EquatableMixin {
   Events$Query$Events$Nodes$Creator();
@@ -59,8 +154,12 @@ class Events$Query$Events$Nodes$Invited extends JsonSerializable
 
   late int id;
 
+  late String username;
+
+  late String profilePhotoUrl;
+
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, username, profilePhotoUrl];
   @override
   Map<String, dynamic> toJson() =>
       _$Events$Query$Events$Nodes$InvitedToJson(this);
@@ -850,55 +949,32 @@ class MyEvents$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Chats$Query$Chats$Nodes$Author extends JsonSerializable
-    with EquatableMixin {
-  Chats$Query$Chats$Nodes$Author();
+class User$Query$User$Nodes extends JsonSerializable with EquatableMixin {
+  User$Query$User$Nodes();
 
-  factory Chats$Query$Chats$Nodes$Author.fromJson(Map<String, dynamic> json) =>
-      _$Chats$Query$Chats$Nodes$AuthorFromJson(json);
+  factory User$Query$User$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$User$Query$User$NodesFromJson(json);
 
   late int id;
+
+  late String bio;
 
   late String profilePhotoUrl;
 
   late String username;
 
   @override
-  List<Object?> get props => [id, profilePhotoUrl, username];
+  List<Object?> get props => [id, bio, profilePhotoUrl, username];
   @override
-  Map<String, dynamic> toJson() => _$Chats$Query$Chats$Nodes$AuthorToJson(this);
+  Map<String, dynamic> toJson() => _$User$Query$User$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Chats$Query$Chats$Nodes extends JsonSerializable with EquatableMixin {
-  Chats$Query$Chats$Nodes();
+class User$Query$User$Errors extends JsonSerializable with EquatableMixin {
+  User$Query$User$Errors();
 
-  factory Chats$Query$Chats$Nodes.fromJson(Map<String, dynamic> json) =>
-      _$Chats$Query$Chats$NodesFromJson(json);
-
-  late int id;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime createdAt;
-
-  late String text;
-
-  late Chats$Query$Chats$Nodes$Author author;
-
-  @override
-  List<Object?> get props => [id, createdAt, text, author];
-  @override
-  Map<String, dynamic> toJson() => _$Chats$Query$Chats$NodesToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Chats$Query$Chats$Errors extends JsonSerializable with EquatableMixin {
-  Chats$Query$Chats$Errors();
-
-  factory Chats$Query$Chats$Errors.fromJson(Map<String, dynamic> json) =>
-      _$Chats$Query$Chats$ErrorsFromJson(json);
+  factory User$Query$User$Errors.fromJson(Map<String, dynamic> json) =>
+      _$User$Query$User$ErrorsFromJson(json);
 
   String? field;
 
@@ -907,41 +983,41 @@ class Chats$Query$Chats$Errors extends JsonSerializable with EquatableMixin {
   @override
   List<Object?> get props => [field, message];
   @override
-  Map<String, dynamic> toJson() => _$Chats$Query$Chats$ErrorsToJson(this);
+  Map<String, dynamic> toJson() => _$User$Query$User$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Chats$Query$Chats extends JsonSerializable with EquatableMixin {
-  Chats$Query$Chats();
+class User$Query$User extends JsonSerializable with EquatableMixin {
+  User$Query$User();
 
-  factory Chats$Query$Chats.fromJson(Map<String, dynamic> json) =>
-      _$Chats$Query$ChatsFromJson(json);
+  factory User$Query$User.fromJson(Map<String, dynamic> json) =>
+      _$User$Query$UserFromJson(json);
 
   bool? ok;
 
-  List<Chats$Query$Chats$Nodes>? nodes;
+  User$Query$User$Nodes? nodes;
 
-  List<Chats$Query$Chats$Errors>? errors;
+  List<User$Query$User$Errors>? errors;
 
   @override
   List<Object?> get props => [ok, nodes, errors];
   @override
-  Map<String, dynamic> toJson() => _$Chats$Query$ChatsToJson(this);
+  Map<String, dynamic> toJson() => _$User$Query$UserToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Chats$Query extends JsonSerializable with EquatableMixin {
-  Chats$Query();
+class User$Query extends JsonSerializable with EquatableMixin {
+  User$Query();
 
-  factory Chats$Query.fromJson(Map<String, dynamic> json) =>
-      _$Chats$QueryFromJson(json);
+  factory User$Query.fromJson(Map<String, dynamic> json) =>
+      _$User$QueryFromJson(json);
 
-  late Chats$Query$Chats chats;
+  late User$Query$User user;
 
   @override
-  List<Object?> get props => [chats];
+  List<Object?> get props => [user];
   @override
-  Map<String, dynamic> toJson() => _$Chats$QueryToJson(this);
+  Map<String, dynamic> toJson() => _$User$QueryToJson(this);
 }
 
 enum Gender {
@@ -954,6 +1030,143 @@ enum Gender {
   @JsonValue('ARTEMIS_UNKNOWN')
   artemisUnknown,
 }
+
+@JsonSerializable(explicitToJson: true)
+class ChatsArguments extends JsonSerializable with EquatableMixin {
+  ChatsArguments({required this.forumId});
+
+  @override
+  factory ChatsArguments.fromJson(Map<String, dynamic> json) =>
+      _$ChatsArgumentsFromJson(json);
+
+  late int forumId;
+
+  @override
+  List<Object?> get props => [forumId];
+  @override
+  Map<String, dynamic> toJson() => _$ChatsArgumentsToJson(this);
+}
+
+final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'chats'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'forumId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'chats'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'forumId'),
+                  value: VariableNode(name: NameNode(value: 'forumId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'createdAt'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'text'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'author'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null)
+                        ]))
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class ChatsQuery extends GraphQLQuery<Chats$Query, ChatsArguments> {
+  ChatsQuery({required this.variables});
+
+  @override
+  final DocumentNode document = CHATS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'chats';
+
+  @override
+  final ChatsArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Chats$Query parse(Map<String, dynamic> json) => Chats$Query.fromJson(json);
+}
+
 final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
   OperationDefinitionNode(
       type: OperationType.query,
@@ -1055,6 +1268,18 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: SelectionSetNode(selections: [
                           FieldNode(
                               name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'username'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'profilePhotoUrl'),
                               alias: null,
                               arguments: [],
                               directives: [],
@@ -1921,28 +2146,28 @@ class MyEventsQuery extends GraphQLQuery<MyEvents$Query, JsonSerializable> {
 }
 
 @JsonSerializable(explicitToJson: true)
-class ChatsArguments extends JsonSerializable with EquatableMixin {
-  ChatsArguments({required this.forumId});
+class UserArguments extends JsonSerializable with EquatableMixin {
+  UserArguments({required this.id});
 
   @override
-  factory ChatsArguments.fromJson(Map<String, dynamic> json) =>
-      _$ChatsArgumentsFromJson(json);
+  factory UserArguments.fromJson(Map<String, dynamic> json) =>
+      _$UserArgumentsFromJson(json);
 
-  late int forumId;
+  late int id;
 
   @override
-  List<Object?> get props => [forumId];
+  List<Object?> get props => [id];
   @override
-  Map<String, dynamic> toJson() => _$ChatsArgumentsToJson(this);
+  Map<String, dynamic> toJson() => _$UserArgumentsToJson(this);
 }
 
-final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
+final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
   OperationDefinitionNode(
       type: OperationType.query,
-      name: NameNode(value: 'chats'),
+      name: NameNode(value: 'user'),
       variableDefinitions: [
         VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'forumId')),
+            variable: VariableNode(name: NameNode(value: 'id')),
             type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
             defaultValue: DefaultValueNode(value: null),
             directives: [])
@@ -1950,12 +2175,12 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
       directives: [],
       selectionSet: SelectionSetNode(selections: [
         FieldNode(
-            name: NameNode(value: 'chats'),
+            name: NameNode(value: 'user'),
             alias: null,
             arguments: [
               ArgumentNode(
-                  name: NameNode(value: 'forumId'),
-                  value: VariableNode(name: NameNode(value: 'forumId')))
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
             ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
@@ -1978,42 +2203,23 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: null),
                     FieldNode(
-                        name: NameNode(value: 'createdAt'),
+                        name: NameNode(value: 'bio'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null),
                     FieldNode(
-                        name: NameNode(value: 'text'),
+                        name: NameNode(value: 'profilePhotoUrl'),
                         alias: null,
                         arguments: [],
                         directives: [],
                         selectionSet: null),
                     FieldNode(
-                        name: NameNode(value: 'author'),
+                        name: NameNode(value: 'username'),
                         alias: null,
                         arguments: [],
                         directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'profilePhotoUrl'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'username'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ]))
+                        selectionSet: null)
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -2038,20 +2244,20 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
       ]))
 ]);
 
-class ChatsQuery extends GraphQLQuery<Chats$Query, ChatsArguments> {
-  ChatsQuery({required this.variables});
+class UserQuery extends GraphQLQuery<User$Query, UserArguments> {
+  UserQuery({required this.variables});
 
   @override
-  final DocumentNode document = CHATS_QUERY_DOCUMENT;
+  final DocumentNode document = USER_QUERY_DOCUMENT;
 
   @override
-  final String operationName = 'chats';
+  final String operationName = 'user';
 
   @override
-  final ChatsArguments variables;
+  final UserArguments variables;
 
   @override
   List<Object?> get props => [document, operationName, variables];
   @override
-  Chats$Query parse(Map<String, dynamic> json) => Chats$Query.fromJson(json);
+  User$Query parse(Map<String, dynamic> json) => User$Query.fromJson(json);
 }

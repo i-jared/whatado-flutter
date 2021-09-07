@@ -10,9 +10,9 @@ class User {
   List<String> photoUrls;
   User({
     required this.id,
-    required this.email,
     required this.name,
     required this.imageUrl,
+    this.email = '',
     this.bio = '',
     this.photoUrls = const [],
     this.interests = const [],

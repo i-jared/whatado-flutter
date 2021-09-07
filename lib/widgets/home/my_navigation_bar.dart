@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/add_event/add_event.dart';
 import 'package:whatado/state/add_event_state.dart';
+import 'package:whatado/widgets/home/subscription_test.dart';
 
 class MyNavigationBar extends StatelessWidget {
   final Function indexSetState;

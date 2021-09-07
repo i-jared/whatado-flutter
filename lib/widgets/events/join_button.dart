@@ -24,7 +24,7 @@ class JoinButton extends StatelessWidget {
                 filterGender: event.filterGender,
                 filterLocation: '',
                 filterRadius: 5,
-                invitedIds: event.invitedIds,
+                invitedIds: event.invited.map((eu) => eu.id).toList(),
                 location: event.location,
                 relatedInterestsIds: event.relatedInterestIds,
                 time: event.time,

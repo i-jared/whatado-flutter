@@ -157,8 +157,10 @@ class _ForumCardState extends State<ForumCard> {
 
   Future<void> init() async {
     final userProvider = UserGqlProvider();
-    final result = await userProvider.eventUserPreview(
-        [...widget.event.invitedIds, widget.event.creator.id]);
+    final result = await userProvider.eventUserPreview([
+      ...widget.event.invited.map((eu) => eu.id).toList(),
+      widget.event.creator.id
+    ]);
     final chatQuery = ChatGqlProvider();
     final chatResult = await chatQuery.lastChat(widget.forum.id);
     setState(() {

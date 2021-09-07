@@ -30,7 +30,7 @@ class GraphqlClientService {
     _authLink = AuthLink(getToken: () => 'Bearer $accessToken');
     _wsLink = WebSocketLink(whatadoWsUrl,
         config: SocketClientConfig(
-            autoReconnect: false,
+            autoReconnect: true,
             inactivityTimeout: const Duration(minutes: 3),
             initialPayload: {
               "headers": {"Authorization": 'Bearer $accessToken'}

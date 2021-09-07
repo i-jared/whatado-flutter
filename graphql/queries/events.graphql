@@ -17,6 +17,8 @@ query events {
       }
       invited {
         id
+        username
+        profilePhotoUrl
       }
       time
       location

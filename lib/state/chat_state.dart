@@ -13,17 +13,21 @@ class ChatState extends ChangeNotifier {
   final Forum forum;
 
   final TextEditingController textController;
+  final ScrollController scrollController;
   StreamSubscription? streamSubscription;
   List<Chat>? chats;
 
   ChatState({required this.event, required this.forum})
-      : textController = TextEditingController() {
+      : textController = TextEditingController(),
+        scrollController = ScrollController() {
     init();
   }
 
   @override
   void dispose() {
     streamSubscription?.cancel();
+    scrollController.dispose();
+    textController.dispose();
     super.dispose();
   }
 
@@ -37,9 +41,10 @@ class ChatState extends ChangeNotifier {
 
   void subscribe() {
     final subscription = ChatSubscription();
-    final stream = graphqlClientService
-        .subscribe(subscription)
-        .map((event) => Chat.fromGqlData(event.data?['chatSubscription']));
+    final stream = graphqlClientService.subscribe(subscription).map((event) {
+      print('in map jcl $event');
+      return Chat.fromGqlData(event.data?['chatSubscription']);
+    });
     stream.handleError((e) => print('jcl stream error $e'));
     streamSubscription = stream.listen((event) {
       print('jcl new event');
@@ -51,7 +56,7 @@ class ChatState extends ChangeNotifier {
 
   void sendMessage(int authorId) async {
     final provider = ChatGqlProvider();
-    final result = await provider.create(
+    await provider.create(
         text: textController.text, userId: authorId, forumId: forum.id);
     textController.clear();
   }
