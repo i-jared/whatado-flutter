@@ -31,11 +31,11 @@ class AddEventState extends ChangeNotifier {
   bool _succeeded;
 
   final popularInterests = [
-    Interest(id: 1, name: 'bball'),
-    Interest(id: 2, name: 'ping pong'),
-    Interest(id: 3, name: 'running'),
-    Interest(id: 4, name: 'another'),
-    Interest(id: 5, name: 'interest')
+    Interest(id: 1, title: 'bball'),
+    Interest(id: 2, title: 'ping pong'),
+    Interest(id: 3, title: 'running'),
+    Interest(id: 4, title: 'another'),
+    Interest(id: 5, title: 'interest')
   ];
 
   List<Interest> customInterests = [];

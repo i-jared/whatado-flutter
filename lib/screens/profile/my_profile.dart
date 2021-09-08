@@ -64,7 +64,7 @@ class MyProfile extends StatelessWidget {
             children: userState.user!.interests
                 .map((interest) => InterestBubble(
                       selected: true,
-                      text: interest.name,
+                      text: interest.title,
                       onSelected: (_) => true,
                     ))
                 .toList(),

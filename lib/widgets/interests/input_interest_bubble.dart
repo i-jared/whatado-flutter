@@ -15,7 +15,7 @@ class InputInterestBubble extends StatelessWidget {
         selectedColor: Colors.grey[850],
         showCheckmark: false,
         labelPadding: EdgeInsets.fromLTRB(20, 3, 10, 3),
-        label: Text(interest.name, style: TextStyle(color: Colors.white)),
+        label: Text(interest.title, style: TextStyle(color: Colors.white)),
         selected: true,
         onDeleted: onDeleted);
   }

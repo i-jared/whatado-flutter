@@ -521,8 +521,10 @@ class CreateInterest$Mutation$CreateInterest$Nodes extends JsonSerializable
 
   late int id;
 
+  late String title;
+
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, title];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateInterest$Mutation$CreateInterest$NodesToJson(this);
@@ -588,20 +590,20 @@ class CreateInterest$Mutation extends JsonSerializable with EquatableMixin {
 @JsonSerializable(explicitToJson: true)
 class InterestInput extends JsonSerializable with EquatableMixin {
   InterestInput(
-      {required this.description,
-      this.id,
+      {this.id,
       required this.peopleInterestedIds,
+      required this.popular,
       required this.relatedEventsIds,
       required this.title});
 
   factory InterestInput.fromJson(Map<String, dynamic> json) =>
       _$InterestInputFromJson(json);
 
-  late String description;
-
   int? id;
 
   late List<int> peopleInterestedIds;
+
+  late bool popular;
 
   late List<int> relatedEventsIds;
 
@@ -609,7 +611,7 @@ class InterestInput extends JsonSerializable with EquatableMixin {
 
   @override
   List<Object?> get props =>
-      [description, id, peopleInterestedIds, relatedEventsIds, title];
+      [id, peopleInterestedIds, popular, relatedEventsIds, title];
   @override
   Map<String, dynamic> toJson() => _$InterestInputToJson(this);
 }
@@ -1092,6 +1094,63 @@ class UpdateEvent$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [updateEvent];
   @override
   Map<String, dynamic> toJson() => _$UpdateEvent$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInterests$Mutation$AddInterests$Errors extends JsonSerializable
+    with EquatableMixin {
+  AddInterests$Mutation$AddInterests$Errors();
+
+  factory AddInterests$Mutation$AddInterests$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$AddInterests$Mutation$AddInterests$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AddInterests$Mutation$AddInterests$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInterests$Mutation$AddInterests extends JsonSerializable
+    with EquatableMixin {
+  AddInterests$Mutation$AddInterests();
+
+  factory AddInterests$Mutation$AddInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$AddInterests$Mutation$AddInterestsFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<AddInterests$Mutation$AddInterests$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AddInterests$Mutation$AddInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInterests$Mutation extends JsonSerializable with EquatableMixin {
+  AddInterests$Mutation();
+
+  factory AddInterests$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$AddInterests$MutationFromJson(json);
+
+  late AddInterests$Mutation$AddInterests addInterests;
+
+  @override
+  List<Object?> get props => [addInterests];
+  @override
+  Map<String, dynamic> toJson() => _$AddInterests$MutationToJson(this);
 }
 
 enum Gender {
@@ -1644,6 +1703,12 @@ final CREATE_INTEREST_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: SelectionSetNode(selections: [
                     FieldNode(
                         name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'title'),
                         alias: null,
                         arguments: [],
                         directives: [],
@@ -2314,4 +2379,101 @@ class UpdateEventMutation
   @override
   UpdateEvent$Mutation parse(Map<String, dynamic> json) =>
       UpdateEvent$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInterestsArguments extends JsonSerializable with EquatableMixin {
+  AddInterestsArguments({required this.interestsText});
+
+  @override
+  factory AddInterestsArguments.fromJson(Map<String, dynamic> json) =>
+      _$AddInterestsArgumentsFromJson(json);
+
+  late List<String> interestsText;
+
+  @override
+  List<Object?> get props => [interestsText];
+  @override
+  Map<String, dynamic> toJson() => _$AddInterestsArgumentsToJson(this);
+}
+
+final ADD_INTERESTS_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'addInterests'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'interestsText')),
+            type: ListTypeNode(
+                type: NamedTypeNode(
+                    name: NameNode(value: 'String'), isNonNull: true),
+                isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'addInterests'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'interestsText'),
+                  value: VariableNode(name: NameNode(value: 'interestsText')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class AddInterestsMutation
+    extends GraphQLQuery<AddInterests$Mutation, AddInterestsArguments> {
+  AddInterestsMutation({required this.variables});
+
+  @override
+  final DocumentNode document = ADD_INTERESTS_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'addInterests';
+
+  @override
+  final AddInterestsArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  AddInterests$Mutation parse(Map<String, dynamic> json) =>
+      AddInterests$Mutation.fromJson(json);
 }

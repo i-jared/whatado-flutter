@@ -134,8 +134,8 @@ class _EditMyProfileState extends State<EditMyProfile> {
                         icon: Icon(Icons.add_circle,
                             color: Color(0xffe85c3f), size: 50),
                         onPressed: () {
-                          interests
-                              .add(Interest(id: 1, name: textController!.text));
+                          interests.add(
+                              Interest(id: 1, title: textController!.text));
                           setState(() => interests = interests);
                           textController!.clear();
                         },

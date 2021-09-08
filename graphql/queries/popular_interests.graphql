@@ -1,0 +1,13 @@
+query popularInterests {
+  popularInterests {
+    ok
+    nodes {
+      id
+      title
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

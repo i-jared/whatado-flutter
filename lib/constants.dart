@@ -18,23 +18,20 @@ String get LOCAL_DEV => "LOCAL_DEV";
 
 //TODO: implement chatnotifications
 //TODO: implement pushNotifications to update users with new messages or new events invited to
-//TODO: edit event page
-//TODO: change profile page
 //TODO: connect interests to live data
 //TODO: make myevents widgets look better
 //TODO: allow reporting and posts
 //TODO: make working calendar selector that defaults to a whole month
 //TODO: populate customized feed
-//TODO: fix double loading logo (placeholders or blank screen)
 //TODO: change slidable forum to a little menu or long press popup
 //TODO: finish post uploaded or failed pages
 //TODO: finish forgot password support and email
-//TODO: implement registration email
-//TODO: clean everything up into proper states and services and widgets
+//TODO: implement registration email and verification
 
 //TODO: create management console
 
 //TODO: problems: users need post history
+//TODO: problems: myevents look dumb. need different layout
 
 
 

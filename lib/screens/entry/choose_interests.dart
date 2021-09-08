@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/interest.dart';
+import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
-import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 class ChooseInterestsScreen extends StatefulWidget {
   @override
@@ -17,7 +18,20 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
   bool passwordHidden = true;
 
-  TextEditingController textController = TextEditingController();
+  late TextEditingController textController;
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController();
+    textController.addListener(() => setState(() {}));
+  }
+
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<SetupState>(
@@ -42,8 +56,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                           children: [
                             SizedBox(height: 50),
                             Center(
-                              child: Image.network(
-                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Instagram_logo.svg/2560px-Instagram_logo.svg.png",
+                              child: Image.asset("assets/text_logo.png",
                                   height: 100),
                             ),
                             SizedBox(height: 40),
@@ -57,9 +70,9 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                 onSelected:
                                     (bool notSelected, Interest interest) {
                                   if (notSelected) {
-                                    setupState.addInterest(interest);
+                                    setupState.selectInterest(interest);
                                   } else {
-                                    setupState.removeInterest(interest);
+                                    setupState.unselectInterest(interest);
                                   }
                                 }),
                             SizedBox(height: 35),
@@ -70,21 +83,50 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                             Row(
                               children: [
                                 Expanded(
-                                  child: MyTextField(
-                                    hintText: 'Add your interest here...',
-                                    controller: textController,
+                                  child: TypeAheadFormField(
+                                    noItemsFoundBuilder: (context) =>
+                                        SizedBox.shrink(),
+                                    onSuggestionSelected: (Interest interest) {
+                                      setupState.addCustomInterest(interest);
+                                      textController.clear();
+                                    },
+                                    suggestionsCallback: (String pattern) {
+                                      final provider = InterestGqlProvider();
+                                      final result = provider.search(pattern);
+                                      return result;
+                                    },
+                                    itemBuilder: (context, Interest interest) =>
+                                        ListTile(title: Text(interest.title)),
+                                    textFieldConfiguration:
+                                        TextFieldConfiguration(
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        hintText: 'Add your interest here...',
+                                        hintStyle: TextStyle(fontSize: 13),
+                                        contentPadding:
+                                            EdgeInsets.symmetric(vertical: 12),
+                                      ),
+                                      controller: textController,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(width: 10),
                                 IconButton(
                                   padding: EdgeInsets.zero,
                                   icon: Icon(Icons.add_circle_outline,
-                                      color: Color(0xffe85c3f), size: 35),
-                                  onPressed: () {
-                                    setupState.addCustomInterest(Interest(
-                                        id: 1, name: textController.text));
-                                    textController.clear();
-                                  },
+                                      color: textController.text.isEmpty
+                                          ? Colors.grey[400]
+                                          : Color(0xffe85c3f),
+                                      size: 35),
+                                  onPressed: textController.text.isEmpty
+                                      ? null
+                                      : () {
+                                          setupState.addCustomInterest(Interest(
+                                              id: 1,
+                                              title:
+                                                  textController.text.trim()));
+                                          textController.clear();
+                                        },
                                 ),
                               ],
                             ),
@@ -99,12 +141,13 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                             Spacer(),
                             Center(
                               child: RoundedArrowButton(
-                                // TODO: use/create real interests
-                                // TODO: edit and save user (add interests)
-                                onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (ctx) => HomeScreen())),
+                                onPressed: () async {
+                                  await setupState.saveInterests();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => HomeScreen()));
+                                },
                                 text: "Continue",
                               ),
                             ),

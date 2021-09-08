@@ -109,7 +109,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                         color: Color(0xffe85c3f), size: 35),
                     onPressed: () {
                       eventState.addCustomInterest(Interest(
-                          id: 1, name: eventState.addInterestController.text));
+                          id: 1, title: eventState.addInterestController.text));
                       eventState.addInterestController.clear();
                     },
                   ),

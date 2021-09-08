@@ -1,9 +1,10 @@
 class Interest {
   int id;
-  String name;
-  Interest({required this.id, required this.name});
+  String title;
+  bool popular;
+  Interest({required this.id, required this.title, this.popular = false});
 
   factory Interest.fromGqlData(Map data) {
-    return Interest(id: data['id'], name: data['name']);
+    return Interest(id: data['id'], title: data['title']);
   }
 }

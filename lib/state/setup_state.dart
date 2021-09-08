@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatado/models/interest.dart';
+import 'package:whatado/providers/graphql/interest_provider.dart';
+import 'package:whatado/providers/graphql/user_provider.dart';
 
 class SetupState extends ChangeNotifier {
   List<Interest> selectedInterests;
@@ -10,31 +12,35 @@ class SetupState extends ChangeNotifier {
       : selectedInterests = [],
         popularInterests = [],
         customInterests = [] {
-    popularInterests.addAll([
-      'Sports',
-      'Theaters',
-      'Movies',
-      'Books',
-      'Education',
-      'IT',
-      'Cooking',
-      'Animals',
-      'Science',
-      'Dancing',
-      'Adventures',
-      'Food',
-      'Games',
-      'Fashion',
-      'Health'
-    ].map((val) => Interest(id: 1, name: val)).toList());
+    init();
   }
 
-  void addInterest(Interest interest) {
+  void init() async {
+    final provider = InterestGqlProvider();
+    final result = await provider.popular();
+    popularInterests.addAll(result.data ?? []);
+    notifyListeners();
+  }
+
+  Future<void> saveInterests() async {
+    // take the selected popular interests
+    // take the selected custom interests
+    // make sure the custom interests are not created already
+    // create brand new interests
+    // add them all to the user
+    final provider = UserGqlProvider();
+    final strings = [...selectedInterests, ...customInterests]
+        .map((interest) => interest.title)
+        .toList();
+    await provider.addInterests(strings);
+  }
+
+  void selectInterest(Interest interest) {
     selectedInterests.add(interest);
     notifyListeners();
   }
 
-  void removeInterest(Interest interest) {
+  void unselectInterest(Interest interest) {
     selectedInterests.remove(interest);
     notifyListeners();
   }

@@ -422,13 +422,16 @@ Map<String, dynamic> _$CreateForum$MutationToJson(
 CreateInterest$Mutation$CreateInterest$Nodes
     _$CreateInterest$Mutation$CreateInterest$NodesFromJson(
         Map<String, dynamic> json) {
-  return CreateInterest$Mutation$CreateInterest$Nodes()..id = json['id'] as int;
+  return CreateInterest$Mutation$CreateInterest$Nodes()
+    ..id = json['id'] as int
+    ..title = json['title'] as String;
 }
 
 Map<String, dynamic> _$CreateInterest$Mutation$CreateInterest$NodesToJson(
         CreateInterest$Mutation$CreateInterest$Nodes instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'title': instance.title,
     };
 
 CreateInterest$Mutation$CreateInterest$Errors
@@ -484,11 +487,11 @@ Map<String, dynamic> _$CreateInterest$MutationToJson(
 
 InterestInput _$InterestInputFromJson(Map<String, dynamic> json) {
   return InterestInput(
-    description: json['description'] as String,
     id: json['id'] as int?,
     peopleInterestedIds: (json['peopleInterestedIds'] as List<dynamic>)
         .map((e) => e as int)
         .toList(),
+    popular: json['popular'] as bool,
     relatedEventsIds: (json['relatedEventsIds'] as List<dynamic>)
         .map((e) => e as int)
         .toList(),
@@ -498,9 +501,9 @@ InterestInput _$InterestInputFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$InterestInputToJson(InterestInput instance) =>
     <String, dynamic>{
-      'description': instance.description,
       'id': instance.id,
       'peopleInterestedIds': instance.peopleInterestedIds,
+      'popular': instance.popular,
       'relatedEventsIds': instance.relatedEventsIds,
       'title': instance.title,
     };
@@ -893,6 +896,53 @@ Map<String, dynamic> _$UpdateEvent$MutationToJson(
       'updateEvent': instance.updateEvent.toJson(),
     };
 
+AddInterests$Mutation$AddInterests$Errors
+    _$AddInterests$Mutation$AddInterests$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return AddInterests$Mutation$AddInterests$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$AddInterests$Mutation$AddInterests$ErrorsToJson(
+        AddInterests$Mutation$AddInterests$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+AddInterests$Mutation$AddInterests _$AddInterests$Mutation$AddInterestsFromJson(
+    Map<String, dynamic> json) {
+  return AddInterests$Mutation$AddInterests()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => AddInterests$Mutation$AddInterests$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$AddInterests$Mutation$AddInterestsToJson(
+        AddInterests$Mutation$AddInterests instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+AddInterests$Mutation _$AddInterests$MutationFromJson(
+    Map<String, dynamic> json) {
+  return AddInterests$Mutation()
+    ..addInterests = AddInterests$Mutation$AddInterests.fromJson(
+        json['addInterests'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$AddInterests$MutationToJson(
+        AddInterests$Mutation instance) =>
+    <String, dynamic>{
+      'addInterests': instance.addInterests.toJson(),
+    };
+
 CreateChatArguments _$CreateChatArgumentsFromJson(Map<String, dynamic> json) {
   return CreateChatArguments(
     chatInput: ChatInput.fromJson(json['chatInput'] as Map<String, dynamic>),
@@ -1000,4 +1050,19 @@ Map<String, dynamic> _$UpdateEventArgumentsToJson(
         UpdateEventArguments instance) =>
     <String, dynamic>{
       'eventInput': instance.eventInput.toJson(),
+    };
+
+AddInterestsArguments _$AddInterestsArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return AddInterestsArguments(
+    interestsText: (json['interestsText'] as List<dynamic>)
+        .map((e) => e as String)
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$AddInterestsArgumentsToJson(
+        AddInterestsArguments instance) =>
+    <String, dynamic>{
+      'interestsText': instance.interestsText,
     };

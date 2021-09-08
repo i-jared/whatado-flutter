@@ -17,7 +17,7 @@ class InterestWrap extends StatelessWidget {
       spacing: 10.0,
       children: interests
           .map((interest) => InterestBubble(
-              text: interest.name,
+              text: interest.title,
               selected: selectedInterests.contains(interest),
               onSelected: (notSelected) => onSelected(notSelected, interest)))
           .toList(),

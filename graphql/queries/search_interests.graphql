@@ -1,0 +1,13 @@
+query searchInterests($partial: String!) {
+  searchInterests (partial: $partial) {
+    ok
+    nodes {
+      id
+      title
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

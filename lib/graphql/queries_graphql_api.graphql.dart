@@ -949,6 +949,160 @@ class MyEvents$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class PopularInterests$Query$PopularInterests$Nodes extends JsonSerializable
+    with EquatableMixin {
+  PopularInterests$Query$PopularInterests$Nodes();
+
+  factory PopularInterests$Query$PopularInterests$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$PopularInterests$Query$PopularInterests$NodesFromJson(json);
+
+  late int id;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [id, title];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PopularInterests$Query$PopularInterests$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PopularInterests$Query$PopularInterests$Errors extends JsonSerializable
+    with EquatableMixin {
+  PopularInterests$Query$PopularInterests$Errors();
+
+  factory PopularInterests$Query$PopularInterests$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$PopularInterests$Query$PopularInterests$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PopularInterests$Query$PopularInterests$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PopularInterests$Query$PopularInterests extends JsonSerializable
+    with EquatableMixin {
+  PopularInterests$Query$PopularInterests();
+
+  factory PopularInterests$Query$PopularInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$PopularInterests$Query$PopularInterestsFromJson(json);
+
+  bool? ok;
+
+  List<PopularInterests$Query$PopularInterests$Nodes>? nodes;
+
+  List<PopularInterests$Query$PopularInterests$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PopularInterests$Query$PopularInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PopularInterests$Query extends JsonSerializable with EquatableMixin {
+  PopularInterests$Query();
+
+  factory PopularInterests$Query.fromJson(Map<String, dynamic> json) =>
+      _$PopularInterests$QueryFromJson(json);
+
+  late PopularInterests$Query$PopularInterests popularInterests;
+
+  @override
+  List<Object?> get props => [popularInterests];
+  @override
+  Map<String, dynamic> toJson() => _$PopularInterests$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchInterests$Query$SearchInterests$Nodes extends JsonSerializable
+    with EquatableMixin {
+  SearchInterests$Query$SearchInterests$Nodes();
+
+  factory SearchInterests$Query$SearchInterests$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$SearchInterests$Query$SearchInterests$NodesFromJson(json);
+
+  late int id;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [id, title];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$SearchInterests$Query$SearchInterests$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchInterests$Query$SearchInterests$Errors extends JsonSerializable
+    with EquatableMixin {
+  SearchInterests$Query$SearchInterests$Errors();
+
+  factory SearchInterests$Query$SearchInterests$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$SearchInterests$Query$SearchInterests$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$SearchInterests$Query$SearchInterests$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchInterests$Query$SearchInterests extends JsonSerializable
+    with EquatableMixin {
+  SearchInterests$Query$SearchInterests();
+
+  factory SearchInterests$Query$SearchInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$SearchInterests$Query$SearchInterestsFromJson(json);
+
+  bool? ok;
+
+  List<SearchInterests$Query$SearchInterests$Nodes>? nodes;
+
+  List<SearchInterests$Query$SearchInterests$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$SearchInterests$Query$SearchInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchInterests$Query extends JsonSerializable with EquatableMixin {
+  SearchInterests$Query();
+
+  factory SearchInterests$Query.fromJson(Map<String, dynamic> json) =>
+      _$SearchInterests$QueryFromJson(json);
+
+  late SearchInterests$Query$SearchInterests searchInterests;
+
+  @override
+  List<Object?> get props => [searchInterests];
+  @override
+  Map<String, dynamic> toJson() => _$SearchInterests$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class User$Query$User$Nodes extends JsonSerializable with EquatableMixin {
   User$Query$User$Nodes();
 
@@ -2143,6 +2297,192 @@ class MyEventsQuery extends GraphQLQuery<MyEvents$Query, JsonSerializable> {
   @override
   MyEvents$Query parse(Map<String, dynamic> json) =>
       MyEvents$Query.fromJson(json);
+}
+
+final POPULAR_INTERESTS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'popularInterests'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'popularInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'title'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class PopularInterestsQuery
+    extends GraphQLQuery<PopularInterests$Query, JsonSerializable> {
+  PopularInterestsQuery();
+
+  @override
+  final DocumentNode document = POPULAR_INTERESTS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'popularInterests';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  PopularInterests$Query parse(Map<String, dynamic> json) =>
+      PopularInterests$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchInterestsArguments extends JsonSerializable with EquatableMixin {
+  SearchInterestsArguments({required this.partial});
+
+  @override
+  factory SearchInterestsArguments.fromJson(Map<String, dynamic> json) =>
+      _$SearchInterestsArgumentsFromJson(json);
+
+  late String partial;
+
+  @override
+  List<Object?> get props => [partial];
+  @override
+  Map<String, dynamic> toJson() => _$SearchInterestsArgumentsToJson(this);
+}
+
+final SEARCH_INTERESTS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'searchInterests'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'partial')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'searchInterests'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'partial'),
+                  value: VariableNode(name: NameNode(value: 'partial')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'title'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class SearchInterestsQuery
+    extends GraphQLQuery<SearchInterests$Query, SearchInterestsArguments> {
+  SearchInterestsQuery({required this.variables});
+
+  @override
+  final DocumentNode document = SEARCH_INTERESTS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'searchInterests';
+
+  @override
+  final SearchInterestsArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  SearchInterests$Query parse(Map<String, dynamic> json) =>
+      SearchInterests$Query.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)

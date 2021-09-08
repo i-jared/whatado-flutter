@@ -787,6 +787,137 @@ Map<String, dynamic> _$MyEvents$QueryToJson(MyEvents$Query instance) =>
       'myEvents': instance.myEvents.toJson(),
     };
 
+PopularInterests$Query$PopularInterests$Nodes
+    _$PopularInterests$Query$PopularInterests$NodesFromJson(
+        Map<String, dynamic> json) {
+  return PopularInterests$Query$PopularInterests$Nodes()
+    ..id = json['id'] as int
+    ..title = json['title'] as String;
+}
+
+Map<String, dynamic> _$PopularInterests$Query$PopularInterests$NodesToJson(
+        PopularInterests$Query$PopularInterests$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+    };
+
+PopularInterests$Query$PopularInterests$Errors
+    _$PopularInterests$Query$PopularInterests$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return PopularInterests$Query$PopularInterests$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$PopularInterests$Query$PopularInterests$ErrorsToJson(
+        PopularInterests$Query$PopularInterests$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+PopularInterests$Query$PopularInterests
+    _$PopularInterests$Query$PopularInterestsFromJson(
+        Map<String, dynamic> json) {
+  return PopularInterests$Query$PopularInterests()
+    ..ok = json['ok'] as bool?
+    ..nodes = (json['nodes'] as List<dynamic>?)
+        ?.map((e) => PopularInterests$Query$PopularInterests$Nodes.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => PopularInterests$Query$PopularInterests$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$PopularInterests$Query$PopularInterestsToJson(
+        PopularInterests$Query$PopularInterests instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+PopularInterests$Query _$PopularInterests$QueryFromJson(
+    Map<String, dynamic> json) {
+  return PopularInterests$Query()
+    ..popularInterests = PopularInterests$Query$PopularInterests.fromJson(
+        json['popularInterests'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$PopularInterests$QueryToJson(
+        PopularInterests$Query instance) =>
+    <String, dynamic>{
+      'popularInterests': instance.popularInterests.toJson(),
+    };
+
+SearchInterests$Query$SearchInterests$Nodes
+    _$SearchInterests$Query$SearchInterests$NodesFromJson(
+        Map<String, dynamic> json) {
+  return SearchInterests$Query$SearchInterests$Nodes()
+    ..id = json['id'] as int
+    ..title = json['title'] as String;
+}
+
+Map<String, dynamic> _$SearchInterests$Query$SearchInterests$NodesToJson(
+        SearchInterests$Query$SearchInterests$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+    };
+
+SearchInterests$Query$SearchInterests$Errors
+    _$SearchInterests$Query$SearchInterests$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return SearchInterests$Query$SearchInterests$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$SearchInterests$Query$SearchInterests$ErrorsToJson(
+        SearchInterests$Query$SearchInterests$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+SearchInterests$Query$SearchInterests
+    _$SearchInterests$Query$SearchInterestsFromJson(Map<String, dynamic> json) {
+  return SearchInterests$Query$SearchInterests()
+    ..ok = json['ok'] as bool?
+    ..nodes = (json['nodes'] as List<dynamic>?)
+        ?.map((e) => SearchInterests$Query$SearchInterests$Nodes.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => SearchInterests$Query$SearchInterests$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$SearchInterests$Query$SearchInterestsToJson(
+        SearchInterests$Query$SearchInterests instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+SearchInterests$Query _$SearchInterests$QueryFromJson(
+    Map<String, dynamic> json) {
+  return SearchInterests$Query()
+    ..searchInterests = SearchInterests$Query$SearchInterests.fromJson(
+        json['searchInterests'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$SearchInterests$QueryToJson(
+        SearchInterests$Query instance) =>
+    <String, dynamic>{
+      'searchInterests': instance.searchInterests.toJson(),
+    };
+
 User$Query$User$Nodes _$User$Query$User$NodesFromJson(
     Map<String, dynamic> json) {
   return User$Query$User$Nodes()
@@ -893,6 +1024,19 @@ LastChatArguments _$LastChatArgumentsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$LastChatArgumentsToJson(LastChatArguments instance) =>
     <String, dynamic>{
       'forumId': instance.forumId,
+    };
+
+SearchInterestsArguments _$SearchInterestsArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return SearchInterestsArguments(
+    partial: json['partial'] as String,
+  );
+}
+
+Map<String, dynamic> _$SearchInterestsArgumentsToJson(
+        SearchInterestsArguments instance) =>
+    <String, dynamic>{
+      'partial': instance.partial,
     };
 
 UserArguments _$UserArgumentsFromJson(Map<String, dynamic> json) {

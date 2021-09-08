@@ -3,6 +3,7 @@ mutation createInterest($interestInput: InterestInput) {
     ok
     nodes {
       id
+      title
     }
     errors {
       field

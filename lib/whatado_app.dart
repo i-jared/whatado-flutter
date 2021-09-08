@@ -4,6 +4,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/welcome.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/environment_config.dart';
@@ -79,7 +80,8 @@ class _MyAppState extends State<MyApp> {
                     child: Image.asset('assets/logo_badge.png'),
                   ))
               : loginService.loggedIn
-                  ? HomeScreen()
+                  // ? HomeScreen()
+                  ? ChooseInterestsScreen()
                   : WelcomeScreen(),
         ),
       ),

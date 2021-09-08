@@ -1,0 +1,10 @@
+mutation addInterests($interestsText: [String!]!) {
+  addInterests(interestsText: $interestsText) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

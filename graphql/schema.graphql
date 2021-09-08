@@ -148,9 +148,9 @@ enum Gender {
 
 type Interest {
   createdAt: String!
-  description: String!
   id: Int!
   peopleInterested: [User!]!
+  popular: Boolean!
   relatedEvents: [Event!]!
   title: String!
   updatedAt: String!
@@ -165,18 +165,18 @@ type InterestApiResponse {
 
 input InterestFilterInput {
   createdAt: String
-  description: String
   id: Int
   peopleInterestedIds: [Int!]
+  popular: Boolean
   relatedEventsIds: [Int!]
   title: String
   updatedAt: String
 }
 
 input InterestInput {
-  description: String!
   id: Int
   peopleInterestedIds: [Int!]!
+  popular: Boolean!
   relatedEventsIds: [Int!]!
   title: String!
 }
@@ -194,6 +194,7 @@ type JwtResponse {
 }
 
 type Mutation {
+  addInterests(interestsText: [String!]!): BoolApiResponse!
   changeUsername(username: String!): BoolApiResponse!
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
@@ -220,10 +221,11 @@ type Query {
   forumsByEventId(ids: [Int!]!): ForumsApiResponse!
   hello: String!
   interest(id: Float!): InterestApiResponse!
-  interests(options: InterestFilterInput!): InterestsApiResponse!
   lastChat(forumId: Int!): ChatApiResponse!
   me: UserApiResponse!
   myEvents: EventsApiResponse!
+  popularInterests: InterestsApiResponse!
+  searchInterests(partial: String!): InterestsApiResponse!
   user(id: Int!): UserApiResponse!
   users: UsersApiResponse!
   usersById(ids: [Int!]!): UsersApiResponse!

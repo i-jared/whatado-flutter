@@ -26,16 +26,17 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       elevation: 1.0,
       actions: [
-        IconButton(
-            onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Chats(
-                        event: event,
-                        forum: homeState.myForums!.firstWhere(
-                            (forum) => forum.eventId == event.id)))),
-            icon: Icon(Icons.forum_outlined),
-            color: Colors.grey[850]),
+        if (!inEdit)
+          IconButton(
+              onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Chats(
+                          event: event,
+                          forum: homeState.myForums!.firstWhere(
+                              (forum) => forum.eventId == event.id)))),
+              icon: Icon(Icons.forum_outlined),
+              color: Colors.grey[850]),
         if (!inEdit && userState.user!.id == event.creator.id)
           IconButton(
               onPressed: () => Navigator.push(
