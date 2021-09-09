@@ -580,6 +580,7 @@ Me$Query$Me$Nodes _$Me$Query$Me$NodesFromJson(Map<String, dynamic> json) {
   return Me$Query$Me$Nodes()
     ..id = json['id'] as int
     ..profilePhotoUrl = json['profilePhotoUrl'] as String
+    ..photoUrls = json['photoUrls'] as String
     ..email = json['email'] as String
     ..verified = json['verified'] as bool
     ..username = json['username'] as String
@@ -603,6 +604,7 @@ Map<String, dynamic> _$Me$Query$Me$NodesToJson(Me$Query$Me$Nodes instance) =>
     <String, dynamic>{
       'id': instance.id,
       'profilePhotoUrl': instance.profilePhotoUrl,
+      'photoUrls': instance.photoUrls,
       'email': instance.email,
       'verified': instance.verified,
       'username': instance.username,
@@ -926,6 +928,7 @@ User$Query$User$Nodes _$User$Query$User$NodesFromJson(
     ..id = json['id'] as int
     ..bio = json['bio'] as String
     ..profilePhotoUrl = json['profilePhotoUrl'] as String
+    ..photoUrls = json['photoUrls'] as String
     ..username = json['username'] as String;
 }
 
@@ -935,6 +938,7 @@ Map<String, dynamic> _$User$Query$User$NodesToJson(
       'id': instance.id,
       'bio': instance.bio,
       'profilePhotoUrl': instance.profilePhotoUrl,
+      'photoUrls': instance.photoUrls,
       'username': instance.username,
     };
 

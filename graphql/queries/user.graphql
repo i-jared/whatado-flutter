@@ -5,6 +5,7 @@ query user($id: Int!) {
       id
       bio
       profilePhotoUrl
+      photoUrls
       username
     }
     errors {

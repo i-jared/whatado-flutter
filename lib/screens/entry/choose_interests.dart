@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
-import 'package:whatado/screens/home/home.dart';
+import 'package:whatado/screens/entry/write_bio.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
@@ -157,7 +157,8 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => HomeScreen()));
+                                          builder: (context) =>
+                                              WriteBioScreen()));
                                 },
                                 text: "Continue",
                               ),

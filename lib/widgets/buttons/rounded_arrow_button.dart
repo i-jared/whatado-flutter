@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 class RoundedArrowButton extends StatelessWidget {
   final Function? onPressed;
   final String text;
-  RoundedArrowButton({@required onPressed, @required text})
-      : onPressed = onPressed,
-        text = text;
+  final bool disabled;
+  RoundedArrowButton(
+      {required this.onPressed, required this.text, this.disabled = false});
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +14,12 @@ class RoundedArrowButton extends StatelessWidget {
           shape: MaterialStateProperty.all(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
           elevation: MaterialStateProperty.resolveWith(
-              (states) => onPressed == null ? 0 : 30),
+              (states) => onPressed == null || disabled ? 0 : 30),
           fixedSize: MaterialStateProperty.all(Size(double.infinity, 50)),
           backgroundColor: MaterialStateProperty.resolveWith((states) =>
-              onPressed == null ? Colors.grey[300] : Color(0xffe85c3f))),
+              onPressed == null || disabled
+                  ? Colors.grey[300]
+                  : Color(0xffe85c3f))),
       child: Stack(
         children: [
           Center(child: Text(text)),
@@ -35,7 +37,7 @@ class RoundedArrowButton extends StatelessWidget {
           ),
         ],
       ),
-      onPressed: onPressed == null ? null : () => onPressed!(),
+      onPressed: onPressed == null || disabled ? null : () => onPressed!(),
     );
   }
 }

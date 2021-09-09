@@ -16,8 +16,7 @@ class MyProfile extends StatelessWidget {
     final imageWidth =
         (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) /
             3.0;
-    // userState.user!.interests.forEach((val) => print('jcl ${val.title}'));
-    // print('\n\n\n');
+
     return SingleChildScrollView(
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),

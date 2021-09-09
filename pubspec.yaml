@@ -44,6 +44,9 @@ dependencies:
   timeago: ^3.1.0
   bubble: ^1.2.1
   flutter_typeahead: ^3.2.0
+  image_picker: ^0.8.4
+  image_crop: ^0.4.0
+  image_cropper: ^1.4.1
 
 dev_dependencies:
   flutter_test:

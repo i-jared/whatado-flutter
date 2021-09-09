@@ -1,0 +1,10 @@
+mutation updatePhotos($urls: [String!]!) {
+  updatePhotos(urls: $urls) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

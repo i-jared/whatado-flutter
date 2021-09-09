@@ -684,6 +684,8 @@ class Me$Query$Me$Nodes extends JsonSerializable with EquatableMixin {
 
   late String profilePhotoUrl;
 
+  late String photoUrls;
+
   late String email;
 
   late bool verified;
@@ -707,6 +709,7 @@ class Me$Query$Me$Nodes extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [
         id,
         profilePhotoUrl,
+        photoUrls,
         email,
         verified,
         username,
@@ -1118,10 +1121,12 @@ class User$Query$User$Nodes extends JsonSerializable with EquatableMixin {
 
   late String profilePhotoUrl;
 
+  late String photoUrls;
+
   late String username;
 
   @override
-  List<Object?> get props => [id, bio, profilePhotoUrl, username];
+  List<Object?> get props => [id, bio, profilePhotoUrl, photoUrls, username];
   @override
   Map<String, dynamic> toJson() => _$User$Query$User$NodesToJson(this);
 }
@@ -2001,6 +2006,12 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: null),
                     FieldNode(
+                        name: NameNode(value: 'photoUrls'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
                         name: NameNode(value: 'email'),
                         alias: null,
                         arguments: [],
@@ -2559,6 +2570,12 @@ final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: null),
                     FieldNode(
                         name: NameNode(value: 'profilePhotoUrl'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'photoUrls'),
                         alias: null,
                         arguments: [],
                         directives: [],

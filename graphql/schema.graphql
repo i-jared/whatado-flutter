@@ -211,6 +211,8 @@ type Mutation {
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventInput!): EventApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
+  updatePhotos(urls: [String!]!): BoolApiResponse!
+  updateProfilePhoto(url: String!): BoolApiResponse!
 }
 
 type Query {
@@ -247,6 +249,7 @@ type User {
   id: Int!
   interests: [Interest!]!
   myEvents: [Event!]!
+  photoUrls: String!
   profilePhotoUrl: String!
   refreshCount: Int!
   updatedAt: DateTime!

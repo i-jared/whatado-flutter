@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:whatado/models/interest.dart';
 
 class User {
@@ -25,7 +27,7 @@ class User {
         imageUrl: data['profilePhotoUrl'] ?? '',
         name: data['username'] ?? '',
         bio: data['bio'] ?? '',
-        photoUrls: data['photoUrls'] ?? [],
+        photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
         interests: List<Interest>.from(data['interests']
                 ?.map((val) => Interest.fromGqlData(val))
                 .toList() ??

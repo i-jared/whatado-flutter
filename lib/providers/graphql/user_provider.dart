@@ -1,7 +1,6 @@
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/models/event_user.dart';
-import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/services/service_provider.dart';
@@ -93,7 +92,53 @@ class UserGqlProvider {
       });
     }
 
-    final root = result.data?['addInterests'];
+    final root = result.data?['updateBio'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> updateProfilePhoto(String url) async {
+    final mutation = UpdateProfilePhotoMutation(
+        variables: UpdateProfilePhotoArguments(url: url));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['updateProfilePhoto'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> updatePhotos(List<String> urls) async {
+    final mutation =
+        UpdatePhotosMutation(variables: UpdatePhotosArguments(urls: urls));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['updatePhotos'];
     final data = root?['ok'] ?? false;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];

@@ -4,6 +4,7 @@ query me {
         nodes {
             id
             profilePhotoUrl
+            photoUrls
             email
             verified
             username

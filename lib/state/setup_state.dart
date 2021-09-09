@@ -7,11 +7,13 @@ class SetupState extends ChangeNotifier {
   List<Interest> selectedInterests;
   List<Interest> customInterests;
   List<Interest> popularInterests;
+  TextEditingController bioController;
 
   SetupState()
       : selectedInterests = [],
         popularInterests = [],
-        customInterests = [] {
+        customInterests = [],
+        bioController = TextEditingController() {
     init();
   }
 
@@ -20,6 +22,11 @@ class SetupState extends ChangeNotifier {
     final result = await provider.popular();
     popularInterests.addAll(result.data ?? []);
     notifyListeners();
+  }
+
+  Future<void> saveBio() async {
+    final provider = UserGqlProvider();
+    await provider.updateBio(bioController.text);
   }
 
   Future<void> saveInterests() async {
