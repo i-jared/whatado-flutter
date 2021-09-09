@@ -943,6 +943,50 @@ Map<String, dynamic> _$AddInterests$MutationToJson(
       'addInterests': instance.addInterests.toJson(),
     };
 
+UpdateBio$Mutation$UpdateBio$Errors
+    _$UpdateBio$Mutation$UpdateBio$ErrorsFromJson(Map<String, dynamic> json) {
+  return UpdateBio$Mutation$UpdateBio$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$UpdateBio$Mutation$UpdateBio$ErrorsToJson(
+        UpdateBio$Mutation$UpdateBio$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+UpdateBio$Mutation$UpdateBio _$UpdateBio$Mutation$UpdateBioFromJson(
+    Map<String, dynamic> json) {
+  return UpdateBio$Mutation$UpdateBio()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => UpdateBio$Mutation$UpdateBio$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$UpdateBio$Mutation$UpdateBioToJson(
+        UpdateBio$Mutation$UpdateBio instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+UpdateBio$Mutation _$UpdateBio$MutationFromJson(Map<String, dynamic> json) {
+  return UpdateBio$Mutation()
+    ..updateBio = UpdateBio$Mutation$UpdateBio.fromJson(
+        json['updateBio'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UpdateBio$MutationToJson(UpdateBio$Mutation instance) =>
+    <String, dynamic>{
+      'updateBio': instance.updateBio.toJson(),
+    };
+
 CreateChatArguments _$CreateChatArgumentsFromJson(Map<String, dynamic> json) {
   return CreateChatArguments(
     chatInput: ChatInput.fromJson(json['chatInput'] as Map<String, dynamic>),
@@ -1065,4 +1109,15 @@ Map<String, dynamic> _$AddInterestsArgumentsToJson(
         AddInterestsArguments instance) =>
     <String, dynamic>{
       'interestsText': instance.interestsText,
+    };
+
+UpdateBioArguments _$UpdateBioArgumentsFromJson(Map<String, dynamic> json) {
+  return UpdateBioArguments(
+    bio: json['bio'] as String,
+  );
+}
+
+Map<String, dynamic> _$UpdateBioArgumentsToJson(UpdateBioArguments instance) =>
+    <String, dynamic>{
+      'bio': instance.bio,
     };

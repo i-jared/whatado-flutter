@@ -20,12 +20,15 @@ class User {
 
   factory User.fromGqlData(Map data) {
     return User(
-      id: data['id'],
-      email: data['email'] ?? '',
-      imageUrl: data['profilePhotoUrl'] ?? '',
-      name: data['username'] ?? '',
-      bio: data['bio'] ?? '',
-      photoUrls: data['photoUrls'] ?? [],
-    );
+        id: data['id'],
+        email: data['email'] ?? '',
+        imageUrl: data['profilePhotoUrl'] ?? '',
+        name: data['username'] ?? '',
+        bio: data['bio'] ?? '',
+        photoUrls: data['photoUrls'] ?? [],
+        interests: List<Interest>.from(data['interests']
+                ?.map((val) => Interest.fromGqlData(val))
+                .toList() ??
+            []));
   }
 }

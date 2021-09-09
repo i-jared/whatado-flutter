@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class SavingAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final Function() onSave;
-  SavingAppBar({required this.title, required this.onSave});
+  final bool disabled;
+  SavingAppBar(
+      {required this.title, required this.onSave, this.disabled = false});
   @override
   Size get preferredSize => Size.fromHeight(50.0);
 
@@ -20,8 +22,10 @@ class SavingAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
           child: TextButton(
-              child: Text('SAVE', style: TextStyle(color: Color(0xffe85c3f))),
-              onPressed: onSave),
+              child: Text('SAVE',
+                  style: TextStyle(
+                      color: disabled ? Colors.grey[400] : Color(0xffe85c3f))),
+              onPressed: disabled ? null : onSave),
         ),
       ],
     );

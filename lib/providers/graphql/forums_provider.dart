@@ -42,7 +42,6 @@ class ForumsGqlProvider {
       });
     }
 
-    print(result);
     final root = result.data?['forumsByEventId'];
     final data = root != null && root['nodes'] != null
         ? List<Forum>.from((root?['nodes']).map((event) {

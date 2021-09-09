@@ -4,6 +4,7 @@ import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/state/setup_state.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
@@ -34,6 +35,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final userState = Provider.of<UserState>(context);
     return ChangeNotifierProvider<SetupState>(
         create: (_) => SetupState(),
         builder: (context, _) {
@@ -87,6 +89,9 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                     noItemsFoundBuilder: (context) =>
                                         SizedBox.shrink(),
                                     onSuggestionSelected: (Interest interest) {
+                                      if (setupState.customInterests
+                                          .map((val) => val.title)
+                                          .contains(interest.title)) return;
                                       setupState.addCustomInterest(interest);
                                       textController.clear();
                                     },
@@ -121,6 +126,11 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                   onPressed: textController.text.isEmpty
                                       ? null
                                       : () {
+                                          if (setupState.customInterests
+                                              .map((val) => val.title)
+                                              .contains(
+                                                  textController.text.trim()))
+                                            return;
                                           setupState.addCustomInterest(Interest(
                                               id: 1,
                                               title:
@@ -143,6 +153,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                               child: RoundedArrowButton(
                                 onPressed: () async {
                                   await setupState.saveInterests();
+                                  userState.getUser();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(

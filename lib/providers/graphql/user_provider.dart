@@ -83,6 +83,28 @@ class UserGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<bool>> updateBio(String bio) async {
+    final mutation = UpdateBioMutation(variables: UpdateBioArguments(bio: bio));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['addInterests'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<bool>> addInterests(List<String> interestsText) async {
     final mutation = AddInterestsMutation(
         variables: AddInterestsArguments(interestsText: interestsText));

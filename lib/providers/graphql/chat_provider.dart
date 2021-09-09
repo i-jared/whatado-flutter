@@ -65,7 +65,6 @@ class ChatGqlProvider {
         print(element.message);
       });
     }
-    print(result);
 
     final root = result.data?['chats'];
     final data = root != null && root['nodes'] != null

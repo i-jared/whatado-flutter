@@ -26,7 +26,6 @@ class _StateUserProfile extends State<UserProfile> {
   void loadUser() async {
     final provider = UserGqlProvider();
     final result = await provider.user(widget.initialUserData.id);
-    print(result.data);
     setState(() {
       user = result.data;
       loading = false;

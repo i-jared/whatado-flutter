@@ -1,0 +1,10 @@
+mutation updateBio($bio: String!) {
+  updateBio(bio: $bio) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

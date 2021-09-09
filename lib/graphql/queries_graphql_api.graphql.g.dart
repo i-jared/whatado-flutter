@@ -584,6 +584,7 @@ Me$Query$Me$Nodes _$Me$Query$Me$NodesFromJson(Map<String, dynamic> json) {
     ..verified = json['verified'] as bool
     ..username = json['username'] as String
     ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String)
+    ..bio = json['bio'] as String
     ..interests = (json['interests'] as List<dynamic>)
         .map((e) =>
             Me$Query$Me$Nodes$Interests.fromJson(e as Map<String, dynamic>))
@@ -606,6 +607,7 @@ Map<String, dynamic> _$Me$Query$Me$NodesToJson(Me$Query$Me$Nodes instance) =>
       'verified': instance.verified,
       'username': instance.username,
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+      'bio': instance.bio,
       'interests': instance.interests.map((e) => e.toJson()).toList(),
       'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
       'chatNotifications':

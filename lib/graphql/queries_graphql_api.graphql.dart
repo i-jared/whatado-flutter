@@ -695,6 +695,8 @@ class Me$Query$Me$Nodes extends JsonSerializable with EquatableMixin {
       toJson: fromDartDateTimeToGraphQLDateTime)
   late DateTime birthday;
 
+  late String bio;
+
   late List<Me$Query$Me$Nodes$Interests> interests;
 
   late List<Me$Query$Me$Nodes$MyEvents> myEvents;
@@ -709,6 +711,7 @@ class Me$Query$Me$Nodes extends JsonSerializable with EquatableMixin {
         verified,
         username,
         birthday,
+        bio,
         interests,
         myEvents,
         chatNotifications
@@ -2017,6 +2020,12 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: null),
                     FieldNode(
                         name: NameNode(value: 'birthday'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'bio'),
                         alias: null,
                         arguments: [],
                         directives: [],

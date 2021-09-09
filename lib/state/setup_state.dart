@@ -23,11 +23,6 @@ class SetupState extends ChangeNotifier {
   }
 
   Future<void> saveInterests() async {
-    // take the selected popular interests
-    // take the selected custom interests
-    // make sure the custom interests are not created already
-    // create brand new interests
-    // add them all to the user
     final provider = UserGqlProvider();
     final strings = [...selectedInterests, ...customInterests]
         .map((interest) => interest.title)
