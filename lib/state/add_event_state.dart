@@ -90,7 +90,6 @@ class AddEventState extends ChangeNotifier {
 
   @override
   void dispose() {
-    print('being disposed');
     photoController.dispose();
     titleController.dispose();
     descriptionController.dispose();
@@ -165,7 +164,6 @@ class AddEventState extends ChangeNotifier {
   }
 
   void clear() {
-    print('being cleard');
     _selectedImage = null;
     _succeeded = false;
     _failed = false;

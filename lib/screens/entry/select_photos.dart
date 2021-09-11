@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image/image.dart' as fi;
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/home.dart';
@@ -43,6 +44,32 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
     final imageWidth =
         (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) /
             3.0;
+
+    void onPressed(int userId) async {
+      setState(() => loading = true);
+      final profileUrl = await cloudStorageService.uploadImage(
+          profilePhoto!.readAsBytesSync(), userState.user!.id);
+      final List<String?> photoUrls =
+          await Future.wait(selectedPhotos.map<Future<String?>>((file) {
+        final bytes = file!.readAsBytesSync();
+        final decodedImage = fi.decodeImage(List.from(bytes));
+        if (decodedImage == null) {
+          return Future.value(null);
+        }
+        final resizedFace =
+            fi.copyResize(decodedImage, height: 700, width: 700);
+        final sizedBytes = Uint8List.fromList(fi.encodePng(resizedFace));
+        return cloudStorageService.uploadImage(sizedBytes, userState.user!.id);
+      }));
+      final provider = UserGqlProvider();
+      if (profileUrl == null || photoUrls.contains(null)) return;
+      await provider.updateProfilePhoto(profileUrl);
+      await provider.updatePhotos(List<String>.from(photoUrls));
+      setState(() => loading = false);
+      userState.getUser();
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => HomeScreen()), (_) => true);
+    }
 
     Future<File?> pickImage() async {
       final xFile = await picker.pickImage(source: ImageSource.gallery);
@@ -152,37 +179,9 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                                   : RoundedArrowButton(
                                       disabled: selectedPhotos.length == 0 ||
                                           profilePhoto == null,
-                                      onPressed: () async {
-                                        setState(() => loading = true);
-                                        final profileUrl =
-                                            await cloudStorageService
-                                                .uploadImage(
-                                                    profilePhoto!
-                                                        .readAsBytesSync(),
-                                                    userState.user!.id);
-                                        final List<String?> photoUrls =
-                                            await Future.wait(selectedPhotos.map(
-                                                (file) => cloudStorageService
-                                                    .uploadImage(
-                                                        file!.readAsBytesSync(),
-                                                        userState.user!.id)));
-                                        final provider = UserGqlProvider();
-                                        if (profileUrl == null ||
-                                            photoUrls.contains(null)) return;
-                                        await provider
-                                            .updateProfilePhoto(profileUrl);
-                                        await provider.updatePhotos(
-                                            List<String>.from(photoUrls));
-                                        setState(() => loading = false);
-                                        userState.getUser();
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeScreen()),
-                                            (_) => true);
-                                      },
                                       text: "Continue",
+                                      onPressed: () =>
+                                          onPressed(userState.user!.id),
                                     ),
                             ),
                             SizedBox(height: 40)

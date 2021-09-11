@@ -7,8 +7,12 @@ import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
 
 class EventsGqlProvider {
-  Future<MyQueryResponse<List<Event>>> events() async {
-    final query = EventsQuery();
+  Future<MyQueryResponse<List<Event>>> events(
+      DateTime start, DateTime end) async {
+    print(start.toString());
+    final query = EventsQuery(
+        variables: EventsArguments(
+            dateRange: DateRangeInput(startDate: start, endDate: end)));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');

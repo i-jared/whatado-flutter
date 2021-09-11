@@ -56,6 +56,11 @@ type ChatsApiResponse {
   ok: Boolean
 }
 
+input DateRangeInput {
+  endDate: DateTime!
+  startDate: DateTime!
+}
+
 """
 The javascript `Date` as string. Type represents date and time as the ISO Date string.
 """
@@ -202,9 +207,9 @@ type Mutation {
   createEvent(options: EventInput!): EventApiResponse!
   createForum(eventId: Int!): ForumApiResponse!
   createInterest(options: InterestInput!): InterestApiResponse!
-  deleteChat(id: Float!): BoolApiResponse!
-  deleteEvent(id: Float!): BoolApiResponse!
-  deleteInterest(id: Float!): BoolApiResponse!
+  deleteChat(id: Int!): BoolApiResponse!
+  deleteEvent(id: Int!): BoolApiResponse!
+  deleteInterest(id: Int!): BoolApiResponse!
   deleteWannago(id: Int!): BoolApiResponse!
   forgotPassword(email: String!): BoolApiResponse!
   helloMutation(message: String!): Boolean!
@@ -220,14 +225,14 @@ type Mutation {
 }
 
 type Query {
-  chat(id: Float!): ChatApiResponse!
+  chat(id: Int!): ChatApiResponse!
   chats(forumId: Int!): ChatsApiResponse!
-  event(id: Float!): Event
-  events: EventsApiResponse!
-  forum(id: Float!): ForumApiResponse!
+  event(id: Int!): Event
+  events(dateRange: DateRangeInput!): EventsApiResponse!
+  forum(id: Int!): ForumApiResponse!
   forumsByEventId(ids: [Int!]!): ForumsApiResponse!
   hello: String!
-  interest(id: Float!): InterestApiResponse!
+  interest(id: Int!): InterestApiResponse!
   lastChat(forumId: Int!): ChatApiResponse!
   me: UserApiResponse!
   myEvents: EventsApiResponse!

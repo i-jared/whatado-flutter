@@ -30,10 +30,10 @@ class _CalendarSelectorState extends State<CalendarSelector> {
     calendarScrollController = ScrollController();
     final now = DateTime.now();
     final daysLeftThisMonth = daysInMonth(now.year, now.month) - now.day + 1;
-    final daysNextMonth = daysInMonth(now.month == 12 ? now.year + 1 : now.year,
-        now.month == 12 ? 1 : now.month + 1);
-    final daysLastMonth = daysInMonth(now.month >= 11 ? now.year + 1 : now.year,
-        now.month >= 11 ? (now.month + 2) % 12 : now.month + 2);
+    final daysNextMonth = daysInMonth(
+        now.month == 12 ? now.year + 1 : now.year, (now.month + 1) % 12);
+    final daysLastMonth = daysInMonth(
+        now.month >= 11 ? now.year + 1 : now.year, (now.month + 2) % 12);
     final dayWidth = (widget.width - monthWidth) / 6;
 
     List<double> monthOffsets = [
@@ -48,7 +48,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
         if (scrollingMonth != now.month) {
           setState(() => scrollingMonth = now.month);
         }
-      } else if (offset < monthOffsets[1] + monthOffsets[1]) {
+      } else if (offset < monthOffsets[0] + monthOffsets[1]) {
         if (scrollingMonth != now.month + 1) {
           setState(() => scrollingMonth = now.month + 1);
         }
@@ -79,24 +79,34 @@ class _CalendarSelectorState extends State<CalendarSelector> {
     final now = DateTime.now();
     return Container(
         height: 40,
+        decoration: BoxDecoration(
+          color: Colors.grey[50],
+          boxShadow: kElevationToShadow[1],
+        ),
         child: Row(
           children: [
-            Container(
-              width: monthWidth,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                  color: Color(0xffe85c3f),
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(50),
-                      bottomRight: Radius.circular(50))),
-              child: Center(
-                  child: Text(
-                      DateFormat('MMM')
-                          .format(DateTime(now.year, scrollingMonth)),
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white))),
+            InkWell(
+              onTap: () {
+                homeState.selectedDate = null;
+                homeState.refreshController.requestRefresh();
+              },
+              child: Container(
+                width: monthWidth,
+                height: double.infinity,
+                decoration: BoxDecoration(
+                    color: Color(0xffe85c3f),
+                    borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(50),
+                        bottomRight: Radius.circular(50))),
+                child: Center(
+                    child: Text(
+                        DateFormat('MMM')
+                            .format(DateTime(now.year, scrollingMonth)),
+                        style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white))),
+              ),
             ),
             Expanded(
                 child: ListView(
@@ -105,8 +115,10 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                     children: [
                   ...dates
                       .map((indexedDate) => InkWell(
-                            onTap: () =>
-                                homeState.selectedDateIndex = indexedDate.index,
+                            onTap: () {
+                              homeState.selectedDate = indexedDate.dateTime;
+                              homeState.refreshController.requestRefresh();
+                            },
                             child: Stack(
                               children: [
                                 Container(
@@ -125,8 +137,8 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                                             .format(indexedDate.dateTime)),
                                       ],
                                     )),
-                                if (homeState.selectedDateIndex ==
-                                    indexedDate.index)
+                                if (homeState.selectedDate ==
+                                    indexedDate.dateTime)
                                   Positioned(
                                     top: 5,
                                     right: 5,

@@ -25,6 +25,7 @@ class HomeScreen extends StatelessWidget {
         appBar: getAppBar(homeState.bottomBarPageNo),
         body: homeState.bottomBarPageNo == 0
             ? PageView(
+                key: PageStorageKey(9),
                 onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
                 controller: homeState.homePageController,
                 children: [AllEvents(), MyEvents(), MyForums()],

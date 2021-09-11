@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
+import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 
@@ -24,6 +26,10 @@ class _EventDetailsState extends State<EventDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final homeState = Provider.of<HomeState>(context);
+    final event = homeState.myEvents?.firstWhere((e) => e.id == widget.event.id,
+            orElse: () => widget.event) ??
+        widget.event;
     final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
     final headingSpacing = 10.0;
     final padding = 30.0;
@@ -36,7 +42,7 @@ class _EventDetailsState extends State<EventDetails> {
         6.0;
 
     return Scaffold(
-        appBar: EventAppBar(event: widget.event),
+        appBar: EventAppBar(event: event),
         body: SingleChildScrollView(
             child: Padding(
           padding: EdgeInsets.symmetric(horizontal: padding),
@@ -45,15 +51,15 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(height: sectionSpacing),
             Text('DESCRIPTION', style: headingStyle),
             SizedBox(height: headingSpacing),
-            Text(widget.event.description),
+            Text(event.description),
             SizedBox(height: sectionSpacing),
             Text('LOCATION', style: headingStyle),
             SizedBox(height: headingSpacing),
-            Text(widget.event.location),
+            Text(event.location),
             SizedBox(height: sectionSpacing),
             Text('TIME', style: headingStyle),
             SizedBox(height: headingSpacing),
-            Text(dateFormat.format(widget.event.time)),
+            Text(dateFormat.format(event.time)),
             SizedBox(height: sectionSpacing),
             Text('ORGANIZER', style: headingStyle),
             SizedBox(height: headingSpacing),
@@ -61,10 +67,10 @@ class _EventDetailsState extends State<EventDetails> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: NetworkImage(widget.event.creator.imageUrl),
+                  backgroundImage: NetworkImage(event.creator.imageUrl),
                 ),
                 SizedBox(width: 20),
-                Text(widget.event.creator.name)
+                Text(event.creator.name)
               ],
             ),
             SizedBox(height: sectionSpacing),
@@ -73,9 +79,9 @@ class _EventDetailsState extends State<EventDetails> {
             Wrap(
               spacing: circleSpacing,
               runSpacing: circleSpacing,
-              children: !expanded && widget.event.invited.length > 5
+              children: !expanded && event.invited.length > 5
                   ? [
-                      ...widget.event.invited
+                      ...event.invited
                           .map((eventUser) => InkWell(
                                 onTap: () => Navigator.push(
                                     context,
@@ -93,12 +99,12 @@ class _EventDetailsState extends State<EventDetails> {
                           onTap: () => setState(() => expanded = !expanded),
                           child: CircleAvatar(
                             radius: circleRadius,
-                            child: Text('+${widget.event.invited.length - 5}',
+                            child: Text('+${event.invited.length - 5}',
                                 style: TextStyle(fontSize: 28)),
                             backgroundColor: Colors.grey[200],
                           ))
                     ]
-                  : widget.event.invited
+                  : event.invited
                       .map((eventUser) => InkWell(
                             onTap: () => Navigator.push(
                                 context,
@@ -114,14 +120,17 @@ class _EventDetailsState extends State<EventDetails> {
             ),
             SizedBox(height: sectionSpacing),
             RoundedArrowButton(
-                disabled: widget.event.wannago.length == 0,
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SelectWannago(
-                            event: widget.event,
-                            wannago: widget.event.wannago))),
-                text: '${widget.event.wannago.length} people wannago'),
+                disabled: event.wannago.length == 0,
+                onPressed: () async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => SelectWannago(event: event)));
+                  // event = homeState.myEvents
+                  // .firstWhere((e) => e.id == widget.event.id);
+                  // setState(() {});
+                },
+                text: '${event.wannago.length} people wannago'),
             SizedBox(height: 50),
           ]),
         )));

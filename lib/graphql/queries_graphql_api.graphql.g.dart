@@ -295,6 +295,19 @@ Map<String, dynamic> _$EventFieldsMixin$RelatedInterestsToJson(
       'id': instance.id,
     };
 
+DateRangeInput _$DateRangeInputFromJson(Map<String, dynamic> json) {
+  return DateRangeInput(
+    endDate: fromGraphQLDateTimeToDartDateTime(json['endDate'] as String),
+    startDate: fromGraphQLDateTimeToDartDateTime(json['startDate'] as String),
+  );
+}
+
+Map<String, dynamic> _$DateRangeInputToJson(DateRangeInput instance) =>
+    <String, dynamic>{
+      'endDate': fromDartDateTimeToGraphQLDateTime(instance.endDate),
+      'startDate': fromDartDateTimeToGraphQLDateTime(instance.startDate),
+    };
+
 EventUserPreview$Query$UsersById$Errors
     _$EventUserPreview$Query$UsersById$ErrorsFromJson(
         Map<String, dynamic> json) {
@@ -979,6 +992,18 @@ ChatsArguments _$ChatsArgumentsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ChatsArgumentsToJson(ChatsArguments instance) =>
     <String, dynamic>{
       'forumId': instance.forumId,
+    };
+
+EventsArguments _$EventsArgumentsFromJson(Map<String, dynamic> json) {
+  return EventsArguments(
+    dateRange:
+        DateRangeInput.fromJson(json['dateRange'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$EventsArgumentsToJson(EventsArguments instance) =>
+    <String, dynamic>{
+      'dateRange': instance.dateRange.toJson(),
     };
 
 EventUserPreviewArguments _$EventUserPreviewArgumentsFromJson(

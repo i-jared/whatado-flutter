@@ -44,12 +44,16 @@ class EventTitle extends StatelessWidget {
                 Flexible(
                     flex: 3,
                     child: event.creator.id == userState.user!.id
-                        ? MyEventButton()
+                        ? NoJoinButton(text: 'My Event')
                         : !event.wannago
                                 .map((w) => w.user.id)
                                 .contains(userState.user!.id)
                             ? JoinButton(event: event)
-                            : LeaveButton(event: event))
+                            : !event.invited
+                                    .map((u) => u.id)
+                                    .contains(userState.user!.id)
+                                ? LeaveButton(event: event)
+                                : NoJoinButton(text: 'Going'))
             ]),
       ],
     );

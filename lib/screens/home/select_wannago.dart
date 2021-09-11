@@ -9,28 +9,38 @@ import 'package:whatado/widgets/appbars/default_app_bar.dart';
 
 class SelectWannago extends StatelessWidget {
   final Event event;
-  final List<Wannago> wannago;
-  SelectWannago({required this.event, required this.wannago});
+  SelectWannago({required this.event});
 
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
-    Future<void> decide(Wannago wannago, bool accepted) async {
+    Future<void> decide(Wannago w, bool accepted) async {
       final provider = EventsGqlProvider();
       if (accepted) {
-        await provider.deleteWannago(wannagoId: wannago.id);
-        final result = await provider.addInvite(
-            eventId: event.id, userId: wannago.user.id);
-        if (result.data != null) homeState.updateEvent(result.data as Event);
+        await provider.deleteWannago(wannagoId: w.id);
+        final result =
+            await provider.addInvite(eventId: event.id, userId: w.user.id);
+        if (result.data != null) {
+          event.wannago.remove(w);
+          homeState.updateEvent(result.data as Event);
+          homeState.updateMyEvent(result.data as Event);
+        }
       } else {
-        await provider.updateWannago(wannagoId: wannago.id, declined: true);
+        final result =
+            await provider.updateWannago(wannagoId: w.id, declined: true);
+        if (result.ok) {
+          final i = event.wannago.indexOf(w);
+          event.wannago[i].declined = true;
+          homeState.updateEvent(event);
+          homeState.updateMyEvent(event);
+        }
       }
     }
 
     return Scaffold(
       appBar: DefaultAppBar(title: 'Invite'),
       body: ListView(
-        children: wannago
+        children: event.wannago
             .map((wannago) => ListTile(
                   onTap: () => Navigator.push(
                       context,

@@ -15,16 +15,14 @@ String get PROD => "PROD";
 // ignore: non_constant_identifier_names
 String get LOCAL_DEV => "LOCAL_DEV";
 
-
-//TODO: implement chatnotifications
-//TODO: implement pushNotifications to update users with new messages or new events invited to
-//TODO: implement wannago selection
-//TODO: make working calendar selector that defaults to a whole month
+//TODO: resize profile photos
 //TODO: change slidable forum to a little menu or long press popup
 //TODO: finish post uploaded or failed pages
 //TODO: finish forgot password support and email
 
 
+//TODO: implement chatnotifications
+//TODO: implement pushNotifications to update users with new messages or new events invited to
 //TODO: figure out how to update on one endpoint
 //TODO: allow reporting and posts
 //TODO: make myevents widgets look better

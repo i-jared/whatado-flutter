@@ -20,7 +20,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leadingWidth: 150,
       backgroundColor: Colors.grey[50],
-      elevation: 1.0,
+      elevation: 0.0,
       leading: Padding(
         padding: EdgeInsets.only(left: 10),
         child: Image.asset("assets/text_logo.png"),

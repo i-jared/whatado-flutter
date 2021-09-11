@@ -11,31 +11,41 @@ class AllEvents extends StatelessWidget {
     final width = MediaQuery.of(context).size.width;
     final homeState = Provider.of<HomeState>(context);
 
-    return SmartRefresher(
-      controller: homeState.refreshController,
-      onRefresh: homeState.allEventsRefresh,
-      child: ListView(
-        shrinkWrap:
-            (homeState.allEvents != null && homeState.allEvents!.isEmpty),
-        key: PageStorageKey(0),
-        controller: homeState.allEventsScrollController,
-        children: [
-          CalendarSelector(width: width),
-          if (homeState.allEvents == null)
-            Container(
-                height: MediaQuery.of(context).size.height - 200,
-                child: Center(child: CircularProgressIndicator(value: null))),
-          if (homeState.allEvents != null && homeState.allEvents!.isEmpty)
-            Container(
-              height: MediaQuery.of(context).size.height - 200,
-              child: Center(
-                child: Text('no events in your area.. :('),
-              ),
+    return Column(
+      children: [
+        CalendarSelector(width: width),
+        Expanded(
+          child: SmartRefresher(
+            controller: homeState.refreshController,
+            onRefresh: homeState.allEventsRefresh,
+            child: ListView(
+              shrinkWrap:
+                  (homeState.allEvents != null && homeState.allEvents!.isEmpty),
+              key: PageStorageKey(0),
+              controller: homeState.allEventsScrollController,
+              children: [
+                if (homeState.allEvents == null)
+                  Container(
+                      height: MediaQuery.of(context).size.height - 200,
+                      child: Center(
+                          child: CircularProgressIndicator(value: null))),
+                if (homeState.allEvents != null && homeState.allEvents!.isEmpty)
+                  Container(
+                    height: MediaQuery.of(context).size.height - 200,
+                    child: Center(
+                      child: Text('no events in your area.. :('),
+                    ),
+                  ),
+                if (homeState.allEvents != null &&
+                    homeState.allEvents!.isNotEmpty)
+                  ...homeState.allEvents!
+                      .map((e) => EventDisplay(event: e))
+                      .toList()
+              ],
             ),
-          if (homeState.allEvents != null && homeState.allEvents!.isNotEmpty)
-            ...homeState.allEvents!.map((e) => EventDisplay(event: e)).toList()
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 }

@@ -299,6 +299,29 @@ class EventFieldsMixin$RelatedInterests extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class DateRangeInput extends JsonSerializable with EquatableMixin {
+  DateRangeInput({required this.endDate, required this.startDate});
+
+  factory DateRangeInput.fromJson(Map<String, dynamic> json) =>
+      _$DateRangeInputFromJson(json);
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime endDate;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime startDate;
+
+  @override
+  List<Object?> get props => [endDate, startDate];
+  @override
+  Map<String, dynamic> toJson() => _$DateRangeInputToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class EventUserPreview$Query$UsersById$Errors extends JsonSerializable
     with EquatableMixin {
   EventUserPreview$Query$UsersById$Errors();
@@ -1224,17 +1247,44 @@ class ChatsQuery extends GraphQLQuery<Chats$Query, ChatsArguments> {
   Chats$Query parse(Map<String, dynamic> json) => Chats$Query.fromJson(json);
 }
 
+@JsonSerializable(explicitToJson: true)
+class EventsArguments extends JsonSerializable with EquatableMixin {
+  EventsArguments({required this.dateRange});
+
+  @override
+  factory EventsArguments.fromJson(Map<String, dynamic> json) =>
+      _$EventsArgumentsFromJson(json);
+
+  late DateRangeInput dateRange;
+
+  @override
+  List<Object?> get props => [dateRange];
+  @override
+  Map<String, dynamic> toJson() => _$EventsArgumentsToJson(this);
+}
+
 final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
   OperationDefinitionNode(
       type: OperationType.query,
       name: NameNode(value: 'events'),
-      variableDefinitions: [],
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'dateRange')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'DateRangeInput'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
       directives: [],
       selectionSet: SelectionSetNode(selections: [
         FieldNode(
             name: NameNode(value: 'events'),
             alias: null,
-            arguments: [],
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'dateRange'),
+                  value: VariableNode(name: NameNode(value: 'dateRange')))
+            ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
@@ -1438,8 +1488,8 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
       ]))
 ]);
 
-class EventsQuery extends GraphQLQuery<Events$Query, JsonSerializable> {
-  EventsQuery();
+class EventsQuery extends GraphQLQuery<Events$Query, EventsArguments> {
+  EventsQuery({required this.variables});
 
   @override
   final DocumentNode document = EVENTS_QUERY_DOCUMENT;
@@ -1448,7 +1498,10 @@ class EventsQuery extends GraphQLQuery<Events$Query, JsonSerializable> {
   final String operationName = 'events';
 
   @override
-  List<Object?> get props => [document, operationName];
+  final EventsArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
   @override
   Events$Query parse(Map<String, dynamic> json) => Events$Query.fromJson(json);
 }

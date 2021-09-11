@@ -19,7 +19,7 @@ class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       backgroundColor: Colors.grey[50],
-      title: Text('Profile',
+      title: Text(userState.user!.name,
           style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       centerTitle: true,
       elevation: homeState.myProfileScrollController.hasClients &&

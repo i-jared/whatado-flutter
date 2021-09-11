@@ -8,7 +8,7 @@ import 'package:whatado/providers/graphql/forums_provider.dart';
 class HomeState extends ChangeNotifier {
   int _appBarPageNo;
   int _bottomBarPageNo;
-  int _selectedDateIndex;
+  DateTime? _selectedDate;
 
   RefreshController refreshController;
   RefreshController myEventsRefreshController;
@@ -23,31 +23,23 @@ class HomeState extends ChangeNotifier {
   HomeState()
       : _appBarPageNo = 0,
         _bottomBarPageNo = 0,
-        _selectedDateIndex = 0,
-        homePageController = PageController(),
+        homePageController = PageController(keepPage: true),
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),
         refreshController = RefreshController(initialRefresh: false),
         myEventsRefreshController = RefreshController(initialRefresh: false) {
-    // check if scroll is at top
-    // allEventsScrollController.addListener(() {
-    // if (allEventsScrollController.offset <= 10 && !_allEventsAtTop) {
-    // _allEventsAtTop = true;
-    // notifyListeners();
-    // } else if (allEventsScrollController.offset > 10 && _allEventsAtTop) {
-    // _allEventsAtTop = false;
-    // notifyListeners();
-    // }
-    // });
     // get initial events
     getNewEvents();
-    getMyEvents().then((_) => getMyForums());
+    getMyEvents().then((myEvents) =>
+        myEvents == null || myEvents.isEmpty ? null : getMyForums());
   }
 
   @override
   void dispose() {
     allEventsScrollController.dispose();
     homePageController.dispose();
+    refreshController.dispose();
+    myEventsRefreshController.dispose();
     super.dispose();
   }
 
@@ -63,9 +55,9 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  int get selectedDateIndex => _selectedDateIndex;
-  set selectedDateIndex(int beginDateIndex) {
-    _selectedDateIndex = beginDateIndex;
+  DateTime? get selectedDate => _selectedDate;
+  set selectedDate(DateTime? beginDateIndex) {
+    _selectedDate = beginDateIndex;
     notifyListeners();
   }
 
@@ -84,16 +76,19 @@ class HomeState extends ChangeNotifier {
 
   Future<void> getNewEvents() async {
     final query = EventsGqlProvider();
-    final response = await query.events();
+    final start = _selectedDate ?? DateTime.now();
+    final end = _selectedDate ?? DateTime.now().add(Duration(days: 1000));
+    final response = await query.events(start, end);
     allEvents = response.data ?? [];
     notifyListeners();
   }
 
-  Future<void> getMyEvents() async {
+  Future<List<Event>?> getMyEvents() async {
     final query = EventsGqlProvider();
     final response = await query.myEvents();
     myEvents = response.data ?? [];
     notifyListeners();
+    return myEvents;
   }
 
   Future<void> getMyForums() async {
@@ -126,6 +121,12 @@ class HomeState extends ChangeNotifier {
   void updateEvent(Event event) {
     final int index = allEvents!.indexWhere((val) => val.id == event.id);
     allEvents![index] = event;
+    notifyListeners();
+  }
+
+  void updateMyEvent(Event event) {
+    final int myindex = myEvents!.indexWhere((val) => val.id == event.id);
+    myEvents![myindex] = event;
     notifyListeners();
   }
 }
