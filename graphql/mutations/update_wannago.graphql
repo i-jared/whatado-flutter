@@ -1,0 +1,10 @@
+mutation updateWannago($id: Int!, $declined: Boolean!) {
+  updateWannago(id: $id, declined: $declined) {
+    ok
+    nodes 
+    errors {
+      field
+      message
+    }
+  }
+}

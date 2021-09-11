@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
@@ -113,8 +114,14 @@ class _EventDetailsState extends State<EventDetails> {
             ),
             SizedBox(height: sectionSpacing),
             RoundedArrowButton(
-                onPressed: null,
-                text: '${widget.event.wannagoIds.length} people wannago'),
+                disabled: widget.event.wannago.length == 0,
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SelectWannago(
+                            event: widget.event,
+                            wannago: widget.event.wannago))),
+                text: '${widget.event.wannago.length} people wannago'),
             SizedBox(height: 50),
           ]),
         )));

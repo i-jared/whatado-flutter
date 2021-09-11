@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/state/home_state.dart';
@@ -16,28 +15,15 @@ class LeaveButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: () async {
           try {
-            final tempIds = event.wannagoIds
-                .where((id) => id != userState.user!.id)
-                .toList();
+            final wannago = event.wannago
+                .firstWhere((w) => w.user.id == userState.user!.id);
             final provider = EventsGqlProvider();
-            final eventInput = EventInput(
-                id: event.id,
-                description: event.description,
-                filterAge: '',
-                filterGender: event.filterGender,
-                filterLocation: '',
-                filterRadius: 5,
-                invitedIds: event.invited.map((eu) => eu.id).toList(),
-                location: event.location,
-                relatedInterestsIds: event.relatedInterestIds,
-                time: event.time,
-                title: event.title,
-                wannagoIds: tempIds,
-                creatorId: event.creator.id,
-                pictureUrl: event.imageUrl);
-            final response = await provider.updateEvent(eventInput);
+            await provider.deleteWannago(wannagoId: wannago.id);
             // update the event
-            homeState.updateEvent(response.data as Event);
+            event.wannago = event.wannago
+                .where((w) => w.user.id != userState.user!.id)
+                .toList();
+            homeState.updateEvent(event);
           } catch (e) {
             print(e.toString());
           }

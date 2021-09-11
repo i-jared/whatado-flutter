@@ -106,4 +106,103 @@ class EventsGqlProvider {
       errors: errors,
     );
   }
+
+  Future<MyQueryResponse<Event>> addWannago(
+      {required int eventId, required int userId}) async {
+    final mutation = AddWannagoMutation(
+        variables: AddWannagoArguments(eventId: eventId, userId: userId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+    print('add wannago $result');
+    final root = result.data?['addWannago'];
+    final data = root != null && root['nodes'] != null
+        ? Event.fromGqlData(root?['nodes'])
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<Event>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<Event>> addInvite(
+      {required int eventId, required int userId}) async {
+    final mutation = AddInviteMutation(
+        variables: AddInviteArguments(eventId: eventId, userId: userId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+    print('add Invite $result');
+    final root = result.data?['addInvite'];
+    final data = root != null && root['nodes'] != null
+        ? Event.fromGqlData(root?['nodes'])
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<Event>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> updateWannago(
+      {required int wannagoId, required bool declined}) async {
+    final mutation = UpdateWannagoMutation(
+        variables: UpdateWannagoArguments(id: wannagoId, declined: declined));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+    print('update wannago $result');
+    final root = result.data?['updateWannago'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> deleteWannago({required int wannagoId}) async {
+    final mutation =
+        DeleteWannagoMutation(variables: DeleteWannagoArguments(id: wannagoId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+    print('delete wannago $result');
+    final root = result.data?['deleteWannago'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
 }

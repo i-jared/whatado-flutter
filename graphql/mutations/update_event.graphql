@@ -2,32 +2,7 @@ mutation updateEvent($eventInput: EventInput!) {
   updateEvent(options: $eventInput) {
     ok
     nodes {
-      id
-      createdAt
-      updatedAt
-      title
-      description
-      creator {
-        id
-        profilePhotoUrl
-        username
-      }
-      wannago {
-        id
-      }
-      invited {
-        id
-      }
-      time
-      location
-      pictureUrl
-      relatedInterests {
-        id
-      }
-      filterLocation
-      filterRadius
-      filterGender
-      filterAge
+      ...EventFields
     }
     errors {
       field

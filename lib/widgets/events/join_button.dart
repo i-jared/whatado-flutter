@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/state/home_state.dart';
@@ -17,24 +16,10 @@ class JoinButton extends StatelessWidget {
         onPressed: () async {
           try {
             final provider = EventsGqlProvider();
-            final eventInput = EventInput(
-                id: event.id,
-                description: event.description,
-                filterAge: '',
-                filterGender: event.filterGender,
-                filterLocation: '',
-                filterRadius: 5,
-                invitedIds: event.invited.map((eu) => eu.id).toList(),
-                location: event.location,
-                relatedInterestsIds: event.relatedInterestIds,
-                time: event.time,
-                title: event.title,
-                wannagoIds: [...event.wannagoIds, userState.user!.id],
-                creatorId: event.creator.id,
-                pictureUrl: event.imageUrl);
-            final result = await provider.updateEvent(eventInput);
+            final result = await provider.addWannago(
+                eventId: event.id, userId: userState.user!.id);
             // update the event
-            homeState.updateEvent(result.data as Event);
+            if (result.ok) homeState.updateEvent(result.data as Event);
           } catch (e) {
             print(e.toString());
           }

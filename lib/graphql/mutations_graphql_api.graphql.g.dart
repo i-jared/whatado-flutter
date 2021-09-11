@@ -152,63 +152,6 @@ Map<String, dynamic> _$ChatInputToJson(ChatInput instance) => <String, dynamic>{
       'text': instance.text,
     };
 
-CreateEvent$Mutation$CreateEvent$Nodes$Creator
-    _$CreateEvent$Mutation$CreateEvent$Nodes$CreatorFromJson(
-        Map<String, dynamic> json) {
-  return CreateEvent$Mutation$CreateEvent$Nodes$Creator()
-    ..id = json['id'] as int
-    ..profilePhotoUrl = json['profilePhotoUrl'] as String
-    ..username = json['username'] as String;
-}
-
-Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$Nodes$CreatorToJson(
-        CreateEvent$Mutation$CreateEvent$Nodes$Creator instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'profilePhotoUrl': instance.profilePhotoUrl,
-      'username': instance.username,
-    };
-
-CreateEvent$Mutation$CreateEvent$Nodes$Wannago
-    _$CreateEvent$Mutation$CreateEvent$Nodes$WannagoFromJson(
-        Map<String, dynamic> json) {
-  return CreateEvent$Mutation$CreateEvent$Nodes$Wannago()
-    ..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$Nodes$WannagoToJson(
-        CreateEvent$Mutation$CreateEvent$Nodes$Wannago instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-CreateEvent$Mutation$CreateEvent$Nodes$Invited
-    _$CreateEvent$Mutation$CreateEvent$Nodes$InvitedFromJson(
-        Map<String, dynamic> json) {
-  return CreateEvent$Mutation$CreateEvent$Nodes$Invited()
-    ..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$Nodes$InvitedToJson(
-        CreateEvent$Mutation$CreateEvent$Nodes$Invited instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests
-    _$CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterestsFromJson(
-        Map<String, dynamic> json) {
-  return CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests()
-    ..id = json['id'] as int;
-}
-
-Map<String, dynamic>
-    _$CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterestsToJson(
-            CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests instance) =>
-        <String, dynamic>{
-          'id': instance.id,
-        };
-
 CreateEvent$Mutation$CreateEvent$Nodes
     _$CreateEvent$Mutation$CreateEvent$NodesFromJson(
         Map<String, dynamic> json) {
@@ -218,23 +161,22 @@ CreateEvent$Mutation$CreateEvent$Nodes
     ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
     ..title = json['title'] as String
     ..description = json['description'] as String
-    ..creator = CreateEvent$Mutation$CreateEvent$Nodes$Creator.fromJson(
+    ..creator = EventFieldsMixin$Creator.fromJson(
         json['creator'] as Map<String, dynamic>)
-    ..wannago = (json['wannago'] as List<dynamic>)
-        .map((e) => CreateEvent$Mutation$CreateEvent$Nodes$Wannago.fromJson(
-            e as Map<String, dynamic>))
-        .toList()
     ..invited = (json['invited'] as List<dynamic>)
-        .map((e) => CreateEvent$Mutation$CreateEvent$Nodes$Invited.fromJson(
-            e as Map<String, dynamic>))
+        .map(
+            (e) => EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..wannago = (json['wannago'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
         .toList()
     ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
     ..location = json['location'] as String
     ..pictureUrl = json['pictureUrl'] as String?
     ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
-        .map((e) =>
-            CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests.fromJson(
-                e as Map<String, dynamic>))
+        .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+            e as Map<String, dynamic>))
         .toList()
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
@@ -252,8 +194,8 @@ Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
       'title': instance.title,
       'description': instance.description,
       'creator': instance.creator.toJson(),
-      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
       'pictureUrl': instance.pictureUrl,
@@ -345,6 +287,82 @@ Map<String, dynamic> _$CreateEvent$MutationToJson(
         CreateEvent$Mutation instance) =>
     <String, dynamic>{
       'createEvent': instance.createEvent.toJson(),
+    };
+
+EventFieldsMixin$Creator _$EventFieldsMixin$CreatorFromJson(
+    Map<String, dynamic> json) {
+  return EventFieldsMixin$Creator()
+    ..id = json['id'] as int
+    ..username = json['username'] as String
+    ..profilePhotoUrl = json['profilePhotoUrl'] as String;
+}
+
+Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
+        EventFieldsMixin$Creator instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'profilePhotoUrl': instance.profilePhotoUrl,
+    };
+
+EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
+    Map<String, dynamic> json) {
+  return EventFieldsMixin$Invited()
+    ..id = json['id'] as int
+    ..username = json['username'] as String
+    ..profilePhotoUrl = json['profilePhotoUrl'] as String;
+}
+
+Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
+        EventFieldsMixin$Invited instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'profilePhotoUrl': instance.profilePhotoUrl,
+    };
+
+EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
+    Map<String, dynamic> json) {
+  return EventFieldsMixin$Wannago$User()
+    ..id = json['id'] as int
+    ..username = json['username'] as String
+    ..profilePhotoUrl = json['profilePhotoUrl'] as String;
+}
+
+Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
+        EventFieldsMixin$Wannago$User instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'username': instance.username,
+      'profilePhotoUrl': instance.profilePhotoUrl,
+    };
+
+EventFieldsMixin$Wannago _$EventFieldsMixin$WannagoFromJson(
+    Map<String, dynamic> json) {
+  return EventFieldsMixin$Wannago()
+    ..id = json['id'] as int
+    ..declined = json['declined'] as bool
+    ..user = EventFieldsMixin$Wannago$User.fromJson(
+        json['user'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$EventFieldsMixin$WannagoToJson(
+        EventFieldsMixin$Wannago instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'declined': instance.declined,
+      'user': instance.user.toJson(),
+    };
+
+EventFieldsMixin$RelatedInterests _$EventFieldsMixin$RelatedInterestsFromJson(
+    Map<String, dynamic> json) {
+  return EventFieldsMixin$RelatedInterests()..id = json['id'] as int;
+}
+
+Map<String, dynamic> _$EventFieldsMixin$RelatedInterestsToJson(
+        EventFieldsMixin$RelatedInterests instance) =>
+    <String, dynamic>{
+      'id': instance.id,
     };
 
 EventInput _$EventInputFromJson(Map<String, dynamic> json) {
@@ -825,63 +843,6 @@ Map<String, dynamic> _$UpdateBio$MutationToJson(UpdateBio$Mutation instance) =>
       'updateBio': instance.updateBio.toJson(),
     };
 
-UpdateEvent$Mutation$UpdateEvent$Nodes$Creator
-    _$UpdateEvent$Mutation$UpdateEvent$Nodes$CreatorFromJson(
-        Map<String, dynamic> json) {
-  return UpdateEvent$Mutation$UpdateEvent$Nodes$Creator()
-    ..id = json['id'] as int
-    ..profilePhotoUrl = json['profilePhotoUrl'] as String
-    ..username = json['username'] as String;
-}
-
-Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$Nodes$CreatorToJson(
-        UpdateEvent$Mutation$UpdateEvent$Nodes$Creator instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'profilePhotoUrl': instance.profilePhotoUrl,
-      'username': instance.username,
-    };
-
-UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago
-    _$UpdateEvent$Mutation$UpdateEvent$Nodes$WannagoFromJson(
-        Map<String, dynamic> json) {
-  return UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago()
-    ..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$Nodes$WannagoToJson(
-        UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-UpdateEvent$Mutation$UpdateEvent$Nodes$Invited
-    _$UpdateEvent$Mutation$UpdateEvent$Nodes$InvitedFromJson(
-        Map<String, dynamic> json) {
-  return UpdateEvent$Mutation$UpdateEvent$Nodes$Invited()
-    ..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$Nodes$InvitedToJson(
-        UpdateEvent$Mutation$UpdateEvent$Nodes$Invited instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests
-    _$UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterestsFromJson(
-        Map<String, dynamic> json) {
-  return UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests()
-    ..id = json['id'] as int;
-}
-
-Map<String, dynamic>
-    _$UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterestsToJson(
-            UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests instance) =>
-        <String, dynamic>{
-          'id': instance.id,
-        };
-
 UpdateEvent$Mutation$UpdateEvent$Nodes
     _$UpdateEvent$Mutation$UpdateEvent$NodesFromJson(
         Map<String, dynamic> json) {
@@ -891,23 +852,22 @@ UpdateEvent$Mutation$UpdateEvent$Nodes
     ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
     ..title = json['title'] as String
     ..description = json['description'] as String
-    ..creator = UpdateEvent$Mutation$UpdateEvent$Nodes$Creator.fromJson(
+    ..creator = EventFieldsMixin$Creator.fromJson(
         json['creator'] as Map<String, dynamic>)
-    ..wannago = (json['wannago'] as List<dynamic>)
-        .map((e) => UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago.fromJson(
-            e as Map<String, dynamic>))
-        .toList()
     ..invited = (json['invited'] as List<dynamic>)
-        .map((e) => UpdateEvent$Mutation$UpdateEvent$Nodes$Invited.fromJson(
-            e as Map<String, dynamic>))
+        .map(
+            (e) => EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..wannago = (json['wannago'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
         .toList()
     ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
     ..location = json['location'] as String
     ..pictureUrl = json['pictureUrl'] as String?
     ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
-        .map((e) =>
-            UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests.fromJson(
-                e as Map<String, dynamic>))
+        .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+            e as Map<String, dynamic>))
         .toList()
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
@@ -925,8 +885,8 @@ Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
       'title': instance.title,
       'description': instance.description,
       'creator': instance.creator.toJson(),
-      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
       'pictureUrl': instance.pictureUrl,
@@ -1083,6 +1043,303 @@ Map<String, dynamic> _$UpdateProfilePhoto$MutationToJson(
         UpdateProfilePhoto$Mutation instance) =>
     <String, dynamic>{
       'updateProfilePhoto': instance.updateProfilePhoto.toJson(),
+    };
+
+AddInvite$Mutation$AddInvite$Nodes _$AddInvite$Mutation$AddInvite$NodesFromJson(
+    Map<String, dynamic> json) {
+  return AddInvite$Mutation$AddInvite$Nodes()
+    ..id = json['id'] as int
+    ..createdAt = fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+    ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+    ..title = json['title'] as String
+    ..description = json['description'] as String
+    ..creator = EventFieldsMixin$Creator.fromJson(
+        json['creator'] as Map<String, dynamic>)
+    ..invited = (json['invited'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..wannago = (json['wannago'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
+    ..location = json['location'] as String
+    ..pictureUrl = json['pictureUrl'] as String?
+    ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+        .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..filterLocation = json['filterLocation'] as String
+    ..filterRadius = (json['filterRadius'] as num).toDouble()
+    ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
+        unknownValue: Gender.artemisUnknown)
+    ..filterAge = json['filterAge'] as String;
+}
+
+Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
+        AddInvite$Mutation$AddInvite$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'title': instance.title,
+      'description': instance.description,
+      'creator': instance.creator.toJson(),
+      'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
+      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
+      'location': instance.location,
+      'pictureUrl': instance.pictureUrl,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'filterLocation': instance.filterLocation,
+      'filterRadius': instance.filterRadius,
+      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterAge': instance.filterAge,
+    };
+
+AddInvite$Mutation$AddInvite$Errors
+    _$AddInvite$Mutation$AddInvite$ErrorsFromJson(Map<String, dynamic> json) {
+  return AddInvite$Mutation$AddInvite$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$AddInvite$Mutation$AddInvite$ErrorsToJson(
+        AddInvite$Mutation$AddInvite$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+AddInvite$Mutation$AddInvite _$AddInvite$Mutation$AddInviteFromJson(
+    Map<String, dynamic> json) {
+  return AddInvite$Mutation$AddInvite()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] == null
+        ? null
+        : AddInvite$Mutation$AddInvite$Nodes.fromJson(
+            json['nodes'] as Map<String, dynamic>)
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => AddInvite$Mutation$AddInvite$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$AddInvite$Mutation$AddInviteToJson(
+        AddInvite$Mutation$AddInvite instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+AddInvite$Mutation _$AddInvite$MutationFromJson(Map<String, dynamic> json) {
+  return AddInvite$Mutation()
+    ..addInvite = AddInvite$Mutation$AddInvite.fromJson(
+        json['addInvite'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$AddInvite$MutationToJson(AddInvite$Mutation instance) =>
+    <String, dynamic>{
+      'addInvite': instance.addInvite.toJson(),
+    };
+
+AddWannago$Mutation$AddWannago$Nodes
+    _$AddWannago$Mutation$AddWannago$NodesFromJson(Map<String, dynamic> json) {
+  return AddWannago$Mutation$AddWannago$Nodes()
+    ..id = json['id'] as int
+    ..createdAt = fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+    ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+    ..title = json['title'] as String
+    ..description = json['description'] as String
+    ..creator = EventFieldsMixin$Creator.fromJson(
+        json['creator'] as Map<String, dynamic>)
+    ..invited = (json['invited'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..wannago = (json['wannago'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
+    ..location = json['location'] as String
+    ..pictureUrl = json['pictureUrl'] as String?
+    ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+        .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..filterLocation = json['filterLocation'] as String
+    ..filterRadius = (json['filterRadius'] as num).toDouble()
+    ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
+        unknownValue: Gender.artemisUnknown)
+    ..filterAge = json['filterAge'] as String;
+}
+
+Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
+        AddWannago$Mutation$AddWannago$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'title': instance.title,
+      'description': instance.description,
+      'creator': instance.creator.toJson(),
+      'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
+      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
+      'location': instance.location,
+      'pictureUrl': instance.pictureUrl,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'filterLocation': instance.filterLocation,
+      'filterRadius': instance.filterRadius,
+      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterAge': instance.filterAge,
+    };
+
+AddWannago$Mutation$AddWannago$Errors
+    _$AddWannago$Mutation$AddWannago$ErrorsFromJson(Map<String, dynamic> json) {
+  return AddWannago$Mutation$AddWannago$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$AddWannago$Mutation$AddWannago$ErrorsToJson(
+        AddWannago$Mutation$AddWannago$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+AddWannago$Mutation$AddWannago _$AddWannago$Mutation$AddWannagoFromJson(
+    Map<String, dynamic> json) {
+  return AddWannago$Mutation$AddWannago()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] == null
+        ? null
+        : AddWannago$Mutation$AddWannago$Nodes.fromJson(
+            json['nodes'] as Map<String, dynamic>)
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => AddWannago$Mutation$AddWannago$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$AddWannago$Mutation$AddWannagoToJson(
+        AddWannago$Mutation$AddWannago instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+AddWannago$Mutation _$AddWannago$MutationFromJson(Map<String, dynamic> json) {
+  return AddWannago$Mutation()
+    ..addWannago = AddWannago$Mutation$AddWannago.fromJson(
+        json['addWannago'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$AddWannago$MutationToJson(
+        AddWannago$Mutation instance) =>
+    <String, dynamic>{
+      'addWannago': instance.addWannago.toJson(),
+    };
+
+DeleteWannago$Mutation$DeleteWannago$Errors
+    _$DeleteWannago$Mutation$DeleteWannago$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return DeleteWannago$Mutation$DeleteWannago$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$DeleteWannago$Mutation$DeleteWannago$ErrorsToJson(
+        DeleteWannago$Mutation$DeleteWannago$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+DeleteWannago$Mutation$DeleteWannago
+    _$DeleteWannago$Mutation$DeleteWannagoFromJson(Map<String, dynamic> json) {
+  return DeleteWannago$Mutation$DeleteWannago()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => DeleteWannago$Mutation$DeleteWannago$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$DeleteWannago$Mutation$DeleteWannagoToJson(
+        DeleteWannago$Mutation$DeleteWannago instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+DeleteWannago$Mutation _$DeleteWannago$MutationFromJson(
+    Map<String, dynamic> json) {
+  return DeleteWannago$Mutation()
+    ..deleteWannago = DeleteWannago$Mutation$DeleteWannago.fromJson(
+        json['deleteWannago'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$DeleteWannago$MutationToJson(
+        DeleteWannago$Mutation instance) =>
+    <String, dynamic>{
+      'deleteWannago': instance.deleteWannago.toJson(),
+    };
+
+UpdateWannago$Mutation$UpdateWannago$Errors
+    _$UpdateWannago$Mutation$UpdateWannago$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return UpdateWannago$Mutation$UpdateWannago$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$UpdateWannago$Mutation$UpdateWannago$ErrorsToJson(
+        UpdateWannago$Mutation$UpdateWannago$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+UpdateWannago$Mutation$UpdateWannago
+    _$UpdateWannago$Mutation$UpdateWannagoFromJson(Map<String, dynamic> json) {
+  return UpdateWannago$Mutation$UpdateWannago()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => UpdateWannago$Mutation$UpdateWannago$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$UpdateWannago$Mutation$UpdateWannagoToJson(
+        UpdateWannago$Mutation$UpdateWannago instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+UpdateWannago$Mutation _$UpdateWannago$MutationFromJson(
+    Map<String, dynamic> json) {
+  return UpdateWannago$Mutation()
+    ..updateWannago = UpdateWannago$Mutation$UpdateWannago.fromJson(
+        json['updateWannago'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UpdateWannago$MutationToJson(
+        UpdateWannago$Mutation instance) =>
+    <String, dynamic>{
+      'updateWannago': instance.updateWannago.toJson(),
     };
 
 AddInterestsArguments _$AddInterestsArgumentsFromJson(
@@ -1244,4 +1501,59 @@ Map<String, dynamic> _$UpdateProfilePhotoArgumentsToJson(
         UpdateProfilePhotoArguments instance) =>
     <String, dynamic>{
       'url': instance.url,
+    };
+
+AddInviteArguments _$AddInviteArgumentsFromJson(Map<String, dynamic> json) {
+  return AddInviteArguments(
+    eventId: json['eventId'] as int,
+    userId: json['userId'] as int,
+  );
+}
+
+Map<String, dynamic> _$AddInviteArgumentsToJson(AddInviteArguments instance) =>
+    <String, dynamic>{
+      'eventId': instance.eventId,
+      'userId': instance.userId,
+    };
+
+AddWannagoArguments _$AddWannagoArgumentsFromJson(Map<String, dynamic> json) {
+  return AddWannagoArguments(
+    eventId: json['eventId'] as int,
+    userId: json['userId'] as int,
+  );
+}
+
+Map<String, dynamic> _$AddWannagoArgumentsToJson(
+        AddWannagoArguments instance) =>
+    <String, dynamic>{
+      'eventId': instance.eventId,
+      'userId': instance.userId,
+    };
+
+DeleteWannagoArguments _$DeleteWannagoArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return DeleteWannagoArguments(
+    id: json['id'] as int,
+  );
+}
+
+Map<String, dynamic> _$DeleteWannagoArgumentsToJson(
+        DeleteWannagoArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+UpdateWannagoArguments _$UpdateWannagoArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return UpdateWannagoArguments(
+    id: json['id'] as int,
+    declined: json['declined'] as bool,
+  );
+}
+
+Map<String, dynamic> _$UpdateWannagoArgumentsToJson(
+        UpdateWannagoArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'declined': instance.declined,
     };

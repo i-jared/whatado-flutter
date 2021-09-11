@@ -78,7 +78,7 @@ type Event {
   time: DateTime!
   title: String!
   updatedAt: DateTime!
-  wannago: [User!]!
+  wannago: [Wannago!]!
 }
 
 type EventApiResponse {
@@ -195,6 +195,8 @@ type JwtResponse {
 
 type Mutation {
   addInterests(interestsText: [String!]!): BoolApiResponse!
+  addInvite(eventId: Int!, userId: Int!): EventApiResponse!
+  addWannago(eventId: Int!, userId: Int!): EventApiResponse!
   changeUsername(username: String!): BoolApiResponse!
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
@@ -203,6 +205,7 @@ type Mutation {
   deleteChat(id: Float!): BoolApiResponse!
   deleteEvent(id: Float!): BoolApiResponse!
   deleteInterest(id: Float!): BoolApiResponse!
+  deleteWannago(id: Int!): BoolApiResponse!
   forgotPassword(email: String!): BoolApiResponse!
   helloMutation(message: String!): Boolean!
   login(options: UserInput!): UserApiResponse!
@@ -213,6 +216,7 @@ type Mutation {
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
   updatePhotos(urls: [String!]!): BoolApiResponse!
   updateProfilePhoto(url: String!): BoolApiResponse!
+  updateWannago(declined: Boolean!, id: Float!): BoolApiResponse!
 }
 
 type Query {
@@ -276,4 +280,11 @@ type UsersApiResponse {
   jwt: JwtResponse
   nodes: [User!]
   ok: Boolean
+}
+
+type Wannago {
+  declined: Boolean!
+  event: Event!
+  id: Int!
+  user: User!
 }

@@ -1,5 +1,6 @@
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/models/wannago.dart';
 
 // TODO: make events just hold ids... extend class for models with full member data
 class Event {
@@ -13,7 +14,7 @@ class Event {
   Gender filterGender;
   String location;
   List<int> relatedInterestIds;
-  List<int> wannagoIds;
+  List<Wannago> wannago;
   List<EventUser> invited;
 
   Event({
@@ -26,7 +27,7 @@ class Event {
     required this.relatedInterestIds,
     required this.location,
     required this.filterGender,
-    this.wannagoIds = const [],
+    this.wannago = const [],
     this.invited = const [],
     this.imageUrl,
   });
@@ -43,8 +44,9 @@ class Event {
           data['relatedInterests']?.map((obj) => obj['id']).toList() ?? []),
       location: data['location'] ?? [],
       description: data['description'],
-      wannagoIds: List<int>.from(
-          data['wannago']?.map((obj) => obj['id']).toList() ?? []),
+      wannago: List<Wannago>.from(
+          data['wannago']?.map((obj) => Wannago.fromGqlData(obj)).toList() ??
+              []),
       invited: List<EventUser>.from(
           data['invited']?.map((obj) => EventUser.fromGqlData(obj)).toList() ??
               []),

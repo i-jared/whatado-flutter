@@ -1,0 +1,10 @@
+mutation deleteWannago($id: Int!) {
+  deleteWannago(id: $id) {
+    ok
+    nodes 
+    errors {
+      field
+      message
+    }
+  }
+}

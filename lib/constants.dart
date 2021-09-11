@@ -19,12 +19,13 @@ String get LOCAL_DEV => "LOCAL_DEV";
 //TODO: implement chatnotifications
 //TODO: implement pushNotifications to update users with new messages or new events invited to
 //TODO: implement wannago selection
-//TODO: implement onboarding photo selection & bio 
 //TODO: make working calendar selector that defaults to a whole month
 //TODO: change slidable forum to a little menu or long press popup
 //TODO: finish post uploaded or failed pages
 //TODO: finish forgot password support and email
 
+
+//TODO: figure out how to update on one endpoint
 //TODO: allow reporting and posts
 //TODO: make myevents widgets look better
 //TODO: populate customized feed

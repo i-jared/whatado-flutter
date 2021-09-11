@@ -129,9 +129,12 @@ class _ForumCardState extends State<ForumCard> {
                                 child: Container(
                                     color: Colors.grey[100], height: 15)),
                           )
-                        : Text(
-                            lastMessage?.text ?? '',
-                            overflow: TextOverflow.ellipsis,
+                        : Flexible(
+                            flex: 5,
+                            child: Text(
+                              lastMessage?.text ?? '',
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                     const SizedBox(width: 20),
                     loading
@@ -143,10 +146,13 @@ class _ForumCardState extends State<ForumCard> {
                                 child: Container(
                                     color: Colors.grey[100], height: 15)),
                           )
-                        : Text(lastMessage != null
-                            ? timeago.format(lastMessage!.createdAt,
-                                locale: 'en_short')
-                            : ''),
+                        : Flexible(
+                            flex: 1,
+                            child: Text(lastMessage != null
+                                ? timeago.format(lastMessage!.createdAt,
+                                    locale: 'en_short')
+                                : ''),
+                          ),
                   ],
                 )
               ],

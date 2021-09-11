@@ -8,6 +8,40 @@ import 'package:gql/ast.dart';
 import 'package:whatado/utils/coercers.dart';
 part 'mutations_graphql_api.graphql.g.dart';
 
+mixin EventFieldsMixin {
+  late int id;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+  late String title;
+  late String description;
+  late EventFieldsMixin$Creator creator;
+  late List<EventFieldsMixin$Invited> invited;
+  late List<EventFieldsMixin$Wannago> wannago;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime time;
+  late String location;
+  String? pictureUrl;
+  late List<EventFieldsMixin$RelatedInterests> relatedInterests;
+  late String filterLocation;
+  late double filterRadius;
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender filterGender;
+  late String filterAge;
+}
+mixin EventUserMixin {
+  late int id;
+  late String username;
+  late String profilePhotoUrl;
+}
+
 @JsonSerializable(explicitToJson: true)
 class AddInterests$Mutation$AddInterests$Errors extends JsonSerializable
     with EquatableMixin {
@@ -190,132 +224,13 @@ class ChatInput extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$CreateEvent$Nodes$Creator extends JsonSerializable
-    with EquatableMixin {
-  CreateEvent$Mutation$CreateEvent$Nodes$Creator();
-
-  factory CreateEvent$Mutation$CreateEvent$Nodes$Creator.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$CreatorFromJson(json);
-
-  late int id;
-
-  late String profilePhotoUrl;
-
-  late String username;
-
-  @override
-  List<Object?> get props => [id, profilePhotoUrl, username];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$CreatorToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$CreateEvent$Nodes$Wannago extends JsonSerializable
-    with EquatableMixin {
-  CreateEvent$Mutation$CreateEvent$Nodes$Wannago();
-
-  factory CreateEvent$Mutation$CreateEvent$Nodes$Wannago.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$WannagoFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$WannagoToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$CreateEvent$Nodes$Invited extends JsonSerializable
-    with EquatableMixin {
-  CreateEvent$Mutation$CreateEvent$Nodes$Invited();
-
-  factory CreateEvent$Mutation$CreateEvent$Nodes$Invited.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$InvitedFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$InvitedToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests
-    extends JsonSerializable with EquatableMixin {
-  CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests();
-
-  factory CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterestsFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterestsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, EventFieldsMixin {
   CreateEvent$Mutation$CreateEvent$Nodes();
 
   factory CreateEvent$Mutation$CreateEvent$Nodes.fromJson(
           Map<String, dynamic> json) =>
       _$CreateEvent$Mutation$CreateEvent$NodesFromJson(json);
-
-  late int id;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime createdAt;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime updatedAt;
-
-  late String title;
-
-  late String description;
-
-  late CreateEvent$Mutation$CreateEvent$Nodes$Creator creator;
-
-  late List<CreateEvent$Mutation$CreateEvent$Nodes$Wannago> wannago;
-
-  late List<CreateEvent$Mutation$CreateEvent$Nodes$Invited> invited;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime time;
-
-  late String location;
-
-  String? pictureUrl;
-
-  late List<CreateEvent$Mutation$CreateEvent$Nodes$RelatedInterests>
-      relatedInterests;
-
-  late String filterLocation;
-
-  late double filterRadius;
-
-  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
-  late Gender filterGender;
-
-  late String filterAge;
 
   @override
   List<Object?> get props => [
@@ -325,8 +240,8 @@ class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
         title,
         description,
         creator,
-        wannago,
         invited,
+        wannago,
         time,
         location,
         pictureUrl,
@@ -396,6 +311,85 @@ class CreateEvent$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [createEvent];
   @override
   Map<String, dynamic> toJson() => _$CreateEvent$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Creator extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  EventFieldsMixin$Creator();
+
+  factory EventFieldsMixin$Creator.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$CreatorFromJson(json);
+
+  @override
+  List<Object?> get props => [id, username, profilePhotoUrl];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Invited extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  EventFieldsMixin$Invited();
+
+  factory EventFieldsMixin$Invited.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$InvitedFromJson(json);
+
+  @override
+  List<Object?> get props => [id, username, profilePhotoUrl];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Wannago$User extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  EventFieldsMixin$Wannago$User();
+
+  factory EventFieldsMixin$Wannago$User.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$Wannago$UserFromJson(json);
+
+  @override
+  List<Object?> get props => [id, username, profilePhotoUrl];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Wannago extends JsonSerializable with EquatableMixin {
+  EventFieldsMixin$Wannago();
+
+  factory EventFieldsMixin$Wannago.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$WannagoFromJson(json);
+
+  late int id;
+
+  late bool declined;
+
+  late EventFieldsMixin$Wannago$User user;
+
+  @override
+  List<Object?> get props => [id, declined, user];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$WannagoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$RelatedInterests extends JsonSerializable
+    with EquatableMixin {
+  EventFieldsMixin$RelatedInterests();
+
+  factory EventFieldsMixin$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$EventFieldsMixin$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$EventFieldsMixin$RelatedInterestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1000,132 +994,13 @@ class UpdateBio$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class UpdateEvent$Mutation$UpdateEvent$Nodes$Creator extends JsonSerializable
-    with EquatableMixin {
-  UpdateEvent$Mutation$UpdateEvent$Nodes$Creator();
-
-  factory UpdateEvent$Mutation$UpdateEvent$Nodes$Creator.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$CreatorFromJson(json);
-
-  late int id;
-
-  late String profilePhotoUrl;
-
-  late String username;
-
-  @override
-  List<Object?> get props => [id, profilePhotoUrl, username];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$CreatorToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago extends JsonSerializable
-    with EquatableMixin {
-  UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago();
-
-  factory UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$WannagoFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$WannagoToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateEvent$Mutation$UpdateEvent$Nodes$Invited extends JsonSerializable
-    with EquatableMixin {
-  UpdateEvent$Mutation$UpdateEvent$Nodes$Invited();
-
-  factory UpdateEvent$Mutation$UpdateEvent$Nodes$Invited.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$InvitedFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$InvitedToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests
-    extends JsonSerializable with EquatableMixin {
-  UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests();
-
-  factory UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterestsFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterestsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, EventFieldsMixin {
   UpdateEvent$Mutation$UpdateEvent$Nodes();
 
   factory UpdateEvent$Mutation$UpdateEvent$Nodes.fromJson(
           Map<String, dynamic> json) =>
       _$UpdateEvent$Mutation$UpdateEvent$NodesFromJson(json);
-
-  late int id;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime createdAt;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime updatedAt;
-
-  late String title;
-
-  late String description;
-
-  late UpdateEvent$Mutation$UpdateEvent$Nodes$Creator creator;
-
-  late List<UpdateEvent$Mutation$UpdateEvent$Nodes$Wannago> wannago;
-
-  late List<UpdateEvent$Mutation$UpdateEvent$Nodes$Invited> invited;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime time;
-
-  late String location;
-
-  String? pictureUrl;
-
-  late List<UpdateEvent$Mutation$UpdateEvent$Nodes$RelatedInterests>
-      relatedInterests;
-
-  late String filterLocation;
-
-  late double filterRadius;
-
-  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
-  late Gender filterGender;
-
-  late String filterAge;
 
   @override
   List<Object?> get props => [
@@ -1135,8 +1010,8 @@ class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
         title,
         description,
         creator,
-        wannago,
         invited,
+        wannago,
         time,
         location,
         pictureUrl,
@@ -1320,6 +1195,296 @@ class UpdateProfilePhoto$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [updateProfilePhoto];
   @override
   Map<String, dynamic> toJson() => _$UpdateProfilePhoto$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInvite$Mutation$AddInvite$Nodes extends JsonSerializable
+    with EquatableMixin, EventFieldsMixin {
+  AddInvite$Mutation$AddInvite$Nodes();
+
+  factory AddInvite$Mutation$AddInvite$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$AddInvite$Mutation$AddInvite$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        title,
+        description,
+        creator,
+        invited,
+        wannago,
+        time,
+        location,
+        pictureUrl,
+        relatedInterests,
+        filterLocation,
+        filterRadius,
+        filterGender,
+        filterAge
+      ];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AddInvite$Mutation$AddInvite$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInvite$Mutation$AddInvite$Errors extends JsonSerializable
+    with EquatableMixin {
+  AddInvite$Mutation$AddInvite$Errors();
+
+  factory AddInvite$Mutation$AddInvite$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$AddInvite$Mutation$AddInvite$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AddInvite$Mutation$AddInvite$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInvite$Mutation$AddInvite extends JsonSerializable
+    with EquatableMixin {
+  AddInvite$Mutation$AddInvite();
+
+  factory AddInvite$Mutation$AddInvite.fromJson(Map<String, dynamic> json) =>
+      _$AddInvite$Mutation$AddInviteFromJson(json);
+
+  bool? ok;
+
+  AddInvite$Mutation$AddInvite$Nodes? nodes;
+
+  List<AddInvite$Mutation$AddInvite$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$AddInvite$Mutation$AddInviteToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInvite$Mutation extends JsonSerializable with EquatableMixin {
+  AddInvite$Mutation();
+
+  factory AddInvite$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$AddInvite$MutationFromJson(json);
+
+  late AddInvite$Mutation$AddInvite addInvite;
+
+  @override
+  List<Object?> get props => [addInvite];
+  @override
+  Map<String, dynamic> toJson() => _$AddInvite$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
+    with EquatableMixin, EventFieldsMixin {
+  AddWannago$Mutation$AddWannago$Nodes();
+
+  factory AddWannago$Mutation$AddWannago$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$AddWannago$Mutation$AddWannago$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        title,
+        description,
+        creator,
+        invited,
+        wannago,
+        time,
+        location,
+        pictureUrl,
+        relatedInterests,
+        filterLocation,
+        filterRadius,
+        filterGender,
+        filterAge
+      ];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AddWannago$Mutation$AddWannago$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddWannago$Mutation$AddWannago$Errors extends JsonSerializable
+    with EquatableMixin {
+  AddWannago$Mutation$AddWannago$Errors();
+
+  factory AddWannago$Mutation$AddWannago$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$AddWannago$Mutation$AddWannago$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AddWannago$Mutation$AddWannago$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddWannago$Mutation$AddWannago extends JsonSerializable
+    with EquatableMixin {
+  AddWannago$Mutation$AddWannago();
+
+  factory AddWannago$Mutation$AddWannago.fromJson(Map<String, dynamic> json) =>
+      _$AddWannago$Mutation$AddWannagoFromJson(json);
+
+  bool? ok;
+
+  AddWannago$Mutation$AddWannago$Nodes? nodes;
+
+  List<AddWannago$Mutation$AddWannago$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$AddWannago$Mutation$AddWannagoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddWannago$Mutation extends JsonSerializable with EquatableMixin {
+  AddWannago$Mutation();
+
+  factory AddWannago$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$AddWannago$MutationFromJson(json);
+
+  late AddWannago$Mutation$AddWannago addWannago;
+
+  @override
+  List<Object?> get props => [addWannago];
+  @override
+  Map<String, dynamic> toJson() => _$AddWannago$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteWannago$Mutation$DeleteWannago$Errors extends JsonSerializable
+    with EquatableMixin {
+  DeleteWannago$Mutation$DeleteWannago$Errors();
+
+  factory DeleteWannago$Mutation$DeleteWannago$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$DeleteWannago$Mutation$DeleteWannago$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$DeleteWannago$Mutation$DeleteWannago$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteWannago$Mutation$DeleteWannago extends JsonSerializable
+    with EquatableMixin {
+  DeleteWannago$Mutation$DeleteWannago();
+
+  factory DeleteWannago$Mutation$DeleteWannago.fromJson(
+          Map<String, dynamic> json) =>
+      _$DeleteWannago$Mutation$DeleteWannagoFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<DeleteWannago$Mutation$DeleteWannago$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$DeleteWannago$Mutation$DeleteWannagoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteWannago$Mutation extends JsonSerializable with EquatableMixin {
+  DeleteWannago$Mutation();
+
+  factory DeleteWannago$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$DeleteWannago$MutationFromJson(json);
+
+  late DeleteWannago$Mutation$DeleteWannago deleteWannago;
+
+  @override
+  List<Object?> get props => [deleteWannago];
+  @override
+  Map<String, dynamic> toJson() => _$DeleteWannago$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateWannago$Mutation$UpdateWannago$Errors extends JsonSerializable
+    with EquatableMixin {
+  UpdateWannago$Mutation$UpdateWannago$Errors();
+
+  factory UpdateWannago$Mutation$UpdateWannago$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateWannago$Mutation$UpdateWannago$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateWannago$Mutation$UpdateWannago$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateWannago$Mutation$UpdateWannago extends JsonSerializable
+    with EquatableMixin {
+  UpdateWannago$Mutation$UpdateWannago();
+
+  factory UpdateWannago$Mutation$UpdateWannago.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateWannago$Mutation$UpdateWannagoFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<UpdateWannago$Mutation$UpdateWannago$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateWannago$Mutation$UpdateWannagoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateWannago$Mutation extends JsonSerializable with EquatableMixin {
+  UpdateWannago$Mutation();
+
+  factory UpdateWannago$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$UpdateWannago$MutationFromJson(json);
+
+  late UpdateWannago$Mutation$UpdateWannago updateWannago;
+
+  @override
+  List<Object?> get props => [updateWannago];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateWannago$MutationToJson(this);
 }
 
 enum Gender {
@@ -1621,142 +1786,8 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'createdAt'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'updatedAt'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'title'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'description'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'creator'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'profilePhotoUrl'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'username'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'wannago'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'invited'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'time'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'location'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'pictureUrl'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'relatedInterests'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'filterLocation'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'filterRadius'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'filterGender'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'filterAge'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventFields'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -1778,6 +1809,169 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: null)
                   ]))
             ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'createdAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'title'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'creator'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'invited'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'wannago'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'declined'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'user'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ]))
+            ])),
+        FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'pictureUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'filterLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterRadius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterGender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'profilePhotoUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ]))
 ]);
 
@@ -2562,142 +2756,8 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'createdAt'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'updatedAt'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'title'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'description'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'creator'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'profilePhotoUrl'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'username'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'wannago'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'invited'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'time'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'location'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'pictureUrl'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'relatedInterests'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'filterLocation'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'filterRadius'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'filterGender'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'filterAge'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventFields'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -2719,6 +2779,169 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: null)
                   ]))
             ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'createdAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'title'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'creator'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'invited'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'wannago'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'declined'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'user'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ]))
+            ])),
+        FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'pictureUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'filterLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterRadius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterGender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'profilePhotoUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ]))
 ]);
 
@@ -2932,4 +3155,743 @@ class UpdateProfilePhotoMutation extends GraphQLQuery<
   @override
   UpdateProfilePhoto$Mutation parse(Map<String, dynamic> json) =>
       UpdateProfilePhoto$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddInviteArguments extends JsonSerializable with EquatableMixin {
+  AddInviteArguments({required this.eventId, required this.userId});
+
+  @override
+  factory AddInviteArguments.fromJson(Map<String, dynamic> json) =>
+      _$AddInviteArgumentsFromJson(json);
+
+  late int eventId;
+
+  late int userId;
+
+  @override
+  List<Object?> get props => [eventId, userId];
+  @override
+  Map<String, dynamic> toJson() => _$AddInviteArgumentsToJson(this);
+}
+
+final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'addInvite'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'userId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'addInvite'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'eventId'),
+                  value: VariableNode(name: NameNode(value: 'eventId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'userId'),
+                  value: VariableNode(name: NameNode(value: 'userId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventFields'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'createdAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'title'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'creator'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'invited'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'wannago'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'declined'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'user'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ]))
+            ])),
+        FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'pictureUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'filterLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterRadius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterGender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'profilePhotoUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class AddInviteMutation
+    extends GraphQLQuery<AddInvite$Mutation, AddInviteArguments> {
+  AddInviteMutation({required this.variables});
+
+  @override
+  final DocumentNode document = ADD_INVITE_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'addInvite';
+
+  @override
+  final AddInviteArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  AddInvite$Mutation parse(Map<String, dynamic> json) =>
+      AddInvite$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AddWannagoArguments extends JsonSerializable with EquatableMixin {
+  AddWannagoArguments({required this.eventId, required this.userId});
+
+  @override
+  factory AddWannagoArguments.fromJson(Map<String, dynamic> json) =>
+      _$AddWannagoArgumentsFromJson(json);
+
+  late int eventId;
+
+  late int userId;
+
+  @override
+  List<Object?> get props => [eventId, userId];
+  @override
+  Map<String, dynamic> toJson() => _$AddWannagoArgumentsToJson(this);
+}
+
+final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'addWannago'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'userId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'addWannago'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'eventId'),
+                  value: VariableNode(name: NameNode(value: 'eventId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'userId'),
+                  value: VariableNode(name: NameNode(value: 'userId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventFields'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'createdAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'title'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'creator'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'invited'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'wannago'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'declined'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'user'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ]))
+            ])),
+        FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'pictureUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'filterLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterRadius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterGender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'profilePhotoUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class AddWannagoMutation
+    extends GraphQLQuery<AddWannago$Mutation, AddWannagoArguments> {
+  AddWannagoMutation({required this.variables});
+
+  @override
+  final DocumentNode document = ADD_WANNAGO_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'addWannago';
+
+  @override
+  final AddWannagoArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  AddWannago$Mutation parse(Map<String, dynamic> json) =>
+      AddWannago$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteWannagoArguments extends JsonSerializable with EquatableMixin {
+  DeleteWannagoArguments({required this.id});
+
+  @override
+  factory DeleteWannagoArguments.fromJson(Map<String, dynamic> json) =>
+      _$DeleteWannagoArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$DeleteWannagoArgumentsToJson(this);
+}
+
+final DELETE_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'deleteWannago'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'deleteWannago'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class DeleteWannagoMutation
+    extends GraphQLQuery<DeleteWannago$Mutation, DeleteWannagoArguments> {
+  DeleteWannagoMutation({required this.variables});
+
+  @override
+  final DocumentNode document = DELETE_WANNAGO_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'deleteWannago';
+
+  @override
+  final DeleteWannagoArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  DeleteWannago$Mutation parse(Map<String, dynamic> json) =>
+      DeleteWannago$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateWannagoArguments extends JsonSerializable with EquatableMixin {
+  UpdateWannagoArguments({required this.id, required this.declined});
+
+  @override
+  factory UpdateWannagoArguments.fromJson(Map<String, dynamic> json) =>
+      _$UpdateWannagoArgumentsFromJson(json);
+
+  late int id;
+
+  late bool declined;
+
+  @override
+  List<Object?> get props => [id, declined];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateWannagoArgumentsToJson(this);
+}
+
+final UPDATE_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'updateWannago'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'declined')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'Boolean'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'updateWannago'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id'))),
+              ArgumentNode(
+                  name: NameNode(value: 'declined'),
+                  value: VariableNode(name: NameNode(value: 'declined')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class UpdateWannagoMutation
+    extends GraphQLQuery<UpdateWannago$Mutation, UpdateWannagoArguments> {
+  UpdateWannagoMutation({required this.variables});
+
+  @override
+  final DocumentNode document = UPDATE_WANNAGO_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'updateWannago';
+
+  @override
+  final UpdateWannagoArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  UpdateWannago$Mutation parse(Map<String, dynamic> json) =>
+      UpdateWannago$Mutation.fromJson(json);
 }

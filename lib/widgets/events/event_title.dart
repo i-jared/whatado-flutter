@@ -5,6 +5,7 @@ import 'package:whatado/models/event.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/join_button.dart';
 import 'package:whatado/widgets/events/leave_button.dart';
+import 'package:whatado/widgets/events/my_event_button.dart';
 
 class EventTitle extends StatelessWidget {
   final Event event;
@@ -42,9 +43,13 @@ class EventTitle extends StatelessWidget {
               if (showButton)
                 Flexible(
                     flex: 3,
-                    child: !event.wannagoIds.contains(userState.user!.id)
-                        ? JoinButton(event: event)
-                        : LeaveButton(event: event))
+                    child: event.creator.id == userState.user!.id
+                        ? MyEventButton()
+                        : !event.wannago
+                                .map((w) => w.user.id)
+                                .contains(userState.user!.id)
+                            ? JoinButton(event: event)
+                            : LeaveButton(event: event))
             ]),
       ],
     );

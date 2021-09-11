@@ -1,0 +1,12 @@
+mutation addWannago($eventId: Int!, $userId: Int!) {
+  addWannago(eventId: $eventId, userId: $userId) {
+    ok
+    nodes {
+      ...EventFields 
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

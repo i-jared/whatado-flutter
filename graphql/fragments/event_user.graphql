@@ -1,0 +1,5 @@
+fragment EventUser on User {
+    id
+    username
+    profilePhotoUrl
+}

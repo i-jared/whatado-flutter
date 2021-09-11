@@ -1,0 +1,30 @@
+fragment EventFields on Event {
+  id
+  createdAt
+  updatedAt
+  title
+  description
+  creator {
+    ...EventUser
+  }
+  invited {
+    ...EventUser
+  }
+  wannago {
+    id
+    declined
+    user {
+      ...EventUser
+    }
+  }
+  time
+  location
+  pictureUrl
+  relatedInterests {
+    id
+  }
+  filterLocation
+  filterRadius
+  filterGender
+  filterAge
+}

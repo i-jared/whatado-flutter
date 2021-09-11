@@ -1,0 +1,12 @@
+mutation addInvite($eventId: Int!, $userId: Int!) {
+  addInvite(eventId: $eventId, userId: $userId) {
+    ok
+    nodes {
+      ...EventFields 
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
