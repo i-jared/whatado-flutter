@@ -216,7 +216,7 @@ type Mutation {
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
   updatePhotos(urls: [String!]!): BoolApiResponse!
   updateProfilePhoto(url: String!): BoolApiResponse!
-  updateWannago(declined: Boolean!, id: Float!): BoolApiResponse!
+  updateWannago(declined: Boolean!, id: Int!): BoolApiResponse!
 }
 
 type Query {

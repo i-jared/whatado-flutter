@@ -36,6 +36,14 @@
         "type": "dart",
         "program": "lib/dev_main.dart",
         "preLaunchTask": "build_runner_local_dev"
+      },
+      {
+        "name": "release_local_dev",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/dev_main.dart",
+        "preLaunchTask": "build_runner_local_dev",
+        "args": ["--release"]
       }
     ],
     "compounds": []
