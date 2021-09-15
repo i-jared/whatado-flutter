@@ -4,6 +4,8 @@ import 'package:flutter/scheduler.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/console/screens/home.dart';
+import 'package:whatado/screens/entry/login.dart';
 import 'package:whatado/screens/entry/welcome.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/environment_config.dart';
@@ -20,20 +22,20 @@ Future<void> run(String flavor) async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp();
-  await Hive.initFlutter('whatado');
-  await Hive.openBox('whatado');
+  await Hive.initFlutter('whatado-console');
+  await Hive.openBox('whatado-console');
   Startup.initDependencies();
 
   EnvironmentConfig.initFlavor(flavor);
-  runApp(MyApp());
+  runApp(MyConsole());
 }
 
-class MyApp extends StatefulWidget {
+class MyConsole extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _MyAppState();
+  State<StatefulWidget> createState() => _MyConsoleState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyConsoleState extends State<MyConsole> {
   bool loading = true;
   @override
   void initState() {
@@ -51,13 +53,13 @@ class _MyAppState extends State<MyApp> {
       headerTriggerDistance: 120,
       child: MultiProvider(
         providers: [
-          ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
-          ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
-          ChangeNotifierProvider<UserState>(create: (_) => UserState()),
-          ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
+          // ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
+          // ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
+          // ChangeNotifierProvider<UserState>(create: (_) => UserState()),
+          // ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
         ],
         child: MaterialApp(
-          title: 'Flutter Demo',
+          title: 'Whatado Console',
           theme: ThemeData(
               primarySwatch: MaterialColor(
             0xFF000000,
@@ -81,9 +83,8 @@ class _MyAppState extends State<MyApp> {
                     child: Image.asset('assets/logo_badge.png'),
                   ))
               : loginService.loggedIn
-                  ? HomeScreen()
-                  // ? SelectPhotosScreen()
-                  : WelcomeScreen(),
+                  ? ConsoleHomeScreen()
+                  : LoginScreen(),
         ),
       ),
     );

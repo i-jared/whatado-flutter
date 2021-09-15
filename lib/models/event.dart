@@ -2,7 +2,6 @@ import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/wannago.dart';
 
-// TODO: make events just hold ids... extend class for models with full member data
 class Event {
   int id;
   DateTime createdAt;

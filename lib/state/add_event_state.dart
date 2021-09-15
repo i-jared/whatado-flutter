@@ -54,7 +54,6 @@ class AddEventState extends ChangeNotifier {
     customInterests.remove(interest);
     notifyListeners();
   }
-  // TODO: add real interest data
 
   AddEventState()
       : photoController = PhotoViewController(),

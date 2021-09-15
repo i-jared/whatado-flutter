@@ -19,7 +19,6 @@ String get LOCAL_DEV => "LOCAL_DEV";
 
 //TODO: implement chatnotifications
 //TODO: implement pushNotifications to update users with new messages or new events invited to
-//TODO: figure out how to update on one endpoint
 //TODO: allow reporting and posts
 //TODO: make myevents widgets look better
 //TODO: populate customized feed

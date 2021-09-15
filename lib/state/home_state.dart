@@ -77,7 +77,8 @@ class HomeState extends ChangeNotifier {
   Future<void> getNewEvents() async {
     final query = EventsGqlProvider();
     final start = _selectedDate ?? DateTime.now();
-    final end = _selectedDate ?? DateTime.now().add(Duration(days: 1000));
+    final end = _selectedDate?.add(Duration(days: 1)) ??
+        DateTime.now().add(Duration(days: 1000));
     final response = await query.events(start, end);
     allEvents = response.data ?? [];
     notifyListeners();

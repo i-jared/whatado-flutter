@@ -56,6 +56,32 @@ class ChatGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<List<Chat>>> flaggedChats() async {
+    final query = FlaggedChatsQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['flaggedChats'];
+    final data = root != null && root['nodes'] != null
+        ? List<Chat>.from((root['nodes']).map((chat) {
+            return Chat.fromGqlData(chat);
+          }).toList())
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<Chat>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<List<Chat>>> chats(int forumId) async {
     final query = ChatsQuery(variables: ChatsArguments(forumId: forumId));
     final result = await graphqlClientService.query(query);

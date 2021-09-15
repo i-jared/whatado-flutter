@@ -38,6 +38,20 @@
         "preLaunchTask": "build_runner_local_dev"
       },
       {
+        "name": "debug_console_local_dev",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/dev_console_main.dart",
+        "preLaunchTask": "build_runner_local_dev",
+      },
+      {
+        "name": "debug_console_local_dev",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/console_main.dart",
+        "preLaunchTask": "build_runner_prod",
+      },
+      {
         "name": "release_local_dev",
         "request": "launch",
         "type": "dart",

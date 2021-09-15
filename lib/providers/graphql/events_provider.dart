@@ -112,6 +112,32 @@ class EventsGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<List<Event>>> flaggedEvents() async {
+    final query = FlaggedEventsQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['flaggedEvents'];
+    final data = root != null && root['nodes'] != null
+        ? List<Event>.from((root?['nodes']).map((event) {
+            return Event.fromGqlData(event);
+          }).toList())
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<Event>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<Event>> addWannago(
       {required int eventId, required int userId}) async {
     final mutation = AddWannagoMutation(

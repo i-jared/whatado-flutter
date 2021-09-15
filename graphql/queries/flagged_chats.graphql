@@ -1,0 +1,17 @@
+query flaggedChats {
+  flaggedChats {
+    ok
+    nodes {
+      id
+      createdAt
+      text
+      author {
+        ...EventUser
+      }
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/widgets/events/event_display.dart';

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
-import 'package:whatado/state/chat_state.dart';
 
 class GroupMembersRow extends StatefulWidget {
   final Event event;
@@ -27,8 +25,6 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
 
   @override
   Widget build(BuildContext context) {
-    final chatState = Provider.of<ChatState>(context);
-    final ids = chatState.event.invited;
     return Container(
       width: MediaQuery.of(context).size.width,
       child: SingleChildScrollView(

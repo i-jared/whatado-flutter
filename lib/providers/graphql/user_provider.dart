@@ -130,6 +130,31 @@ class UserGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<List<User>>> flaggedUsers() async {
+    final query = FlaggedUsersQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['flaggedUsers'];
+    final data = root != null && root['nodes'] != null
+        ? List<User>.from(
+            root['nodes'].map((val) => User.fromGqlData(val)).toList())
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<User>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<bool>> updateProfilePhoto(String url) async {
     final mutation = UpdateProfilePhotoMutation(
         variables: UpdateProfilePhotoArguments(url: url));

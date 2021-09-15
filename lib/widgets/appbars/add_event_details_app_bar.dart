@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/providers/graphql/create_event_query.dart';
-import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
@@ -50,7 +48,6 @@ class AddEventDetailsAppBar extends StatelessWidget
 
                     try {
                       String? downloadUrl;
-                      // TODO: create custom interests
                       if (!eventState.textMode) {
                         downloadUrl = await cloudStorageService.uploadImage(
                           await eventState.cropResizeImage(

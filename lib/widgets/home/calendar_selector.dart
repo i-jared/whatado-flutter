@@ -18,8 +18,12 @@ class CalendarSelector extends StatefulWidget {
 }
 
 class _CalendarSelectorState extends State<CalendarSelector> {
-  final List<_IndexedDate> dates = List<_IndexedDate>.generate(
-      100, (i) => _IndexedDate(i, DateTime.now().add(Duration(days: i))));
+  final List<_IndexedDate> dates = List<_IndexedDate>.generate(100, (i) {
+    final now = DateTime.now();
+    return _IndexedDate(
+        i, DateTime(now.year, now.month, now.day).add(Duration(days: i)));
+  });
+
   final monthWidth = 70.0;
   int scrollingMonth = DateTime.now().month;
   ScrollController? calendarScrollController;

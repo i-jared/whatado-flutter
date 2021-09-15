@@ -1,0 +1,12 @@
+query flaggedEvents {
+  flaggedEvents {
+    ok
+    nodes {
+      ...EventFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

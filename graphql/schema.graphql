@@ -13,6 +13,7 @@ type BoolApiResponse {
 type Chat {
   author: User!
   createdAt: DateTime!
+  flags: Int!
   forum: Forum!
   id: Int!
   text: String!
@@ -74,6 +75,7 @@ type Event {
   filterGender: Gender!
   filterLocation: String!
   filterRadius: Float!
+  flags: Int!
   forum: Forum!
   id: Int!
   invited: [User!]!
@@ -249,6 +251,9 @@ type Query {
   chats(forumId: Int!): ChatsApiResponse!
   event(id: Int!): Event
   events(dateRange: DateRangeInput!): EventsApiResponse!
+  flaggedChats: ChatsApiResponse!
+  flaggedEvents: EventsApiResponse!
+  flaggedUsers: UsersApiResponse!
   forum(id: Int!): ForumApiResponse!
   forumsByEventId(ids: [Int!]!): ForumsApiResponse!
   hello: String!
@@ -275,6 +280,7 @@ type User {
   chatNotifications: [ChatNotification!]!
   createdAt: DateTime!
   email: String!
+  flags: Int!
   id: Int!
   interests: [Interest!]!
   myEvents: [Event!]!

@@ -1,0 +1,12 @@
+query flaggedUsers {
+  flaggedUsers {
+    ok
+    nodes {
+      ...UserFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
