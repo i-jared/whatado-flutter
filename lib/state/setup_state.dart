@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
@@ -9,12 +12,54 @@ class SetupState extends ChangeNotifier {
   List<Interest> popularInterests;
   TextEditingController bioController;
 
+  File? _profilePhoto;
+  Uint8List? _profileImageData;
+  List<File?> _photos;
+  List<Uint8List?> _photosImageData;
+
   SetupState()
       : selectedInterests = [],
         popularInterests = [],
         customInterests = [],
+        _photosImageData = [],
+        _photos = [],
         bioController = TextEditingController() {
     init();
+  }
+
+  Uint8List? get profileImageData => _profileImageData;
+
+  set profileImageData(Uint8List? profileImageData) {
+    _profileImageData = profileImageData;
+    notifyListeners();
+  }
+
+  File? get profilePhoto => _profilePhoto;
+
+  set profilePhoto(File? profilePhoto) {
+    _profilePhoto = profilePhoto;
+    notifyListeners();
+  }
+
+  List<Uint8List?> get photosImageData => _photosImageData;
+
+  set photosImageData(List<Uint8List?> photosImageData) {
+    _photosImageData = photosImageData;
+    notifyListeners();
+  }
+
+  List<File?> get photos => _photos;
+
+  set photos(List<File?> photos) {
+    _photos = photos;
+    notifyListeners();
+  }
+
+  void removePhoto(File? xfile) {
+    final index = photos.indexOf(xfile);
+    photos.removeAt(index);
+    photosImageData.removeAt(index);
+    notifyListeners();
   }
 
   void init() async {

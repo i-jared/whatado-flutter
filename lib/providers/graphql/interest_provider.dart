@@ -7,10 +7,10 @@ import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
 
 class InterestGqlProvider {
-  Future<MyQueryResponse<Interest>> create(
-      {required InterestInput interestInput}) async {
+  Future<MyQueryResponse<List<int>>> create(
+      {required List<String> interestsText}) async {
     final mutation = CreateInterestMutation(
-      variables: CreateInterestArguments(interestInput: interestInput),
+      variables: CreateInterestArguments(interestsText: interestsText),
     );
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
@@ -19,13 +19,13 @@ class InterestGqlProvider {
         print(element.message);
       });
     }
-
-    final root = result.data?['createinterest'];
-    final data = Interest.fromGqlData(root['nodes']);
+    print(result);
+    final root = result.data?['createInterest'];
+    final data = List<int>.from(root?['nodes'] ?? []);
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<Interest>(
+    return MyQueryResponse<List<int>>(
       data: data,
       ok: ok,
       errors: errors,

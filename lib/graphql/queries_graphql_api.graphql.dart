@@ -41,6 +41,22 @@ mixin EventUserMixin {
   late String username;
   late String profilePhotoUrl;
 }
+mixin UserFieldsMixin {
+  late int id;
+  late String profilePhotoUrl;
+  late String photoUrls;
+  late String email;
+  late bool verified;
+  late String username;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime birthday;
+  late String bio;
+  late List<UserFieldsMixin$Interests> interests;
+  late List<UserFieldsMixin$MyEvents> myEvents;
+  late List<UserFieldsMixin$ChatNotifications> chatNotifications;
+}
 
 @JsonSerializable(explicitToJson: true)
 class Chats$Query$Chats$Nodes$Author extends JsonSerializable
@@ -637,88 +653,12 @@ class LastChat$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Me$Query$Me$Nodes$Interests extends JsonSerializable with EquatableMixin {
-  Me$Query$Me$Nodes$Interests();
-
-  factory Me$Query$Me$Nodes$Interests.fromJson(Map<String, dynamic> json) =>
-      _$Me$Query$Me$Nodes$InterestsFromJson(json);
-
-  late int id;
-
-  late String title;
-
-  @override
-  List<Object?> get props => [id, title];
-  @override
-  Map<String, dynamic> toJson() => _$Me$Query$Me$Nodes$InterestsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$Me$Nodes$MyEvents extends JsonSerializable with EquatableMixin {
-  Me$Query$Me$Nodes$MyEvents();
-
-  factory Me$Query$Me$Nodes$MyEvents.fromJson(Map<String, dynamic> json) =>
-      _$Me$Query$Me$Nodes$MyEventsFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() => _$Me$Query$Me$Nodes$MyEventsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$Me$Nodes$ChatNotifications extends JsonSerializable
-    with EquatableMixin {
-  Me$Query$Me$Nodes$ChatNotifications();
-
-  factory Me$Query$Me$Nodes$ChatNotifications.fromJson(
-          Map<String, dynamic> json) =>
-      _$Me$Query$Me$Nodes$ChatNotificationsFromJson(json);
-
-  late int notifications;
-
-  late bool muted;
-
-  @override
-  List<Object?> get props => [notifications, muted];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Me$Query$Me$Nodes$ChatNotificationsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Me$Query$Me$Nodes extends JsonSerializable with EquatableMixin {
+class Me$Query$Me$Nodes extends JsonSerializable
+    with EquatableMixin, UserFieldsMixin {
   Me$Query$Me$Nodes();
 
   factory Me$Query$Me$Nodes.fromJson(Map<String, dynamic> json) =>
       _$Me$Query$Me$NodesFromJson(json);
-
-  late int id;
-
-  late String profilePhotoUrl;
-
-  late String photoUrls;
-
-  late String email;
-
-  late bool verified;
-
-  late String username;
-
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime birthday;
-
-  late String bio;
-
-  late List<Me$Query$Me$Nodes$Interests> interests;
-
-  late List<Me$Query$Me$Nodes$MyEvents> myEvents;
-
-  late List<Me$Query$Me$Nodes$ChatNotifications> chatNotifications;
 
   @override
   List<Object?> get props => [
@@ -787,6 +727,58 @@ class Me$Query extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [me];
   @override
   Map<String, dynamic> toJson() => _$Me$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$Interests extends JsonSerializable with EquatableMixin {
+  UserFieldsMixin$Interests();
+
+  factory UserFieldsMixin$Interests.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$InterestsFromJson(json);
+
+  late int id;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [id, title];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$InterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$MyEvents extends JsonSerializable with EquatableMixin {
+  UserFieldsMixin$MyEvents();
+
+  factory UserFieldsMixin$MyEvents.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$MyEventsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$MyEventsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$ChatNotifications extends JsonSerializable
+    with EquatableMixin {
+  UserFieldsMixin$ChatNotifications();
+
+  factory UserFieldsMixin$ChatNotifications.fromJson(
+          Map<String, dynamic> json) =>
+      _$UserFieldsMixin$ChatNotificationsFromJson(json);
+
+  late int notifications;
+
+  late bool muted;
+
+  @override
+  List<Object?> get props => [notifications, muted];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UserFieldsMixin$ChatNotificationsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1958,105 +1950,8 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'profilePhotoUrl'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'photoUrls'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'email'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'verified'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'username'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'birthday'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'bio'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'interests'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'title'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'myEvents'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'chatNotifications'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'notifications'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'muted'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ]))
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'UserFields'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -2077,6 +1972,112 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: null)
                   ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'UserFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'profilePhotoUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'email'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'verified'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'interests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'myEvents'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'chatNotifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'notifications'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'muted'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);

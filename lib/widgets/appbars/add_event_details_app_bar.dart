@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/providers/graphql/create_event_query.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
+import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
@@ -76,11 +77,27 @@ class AddEventDetailsAppBar extends StatelessWidget
                       final hourSplit = timeSplit[0].split(":");
                       final hour = int.parse(hourSplit[0]) + (isPm ? 12 : 0);
                       final finalTime = DateTime.parse(
-                          '${dateSplit[2]}-${dateSplit[0].padLeft(2, '0')}-${dateSplit[1].padLeft(2, '0')} $hour:${hourSplit[1]}:00');
+                          '${dateSplit[2]}-${dateSplit[0].padLeft(2, '0')}-${dateSplit[1].padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${hourSplit[1]}:00');
+
+                      // create interests
+                      final interestsProvider = InterestGqlProvider();
+                      final interests =
+                          await interestsProvider.create(interestsText: [
+                        ...(eventState.customInterests
+                            .map((i) => i.title)
+                            .toList()),
+                        if (eventState.selectedInterests.isNotEmpty)
+                          ...(eventState.selectedInterests
+                              .map((i) => i.title)
+                              .toList())
+                      ]);
+                      print('jcl this');
+                      print(interests.errors);
+                      print(interests.data);
 
                       // make query
                       final query = CreateEventGqlQuery();
-                      final response = await query.create(
+                      await query.create(
                           eventInput: EventInput(
                         creatorId: userState.user!.id,
                         description: eventState.descriptionController.text,
@@ -92,9 +109,10 @@ class AddEventDetailsAppBar extends StatelessWidget
                         filterLocation: '', // not yet used
                         filterRadius: 5, // not yet used
                         location: eventState.locationController.text,
-                        relatedInterestsIds: eventState.selectedInterests
-                            .map((val) => val.id)
-                            .toList(),
+                        relatedInterestsIds: List<int>.from(interests.data ??
+                            eventState.selectedInterests
+                                .map((v) => v.id)
+                                .toList()),
                         time: finalTime,
                         pictureUrl: downloadUrl,
                         title: eventState.textMode
@@ -107,6 +125,7 @@ class AddEventDetailsAppBar extends StatelessWidget
                       await homeState.getMyEvents();
                       await homeState.getMyForums();
                     } catch (e) {
+                      print(e.toString());
                       eventState.clear();
                       eventState.failed = true;
                       eventState.loading = false;

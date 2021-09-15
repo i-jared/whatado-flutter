@@ -15,11 +15,7 @@ String get PROD => "PROD";
 // ignore: non_constant_identifier_names
 String get LOCAL_DEV => "LOCAL_DEV";
 
-//TODO: resize profile photos
-//TODO: change slidable forum to a little menu or long press popup
-//TODO: finish post uploaded or failed pages
 //TODO: finish forgot password support and email
-
 
 //TODO: implement chatnotifications
 //TODO: implement pushNotifications to update users with new messages or new events invited to

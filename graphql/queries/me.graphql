@@ -2,25 +2,7 @@ query me {
     me {
         ok
         nodes {
-            id
-            profilePhotoUrl
-            photoUrls
-            email
-            verified
-            username
-            birthday
-            bio
-            interests {
-                id
-                title
-            }
-            myEvents {
-                id
-            }
-            chatNotifications {
-                notifications
-                muted
-            }
+            ...UserFields
         }
         errors {
             field

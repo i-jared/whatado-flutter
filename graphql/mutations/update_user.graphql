@@ -1,0 +1,12 @@
+mutation updateUser($userInput: UserFilterInput!) {
+  updateUser(options: $userInput) {
+    ok
+    nodes {
+      ...UserFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

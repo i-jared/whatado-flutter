@@ -82,6 +82,32 @@ class UserGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<User>> updateUser(UserFilterInput userInput) async {
+    final mutation = UpdateUserMutation(
+        variables: UpdateUserArguments(userInput: userInput));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    print(result);
+
+    final root = result.data?['updateUser'];
+    final data =
+        root?['nodes'] == null ? null : User.fromGqlData(root?['nodes']);
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<User>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<bool>> updateBio(String bio) async {
     final mutation = UpdateBioMutation(variables: UpdateBioArguments(bio: bio));
     final result = await graphqlClientService.mutate(mutation);
@@ -93,7 +119,7 @@ class UserGqlProvider {
     }
 
     final root = result.data?['updateBio'];
-    final data = root?['ok'] ?? false;
+    final data = root?['nodes'] ?? false;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -139,7 +165,7 @@ class UserGqlProvider {
     }
 
     final root = result.data?['updatePhotos'];
-    final data = root?['ok'] ?? false;
+    final data = root?['nodes'] ?? false;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -162,7 +188,7 @@ class UserGqlProvider {
     }
 
     final root = result.data?['addInterests'];
-    final data = root?['ok'] ?? false;
+    final data = root?['nodes'] ?? false;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 

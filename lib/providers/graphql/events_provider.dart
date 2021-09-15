@@ -87,7 +87,8 @@ class EventsGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<Event>> updateEvent(EventInput eventInput) async {
+  Future<MyQueryResponse<Event>> updateEvent(
+      EventFilterInput eventInput) async {
     final mutation = UpdateEventMutation(
         variables: UpdateEventArguments(eventInput: eventInput));
     final result = await graphqlClientService.mutate(mutation);

@@ -14,6 +14,7 @@ import 'package:whatado/services/startup.dart';
 import 'package:flutter/services.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
 
 Future<void> run(String flavor) async {
@@ -55,6 +56,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
           ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
           ChangeNotifierProvider<UserState>(create: (_) => UserState()),
+          ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
         ],
         child: MaterialApp(
           title: 'Flutter Demo',

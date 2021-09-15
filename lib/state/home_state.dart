@@ -31,7 +31,7 @@ class HomeState extends ChangeNotifier {
     // get initial events
     getNewEvents();
     getMyEvents().then((myEvents) =>
-        myEvents == null || myEvents.isEmpty ? null : getMyForums());
+        myEvents == null || myEvents.isEmpty ? myForums = [] : getMyForums());
   }
 
   @override
@@ -119,13 +119,19 @@ class HomeState extends ChangeNotifier {
   }
 
   void updateEvent(Event event) {
-    final int index = allEvents!.indexWhere((val) => val.id == event.id);
+    int index = allEvents!.indexWhere((val) => val.id == event.id);
+    if (index == -1) {
+      return;
+    }
     allEvents![index] = event;
     notifyListeners();
   }
 
   void updateMyEvent(Event event) {
     final int myindex = myEvents!.indexWhere((val) => val.id == event.id);
+    if (myindex == -1) {
+      return;
+    }
     myEvents![myindex] = event;
     notifyListeners();
   }

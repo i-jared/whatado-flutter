@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/graphql/queries_graphql_api.dart';
+import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/interest.dart';
+import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
+import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
-import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
@@ -19,8 +21,20 @@ class _TargetAudienceState extends State<TargetAudience> {
   final headingSpacing = 10.0;
   final padding = 30.0;
   final sectionSpacing = 35.0;
+  late TextEditingController textController;
+  @override
+  void initState() {
+    super.initState();
+    textController = TextEditingController();
+    textController.addListener(() => setState(() {}));
+  }
 
-  Gender? selectedGender;
+  @override
+  void dispose() {
+    textController.dispose();
+    super.dispose();
+  }
+
   final genders = [
     {'gender': Gender.both, 'text': 'BOTH'},
     {'gender': Gender.female, 'text': 'GIRLS'},
@@ -28,14 +42,9 @@ class _TargetAudienceState extends State<TargetAudience> {
   ];
 
   @override
-  void initState() {
-    super.initState();
-    selectedGender = genders.first['gender'] as Gender;
-  }
-
-  @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
+    final setupState = Provider.of<SetupState>(context);
     return Scaffold(
         appBar: DefaultAppBar(title: 'Target Audience'),
         body: SingleChildScrollView(
@@ -53,14 +62,10 @@ class _TargetAudienceState extends State<TargetAudience> {
                 children: genders
                     .map((gender) => InterestBubble(
                         text: gender['text'] as String,
-                        selected: selectedGender == gender['gender'],
+                        selected: eventState.selectedGender == gender['gender'],
                         onSelected: (notSelected) {
-                          if (notSelected) {
-                            setState(() =>
-                                selectedGender = gender['gender'] as Gender);
-                          } else {
-                            setState(() => selectedGender = null);
-                          }
+                          eventState.selectedGender =
+                              gender['gender'] as Gender;
                         }))
                     .toList(),
               ),
@@ -83,35 +88,67 @@ class _TargetAudienceState extends State<TargetAudience> {
               Text('INTERESTS', style: headingStyle),
               SizedBox(height: headingSpacing),
               InterestWrap(
-                interests: eventState.popularInterests,
-                selectedInterests: eventState.selectedInterests,
-                onSelected: (bool notSelected, Interest interest) {
-                  if (notSelected) {
-                    eventState.addInterest(interest);
-                  } else {
-                    eventState.removeInterest(interest);
-                  }
-                },
-              ),
-              SizedBox(height: headingSpacing),
+                  interests: setupState.popularInterests,
+                  selectedInterests: eventState.selectedInterests,
+                  onSelected: (bool notSelected, Interest interest) {
+                    if (notSelected) {
+                      eventState.selectInterest(interest);
+                    } else {
+                      eventState.unselectInterest(interest);
+                    }
+                  }),
+              SizedBox(height: 35),
+              Text('Add interests',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
+              SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
-                    child: MyTextField(
-                      hintText: 'Add your interest here...',
-                      controller: eventState.addInterestController,
+                    child: TypeAheadFormField(
+                      noItemsFoundBuilder: (context) => SizedBox.shrink(),
+                      onSuggestionSelected: (Interest interest) {
+                        if (eventState.customInterests
+                            .map((val) => val.title)
+                            .contains(interest.title)) return;
+                        eventState.addCustomInterest(interest);
+                        textController.clear();
+                      },
+                      suggestionsCallback: (String pattern) {
+                        final provider = InterestGqlProvider();
+                        final result = provider.search(pattern);
+                        return result;
+                      },
+                      itemBuilder: (context, Interest interest) =>
+                          ListTile(title: Text(interest.title)),
+                      textFieldConfiguration: TextFieldConfiguration(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hintText: 'Add your interest here...',
+                          hintStyle: TextStyle(fontSize: 13),
+                          contentPadding: EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        controller: textController,
+                      ),
                     ),
                   ),
                   const SizedBox(width: 10),
                   IconButton(
                     padding: EdgeInsets.zero,
                     icon: Icon(Icons.add_circle_outline,
-                        color: Color(0xffe85c3f), size: 35),
-                    onPressed: () {
-                      eventState.addCustomInterest(Interest(
-                          id: 1, title: eventState.addInterestController.text));
-                      eventState.addInterestController.clear();
-                    },
+                        color: textController.text.isEmpty
+                            ? Colors.grey[400]
+                            : Color(0xffe85c3f),
+                        size: 35),
+                    onPressed: textController.text.isEmpty
+                        ? null
+                        : () {
+                            if (eventState.customInterests
+                                .map((val) => val.title)
+                                .contains(textController.text.trim())) return;
+                            eventState.addCustomInterest(Interest(
+                                id: 1, title: textController.text.trim()));
+                            textController.clear();
+                          },
                   ),
                 ],
               ),

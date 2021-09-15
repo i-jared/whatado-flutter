@@ -3,7 +3,6 @@ import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/forum.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:whatado/providers/graphql/chat_provider.dart';
@@ -41,28 +40,42 @@ class _ForumCardState extends State<ForumCard> {
           MaterialPageRoute(
               builder: (context) =>
                   Chats(event: widget.event, forum: widget.forum))),
-      child: Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        secondaryActions: [
-          IconSlideAction(
-              iconWidget: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Icon(
-                  Icons.volume_off_outlined,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              ),
-              color: Colors.blue[800]),
-          IconSlideAction(
-              iconWidget:
-                  Icon(Icons.logout_outlined, color: Colors.white, size: 40),
-              color: Colors.red[300])
-        ],
-        child: Container(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 35),
-            child: Column(
-              children: [
+      child: Stack(
+        children: [
+          Positioned(
+            top: 0,
+            right: 0,
+            child: PopupMenuButton(
+                onSelected: (value) {
+                  if (value == 'mute') print('mute');
+                  if (value == 'leave') print('leave');
+                },
+                itemBuilder: (context) => [
+                      PopupMenuItem(
+                        child: Row(children: [
+                          Icon(Icons.volume_off_outlined,
+                              color: Colors.blue, size: 30),
+                          SizedBox(width: 10),
+                          Text('mute', style: TextStyle(color: Colors.blue))
+                        ]),
+                        value: 'mute',
+                      ),
+                      PopupMenuItem(
+                        child: Row(
+                          children: [
+                            Icon(Icons.logout_outlined,
+                                color: Colors.red, size: 30),
+                            SizedBox(width: 10),
+                            Text('leave', style: TextStyle(color: Colors.red))
+                          ],
+                        ),
+                        value: 'leave',
+                      )
+                    ]),
+          ),
+          Container(
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 35),
+              child: Column(children: [
                 Row(
                   children: [
                     CircleAvatar(
@@ -85,7 +98,7 @@ class _ForumCardState extends State<ForumCard> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   fontSize: 22, fontWeight: FontWeight.bold)),
-                          SizedBox(height: 8),
+                          SizedBox(height: 4),
                           Container(
                             height: 26,
                             width: 100,
@@ -110,6 +123,50 @@ class _ForumCardState extends State<ForumCard> {
                                                   eventUser.imageUrl),
                                             ))
                                         .toList()),
+                          ),
+                          SizedBox(height: 4),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              loading
+                                  ? Flexible(
+                                      flex: 3,
+                                      child: Shimmer.fromColors(
+                                          baseColor:
+                                              Colors.grey[200] ?? Colors.grey,
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                              color: Colors.grey[100],
+                                              height: 15)),
+                                    )
+                                  : Flexible(
+                                      flex: 5,
+                                      child: Text(
+                                        lastMessage?.text ?? '',
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                              const SizedBox(width: 20),
+                              loading
+                                  ? Flexible(
+                                      flex: 1,
+                                      child: Shimmer.fromColors(
+                                          baseColor:
+                                              Colors.grey[200] ?? Colors.grey,
+                                          highlightColor: Colors.white,
+                                          child: Container(
+                                              color: Colors.grey[100],
+                                              height: 15)),
+                                    )
+                                  : Flexible(
+                                      flex: 1,
+                                      child: Text(lastMessage != null
+                                          ? timeago.format(
+                                              lastMessage!.createdAt,
+                                              locale: 'en_short')
+                                          : ''),
+                                    ),
+                            ],
                           )
                         ],
                       ),
@@ -117,46 +174,8 @@ class _ForumCardState extends State<ForumCard> {
                   ],
                 ),
                 SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    loading
-                        ? Flexible(
-                            flex: 3,
-                            child: Shimmer.fromColors(
-                                baseColor: Colors.grey[200] ?? Colors.grey,
-                                highlightColor: Colors.white,
-                                child: Container(
-                                    color: Colors.grey[100], height: 15)),
-                          )
-                        : Flexible(
-                            flex: 5,
-                            child: Text(
-                              lastMessage?.text ?? '',
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                    const SizedBox(width: 20),
-                    loading
-                        ? Flexible(
-                            flex: 1,
-                            child: Shimmer.fromColors(
-                                baseColor: Colors.grey[200] ?? Colors.grey,
-                                highlightColor: Colors.white,
-                                child: Container(
-                                    color: Colors.grey[100], height: 15)),
-                          )
-                        : Flexible(
-                            flex: 1,
-                            child: Text(lastMessage != null
-                                ? timeago.format(lastMessage!.createdAt,
-                                    locale: 'en_short')
-                                : ''),
-                          ),
-                  ],
-                )
-              ],
-            )),
+              ])),
+        ],
       ),
     );
   }

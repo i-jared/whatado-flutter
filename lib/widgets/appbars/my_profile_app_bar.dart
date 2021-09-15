@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/models/interest.dart';
-import 'package:whatado/models/user.dart';
 import 'package:whatado/screens/profile/edit_my_profile.dart';
 import 'package:whatado/screens/profile/settings.dart';
 import 'package:whatado/state/home_state.dart';
@@ -19,7 +16,7 @@ class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       backgroundColor: Colors.grey[50],
-      title: Text(userState.user!.name,
+      title: Text(userState.user?.name ?? 'My Profile',
           style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       centerTitle: true,
       elevation: homeState.myProfileScrollController.hasClients &&

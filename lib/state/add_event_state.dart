@@ -7,6 +7,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:image/image.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/interest.dart';
+import 'package:whatado/providers/graphql/interest_provider.dart';
 
 class AddEventState extends ChangeNotifier {
   PhotoViewController photoController;
@@ -30,14 +31,7 @@ class AddEventState extends ChangeNotifier {
   bool _failed;
   bool _succeeded;
 
-  final popularInterests = [
-    Interest(id: 1, title: 'bball'),
-    Interest(id: 2, title: 'ping pong'),
-    Interest(id: 3, title: 'running'),
-    Interest(id: 4, title: 'another'),
-    Interest(id: 5, title: 'interest')
-  ];
-
+  List<Interest> popularInterests = [];
   List<Interest> customInterests = [];
   List<Interest> selectedInterests = [];
 
@@ -86,6 +80,7 @@ class AddEventState extends ChangeNotifier {
     locationController.addListener(() => notifyListeners());
     dateController.addListener(() => notifyListeners());
     timeController.addListener(() => notifyListeners());
+    init();
   }
 
   @override
@@ -99,6 +94,14 @@ class AddEventState extends ChangeNotifier {
     textModeController.dispose();
     addInterestController.dispose();
     super.dispose();
+  }
+
+  Future<void> init() async {
+    final provider = InterestGqlProvider();
+    final result = await provider.popular();
+    popularInterests.addAll(result.data ?? []);
+    print(popularInterests);
+    notifyListeners();
   }
 
   bool get succeeded => _succeeded;
@@ -208,4 +211,8 @@ class AddEventState extends ChangeNotifier {
     final resizedFace = copyResize(rerotatedImage, height: 700, width: 700);
     return Uint8List.fromList(encodePng(resizedFace));
   }
+
+  void selectInterest(Interest interest) {}
+
+  void unselectInterest(Interest interest) {}
 }

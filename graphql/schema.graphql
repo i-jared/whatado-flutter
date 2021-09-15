@@ -93,6 +93,26 @@ type EventApiResponse {
   ok: Boolean
 }
 
+input EventFilterInput {
+  createdAt: String
+  creatorId: Int
+  description: String
+  filterAge: String
+  filterGender: Gender
+  filterLocation: String
+  filterRadius: Float
+  forumId: Int
+  id: Int
+  invitedIds: [Int!]
+  location: String
+  pictureUrl: String
+  relatedInterestsIds: [Int!]
+  time: DateTime
+  title: String
+  updatedAt: String
+  wannagoIds: [Int!]
+}
+
 input EventInput {
   creatorId: Int!
   description: String!
@@ -178,18 +198,17 @@ input InterestFilterInput {
   updatedAt: String
 }
 
-input InterestInput {
-  id: Int
-  peopleInterestedIds: [Int!]!
-  popular: Boolean!
-  relatedEventsIds: [Int!]!
-  title: String!
-}
-
 type InterestsApiResponse {
   errors: [FieldError!]
   jwt: JwtResponse
   nodes: [Interest!]
+  ok: Boolean
+}
+
+type IntsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [Float!]
   ok: Boolean
 }
 
@@ -206,7 +225,7 @@ type Mutation {
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
   createForum(eventId: Int!): ForumApiResponse!
-  createInterest(options: InterestInput!): InterestApiResponse!
+  createInterest(interestsText: [String!]!): IntsApiResponse!
   deleteChat(id: Int!): BoolApiResponse!
   deleteEvent(id: Int!): BoolApiResponse!
   deleteInterest(id: Int!): BoolApiResponse!
@@ -217,10 +236,11 @@ type Mutation {
   register(options: UserInput!): UserApiResponse!
   updateBio(bio: String!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
-  updateEvent(options: EventInput!): EventApiResponse!
+  updateEvent(options: EventFilterInput!): EventApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
   updatePhotos(urls: [String!]!): BoolApiResponse!
   updateProfilePhoto(url: String!): BoolApiResponse!
+  updateUser(options: UserFilterInput!): UserApiResponse!
   updateWannago(declined: Boolean!, id: Int!): BoolApiResponse!
 }
 
@@ -271,6 +291,17 @@ type UserApiResponse {
   jwt: JwtResponse
   nodes: User
   ok: Boolean
+}
+
+input UserFilterInput {
+  bio: String
+  birthday: DateTime
+  email: String
+  id: Float
+  photoUrls: String
+  profilePhotoUrl: String
+  username: String
+  verified: Boolean
 }
 
 input UserInput {

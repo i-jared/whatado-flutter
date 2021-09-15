@@ -571,45 +571,6 @@ Map<String, dynamic> _$LastChat$QueryToJson(LastChat$Query instance) =>
       'lastChat': instance.lastChat.toJson(),
     };
 
-Me$Query$Me$Nodes$Interests _$Me$Query$Me$Nodes$InterestsFromJson(
-    Map<String, dynamic> json) {
-  return Me$Query$Me$Nodes$Interests()
-    ..id = json['id'] as int
-    ..title = json['title'] as String;
-}
-
-Map<String, dynamic> _$Me$Query$Me$Nodes$InterestsToJson(
-        Me$Query$Me$Nodes$Interests instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'title': instance.title,
-    };
-
-Me$Query$Me$Nodes$MyEvents _$Me$Query$Me$Nodes$MyEventsFromJson(
-    Map<String, dynamic> json) {
-  return Me$Query$Me$Nodes$MyEvents()..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$Me$Query$Me$Nodes$MyEventsToJson(
-        Me$Query$Me$Nodes$MyEvents instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
-Me$Query$Me$Nodes$ChatNotifications
-    _$Me$Query$Me$Nodes$ChatNotificationsFromJson(Map<String, dynamic> json) {
-  return Me$Query$Me$Nodes$ChatNotifications()
-    ..notifications = json['notifications'] as int
-    ..muted = json['muted'] as bool;
-}
-
-Map<String, dynamic> _$Me$Query$Me$Nodes$ChatNotificationsToJson(
-        Me$Query$Me$Nodes$ChatNotifications instance) =>
-    <String, dynamic>{
-      'notifications': instance.notifications,
-      'muted': instance.muted,
-    };
-
 Me$Query$Me$Nodes _$Me$Query$Me$NodesFromJson(Map<String, dynamic> json) {
   return Me$Query$Me$Nodes()
     ..id = json['id'] as int
@@ -622,14 +583,14 @@ Me$Query$Me$Nodes _$Me$Query$Me$NodesFromJson(Map<String, dynamic> json) {
     ..bio = json['bio'] as String
     ..interests = (json['interests'] as List<dynamic>)
         .map((e) =>
-            Me$Query$Me$Nodes$Interests.fromJson(e as Map<String, dynamic>))
+            UserFieldsMixin$Interests.fromJson(e as Map<String, dynamic>))
         .toList()
     ..myEvents = (json['myEvents'] as List<dynamic>)
-        .map((e) =>
-            Me$Query$Me$Nodes$MyEvents.fromJson(e as Map<String, dynamic>))
+        .map(
+            (e) => UserFieldsMixin$MyEvents.fromJson(e as Map<String, dynamic>))
         .toList()
     ..chatNotifications = (json['chatNotifications'] as List<dynamic>)
-        .map((e) => Me$Query$Me$Nodes$ChatNotifications.fromJson(
+        .map((e) => UserFieldsMixin$ChatNotifications.fromJson(
             e as Map<String, dynamic>))
         .toList();
 }
@@ -687,6 +648,45 @@ Me$Query _$Me$QueryFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$Me$QueryToJson(Me$Query instance) => <String, dynamic>{
       'me': instance.me.toJson(),
+    };
+
+UserFieldsMixin$Interests _$UserFieldsMixin$InterestsFromJson(
+    Map<String, dynamic> json) {
+  return UserFieldsMixin$Interests()
+    ..id = json['id'] as int
+    ..title = json['title'] as String;
+}
+
+Map<String, dynamic> _$UserFieldsMixin$InterestsToJson(
+        UserFieldsMixin$Interests instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+    };
+
+UserFieldsMixin$MyEvents _$UserFieldsMixin$MyEventsFromJson(
+    Map<String, dynamic> json) {
+  return UserFieldsMixin$MyEvents()..id = json['id'] as int;
+}
+
+Map<String, dynamic> _$UserFieldsMixin$MyEventsToJson(
+        UserFieldsMixin$MyEvents instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+UserFieldsMixin$ChatNotifications _$UserFieldsMixin$ChatNotificationsFromJson(
+    Map<String, dynamic> json) {
+  return UserFieldsMixin$ChatNotifications()
+    ..notifications = json['notifications'] as int
+    ..muted = json['muted'] as bool;
+}
+
+Map<String, dynamic> _$UserFieldsMixin$ChatNotificationsToJson(
+        UserFieldsMixin$ChatNotifications instance) =>
+    <String, dynamic>{
+      'notifications': instance.notifications,
+      'muted': instance.muted,
     };
 
 MyEvents$Query$MyEvents$Nodes _$MyEvents$Query$MyEvents$NodesFromJson(

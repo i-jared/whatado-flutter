@@ -1,10 +1,7 @@
-mutation createInterest($interestInput: InterestInput) {
-  createInterest(options: $interestInput) {
+mutation createInterest($interestsText: [String!]!) {
+  createInterest(interestsText: $interestsText) {
     ok
-    nodes {
-      id
-      title
-    }
+    nodes
     errors {
       field
       message

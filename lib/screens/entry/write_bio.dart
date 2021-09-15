@@ -10,64 +10,59 @@ class WriteBioScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
-    return ChangeNotifierProvider<SetupState>(
-        create: (_) => SetupState(),
-        builder: (context, _) {
-          final setupState = Provider.of<SetupState>(context);
-          return Scaffold(
-              body: Form(
-            child: LayoutBuilder(
-              builder: (context, constraints) => SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                    minWidth: constraints.maxWidth,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 50),
-                            Center(
-                              child: Image.asset("assets/text_logo.png",
-                                  height: 100),
-                            ),
-                            SizedBox(height: 40),
-                            Text('Write Bio',
-                                style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.w600)),
-                            SizedBox(height: 10),
-                            MyTextField(
-                              hintText: 'Write bio here',
-                              maxLines: null,
-                              controller: setupState.bioController,
-                            ),
-                            SizedBox(height: 35),
-                            Spacer(),
-                            Center(
-                              child: RoundedArrowButton(
-                                onPressed: () async {
-                                  await setupState.saveBio();
-                                  userState.getUser();
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SelectPhotosScreen()));
-                                },
-                                text: "Continue",
-                              ),
-                            ),
-                            SizedBox(height: 40)
-                          ]),
-                    ),
-                  ),
-                ),
+    final setupState = Provider.of<SetupState>(context);
+    return Scaffold(
+        body: Form(
+      child: LayoutBuilder(
+        builder: (context, constraints) => SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+              minWidth: constraints.maxWidth,
+            ),
+            child: IntrinsicHeight(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 50),
+                      Center(
+                        child: Image.asset("assets/text_logo.png", height: 100),
+                      ),
+                      SizedBox(height: 40),
+                      Text('Write Bio',
+                          style: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.w600)),
+                      SizedBox(height: 10),
+                      MyTextField(
+                        hintText: 'Write bio here',
+                        maxLines: null,
+                        controller: setupState.bioController,
+                      ),
+                      SizedBox(height: 35),
+                      Spacer(),
+                      Center(
+                        child: RoundedArrowButton(
+                          onPressed: () async {
+                            await setupState.saveBio();
+                            userState.getUser();
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SelectPhotosScreen()));
+                          },
+                          text: "Continue",
+                        ),
+                      ),
+                      SizedBox(height: 40)
+                    ]),
               ),
             ),
-          ));
-        });
+          ),
+        ),
+      ),
+    ));
   }
 }
