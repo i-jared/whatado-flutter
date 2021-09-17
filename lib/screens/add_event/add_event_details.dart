@@ -76,26 +76,26 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             controller: eventState.descriptionController,
             maxLines: null,
           ),
-          SizedBox(height: sectionSpacing),
-          Text('GROUP SIZE', style: headingStyle),
-          SizedBox(height: headingSpacing),
-          Wrap(
-            runSpacing: 0.0,
-            spacing: 10.0,
-            children: sizes
-                .map((size) => InterestBubble(
-                    text: size.keys.first,
-                    selected: selectedSize == size.keys.first,
-                    selectedColor: size.values.first,
-                    onSelected: (notSelected) {
-                      if (notSelected) {
-                        setState(() => selectedSize = size.keys.first);
-                      } else {
-                        setState(() => selectedSize = null);
-                      }
-                    }))
-                .toList(),
-          ),
+          // SizedBox(height: sectionSpacing),
+          // Text('GROUP SIZE', style: headingStyle),
+          // SizedBox(height: headingSpacing),
+          // Wrap(
+          // runSpacing: 0.0,
+          // spacing: 10.0,
+          // children: sizes
+          // .map((size) => InterestBubble(
+          // text: size.keys.first,
+          // selected: selectedSize == size.keys.first,
+          // selectedColor: size.values.first,
+          // onSelected: (notSelected) {
+          // if (notSelected) {
+          // setState(() => selectedSize = size.keys.first);
+          // } else {
+          // setState(() => selectedSize = null);
+          // }
+          // }))
+          // .toList(),
+          // ),
           SizedBox(height: sectionSpacing),
           Text('LOCATION', style: headingStyle),
           SizedBox(height: headingSpacing),
