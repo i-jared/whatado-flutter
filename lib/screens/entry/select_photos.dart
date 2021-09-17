@@ -12,7 +12,6 @@ import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
 import 'package:whatado/widgets/entry/select_profile_image_box.dart';
 
-//TODO: configure image picker for ios
 class SelectPhotosScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SelectPhotosScreenState();
