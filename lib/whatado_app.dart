@@ -57,6 +57,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
         ],
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
               primarySwatch: MaterialColor(
