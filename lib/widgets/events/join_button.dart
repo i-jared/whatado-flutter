@@ -15,6 +15,7 @@ class JoinButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: () async {
           try {
+            if (userState.user == null) return;
             final provider = EventsGqlProvider();
             final result = await provider.addWannago(
                 eventId: event.id, userId: userState.user!.id);

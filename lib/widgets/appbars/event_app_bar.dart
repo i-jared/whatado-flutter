@@ -37,7 +37,7 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
                               (forum) => forum.eventId == event.id)))),
               icon: Icon(Icons.forum_outlined),
               color: Colors.grey[850]),
-        if (!inEdit && userState.user!.id == event.creator.id)
+        if (!inEdit && userState.user?.id == event.creator.id)
           IconButton(
               onPressed: () => Navigator.push(
                   context,

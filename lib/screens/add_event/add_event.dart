@@ -15,6 +15,7 @@ class AddEvent extends StatefulWidget {
 
 class _AddEventState extends State<AddEvent> {
   bool loading = true;
+  bool photosEnabled = false;
   late int page;
   late List<Map<String, dynamic>> loadedAssets;
   List<Uint8List> thumbdata = [];
@@ -42,6 +43,7 @@ class _AddEventState extends State<AddEvent> {
 
       eventState.selectedImage = recentAssets.first;
       setState(() {
+        photosEnabled = true;
         loadedAssets = tempLoadedAssets;
         page = 20;
         loading = false;
@@ -117,7 +119,9 @@ class _AddEventState extends State<AddEvent> {
                                 !eventState.textMode ? Color(0xffe85c3f) : null,
                             icon: Icon(Icons.camera_alt_outlined),
                             iconSize: 30,
-                            onPressed: () => eventState.textMode = false)
+                            onPressed: !photosEnabled
+                                ? null
+                                : () => eventState.textMode = false)
                       ],
                     ),
                   ))),

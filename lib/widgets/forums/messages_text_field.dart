@@ -32,7 +32,9 @@ class MessagesTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(height / 2.0),
             ),
             child: IconButton(
-                onPressed: () => chatState.sendMessage(userState.user!.id),
+                onPressed: () => userState.user == null
+                    ? null
+                    : chatState.sendMessage(userState.user!.id),
                 icon: Icon(Icons.send, color: Colors.white, size: 30)),
           )
         ],
