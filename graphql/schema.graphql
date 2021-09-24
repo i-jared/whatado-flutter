@@ -223,15 +223,18 @@ type Mutation {
   addInterests(interestsText: [String!]!): BoolApiResponse!
   addInvite(eventId: Int!, userId: Int!): EventApiResponse!
   addWannago(eventId: Int!, userId: Int!): EventApiResponse!
+  blockUser(userId: Int!): BoolApiResponse!
   changeUsername(username: String!): BoolApiResponse!
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
   createForum(eventId: Int!): ForumApiResponse!
   createInterest(interestsText: [String!]!): IntsApiResponse!
   deleteChat(id: Int!): BoolApiResponse!
-  deleteEvent(id: Int!): BoolApiResponse!
+  deleteEvent(eventId: Int!): BoolApiResponse!
   deleteInterest(id: Int!): BoolApiResponse!
   deleteWannago(id: Int!): BoolApiResponse!
+  flagEvent(eventId: Int!): BoolApiResponse!
+  flagUser(userId: Int!): BoolApiResponse!
   forgotPassword(email: String!): BoolApiResponse!
   helloMutation(message: String!): Boolean!
   login(options: UserInput!): UserApiResponse!
@@ -269,7 +272,7 @@ type Query {
 }
 
 type Subscription {
-  chatSubscription: Chat!
+  chatSubscription(forumId: Int!): Chat!
   helloSubscription: String!
   me_sub: String!
 }
@@ -277,6 +280,7 @@ type Subscription {
 type User {
   bio: String!
   birthday: DateTime!
+  blockedUsers: [User!]!
   chatNotifications: [ChatNotification!]!
   createdAt: DateTime!
   email: String!

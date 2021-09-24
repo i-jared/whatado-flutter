@@ -1,0 +1,10 @@
+mutation deleteEvent($eventId: Int!) {
+  deleteEvent(eventId: $eventId) {
+    ok
+    nodes 
+    errors {
+      field
+      message
+    }
+  }
+}

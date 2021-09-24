@@ -7,16 +7,6 @@ part of 'subscriptions_graphql_api.graphql.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Hello$Subscription _$Hello$SubscriptionFromJson(Map<String, dynamic> json) {
-  return Hello$Subscription()
-    ..helloSubscription = json['helloSubscription'] as String;
-}
-
-Map<String, dynamic> _$Hello$SubscriptionToJson(Hello$Subscription instance) =>
-    <String, dynamic>{
-      'helloSubscription': instance.helloSubscription,
-    };
-
 Chat$Subscription$ChatSubscription$Author
     _$Chat$Subscription$ChatSubscription$AuthorFromJson(
         Map<String, dynamic> json) {
@@ -62,4 +52,25 @@ Chat$Subscription _$Chat$SubscriptionFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$Chat$SubscriptionToJson(Chat$Subscription instance) =>
     <String, dynamic>{
       'chatSubscription': instance.chatSubscription.toJson(),
+    };
+
+Hello$Subscription _$Hello$SubscriptionFromJson(Map<String, dynamic> json) {
+  return Hello$Subscription()
+    ..helloSubscription = json['helloSubscription'] as String;
+}
+
+Map<String, dynamic> _$Hello$SubscriptionToJson(Hello$Subscription instance) =>
+    <String, dynamic>{
+      'helloSubscription': instance.helloSubscription,
+    };
+
+ChatArguments _$ChatArgumentsFromJson(Map<String, dynamic> json) {
+  return ChatArguments(
+    forumId: json['forumId'] as int,
+  );
+}
+
+Map<String, dynamic> _$ChatArgumentsToJson(ChatArguments instance) =>
+    <String, dynamic>{
+      'forumId': instance.forumId,
     };

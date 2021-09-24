@@ -6,16 +6,10 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/console/screens/home.dart';
 import 'package:whatado/screens/entry/login.dart';
-import 'package:whatado/screens/entry/welcome.dart';
-import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/environment_config.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/services/startup.dart';
 import 'package:flutter/services.dart';
-import 'package:whatado/state/add_event_state.dart';
-import 'package:whatado/state/home_state.dart';
-import 'package:whatado/state/setup_state.dart';
-import 'package:whatado/state/user_state.dart';
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();

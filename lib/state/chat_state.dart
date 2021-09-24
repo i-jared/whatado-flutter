@@ -26,8 +26,8 @@ class ChatState extends ChangeNotifier {
   @override
   void dispose() {
     streamSubscription?.cancel();
-    scrollController.dispose();
-    textController.dispose();
+    // scrollController.dispose();
+    // textController.dispose();
     super.dispose();
   }
 
@@ -35,12 +35,13 @@ class ChatState extends ChangeNotifier {
     final provider = ChatGqlProvider();
     final result = await provider.chats(forum.id);
     chats = result.data;
-    subscribe();
+    subscribe(forum.id);
     notifyListeners();
   }
 
-  void subscribe() {
-    final subscription = ChatSubscription();
+  void subscribe(int forumId) {
+    final subscription =
+        ChatSubscription(variables: ChatArguments(forumId: forumId));
     final stream = graphqlClientService.subscribe(subscription).map((event) {
       return Chat.fromGqlData(event.data?['chatSubscription']);
     });

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/register_query.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/login.dart';
+import 'package:whatado/screens/profile/eula.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
@@ -127,6 +128,18 @@ class _SignupScreenState extends State<StatefulWidget> {
                                           builder: (ctx) => LoginScreen())),
                                 ),
                               ],
+                            ),
+                            Center(
+                              child: TextButton(
+                                child: Text(
+                                  'Terms of Service',
+                                  style: TextStyle(color: Color(0xffe85c3f)),
+                                ),
+                                onPressed: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (ctx) => Eula())),
+                              ),
                             ),
                             SizedBox(height: 40)
                           ]),

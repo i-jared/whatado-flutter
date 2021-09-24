@@ -1,5 +1,5 @@
-subscription chat {
-  chatSubscription {
+subscription chat ($forumId: Int!){
+  chatSubscription (forumId: $forumId){
     id
     createdAt
     text

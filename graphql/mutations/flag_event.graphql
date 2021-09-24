@@ -1,0 +1,10 @@
+mutation flagEvent($eventId: Int!) {
+  flagEvent (eventId: $eventId) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

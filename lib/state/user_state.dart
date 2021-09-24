@@ -34,14 +34,14 @@ class UserState extends ChangeNotifier {
 
   void updatePhotos() async {
     if (_user == null) return;
+    final imageUrl = user!.imageUrl;
     final initialPhotoData = await Future.wait(user!.photoUrls
         .map((url) async => (await NetworkAssetBundle(Uri.parse(url)).load(url))
             .buffer
             .asUint8List())
         .toList());
     photos = initialPhotoData;
-    photo = (await NetworkAssetBundle(Uri.parse(_user!.imageUrl))
-            .load(_user!.imageUrl))
+    photo = (await NetworkAssetBundle(Uri.parse(imageUrl)).load(imageUrl))
         .buffer
         .asUint8List();
     ogphoto = photo;

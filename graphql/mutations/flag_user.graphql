@@ -1,0 +1,10 @@
+mutation flagUser($userId: Int!) {
+  flagUser(userId: $userId) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

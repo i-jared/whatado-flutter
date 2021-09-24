@@ -201,6 +201,52 @@ class UserGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<bool>> flagUser(int userId) async {
+    final mutation =
+        FlagUserMutation(variables: FlagUserArguments(userId: userId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['flagUser'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> blockUser(int userId) async {
+    final mutation =
+        BlockUserMutation(variables: BlockUserArguments(userId: userId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['blockUser'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<bool>> addInterests(List<String> interestsText) async {
     final mutation = AddInterestsMutation(
         variables: AddInterestsArguments(interestsText: interestsText));

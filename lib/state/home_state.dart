@@ -128,6 +128,15 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeEvent(Event event) {
+    if (allEvents?.contains(event) ?? false) allEvents?.remove(event);
+    if (myEvents?.contains(event) ?? false) {
+      myEvents?.remove(event);
+      myForums?.removeWhere((forum) => forum.eventId == event.id);
+    }
+    notifyListeners();
+  }
+
   void updateMyEvent(Event event) {
     final int myindex = myEvents!.indexWhere((val) => val.id == event.id);
     if (myindex == -1) {

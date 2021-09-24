@@ -8,7 +8,6 @@ import 'package:whatado/screens/add_event/target_audience.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/widgets/appbars/add_event_details_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
-import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AddEventDetails extends StatefulWidget {

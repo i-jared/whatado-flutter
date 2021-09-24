@@ -87,6 +87,29 @@ class EventsGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<bool>> flagEvent(int eventId) async {
+    final mutation =
+        FlagEventMutation(variables: FlagEventArguments(eventId: eventId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['flagEvent'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<Event>> updateEvent(
       EventFilterInput eventInput) async {
     final mutation = UpdateEventMutation(
@@ -203,6 +226,28 @@ class EventsGqlProvider {
     }
     print('update wannago $result');
     final root = result.data?['updateWannago'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> deleteEvent(int eventId) async {
+    final mutation =
+        DeleteEventMutation(variables: DeleteEventArguments(eventId: eventId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+    final root = result.data?['deleteEvent'];
     final data = root?['ok'] ?? false;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
