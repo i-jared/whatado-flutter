@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:whatado/screens/entry/welcome.dart';
 import 'package:whatado/screens/profile/change_password.dart';
 import 'package:whatado/screens/profile/change_personal_info.dart';
+import 'package:whatado/screens/profile/eula.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/settings/settings_item.dart';
@@ -24,6 +25,10 @@ class Settings extends StatelessWidget {
               title: 'CHANGE PASSWORD',
               onPressed: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ChangePassword()))),
+          SettingsItem(
+              title: 'LEGAL',
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => Eula()))),
           SettingsItem(
             title: 'LOG OUT',
             onPressed: () {
