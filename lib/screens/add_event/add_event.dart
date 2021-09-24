@@ -15,6 +15,7 @@ class AddEvent extends StatefulWidget {
 
 class _AddEventState extends State<AddEvent> {
   bool loading = true;
+  bool photosEnabled = false;
   late int page;
   late List<Map<String, dynamic>> loadedAssets;
   List<Uint8List> thumbdata = [];
@@ -29,8 +30,6 @@ class _AddEventState extends State<AddEvent> {
   void initPhotos() async {
     final eventState = Provider.of<AddEventState>(context, listen: false);
     var result = await PhotoManager.requestPermissionExtend();
-    // TODO configure iOS app for firebase and photomanager
-    // TODO configure iOS splash screen?
     if (result.isAuth) {
       eventState.textMode = false;
       final albums = await PhotoManager.getAssetPathList(onlyAll: true);
@@ -44,6 +43,7 @@ class _AddEventState extends State<AddEvent> {
 
       eventState.selectedImage = recentAssets.first;
       setState(() {
+        photosEnabled = true;
         loadedAssets = tempLoadedAssets;
         page = 20;
         loading = false;
@@ -113,15 +113,15 @@ class _AddEventState extends State<AddEvent> {
                                 eventState.textMode ? Color(0xffe85c3f) : null,
                             icon: Icon(Icons.text_fields_outlined),
                             iconSize: 30,
-                            onPressed: () =>
-                                setState(() => eventState.textMode = true)),
+                            onPressed: () => eventState.textMode = true),
                         IconButton(
                             color:
                                 !eventState.textMode ? Color(0xffe85c3f) : null,
                             icon: Icon(Icons.camera_alt_outlined),
                             iconSize: 30,
-                            onPressed: () =>
-                                setState(() => eventState.textMode = false))
+                            onPressed: !photosEnabled
+                                ? null
+                                : () => eventState.textMode = false)
                       ],
                     ),
                   ))),
@@ -140,8 +140,8 @@ class _AddEventState extends State<AddEvent> {
                               crossAxisCount: 4,
                               children: loadedAssets
                                   .map((assetMap) => InkWell(
-                                      onTap: () => setState(() => eventState
-                                          .selectedImage = assetMap['asset']),
+                                      onTap: () => eventState.selectedImage =
+                                          assetMap['asset'],
                                       child: Stack(
                                         fit: StackFit.expand,
                                         children: [

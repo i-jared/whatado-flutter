@@ -15,6 +15,7 @@ class LeaveButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: () async {
           try {
+            if (userState.user == null) return;
             final wannago = event.wannago
                 .firstWhere((w) => w.user.id == userState.user!.id);
             final provider = EventsGqlProvider();

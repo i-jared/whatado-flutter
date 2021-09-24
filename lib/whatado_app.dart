@@ -34,15 +34,20 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool loading = true;
+  late bool loading;
+
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) async {
+    loading = true;
+    // SchedulerBinding.instance?.addPostFrameCallback((timeStamp) async {
+    // await loginService.attemptAutoLogin();
+    // setState(() => loading = false);
+    // });
+    SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
       await loginService.attemptAutoLogin();
       setState(() => loading = false);
     });
-    SchedulerBinding.instance!.scheduleForcedFrame();
   }
 
   @override
@@ -57,6 +62,7 @@ class _MyAppState extends State<MyApp> {
           ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
         ],
         child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
           theme: ThemeData(
               primarySwatch: MaterialColor(
@@ -82,7 +88,6 @@ class _MyAppState extends State<MyApp> {
                   ))
               : loginService.loggedIn
                   ? HomeScreen()
-                  // ? SelectPhotosScreen()
                   : WelcomeScreen(),
         ),
       ),

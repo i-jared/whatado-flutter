@@ -12,7 +12,6 @@ import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
 import 'package:whatado/widgets/entry/select_profile_image_box.dart';
 
-//TODO: configure image picker for ios
 class SelectPhotosScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SelectPhotosScreenState();
@@ -73,13 +72,12 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
       final tempImageData = setupState.profileImageData;
       if (tempImageData == null) return;
       final profileUrl = await cloudStorageService
-          .uploadImage(tempImageData, userState.user!.id, userImage: true);
+          .uploadImage(tempImageData, userId, userImage: true);
 
       final List<String?> photoUrls = await Future.wait(
           setupState.photosImageData.map<Future<String?>>((data) {
         if (data == null) return Future.value(null);
-        return cloudStorageService.uploadImage(data, userState.user!.id,
-            userImage: true);
+        return cloudStorageService.uploadImage(data, userId, userImage: true);
       }));
 
       // save urls to user profile
@@ -148,7 +146,9 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                                 disabled: setupState.photos.length == 0 ||
                                     setupState.profilePhoto == null,
                                 text: "Continue",
-                                onPressed: () => onPressed(userState.user!.id),
+                                onPressed: () => userState.user == null
+                                    ? null
+                                    : onPressed(userState.user!.id),
                               ),
                       ),
                       SizedBox(height: 40)

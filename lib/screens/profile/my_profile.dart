@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
@@ -17,6 +18,12 @@ class MyProfile extends StatelessWidget {
         (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) /
             3.0;
 
+    if (userState.user == null) {
+      SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
+        userState.getUser();
+      });
+      return Center(child: CircularProgressIndicator());
+    }
     return SingleChildScrollView(
         child: Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),

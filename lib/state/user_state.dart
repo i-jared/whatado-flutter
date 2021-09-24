@@ -33,6 +33,7 @@ class UserState extends ChangeNotifier {
   }
 
   void updatePhotos() async {
+    if (_user == null) return;
     final initialPhotoData = await Future.wait(user!.photoUrls
         .map((url) async => (await NetworkAssetBundle(Uri.parse(url)).load(url))
             .buffer
@@ -48,7 +49,7 @@ class UserState extends ChangeNotifier {
   }
 
   UserState() : _loading = false {
-    getUser().then((_) => updatePhotos());
+    getUser();
   }
 
   List<String>? get urls => _urls;
