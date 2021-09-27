@@ -36,7 +36,7 @@ class Settings extends StatelessWidget {
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => WelcomeScreen()),
-                  (route) => true);
+                  (route) => false);
             },
             showIcon: false,
           ),

@@ -5,7 +5,7 @@ import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
-import 'package:whatado/state/setup_state.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
@@ -44,7 +44,7 @@ class _TargetAudienceState extends State<TargetAudience> {
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
-    final setupState = Provider.of<SetupState>(context);
+    final userState = Provider.of<UserState>(context);
     return Scaffold(
         appBar: DefaultAppBar(title: 'Target Audience'),
         body: SingleChildScrollView(
@@ -88,7 +88,7 @@ class _TargetAudienceState extends State<TargetAudience> {
               Text('INTERESTS', style: headingStyle),
               SizedBox(height: headingSpacing),
               InterestWrap(
-                  interests: setupState.popularInterests,
+                  interests: userState.user?.interests ?? [],
                   selectedInterests: eventState.selectedInterests,
                   onSelected: (bool notSelected, Interest interest) {
                     if (notSelected) {

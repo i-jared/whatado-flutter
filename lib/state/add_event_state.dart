@@ -27,7 +27,7 @@ class AddEventState extends ChangeNotifier {
   double _filterAgeStart;
   double _filterAgeEnd;
   bool _textMode;
-  bool _loading;
+  bool _postLoading;
   bool _failed;
   bool _succeeded;
 
@@ -68,7 +68,7 @@ class AddEventState extends ChangeNotifier {
         _filterAgeStart = 18,
         _textMode = false,
         _selectedGender = Gender.both,
-        _loading = false,
+        _postLoading = false,
         _succeeded = false,
         _failed = false,
         _scale = 0,
@@ -117,10 +117,10 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool get loading => _loading;
+  bool get postLoading => _postLoading;
 
-  set loading(bool loading) {
-    _loading = loading;
+  set postLoading(bool loading) {
+    _postLoading = loading;
     notifyListeners();
   }
 
@@ -169,7 +169,7 @@ class AddEventState extends ChangeNotifier {
     _selectedImage = null;
     _succeeded = false;
     _failed = false;
-    _loading = false;
+    _postLoading = false;
     photoController.reset();
     titleController.clear();
     descriptionController.clear();

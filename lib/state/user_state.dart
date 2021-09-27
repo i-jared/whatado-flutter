@@ -33,7 +33,7 @@ class UserState extends ChangeNotifier {
   }
 
   void updatePhotos() async {
-    if (_user == null) return;
+    if (user == null || user!.imageUrl.isEmpty) return;
     final imageUrl = user!.imageUrl;
     final initialPhotoData = await Future.wait(user!.photoUrls
         .map((url) async => (await NetworkAssetBundle(Uri.parse(url)).load(url))

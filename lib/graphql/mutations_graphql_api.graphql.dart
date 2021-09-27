@@ -371,6 +371,61 @@ class AddWannago$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class BlockUser$Mutation$BlockUser$Errors extends JsonSerializable
+    with EquatableMixin {
+  BlockUser$Mutation$BlockUser$Errors();
+
+  factory BlockUser$Mutation$BlockUser$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$BlockUser$Mutation$BlockUser$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$BlockUser$Mutation$BlockUser$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BlockUser$Mutation$BlockUser extends JsonSerializable
+    with EquatableMixin {
+  BlockUser$Mutation$BlockUser();
+
+  factory BlockUser$Mutation$BlockUser.fromJson(Map<String, dynamic> json) =>
+      _$BlockUser$Mutation$BlockUserFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<BlockUser$Mutation$BlockUser$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$BlockUser$Mutation$BlockUserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class BlockUser$Mutation extends JsonSerializable with EquatableMixin {
+  BlockUser$Mutation();
+
+  factory BlockUser$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$BlockUser$MutationFromJson(json);
+
+  late BlockUser$Mutation$BlockUser blockUser;
+
+  @override
+  List<Object?> get props => [blockUser];
+  @override
+  Map<String, dynamic> toJson() => _$BlockUser$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class CreateChat$Mutation$CreateChat$Nodes$Author extends JsonSerializable
     with EquatableMixin {
   CreateChat$Mutation$CreateChat$Nodes$Author();
@@ -811,6 +866,63 @@ class CreateInterest$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class DeleteEvent$Mutation$DeleteEvent$Errors extends JsonSerializable
+    with EquatableMixin {
+  DeleteEvent$Mutation$DeleteEvent$Errors();
+
+  factory DeleteEvent$Mutation$DeleteEvent$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$DeleteEvent$Mutation$DeleteEvent$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$DeleteEvent$Mutation$DeleteEvent$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteEvent$Mutation$DeleteEvent extends JsonSerializable
+    with EquatableMixin {
+  DeleteEvent$Mutation$DeleteEvent();
+
+  factory DeleteEvent$Mutation$DeleteEvent.fromJson(
+          Map<String, dynamic> json) =>
+      _$DeleteEvent$Mutation$DeleteEventFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<DeleteEvent$Mutation$DeleteEvent$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$DeleteEvent$Mutation$DeleteEventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class DeleteEvent$Mutation extends JsonSerializable with EquatableMixin {
+  DeleteEvent$Mutation();
+
+  factory DeleteEvent$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$DeleteEvent$MutationFromJson(json);
+
+  late DeleteEvent$Mutation$DeleteEvent deleteEvent;
+
+  @override
+  List<Object?> get props => [deleteEvent];
+  @override
+  Map<String, dynamic> toJson() => _$DeleteEvent$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class DeleteWannago$Mutation$DeleteWannago$Errors extends JsonSerializable
     with EquatableMixin {
   DeleteWannago$Mutation$DeleteWannago$Errors();
@@ -865,6 +977,115 @@ class DeleteWannago$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [deleteWannago];
   @override
   Map<String, dynamic> toJson() => _$DeleteWannago$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagEvent$Mutation$FlagEvent$Errors extends JsonSerializable
+    with EquatableMixin {
+  FlagEvent$Mutation$FlagEvent$Errors();
+
+  factory FlagEvent$Mutation$FlagEvent$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$FlagEvent$Mutation$FlagEvent$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$FlagEvent$Mutation$FlagEvent$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagEvent$Mutation$FlagEvent extends JsonSerializable
+    with EquatableMixin {
+  FlagEvent$Mutation$FlagEvent();
+
+  factory FlagEvent$Mutation$FlagEvent.fromJson(Map<String, dynamic> json) =>
+      _$FlagEvent$Mutation$FlagEventFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<FlagEvent$Mutation$FlagEvent$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$FlagEvent$Mutation$FlagEventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagEvent$Mutation extends JsonSerializable with EquatableMixin {
+  FlagEvent$Mutation();
+
+  factory FlagEvent$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$FlagEvent$MutationFromJson(json);
+
+  late FlagEvent$Mutation$FlagEvent flagEvent;
+
+  @override
+  List<Object?> get props => [flagEvent];
+  @override
+  Map<String, dynamic> toJson() => _$FlagEvent$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagUser$Mutation$FlagUser$Errors extends JsonSerializable
+    with EquatableMixin {
+  FlagUser$Mutation$FlagUser$Errors();
+
+  factory FlagUser$Mutation$FlagUser$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$FlagUser$Mutation$FlagUser$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$FlagUser$Mutation$FlagUser$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagUser$Mutation$FlagUser extends JsonSerializable with EquatableMixin {
+  FlagUser$Mutation$FlagUser();
+
+  factory FlagUser$Mutation$FlagUser.fromJson(Map<String, dynamic> json) =>
+      _$FlagUser$Mutation$FlagUserFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<FlagUser$Mutation$FlagUser$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$FlagUser$Mutation$FlagUserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagUser$Mutation extends JsonSerializable with EquatableMixin {
+  FlagUser$Mutation();
+
+  factory FlagUser$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$FlagUser$MutationFromJson(json);
+
+  late FlagUser$Mutation$FlagUser flagUser;
+
+  @override
+  List<Object?> get props => [flagUser];
+  @override
+  Map<String, dynamic> toJson() => _$FlagUser$MutationToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1724,227 +1945,6 @@ class UpdateWannago$Mutation extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$UpdateWannago$MutationToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true)
-class BlockUser$Mutation$BlockUser$Errors extends JsonSerializable
-    with EquatableMixin {
-  BlockUser$Mutation$BlockUser$Errors();
-
-  factory BlockUser$Mutation$BlockUser$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$BlockUser$Mutation$BlockUser$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$BlockUser$Mutation$BlockUser$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class BlockUser$Mutation$BlockUser extends JsonSerializable
-    with EquatableMixin {
-  BlockUser$Mutation$BlockUser();
-
-  factory BlockUser$Mutation$BlockUser.fromJson(Map<String, dynamic> json) =>
-      _$BlockUser$Mutation$BlockUserFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<BlockUser$Mutation$BlockUser$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() => _$BlockUser$Mutation$BlockUserToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class BlockUser$Mutation extends JsonSerializable with EquatableMixin {
-  BlockUser$Mutation();
-
-  factory BlockUser$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$BlockUser$MutationFromJson(json);
-
-  late BlockUser$Mutation$BlockUser blockUser;
-
-  @override
-  List<Object?> get props => [blockUser];
-  @override
-  Map<String, dynamic> toJson() => _$BlockUser$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagEvent$Mutation$FlagEvent$Errors extends JsonSerializable
-    with EquatableMixin {
-  FlagEvent$Mutation$FlagEvent$Errors();
-
-  factory FlagEvent$Mutation$FlagEvent$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$FlagEvent$Mutation$FlagEvent$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$FlagEvent$Mutation$FlagEvent$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagEvent$Mutation$FlagEvent extends JsonSerializable
-    with EquatableMixin {
-  FlagEvent$Mutation$FlagEvent();
-
-  factory FlagEvent$Mutation$FlagEvent.fromJson(Map<String, dynamic> json) =>
-      _$FlagEvent$Mutation$FlagEventFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<FlagEvent$Mutation$FlagEvent$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() => _$FlagEvent$Mutation$FlagEventToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagEvent$Mutation extends JsonSerializable with EquatableMixin {
-  FlagEvent$Mutation();
-
-  factory FlagEvent$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$FlagEvent$MutationFromJson(json);
-
-  late FlagEvent$Mutation$FlagEvent flagEvent;
-
-  @override
-  List<Object?> get props => [flagEvent];
-  @override
-  Map<String, dynamic> toJson() => _$FlagEvent$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagUser$Mutation$FlagUser$Errors extends JsonSerializable
-    with EquatableMixin {
-  FlagUser$Mutation$FlagUser$Errors();
-
-  factory FlagUser$Mutation$FlagUser$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$FlagUser$Mutation$FlagUser$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$FlagUser$Mutation$FlagUser$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagUser$Mutation$FlagUser extends JsonSerializable with EquatableMixin {
-  FlagUser$Mutation$FlagUser();
-
-  factory FlagUser$Mutation$FlagUser.fromJson(Map<String, dynamic> json) =>
-      _$FlagUser$Mutation$FlagUserFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<FlagUser$Mutation$FlagUser$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() => _$FlagUser$Mutation$FlagUserToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagUser$Mutation extends JsonSerializable with EquatableMixin {
-  FlagUser$Mutation();
-
-  factory FlagUser$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$FlagUser$MutationFromJson(json);
-
-  late FlagUser$Mutation$FlagUser flagUser;
-
-  @override
-  List<Object?> get props => [flagUser];
-  @override
-  Map<String, dynamic> toJson() => _$FlagUser$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class DeleteEvent$Mutation$DeleteEvent$Errors extends JsonSerializable
-    with EquatableMixin {
-  DeleteEvent$Mutation$DeleteEvent$Errors();
-
-  factory DeleteEvent$Mutation$DeleteEvent$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$DeleteEvent$Mutation$DeleteEvent$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$DeleteEvent$Mutation$DeleteEvent$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class DeleteEvent$Mutation$DeleteEvent extends JsonSerializable
-    with EquatableMixin {
-  DeleteEvent$Mutation$DeleteEvent();
-
-  factory DeleteEvent$Mutation$DeleteEvent.fromJson(
-          Map<String, dynamic> json) =>
-      _$DeleteEvent$Mutation$DeleteEventFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<DeleteEvent$Mutation$DeleteEvent$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$DeleteEvent$Mutation$DeleteEventToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class DeleteEvent$Mutation extends JsonSerializable with EquatableMixin {
-  DeleteEvent$Mutation();
-
-  factory DeleteEvent$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$DeleteEvent$MutationFromJson(json);
-
-  late DeleteEvent$Mutation$DeleteEvent deleteEvent;
-
-  @override
-  List<Object?> get props => [deleteEvent];
-  @override
-  Map<String, dynamic> toJson() => _$DeleteEvent$MutationToJson(this);
-}
-
 enum Gender {
   @JsonValue('BOTH')
   both,
@@ -2594,6 +2594,100 @@ class AddWannagoMutation
 }
 
 @JsonSerializable(explicitToJson: true)
+class BlockUserArguments extends JsonSerializable with EquatableMixin {
+  BlockUserArguments({required this.userId});
+
+  @override
+  factory BlockUserArguments.fromJson(Map<String, dynamic> json) =>
+      _$BlockUserArgumentsFromJson(json);
+
+  late int userId;
+
+  @override
+  List<Object?> get props => [userId];
+  @override
+  Map<String, dynamic> toJson() => _$BlockUserArgumentsToJson(this);
+}
+
+final BLOCK_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'blockUser'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'userId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'blockUser'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'userId'),
+                  value: VariableNode(name: NameNode(value: 'userId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class BlockUserMutation
+    extends GraphQLQuery<BlockUser$Mutation, BlockUserArguments> {
+  BlockUserMutation({required this.variables});
+
+  @override
+  final DocumentNode document = BLOCK_USER_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'blockUser';
+
+  @override
+  final BlockUserArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  BlockUser$Mutation parse(Map<String, dynamic> json) =>
+      BlockUser$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
 class CreateChatArguments extends JsonSerializable with EquatableMixin {
   CreateChatArguments({required this.chatInput});
 
@@ -3205,6 +3299,100 @@ class CreateInterestMutation
 }
 
 @JsonSerializable(explicitToJson: true)
+class DeleteEventArguments extends JsonSerializable with EquatableMixin {
+  DeleteEventArguments({required this.eventId});
+
+  @override
+  factory DeleteEventArguments.fromJson(Map<String, dynamic> json) =>
+      _$DeleteEventArgumentsFromJson(json);
+
+  late int eventId;
+
+  @override
+  List<Object?> get props => [eventId];
+  @override
+  Map<String, dynamic> toJson() => _$DeleteEventArgumentsToJson(this);
+}
+
+final DELETE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'deleteEvent'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'deleteEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'eventId'),
+                  value: VariableNode(name: NameNode(value: 'eventId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class DeleteEventMutation
+    extends GraphQLQuery<DeleteEvent$Mutation, DeleteEventArguments> {
+  DeleteEventMutation({required this.variables});
+
+  @override
+  final DocumentNode document = DELETE_EVENT_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'deleteEvent';
+
+  @override
+  final DeleteEventArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  DeleteEvent$Mutation parse(Map<String, dynamic> json) =>
+      DeleteEvent$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
 class DeleteWannagoArguments extends JsonSerializable with EquatableMixin {
   DeleteWannagoArguments({required this.id});
 
@@ -3296,6 +3484,194 @@ class DeleteWannagoMutation
   @override
   DeleteWannago$Mutation parse(Map<String, dynamic> json) =>
       DeleteWannago$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagEventArguments extends JsonSerializable with EquatableMixin {
+  FlagEventArguments({required this.eventId});
+
+  @override
+  factory FlagEventArguments.fromJson(Map<String, dynamic> json) =>
+      _$FlagEventArgumentsFromJson(json);
+
+  late int eventId;
+
+  @override
+  List<Object?> get props => [eventId];
+  @override
+  Map<String, dynamic> toJson() => _$FlagEventArgumentsToJson(this);
+}
+
+final FLAG_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'flagEvent'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'flagEvent'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'eventId'),
+                  value: VariableNode(name: NameNode(value: 'eventId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class FlagEventMutation
+    extends GraphQLQuery<FlagEvent$Mutation, FlagEventArguments> {
+  FlagEventMutation({required this.variables});
+
+  @override
+  final DocumentNode document = FLAG_EVENT_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'flagEvent';
+
+  @override
+  final FlagEventArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  FlagEvent$Mutation parse(Map<String, dynamic> json) =>
+      FlagEvent$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FlagUserArguments extends JsonSerializable with EquatableMixin {
+  FlagUserArguments({required this.userId});
+
+  @override
+  factory FlagUserArguments.fromJson(Map<String, dynamic> json) =>
+      _$FlagUserArgumentsFromJson(json);
+
+  late int userId;
+
+  @override
+  List<Object?> get props => [userId];
+  @override
+  Map<String, dynamic> toJson() => _$FlagUserArgumentsToJson(this);
+}
+
+final FLAG_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'flagUser'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'userId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'flagUser'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'userId'),
+                  value: VariableNode(name: NameNode(value: 'userId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class FlagUserMutation
+    extends GraphQLQuery<FlagUser$Mutation, FlagUserArguments> {
+  FlagUserMutation({required this.variables});
+
+  @override
+  final DocumentNode document = FLAG_USER_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'flagUser';
+
+  @override
+  final FlagUserArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  FlagUser$Mutation parse(Map<String, dynamic> json) =>
+      FlagUser$Mutation.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -4545,380 +4921,4 @@ class UpdateWannagoMutation
   @override
   UpdateWannago$Mutation parse(Map<String, dynamic> json) =>
       UpdateWannago$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class BlockUserArguments extends JsonSerializable with EquatableMixin {
-  BlockUserArguments({required this.userId});
-
-  @override
-  factory BlockUserArguments.fromJson(Map<String, dynamic> json) =>
-      _$BlockUserArgumentsFromJson(json);
-
-  late int userId;
-
-  @override
-  List<Object?> get props => [userId];
-  @override
-  Map<String, dynamic> toJson() => _$BlockUserArgumentsToJson(this);
-}
-
-final BLOCK_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'blockUser'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'userId')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'blockUser'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'userId'),
-                  value: VariableNode(name: NameNode(value: 'userId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class BlockUserMutation
-    extends GraphQLQuery<BlockUser$Mutation, BlockUserArguments> {
-  BlockUserMutation({required this.variables});
-
-  @override
-  final DocumentNode document = BLOCK_USER_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'blockUser';
-
-  @override
-  final BlockUserArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  BlockUser$Mutation parse(Map<String, dynamic> json) =>
-      BlockUser$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagEventArguments extends JsonSerializable with EquatableMixin {
-  FlagEventArguments({required this.eventId});
-
-  @override
-  factory FlagEventArguments.fromJson(Map<String, dynamic> json) =>
-      _$FlagEventArgumentsFromJson(json);
-
-  late int eventId;
-
-  @override
-  List<Object?> get props => [eventId];
-  @override
-  Map<String, dynamic> toJson() => _$FlagEventArgumentsToJson(this);
-}
-
-final FLAG_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'flagEvent'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'eventId')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'flagEvent'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'eventId'),
-                  value: VariableNode(name: NameNode(value: 'eventId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class FlagEventMutation
-    extends GraphQLQuery<FlagEvent$Mutation, FlagEventArguments> {
-  FlagEventMutation({required this.variables});
-
-  @override
-  final DocumentNode document = FLAG_EVENT_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'flagEvent';
-
-  @override
-  final FlagEventArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  FlagEvent$Mutation parse(Map<String, dynamic> json) =>
-      FlagEvent$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class FlagUserArguments extends JsonSerializable with EquatableMixin {
-  FlagUserArguments({required this.userId});
-
-  @override
-  factory FlagUserArguments.fromJson(Map<String, dynamic> json) =>
-      _$FlagUserArgumentsFromJson(json);
-
-  late int userId;
-
-  @override
-  List<Object?> get props => [userId];
-  @override
-  Map<String, dynamic> toJson() => _$FlagUserArgumentsToJson(this);
-}
-
-final FLAG_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'flagUser'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'userId')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'flagUser'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'userId'),
-                  value: VariableNode(name: NameNode(value: 'userId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class FlagUserMutation
-    extends GraphQLQuery<FlagUser$Mutation, FlagUserArguments> {
-  FlagUserMutation({required this.variables});
-
-  @override
-  final DocumentNode document = FLAG_USER_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'flagUser';
-
-  @override
-  final FlagUserArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  FlagUser$Mutation parse(Map<String, dynamic> json) =>
-      FlagUser$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class DeleteEventArguments extends JsonSerializable with EquatableMixin {
-  DeleteEventArguments({required this.eventId});
-
-  @override
-  factory DeleteEventArguments.fromJson(Map<String, dynamic> json) =>
-      _$DeleteEventArgumentsFromJson(json);
-
-  late int eventId;
-
-  @override
-  List<Object?> get props => [eventId];
-  @override
-  Map<String, dynamic> toJson() => _$DeleteEventArgumentsToJson(this);
-}
-
-final DELETE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'deleteEvent'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'eventId')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'deleteEvent'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'eventId'),
-                  value: VariableNode(name: NameNode(value: 'eventId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class DeleteEventMutation
-    extends GraphQLQuery<DeleteEvent$Mutation, DeleteEventArguments> {
-  DeleteEventMutation({required this.variables});
-
-  @override
-  final DocumentNode document = DELETE_EVENT_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'deleteEvent';
-
-  @override
-  final DeleteEventArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  DeleteEvent$Mutation parse(Map<String, dynamic> json) =>
-      DeleteEvent$Mutation.fromJson(json);
 }

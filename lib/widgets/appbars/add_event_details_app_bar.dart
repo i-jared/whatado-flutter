@@ -37,10 +37,10 @@ class AddEventDetailsAppBar extends StatelessWidget
             child: Text('PUBLISH',
                 style:
                     TextStyle(color: !ready ? Colors.grey : Color(0xffe85c3f))),
-            onPressed: !ready || eventState.loading
+            onPressed: !ready || eventState.postLoading
                 ? null
                 : () async {
-                    eventState.loading = true;
+                    eventState.postLoading = true;
                     if (userState.user == null) {
                       print('fail: user null');
                       await userState.getUser();
@@ -60,7 +60,7 @@ class AddEventDetailsAppBar extends StatelessWidget
                         print('fail: downloadUrl null');
                         eventState.clear();
                         eventState.failed = true;
-                        eventState.loading = false;
+                        eventState.postLoading = false;
                         return;
                       }
 
@@ -125,12 +125,12 @@ class AddEventDetailsAppBar extends StatelessWidget
                       print(e.toString());
                       eventState.clear();
                       eventState.failed = true;
-                      eventState.loading = false;
+                      eventState.postLoading = false;
                       return;
                     }
                     eventState.clear();
                     eventState.succeeded = true;
-                    eventState.loading = false;
+                    eventState.postLoading = false;
                   },
           ),
         ),

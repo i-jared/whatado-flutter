@@ -35,7 +35,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
-    if (eventState.loading)
+    if (eventState.postLoading)
       return PostLoading();
     else if (eventState.failed)
       return PostFailed();

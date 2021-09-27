@@ -89,7 +89,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
       // reload user object
       userState.getUser();
       Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (context) => HomeScreen()), (_) => true);
+          MaterialPageRoute(builder: (context) => HomeScreen()), (_) => false);
     }
 
     return Scaffold(
@@ -146,9 +146,9 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                                 disabled: setupState.photos.length == 0 ||
                                     setupState.profilePhoto == null,
                                 text: "Continue",
-                                onPressed: () => userState.user == null
+                                onPressed: userState.user == null
                                     ? null
-                                    : onPressed(userState.user!.id),
+                                    : () => onPressed(userState.user!.id),
                               ),
                       ),
                       SizedBox(height: 40)

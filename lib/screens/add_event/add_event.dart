@@ -6,7 +6,7 @@ import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/widgets/appbars/add_event_app_bar.dart';
-import 'package:photo_manager/photo_manager.dart';
+import 'package:whatado/widgets/events/event_photo_selector.dart';
 
 class AddEvent extends StatefulWidget {
   @override
@@ -14,47 +14,6 @@ class AddEvent extends StatefulWidget {
 }
 
 class _AddEventState extends State<AddEvent> {
-  bool loading = true;
-  bool photosEnabled = false;
-  late int page;
-  late List<Map<String, dynamic>> loadedAssets;
-  List<Uint8List> thumbdata = [];
-  @override
-  void initState() {
-    super.initState();
-    page = 0;
-
-    initPhotos();
-  }
-
-  void initPhotos() async {
-    final eventState = Provider.of<AddEventState>(context, listen: false);
-    var result = await PhotoManager.requestPermissionExtend();
-    if (result.isAuth) {
-      eventState.textMode = false;
-      final albums = await PhotoManager.getAssetPathList(onlyAll: true);
-      final album = albums.first;
-      final recentAssets = await album.getAssetListPaged(page, 20);
-      List<Map<String, dynamic>> tempLoadedAssets = await Future.wait(
-          recentAssets
-              .map((asset) async =>
-                  {"asset": asset, "thumb": await asset.thumbData})
-              .toList());
-
-      eventState.selectedImage = recentAssets.first;
-      setState(() {
-        photosEnabled = true;
-        loadedAssets = tempLoadedAssets;
-        page = 20;
-        loading = false;
-      });
-    } else
-      eventState.textMode = true;
-    setState(() {
-      loading = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
@@ -80,7 +39,7 @@ class _AddEventState extends State<AddEvent> {
                         style: TextStyle(fontSize: 30),
                       ),
                     ))
-                  : loading
+                  : eventState.selectedImage == null
                       ? Container()
                       : FutureBuilder(
                           future: eventState.selectedImage?.originBytes,
@@ -119,44 +78,14 @@ class _AddEventState extends State<AddEvent> {
                                 !eventState.textMode ? Color(0xffe85c3f) : null,
                             icon: Icon(Icons.camera_alt_outlined),
                             iconSize: 30,
-                            onPressed: !photosEnabled
-                                ? null
-                                : () => eventState.textMode = false)
+                            onPressed: () => eventState.textMode = false)
                       ],
                     ),
                   ))),
           Flexible(
               fit: FlexFit.tight,
               flex: 5,
-              child: eventState.textMode
-                  ? Container()
-                  : loading
-                      ? Center(child: CircularProgressIndicator())
-                      : Container(
-                          color: Colors.grey[50],
-                          child: GridView.count(
-                              crossAxisSpacing: 1.0,
-                              mainAxisSpacing: 1.0,
-                              crossAxisCount: 4,
-                              children: loadedAssets
-                                  .map((assetMap) => InkWell(
-                                      onTap: () => eventState.selectedImage =
-                                          assetMap['asset'],
-                                      child: Stack(
-                                        fit: StackFit.expand,
-                                        children: [
-                                          Image.memory(assetMap['thumb'],
-                                              fit: BoxFit.cover),
-                                          if (eventState.selectedImage ==
-                                              assetMap['asset'])
-                                            Opacity(
-                                                opacity: 0.3,
-                                                child: Container(
-                                                    color: Colors.blue))
-                                        ],
-                                      )))
-                                  .toList()),
-                        )),
+              child: eventState.textMode ? Container() : EventPhotoSelector()),
         ],
       ),
     );

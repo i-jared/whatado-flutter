@@ -366,6 +366,50 @@ Map<String, dynamic> _$AddWannago$MutationToJson(
       'addWannago': instance.addWannago.toJson(),
     };
 
+BlockUser$Mutation$BlockUser$Errors
+    _$BlockUser$Mutation$BlockUser$ErrorsFromJson(Map<String, dynamic> json) {
+  return BlockUser$Mutation$BlockUser$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$BlockUser$Mutation$BlockUser$ErrorsToJson(
+        BlockUser$Mutation$BlockUser$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+BlockUser$Mutation$BlockUser _$BlockUser$Mutation$BlockUserFromJson(
+    Map<String, dynamic> json) {
+  return BlockUser$Mutation$BlockUser()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => BlockUser$Mutation$BlockUser$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$BlockUser$Mutation$BlockUserToJson(
+        BlockUser$Mutation$BlockUser instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+BlockUser$Mutation _$BlockUser$MutationFromJson(Map<String, dynamic> json) {
+  return BlockUser$Mutation()
+    ..blockUser = BlockUser$Mutation$BlockUser.fromJson(
+        json['blockUser'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$BlockUser$MutationToJson(BlockUser$Mutation instance) =>
+    <String, dynamic>{
+      'blockUser': instance.blockUser.toJson(),
+    };
+
 CreateChat$Mutation$CreateChat$Nodes$Author
     _$CreateChat$Mutation$CreateChat$Nodes$AuthorFromJson(
         Map<String, dynamic> json) {
@@ -737,6 +781,52 @@ Map<String, dynamic> _$CreateInterest$MutationToJson(
       'createInterest': instance.createInterest.toJson(),
     };
 
+DeleteEvent$Mutation$DeleteEvent$Errors
+    _$DeleteEvent$Mutation$DeleteEvent$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return DeleteEvent$Mutation$DeleteEvent$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$DeleteEvent$Mutation$DeleteEvent$ErrorsToJson(
+        DeleteEvent$Mutation$DeleteEvent$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+DeleteEvent$Mutation$DeleteEvent _$DeleteEvent$Mutation$DeleteEventFromJson(
+    Map<String, dynamic> json) {
+  return DeleteEvent$Mutation$DeleteEvent()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => DeleteEvent$Mutation$DeleteEvent$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$DeleteEvent$Mutation$DeleteEventToJson(
+        DeleteEvent$Mutation$DeleteEvent instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+DeleteEvent$Mutation _$DeleteEvent$MutationFromJson(Map<String, dynamic> json) {
+  return DeleteEvent$Mutation()
+    ..deleteEvent = DeleteEvent$Mutation$DeleteEvent.fromJson(
+        json['deleteEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$DeleteEvent$MutationToJson(
+        DeleteEvent$Mutation instance) =>
+    <String, dynamic>{
+      'deleteEvent': instance.deleteEvent.toJson(),
+    };
+
 DeleteWannago$Mutation$DeleteWannago$Errors
     _$DeleteWannago$Mutation$DeleteWannago$ErrorsFromJson(
         Map<String, dynamic> json) {
@@ -782,6 +872,94 @@ Map<String, dynamic> _$DeleteWannago$MutationToJson(
         DeleteWannago$Mutation instance) =>
     <String, dynamic>{
       'deleteWannago': instance.deleteWannago.toJson(),
+    };
+
+FlagEvent$Mutation$FlagEvent$Errors
+    _$FlagEvent$Mutation$FlagEvent$ErrorsFromJson(Map<String, dynamic> json) {
+  return FlagEvent$Mutation$FlagEvent$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$FlagEvent$Mutation$FlagEvent$ErrorsToJson(
+        FlagEvent$Mutation$FlagEvent$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+FlagEvent$Mutation$FlagEvent _$FlagEvent$Mutation$FlagEventFromJson(
+    Map<String, dynamic> json) {
+  return FlagEvent$Mutation$FlagEvent()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => FlagEvent$Mutation$FlagEvent$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$FlagEvent$Mutation$FlagEventToJson(
+        FlagEvent$Mutation$FlagEvent instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+FlagEvent$Mutation _$FlagEvent$MutationFromJson(Map<String, dynamic> json) {
+  return FlagEvent$Mutation()
+    ..flagEvent = FlagEvent$Mutation$FlagEvent.fromJson(
+        json['flagEvent'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$FlagEvent$MutationToJson(FlagEvent$Mutation instance) =>
+    <String, dynamic>{
+      'flagEvent': instance.flagEvent.toJson(),
+    };
+
+FlagUser$Mutation$FlagUser$Errors _$FlagUser$Mutation$FlagUser$ErrorsFromJson(
+    Map<String, dynamic> json) {
+  return FlagUser$Mutation$FlagUser$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$FlagUser$Mutation$FlagUser$ErrorsToJson(
+        FlagUser$Mutation$FlagUser$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+FlagUser$Mutation$FlagUser _$FlagUser$Mutation$FlagUserFromJson(
+    Map<String, dynamic> json) {
+  return FlagUser$Mutation$FlagUser()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => FlagUser$Mutation$FlagUser$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$FlagUser$Mutation$FlagUserToJson(
+        FlagUser$Mutation$FlagUser instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+FlagUser$Mutation _$FlagUser$MutationFromJson(Map<String, dynamic> json) {
+  return FlagUser$Mutation()
+    ..flagUser = FlagUser$Mutation$FlagUser.fromJson(
+        json['flagUser'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$FlagUser$MutationToJson(FlagUser$Mutation instance) =>
+    <String, dynamic>{
+      'flagUser': instance.flagUser.toJson(),
     };
 
 ForgotPassword$Mutation$ForgotPassword$Errors
@@ -1519,184 +1697,6 @@ Map<String, dynamic> _$UpdateWannago$MutationToJson(
       'updateWannago': instance.updateWannago.toJson(),
     };
 
-BlockUser$Mutation$BlockUser$Errors
-    _$BlockUser$Mutation$BlockUser$ErrorsFromJson(Map<String, dynamic> json) {
-  return BlockUser$Mutation$BlockUser$Errors()
-    ..field = json['field'] as String?
-    ..message = json['message'] as String;
-}
-
-Map<String, dynamic> _$BlockUser$Mutation$BlockUser$ErrorsToJson(
-        BlockUser$Mutation$BlockUser$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-BlockUser$Mutation$BlockUser _$BlockUser$Mutation$BlockUserFromJson(
-    Map<String, dynamic> json) {
-  return BlockUser$Mutation$BlockUser()
-    ..ok = json['ok'] as bool?
-    ..nodes = json['nodes'] as bool?
-    ..errors = (json['errors'] as List<dynamic>?)
-        ?.map((e) => BlockUser$Mutation$BlockUser$Errors.fromJson(
-            e as Map<String, dynamic>))
-        .toList();
-}
-
-Map<String, dynamic> _$BlockUser$Mutation$BlockUserToJson(
-        BlockUser$Mutation$BlockUser instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-BlockUser$Mutation _$BlockUser$MutationFromJson(Map<String, dynamic> json) {
-  return BlockUser$Mutation()
-    ..blockUser = BlockUser$Mutation$BlockUser.fromJson(
-        json['blockUser'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$BlockUser$MutationToJson(BlockUser$Mutation instance) =>
-    <String, dynamic>{
-      'blockUser': instance.blockUser.toJson(),
-    };
-
-FlagEvent$Mutation$FlagEvent$Errors
-    _$FlagEvent$Mutation$FlagEvent$ErrorsFromJson(Map<String, dynamic> json) {
-  return FlagEvent$Mutation$FlagEvent$Errors()
-    ..field = json['field'] as String?
-    ..message = json['message'] as String;
-}
-
-Map<String, dynamic> _$FlagEvent$Mutation$FlagEvent$ErrorsToJson(
-        FlagEvent$Mutation$FlagEvent$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-FlagEvent$Mutation$FlagEvent _$FlagEvent$Mutation$FlagEventFromJson(
-    Map<String, dynamic> json) {
-  return FlagEvent$Mutation$FlagEvent()
-    ..ok = json['ok'] as bool?
-    ..nodes = json['nodes'] as bool?
-    ..errors = (json['errors'] as List<dynamic>?)
-        ?.map((e) => FlagEvent$Mutation$FlagEvent$Errors.fromJson(
-            e as Map<String, dynamic>))
-        .toList();
-}
-
-Map<String, dynamic> _$FlagEvent$Mutation$FlagEventToJson(
-        FlagEvent$Mutation$FlagEvent instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-FlagEvent$Mutation _$FlagEvent$MutationFromJson(Map<String, dynamic> json) {
-  return FlagEvent$Mutation()
-    ..flagEvent = FlagEvent$Mutation$FlagEvent.fromJson(
-        json['flagEvent'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$FlagEvent$MutationToJson(FlagEvent$Mutation instance) =>
-    <String, dynamic>{
-      'flagEvent': instance.flagEvent.toJson(),
-    };
-
-FlagUser$Mutation$FlagUser$Errors _$FlagUser$Mutation$FlagUser$ErrorsFromJson(
-    Map<String, dynamic> json) {
-  return FlagUser$Mutation$FlagUser$Errors()
-    ..field = json['field'] as String?
-    ..message = json['message'] as String;
-}
-
-Map<String, dynamic> _$FlagUser$Mutation$FlagUser$ErrorsToJson(
-        FlagUser$Mutation$FlagUser$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-FlagUser$Mutation$FlagUser _$FlagUser$Mutation$FlagUserFromJson(
-    Map<String, dynamic> json) {
-  return FlagUser$Mutation$FlagUser()
-    ..ok = json['ok'] as bool?
-    ..nodes = json['nodes'] as bool?
-    ..errors = (json['errors'] as List<dynamic>?)
-        ?.map((e) => FlagUser$Mutation$FlagUser$Errors.fromJson(
-            e as Map<String, dynamic>))
-        .toList();
-}
-
-Map<String, dynamic> _$FlagUser$Mutation$FlagUserToJson(
-        FlagUser$Mutation$FlagUser instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-FlagUser$Mutation _$FlagUser$MutationFromJson(Map<String, dynamic> json) {
-  return FlagUser$Mutation()
-    ..flagUser = FlagUser$Mutation$FlagUser.fromJson(
-        json['flagUser'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$FlagUser$MutationToJson(FlagUser$Mutation instance) =>
-    <String, dynamic>{
-      'flagUser': instance.flagUser.toJson(),
-    };
-
-DeleteEvent$Mutation$DeleteEvent$Errors
-    _$DeleteEvent$Mutation$DeleteEvent$ErrorsFromJson(
-        Map<String, dynamic> json) {
-  return DeleteEvent$Mutation$DeleteEvent$Errors()
-    ..field = json['field'] as String?
-    ..message = json['message'] as String;
-}
-
-Map<String, dynamic> _$DeleteEvent$Mutation$DeleteEvent$ErrorsToJson(
-        DeleteEvent$Mutation$DeleteEvent$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-DeleteEvent$Mutation$DeleteEvent _$DeleteEvent$Mutation$DeleteEventFromJson(
-    Map<String, dynamic> json) {
-  return DeleteEvent$Mutation$DeleteEvent()
-    ..ok = json['ok'] as bool?
-    ..nodes = json['nodes'] as bool?
-    ..errors = (json['errors'] as List<dynamic>?)
-        ?.map((e) => DeleteEvent$Mutation$DeleteEvent$Errors.fromJson(
-            e as Map<String, dynamic>))
-        .toList();
-}
-
-Map<String, dynamic> _$DeleteEvent$Mutation$DeleteEventToJson(
-        DeleteEvent$Mutation$DeleteEvent instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-DeleteEvent$Mutation _$DeleteEvent$MutationFromJson(Map<String, dynamic> json) {
-  return DeleteEvent$Mutation()
-    ..deleteEvent = DeleteEvent$Mutation$DeleteEvent.fromJson(
-        json['deleteEvent'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$DeleteEvent$MutationToJson(
-        DeleteEvent$Mutation instance) =>
-    <String, dynamic>{
-      'deleteEvent': instance.deleteEvent.toJson(),
-    };
-
 AddInterestsArguments _$AddInterestsArgumentsFromJson(
     Map<String, dynamic> json) {
   return AddInterestsArguments(
@@ -1736,6 +1736,17 @@ Map<String, dynamic> _$AddWannagoArgumentsToJson(
         AddWannagoArguments instance) =>
     <String, dynamic>{
       'eventId': instance.eventId,
+      'userId': instance.userId,
+    };
+
+BlockUserArguments _$BlockUserArgumentsFromJson(Map<String, dynamic> json) {
+  return BlockUserArguments(
+    userId: json['userId'] as int,
+  );
+}
+
+Map<String, dynamic> _$BlockUserArgumentsToJson(BlockUserArguments instance) =>
+    <String, dynamic>{
       'userId': instance.userId,
     };
 
@@ -1790,6 +1801,18 @@ Map<String, dynamic> _$CreateInterestArgumentsToJson(
       'interestsText': instance.interestsText,
     };
 
+DeleteEventArguments _$DeleteEventArgumentsFromJson(Map<String, dynamic> json) {
+  return DeleteEventArguments(
+    eventId: json['eventId'] as int,
+  );
+}
+
+Map<String, dynamic> _$DeleteEventArgumentsToJson(
+        DeleteEventArguments instance) =>
+    <String, dynamic>{
+      'eventId': instance.eventId,
+    };
+
 DeleteWannagoArguments _$DeleteWannagoArgumentsFromJson(
     Map<String, dynamic> json) {
   return DeleteWannagoArguments(
@@ -1801,6 +1824,28 @@ Map<String, dynamic> _$DeleteWannagoArgumentsToJson(
         DeleteWannagoArguments instance) =>
     <String, dynamic>{
       'id': instance.id,
+    };
+
+FlagEventArguments _$FlagEventArgumentsFromJson(Map<String, dynamic> json) {
+  return FlagEventArguments(
+    eventId: json['eventId'] as int,
+  );
+}
+
+Map<String, dynamic> _$FlagEventArgumentsToJson(FlagEventArguments instance) =>
+    <String, dynamic>{
+      'eventId': instance.eventId,
+    };
+
+FlagUserArguments _$FlagUserArgumentsFromJson(Map<String, dynamic> json) {
+  return FlagUserArguments(
+    userId: json['userId'] as int,
+  );
+}
+
+Map<String, dynamic> _$FlagUserArgumentsToJson(FlagUserArguments instance) =>
+    <String, dynamic>{
+      'userId': instance.userId,
     };
 
 ForgotPasswordArguments _$ForgotPasswordArgumentsFromJson(
@@ -1925,49 +1970,4 @@ Map<String, dynamic> _$UpdateWannagoArgumentsToJson(
     <String, dynamic>{
       'id': instance.id,
       'declined': instance.declined,
-    };
-
-BlockUserArguments _$BlockUserArgumentsFromJson(Map<String, dynamic> json) {
-  return BlockUserArguments(
-    userId: json['userId'] as int,
-  );
-}
-
-Map<String, dynamic> _$BlockUserArgumentsToJson(BlockUserArguments instance) =>
-    <String, dynamic>{
-      'userId': instance.userId,
-    };
-
-FlagEventArguments _$FlagEventArgumentsFromJson(Map<String, dynamic> json) {
-  return FlagEventArguments(
-    eventId: json['eventId'] as int,
-  );
-}
-
-Map<String, dynamic> _$FlagEventArgumentsToJson(FlagEventArguments instance) =>
-    <String, dynamic>{
-      'eventId': instance.eventId,
-    };
-
-FlagUserArguments _$FlagUserArgumentsFromJson(Map<String, dynamic> json) {
-  return FlagUserArguments(
-    userId: json['userId'] as int,
-  );
-}
-
-Map<String, dynamic> _$FlagUserArgumentsToJson(FlagUserArguments instance) =>
-    <String, dynamic>{
-      'userId': instance.userId,
-    };
-
-DeleteEventArguments _$DeleteEventArgumentsFromJson(Map<String, dynamic> json) {
-  return DeleteEventArguments(
-    eventId: json['eventId'] as int,
-  );
-}
-
-Map<String, dynamic> _$DeleteEventArgumentsToJson(
-        DeleteEventArguments instance) =>
-    <String, dynamic>{
-      'eventId': instance.eventId,
     };
