@@ -1264,24 +1264,32 @@ Map<String, dynamic> _$User$QueryToJson(User$Query instance) =>
 ChatsArguments _$ChatsArgumentsFromJson(Map<String, dynamic> json) {
   return ChatsArguments(
     forumId: json['forumId'] as int,
+    take: json['take'] as int,
+    skip: json['skip'] as int,
   );
 }
 
 Map<String, dynamic> _$ChatsArgumentsToJson(ChatsArguments instance) =>
     <String, dynamic>{
       'forumId': instance.forumId,
+      'take': instance.take,
+      'skip': instance.skip,
     };
 
 EventsArguments _$EventsArgumentsFromJson(Map<String, dynamic> json) {
   return EventsArguments(
     dateRange:
         DateRangeInput.fromJson(json['dateRange'] as Map<String, dynamic>),
+    take: json['take'] as int,
+    skip: json['skip'] as int,
   );
 }
 
 Map<String, dynamic> _$EventsArgumentsToJson(EventsArguments instance) =>
     <String, dynamic>{
       'dateRange': instance.dateRange.toJson(),
+      'take': instance.take,
+      'skip': instance.skip,
     };
 
 EventUserPreviewArguments _$EventUserPreviewArgumentsFromJson(

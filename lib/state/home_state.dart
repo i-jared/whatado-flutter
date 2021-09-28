@@ -8,6 +8,7 @@ import 'package:whatado/providers/graphql/forums_provider.dart';
 class HomeState extends ChangeNotifier {
   int _appBarPageNo;
   int _bottomBarPageNo;
+  int _skip;
   DateTime? _selectedDate;
 
   RefreshController refreshController;
@@ -23,11 +24,18 @@ class HomeState extends ChangeNotifier {
   HomeState()
       : _appBarPageNo = 0,
         _bottomBarPageNo = 0,
+        _skip = 0,
         homePageController = PageController(keepPage: true),
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),
         refreshController = RefreshController(initialRefresh: false),
         myEventsRefreshController = RefreshController(initialRefresh: false) {
+    allEventsScrollController.addListener(() async {
+      if (allEventsScrollController.position.atEdge &&
+          allEventsScrollController.position.pixels != 0) {
+        await getNewEvents();
+      }
+    });
     // get initial events
     getNewEvents();
     getMyEvents().then((myEvents) =>
@@ -57,6 +65,10 @@ class HomeState extends ChangeNotifier {
 
   DateTime? get selectedDate => _selectedDate;
   set selectedDate(DateTime? beginDateIndex) {
+    if (_selectedDate != beginDateIndex) {
+      allEvents = null;
+      _skip = 0;
+    }
     _selectedDate = beginDateIndex;
     notifyListeners();
   }
@@ -79,8 +91,12 @@ class HomeState extends ChangeNotifier {
     final start = _selectedDate ?? DateTime.now();
     final end = _selectedDate?.add(Duration(days: 1)) ??
         DateTime.now().add(Duration(days: 1000));
-    final response = await query.events(start, end);
-    allEvents = response.data ?? [];
+    final response = await query.events(start, end, 20, _skip);
+    _skip += 20;
+    if (allEvents == null)
+      allEvents = response.data ?? [];
+    else
+      allEvents!.addAll(response.data ?? []);
     notifyListeners();
   }
 
@@ -112,6 +128,8 @@ class HomeState extends ChangeNotifier {
 
   Future<void> allEventsRefresh() async {
     try {
+      allEvents = null;
+      _skip = 0;
       await getNewEvents();
       refreshController.refreshCompleted();
     } catch (e) {

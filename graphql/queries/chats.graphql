@@ -1,5 +1,5 @@
-query chats($forumId: Int!) {
-  chats (forumId: $forumId) {
+query chats($forumId: Int!, $take: Int!, $skip: Int!) {
+  chats(forumId: $forumId, take: $take, skip: $skip) {
     ok
     nodes {
       id

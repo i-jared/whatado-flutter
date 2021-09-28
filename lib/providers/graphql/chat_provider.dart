@@ -82,8 +82,10 @@ class ChatGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<List<Chat>>> chats(int forumId) async {
-    final query = ChatsQuery(variables: ChatsArguments(forumId: forumId));
+  Future<MyQueryResponse<List<Chat>>> chats(
+      int forumId, int take, int skip) async {
+    final query = ChatsQuery(
+        variables: ChatsArguments(forumId: forumId, take: take, skip: skip));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');

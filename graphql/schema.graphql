@@ -251,9 +251,9 @@ type Mutation {
 
 type Query {
   chat(id: Int!): ChatApiResponse!
-  chats(forumId: Int!): ChatsApiResponse!
+  chats(forumId: Int!, skip: Int, take: Int): ChatsApiResponse!
   event(id: Int!): Event
-  events(dateRange: DateRangeInput!): EventsApiResponse!
+  events(dateRange: DateRangeInput!, skip: Int!, take: Int!): EventsApiResponse!
   flaggedChats: ChatsApiResponse!
   flaggedEvents: EventsApiResponse!
   flaggedUsers: UsersApiResponse!

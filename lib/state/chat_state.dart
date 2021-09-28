@@ -11,6 +11,7 @@ import 'package:whatado/services/service_provider.dart';
 class ChatState extends ChangeNotifier {
   final Event event;
   final Forum forum;
+  int _skip;
 
   final TextEditingController textController;
   final ScrollController scrollController;
@@ -19,7 +20,15 @@ class ChatState extends ChangeNotifier {
 
   ChatState({required this.event, required this.forum})
       : textController = TextEditingController(),
-        scrollController = ScrollController() {
+        scrollController = ScrollController(),
+        _skip = 0 {
+    scrollController
+      ..addListener(() async {
+        if (scrollController.position.atEdge &&
+            scrollController.position.pixels != 0) {
+          await getChats();
+        }
+      });
     init();
   }
 
@@ -32,10 +41,18 @@ class ChatState extends ChangeNotifier {
   }
 
   void init() async {
-    final provider = ChatGqlProvider();
-    final result = await provider.chats(forum.id);
-    chats = result.data;
+    await getChats();
     subscribe(forum.id);
+  }
+
+  Future<void> getChats() async {
+    final provider = ChatGqlProvider();
+    final result = await provider.chats(forum.id, 20, _skip);
+    _skip += 20;
+    if (chats == null)
+      chats = result.data ?? [];
+    else
+      chats!.addAll(result.data ?? []);
     notifyListeners();
   }
 

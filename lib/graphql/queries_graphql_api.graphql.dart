@@ -1378,7 +1378,8 @@ enum Gender {
 
 @JsonSerializable(explicitToJson: true)
 class ChatsArguments extends JsonSerializable with EquatableMixin {
-  ChatsArguments({required this.forumId});
+  ChatsArguments(
+      {required this.forumId, required this.take, required this.skip});
 
   @override
   factory ChatsArguments.fromJson(Map<String, dynamic> json) =>
@@ -1386,8 +1387,12 @@ class ChatsArguments extends JsonSerializable with EquatableMixin {
 
   late int forumId;
 
+  late int take;
+
+  late int skip;
+
   @override
-  List<Object?> get props => [forumId];
+  List<Object?> get props => [forumId, take, skip];
   @override
   Map<String, dynamic> toJson() => _$ChatsArgumentsToJson(this);
 }
@@ -1401,6 +1406,16 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
             variable: VariableNode(name: NameNode(value: 'forumId')),
             type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
             defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'take')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'skip')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
             directives: [])
       ],
       directives: [],
@@ -1411,7 +1426,13 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
             arguments: [
               ArgumentNode(
                   name: NameNode(value: 'forumId'),
-                  value: VariableNode(name: NameNode(value: 'forumId')))
+                  value: VariableNode(name: NameNode(value: 'forumId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'take'),
+                  value: VariableNode(name: NameNode(value: 'take'))),
+              ArgumentNode(
+                  name: NameNode(value: 'skip'),
+                  value: VariableNode(name: NameNode(value: 'skip')))
             ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
@@ -1514,7 +1535,8 @@ class ChatsQuery extends GraphQLQuery<Chats$Query, ChatsArguments> {
 
 @JsonSerializable(explicitToJson: true)
 class EventsArguments extends JsonSerializable with EquatableMixin {
-  EventsArguments({required this.dateRange});
+  EventsArguments(
+      {required this.dateRange, required this.take, required this.skip});
 
   @override
   factory EventsArguments.fromJson(Map<String, dynamic> json) =>
@@ -1522,8 +1544,12 @@ class EventsArguments extends JsonSerializable with EquatableMixin {
 
   late DateRangeInput dateRange;
 
+  late int take;
+
+  late int skip;
+
   @override
-  List<Object?> get props => [dateRange];
+  List<Object?> get props => [dateRange, take, skip];
   @override
   Map<String, dynamic> toJson() => _$EventsArgumentsToJson(this);
 }
@@ -1538,6 +1564,16 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             type: NamedTypeNode(
                 name: NameNode(value: 'DateRangeInput'), isNonNull: true),
             defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'take')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'skip')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
             directives: [])
       ],
       directives: [],
@@ -1548,7 +1584,13 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             arguments: [
               ArgumentNode(
                   name: NameNode(value: 'dateRange'),
-                  value: VariableNode(name: NameNode(value: 'dateRange')))
+                  value: VariableNode(name: NameNode(value: 'dateRange'))),
+              ArgumentNode(
+                  name: NameNode(value: 'take'),
+                  value: VariableNode(name: NameNode(value: 'take'))),
+              ArgumentNode(
+                  name: NameNode(value: 'skip'),
+                  value: VariableNode(name: NameNode(value: 'skip')))
             ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [

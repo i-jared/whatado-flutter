@@ -1,5 +1,5 @@
-query events ($dateRange: DateRangeInput!) {
-  events (dateRange: $dateRange) {
+query events($dateRange: DateRangeInput!, $take: Int!, $skip: Int!) {
+  events(dateRange: $dateRange, take: $take, skip: $skip) {
     ok
     nodes {
       ...EventFields
