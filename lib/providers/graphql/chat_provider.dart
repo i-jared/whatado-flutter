@@ -31,10 +31,17 @@ class ChatGqlProvider {
   }
 
   Future<MyQueryResponse<Chat?>> create(
-      {required int userId, required String text, required int forumId}) async {
+      {required int userId,
+      required String text,
+      required int forumId,
+      required int eventId}) async {
     final mutation = CreateChatMutation(
       variables: CreateChatArguments(
-          chatInput: ChatInput(authorId: userId, forumId: forumId, text: text)),
+          chatInput: ChatInput(
+              authorId: userId,
+              forumId: forumId,
+              eventId: eventId,
+              text: text)),
     );
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {

@@ -73,7 +73,10 @@ class ChatState extends ChangeNotifier {
   void sendMessage(int authorId) async {
     final provider = ChatGqlProvider();
     await provider.create(
-        text: textController.text, userId: authorId, forumId: forum.id);
+        text: textController.text,
+        userId: authorId,
+        forumId: forum.id,
+        eventId: event.id);
     textController.clear();
   }
 }

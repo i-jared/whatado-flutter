@@ -497,6 +497,7 @@ Map<String, dynamic> _$CreateChat$MutationToJson(
 ChatInput _$ChatInputFromJson(Map<String, dynamic> json) {
   return ChatInput(
     authorId: json['authorId'] as int,
+    eventId: json['eventId'] as int,
     forumId: json['forumId'] as int,
     text: json['text'] as String,
   );
@@ -504,6 +505,7 @@ ChatInput _$ChatInputFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ChatInputToJson(ChatInput instance) => <String, dynamic>{
       'authorId': instance.authorId,
+      'eventId': instance.eventId,
       'forumId': instance.forumId,
       'text': instance.text,
     };

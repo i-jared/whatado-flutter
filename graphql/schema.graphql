@@ -38,6 +38,7 @@ input ChatFilterInput {
 
 input ChatInput {
   authorId: Int!
+  eventId: Int!
   forumId: Int!
   text: String!
 }

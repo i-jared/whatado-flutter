@@ -532,19 +532,24 @@ class CreateChat$Mutation extends JsonSerializable with EquatableMixin {
 @JsonSerializable(explicitToJson: true)
 class ChatInput extends JsonSerializable with EquatableMixin {
   ChatInput(
-      {required this.authorId, required this.forumId, required this.text});
+      {required this.authorId,
+      required this.eventId,
+      required this.forumId,
+      required this.text});
 
   factory ChatInput.fromJson(Map<String, dynamic> json) =>
       _$ChatInputFromJson(json);
 
   late int authorId;
 
+  late int eventId;
+
   late int forumId;
 
   late String text;
 
   @override
-  List<Object?> get props => [authorId, forumId, text];
+  List<Object?> get props => [authorId, eventId, forumId, text];
   @override
   Map<String, dynamic> toJson() => _$ChatInputToJson(this);
 }
