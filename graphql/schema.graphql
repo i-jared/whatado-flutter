@@ -252,7 +252,7 @@ type Mutation {
 type Query {
   chat(id: Int!): ChatApiResponse!
   chats(forumId: Int!, skip: Int, take: Int): ChatsApiResponse!
-  event(id: Int!): Event
+  event(id: Int!): EventApiResponse!
   events(dateRange: DateRangeInput!, skip: Int!, take: Int!): EventsApiResponse!
   flaggedChats: ChatsApiResponse!
   flaggedEvents: EventsApiResponse!
@@ -283,6 +283,7 @@ type User {
   blockedUsers: [User!]!
   chatNotifications: [ChatNotification!]!
   createdAt: DateTime!
+  deviceId: String!
   email: String!
   flags: Int!
   id: Int!
@@ -306,8 +307,9 @@ type UserApiResponse {
 input UserFilterInput {
   bio: String
   birthday: DateTime
+  deviceId: String
   email: String
-  id: Float
+  id: Int
   photoUrls: String
   profilePhotoUrl: String
   username: String

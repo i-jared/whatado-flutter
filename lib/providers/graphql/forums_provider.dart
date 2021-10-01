@@ -57,4 +57,28 @@ class ForumsGqlProvider {
       errors: errors,
     );
   }
+
+  Future<MyQueryResponse<Forum>> forum(int forumId) async {
+    final query = ForumQuery(variables: ForumArguments(forumId: forumId));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['forum'];
+    final data = root != null && root['nodes'] != null
+        ? Forum.fromGqlData(root?['nodes'])
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<Forum>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
 }

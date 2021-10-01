@@ -45,7 +45,9 @@ class ChatGqlProvider {
     }
 
     final root = result.data?['createChat'];
-    final data = Chat.fromGqlData(root['nodes']);
+    final data = root != null && root['nodes'] != null
+        ? Chat.fromGqlData(root['nodes'])
+        : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 

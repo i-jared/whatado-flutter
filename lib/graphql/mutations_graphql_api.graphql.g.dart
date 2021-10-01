@@ -1628,8 +1628,9 @@ UserFilterInput _$UserFilterInputFromJson(Map<String, dynamic> json) {
     bio: json['bio'] as String?,
     birthday: fromGraphQLDateTimeNullableToDartDateTimeNullable(
         json['birthday'] as String?),
+    deviceId: json['deviceId'] as String?,
     email: json['email'] as String?,
-    id: (json['id'] as num?)?.toDouble(),
+    id: json['id'] as int?,
     photoUrls: json['photoUrls'] as String?,
     profilePhotoUrl: json['profilePhotoUrl'] as String?,
     username: json['username'] as String?,
@@ -1642,6 +1643,7 @@ Map<String, dynamic> _$UserFilterInputToJson(UserFilterInput instance) =>
       'bio': instance.bio,
       'birthday':
           fromDartDateTimeNullableToGraphQLDateTimeNullable(instance.birthday),
+      'deviceId': instance.deviceId,
       'email': instance.email,
       'id': instance.id,
       'photoUrls': instance.photoUrls,

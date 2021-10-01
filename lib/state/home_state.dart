@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/models/event.dart';
@@ -113,6 +114,9 @@ class HomeState extends ChangeNotifier {
     final response =
         await query.myForums(myEvents?.map((event) => event.id).toList() ?? []);
     myForums = response.data ?? [];
+    myForums!.map((forum) async {
+      await FirebaseMessaging.instance.subscribeToTopic('${forum.id}');
+    });
     notifyListeners();
   }
 

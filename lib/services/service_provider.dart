@@ -3,6 +3,7 @@ import 'package:whatado/services/authentication_service.dart';
 import 'package:whatado/services/cloud_storage_service.dart';
 import 'package:whatado/services/graphql_client_service.dart';
 import 'package:whatado/services/http_client_service.dart';
+import 'package:whatado/services/local_notification_service.dart';
 import 'package:whatado/services/local_storage_service.dart';
 import 'package:whatado/services/login_service.dart';
 
@@ -30,6 +31,10 @@ LoginService get loginService {
 
 CloudStorageService get cloudStorageService {
   return _injector.get<CloudStorageService>();
+}
+
+LocalNotificationService get localNotificationService {
+  return _injector.get<LocalNotificationService>();
 }
 // T _getInitialized<T>() {
   // if (!_injector.exists<T>()) {

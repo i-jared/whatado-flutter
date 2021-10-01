@@ -283,4 +283,28 @@ class EventsGqlProvider {
       errors: errors,
     );
   }
+
+  Future<MyQueryResponse<Event>> event(int eventId) async {
+    final query = EventQuery(variables: EventArguments(eventId: eventId));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['event'];
+    final data = root != null && root['nodes'] != null
+        ? Event.fromGqlData(root?['nodes'])
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<Event>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
 }

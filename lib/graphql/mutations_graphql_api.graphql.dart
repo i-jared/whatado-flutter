@@ -1844,6 +1844,7 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
   UserFilterInput(
       {this.bio,
       this.birthday,
+      this.deviceId,
       this.email,
       this.id,
       this.photoUrls,
@@ -1861,9 +1862,11 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
       toJson: fromDartDateTimeNullableToGraphQLDateTimeNullable)
   DateTime? birthday;
 
+  String? deviceId;
+
   String? email;
 
-  double? id;
+  int? id;
 
   String? photoUrls;
 
@@ -1877,6 +1880,7 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [
         bio,
         birthday,
+        deviceId,
         email,
         id,
         photoUrls,

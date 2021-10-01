@@ -1,3 +1,4 @@
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:whatado/services/environment_config.dart';
 
 String get whatadoGqlUrl => EnvironmentConfig.flavor == PROD

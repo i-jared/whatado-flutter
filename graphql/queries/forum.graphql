@@ -1,0 +1,20 @@
+query forum($forumId: Int!) {
+  forumsByEventId(id: $forumId) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes {
+      id
+      userNotifications {
+        id
+        notifications
+        muted
+      }
+      event {
+        id
+      }
+    }
+  }
+}

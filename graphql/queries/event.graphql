@@ -1,0 +1,12 @@
+query event($eventId: Int!) {
+  event(id: $eventId) {
+    ok
+    nodes {
+      ...EventFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}
