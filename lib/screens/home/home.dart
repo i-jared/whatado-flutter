@@ -11,7 +11,6 @@ import 'package:whatado/screens/home/chats.dart';
 import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/services/service_provider.dart';
-import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/home_app_bar.dart';
 import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
@@ -40,6 +39,33 @@ class _HomeScreenState extends State<HomeScreen> {
       await _handleMessage(initialMessage);
     }
 
+    // notifications when in foreground
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      if (message.data['type'] == 'event') {
+        final homeState = Provider.of<HomeState>(context, listen: false);
+        await homeState.myEventsRefresh();
+        RemoteNotification? notification = message.notification;
+        if (notification != null) {
+          localNotificationService.flutterLocalNotificationsPlugin.show(
+              notification.hashCode,
+              notification.title,
+              notification.body,
+              NotificationDetails(
+                android: AndroidNotificationDetails(
+                  localNotificationService.channel.id,
+                  localNotificationService.channel.name,
+                  localNotificationService.channel.description,
+                  // other properties...
+                ),
+              ));
+        }
+      } else if (message.data['type'] == 'event') {
+        final homeState = Provider.of<HomeState>(context, listen: false);
+        // homeState.addChatNotification();
+        // TODO add chat notification? i guess. but how to load chat notifications on start?
+      }
+    });
+
     // notifications when in background
     FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
   }
@@ -63,38 +89,21 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
     if (message.data['type'] == 'event') {
-      RemoteNotification? notification = message.notification;
-      AndroidNotification? android = message.notification?.android;
-      if (notification != null && android != null) {
-        localNotificationService.flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-              android: AndroidNotificationDetails(
-                localNotificationService.channel.id,
-                localNotificationService.channel.name,
-                localNotificationService.channel.description,
-                icon: android.smallIcon,
-                // other properties...
-              ),
-            ));
-      }
       final homeState = Provider.of<HomeState>(context, listen: false);
       await homeState.myEventsRefresh();
     }
   }
 
   Future<void> saveDeviceToken(String? token) async {
-    final userState = Provider.of<UserState>(context, listen: false);
-    if (token == null || userState.user == null) return;
+    if (token == null || loginService.userId == null) return;
     final provider = UserGqlProvider();
     await provider
-        .updateUser(UserFilterInput(id: userState.user!.id, deviceId: token));
+        .updateUser(UserFilterInput(id: loginService.userId, deviceId: token));
   }
 
   Future<void> setupTokenSaving() async {
     final token = await FirebaseMessaging.instance.getToken();
+    print(token);
     await saveDeviceToken(token);
     FirebaseMessaging.instance.onTokenRefresh.listen(saveDeviceToken);
   }

@@ -81,6 +81,46 @@ class _CalendarSelectorState extends State<CalendarSelector> {
     final homeState = Provider.of<HomeState>(context);
     final double width = MediaQuery.of(context).size.width;
     final now = DateTime.now();
+
+    List<Widget> getDays(List<_IndexedDate> _dates) {
+      return _dates
+          .map((indexedDate) => InkWell(
+                onTap: () {
+                  homeState.selectedDate = indexedDate.dateTime;
+                  homeState.refreshController.requestRefresh();
+                },
+                child: Container(
+                    decoration: BoxDecoration(
+                        color: homeState.selectedDate == indexedDate.dateTime
+                            ? Color(0xff204865)
+                            : Colors.white,
+                        borderRadius: BorderRadius.circular(10)),
+                    height: double.infinity,
+                    width: (width - monthWidth) / 6,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(indexedDate.dateTime.day.toString(),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: homeState.selectedDate ==
+                                        indexedDate.dateTime
+                                    ? Colors.white
+                                    : Colors.black,
+                                fontSize: 18)),
+                        Text(DateFormat('EE').format(indexedDate.dateTime),
+                            style: TextStyle(
+                              color:
+                                  homeState.selectedDate == indexedDate.dateTime
+                                      ? Colors.white
+                                      : Colors.black,
+                            )),
+                      ],
+                    )),
+              ))
+          .toList();
+    }
+
     return Container(
         height: 40,
         decoration: BoxDecoration(
@@ -116,49 +156,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                 child: ListView(
                     controller: calendarScrollController,
                     scrollDirection: Axis.horizontal,
-                    children: [
-                  ...dates
-                      .map((indexedDate) => InkWell(
-                            onTap: () {
-                              homeState.selectedDate = indexedDate.dateTime;
-                              homeState.refreshController.requestRefresh();
-                            },
-                            child: Stack(
-                              children: [
-                                Container(
-                                    height: double.infinity,
-                                    width: (width - monthWidth) / 6,
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                            indexedDate.dateTime.day.toString(),
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18)),
-                                        Text(DateFormat('EE')
-                                            .format(indexedDate.dateTime)),
-                                      ],
-                                    )),
-                                if (homeState.selectedDate ==
-                                    indexedDate.dateTime)
-                                  Positioned(
-                                    top: 5,
-                                    right: 5,
-                                    child: Container(
-                                        height: 7,
-                                        width: 7,
-                                        decoration: BoxDecoration(
-                                            color: Color(0xffe85c3f),
-                                            borderRadius:
-                                                BorderRadius.circular(5))),
-                                  )
-                              ],
-                            ),
-                          ))
-                      .toList()
-                ]))
+                    children: [...getDays(dates)]))
           ],
         ));
   }

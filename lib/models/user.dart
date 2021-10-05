@@ -8,12 +8,14 @@ class User {
   String name;
   String imageUrl;
   String bio;
+  String deviceId;
   List<Interest> interests;
   List<String> photoUrls;
   User({
     required this.id,
     required this.name,
     required this.imageUrl,
+    required this.deviceId,
     this.email = '',
     this.bio = '',
     this.photoUrls = const [],
@@ -25,6 +27,7 @@ class User {
         id: data['id'],
         email: data['email'] ?? '',
         imageUrl: data['profilePhotoUrl'] ?? '',
+        deviceId: data['deviceId'] ?? '',
         name: data['username'] ?? '',
         bio: data['bio'] ?? '',
         photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),

@@ -29,4 +29,23 @@ class AuthenticationService {
     localStorageService.accessToken = accessToken;
     return accessToken;
   }
+
+  Future<int?> requestUserId() async {
+    final response = await httpClientService.postAuthenticated(
+        whatadoRefreshUrl, localStorageService.refreshToken ?? '');
+    final responseJson = jsonDecode(response.body);
+    print(whatadoRefreshUrl);
+    print('raw response');
+    print(responseJson);
+    if (responseJson['ok'] == false) {
+      return null;
+    }
+    final refreshToken = responseJson['refreshToken'];
+    final accessToken = responseJson['accessToken'];
+    final userId = responseJson['userId'];
+    graphqlClientService.updateAuth(accessToken);
+    localStorageService.refreshToken = refreshToken;
+    localStorageService.accessToken = accessToken;
+    return userId;
+  }
 }

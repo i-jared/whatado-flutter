@@ -51,11 +51,54 @@ class _StateUserProfile extends State<UserProfile> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: headingSpacing),
-            Center(
-                child: CircleAvatar(
-              radius: 60,
-              backgroundImage: NetworkImage(widget.initialUserData.imageUrl),
-            )),
+            Stack(
+              children: [
+                Center(
+                    child: CircleAvatar(
+                  radius: 60,
+                  backgroundImage:
+                      NetworkImage(widget.initialUserData.imageUrl),
+                )),
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: PopupMenuButton(
+                      onSelected: (value) async {
+                        final userProvider = UserGqlProvider();
+                        if (value == 'report') {
+                          await userProvider
+                              .flagUser(widget.initialUserData.id);
+                        }
+                        if (value == 'block') {
+                          await userProvider
+                              .blockUser(widget.initialUserData.id);
+                        }
+                      },
+                      itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Row(children: [
+                                Icon(Icons.report_outlined, size: 30),
+                                SizedBox(width: 10),
+                                Text('report')
+                              ]),
+                              value: 'report',
+                            ),
+                            PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.block_outlined,
+                                      color: Colors.red, size: 30),
+                                  SizedBox(width: 10),
+                                  Text('block',
+                                      style: TextStyle(color: Colors.red))
+                                ],
+                              ),
+                              value: 'block',
+                            )
+                          ]),
+                ),
+              ],
+            ),
             SizedBox(height: sectionSpacing),
             Text('BIO', style: headingStyle),
             SizedBox(height: headingSpacing),

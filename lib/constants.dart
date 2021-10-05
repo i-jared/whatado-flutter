@@ -1,4 +1,3 @@
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:whatado/services/environment_config.dart';
 
 String get whatadoGqlUrl => EnvironmentConfig.flavor == PROD
@@ -19,16 +18,12 @@ String get LOCAL_DEV => "LOCAL_DEV";
 //TODO: finish forgot password support and email
 
 //TODO: implement chatnotifications
-//TODO: implement pushNotifications to update users with new messages or new events invited to
-//TODO: allow reporting and posts
-//TODO: make myevents widgets look better
 //TODO: populate customized feed
 //TODO: implement registration email and verification
 
 //TODO: create management console
 
 //TODO: problems: users need post history
-//TODO: problems: myevents look dumb. need different layout
 
 
 

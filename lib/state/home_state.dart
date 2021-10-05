@@ -114,9 +114,9 @@ class HomeState extends ChangeNotifier {
     final response =
         await query.myForums(myEvents?.map((event) => event.id).toList() ?? []);
     myForums = response.data ?? [];
-    myForums!.map((forum) async {
+    await Future.wait(myForums!.map((forum) async {
       await FirebaseMessaging.instance.subscribeToTopic('${forum.id}');
-    });
+    }));
     notifyListeners();
   }
 

@@ -44,6 +44,7 @@ class WriteBioScreen extends StatelessWidget {
                       Spacer(),
                       Center(
                         child: RoundedArrowButton(
+                          disabled: setupState.bioController.text == '',
                           onPressed: () async {
                             await setupState.saveBio();
                             userState.getUser();

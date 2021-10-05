@@ -24,6 +24,9 @@ class SetupState extends ChangeNotifier {
         _photosImageData = [],
         _photos = [],
         bioController = TextEditingController() {
+    bioController.addListener(() {
+      notifyListeners();
+    });
     init();
   }
 

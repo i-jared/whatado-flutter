@@ -16,6 +16,23 @@ class LocalNotificationService {
   }
 
   Future<void> init() async {
+    // initialize flutter local notifications
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('launcher_icon');
+    final IOSInitializationSettings initializationSettingsIOS =
+        IOSInitializationSettings(
+            onDidReceiveLocalNotification: (_, __, ___, ____) async {});
+    final MacOSInitializationSettings initializationSettingsMacOS =
+        MacOSInitializationSettings();
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+      macOS: initializationSettingsMacOS,
+    );
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+        onSelectNotification: (_) async {});
+
     // create android high importance notification channel
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
