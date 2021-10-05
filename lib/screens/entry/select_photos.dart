@@ -26,7 +26,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
     loading = false;
   }
 
-  final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+  final headingStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
   final headingSpacing = 10.0;
   final padding = 30.0;
   final sectionSpacing = 35.0;
@@ -113,6 +113,8 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                       ),
                       SizedBox(height: sectionSpacing),
                       Text('Select Profile Photo', style: headingStyle),
+                      SizedBox(height: headingSpacing),
+                      Text('Great!  Now add a couple pictures.'),
                       SizedBox(height: headingSpacing),
                       SelectProfileImageBox(
                           photoBytes: setupState.profileImageData,

@@ -18,6 +18,8 @@ import 'package:whatado/state/user_state.dart';
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(systemNavigationBarColor: Colors.grey[50]));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp();

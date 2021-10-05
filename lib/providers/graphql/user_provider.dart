@@ -108,8 +108,8 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<bool>> updateBio(String bio) async {
-    final mutation = UpdateBioMutation(variables: UpdateBioArguments(bio: bio));
+  Future<MyQueryResponse<bool>> removeAccount() async {
+    final mutation = RemoveAccountMutation();
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -118,7 +118,7 @@ class UserGqlProvider {
       });
     }
 
-    final root = result.data?['updateBio'];
+    final root = result.data?['removeAccount'];
     final data = root?['nodes'] ?? false;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];

@@ -37,6 +37,11 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     final setupState = Provider.of<SetupState>(context);
+    final headingStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
+    final headingSpacing = 10.0;
+    final padding = 30.0;
+    final sectionSpacing = 35.0;
+
     return Scaffold(
         body: Form(
       key: _formKey,
@@ -49,7 +54,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
             ),
             child: IntrinsicHeight(
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                padding: EdgeInsets.symmetric(horizontal: padding),
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -57,11 +62,12 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                       Center(
                         child: Image.asset("assets/text_logo.png", height: 100),
                       ),
-                      SizedBox(height: 40),
-                      Text('Choose interests',
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w600)),
-                      SizedBox(height: 10),
+                      SizedBox(height: sectionSpacing),
+                      Text('Choose interests', style: headingStyle),
+                      SizedBox(height: headingSpacing),
+                      Text(
+                          '''Welcome! First add some of your interests to help connect you with like-minded people.'''),
+                      SizedBox(height: headingSpacing),
                       InterestWrap(
                           interests: setupState.popularInterests,
                           selectedInterests: setupState.selectedInterests,
@@ -72,11 +78,9 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                               setupState.unselectInterest(interest);
                             }
                           }),
-                      SizedBox(height: 35),
-                      Text('Add interests',
-                          style: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.w600)),
-                      SizedBox(height: 10),
+                      SizedBox(height: sectionSpacing),
+                      Text('Add interests', style: headingStyle),
+                      SizedBox(height: headingSpacing),
                       Row(
                         children: [
                           Expanded(
@@ -132,7 +136,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: headingSpacing),
                       InputInterestWrap(
                         customInterests: setupState.customInterests,
                         onDeleted: (Interest interest) {
@@ -154,7 +158,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                           text: "Continue",
                         ),
                       ),
-                      SizedBox(height: 40)
+                      SizedBox(height: sectionSpacing)
                     ]),
               ),
             ),

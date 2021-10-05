@@ -12,7 +12,7 @@ class MyNavigationBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 50),
+      padding: EdgeInsets.only(left: 50, right: 50, bottom: 7, top: 5),
       width: MediaQuery.of(context).size.width,
       height: 50,
       decoration: BoxDecoration(

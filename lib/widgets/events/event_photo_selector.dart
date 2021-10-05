@@ -46,7 +46,11 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
 
     setState(() => page = page + 1);
     List<Map<String, dynamic>> tempLoadedAssets = await Future.wait(nextAssets
-        .map((asset) async => {"asset": asset, "thumb": await asset.thumbData})
+        .map((asset) async => {
+              "asset": asset,
+              "thumb": await asset.thumbData,
+              "valid": await asset.exists && asset.type == AssetType.image
+            })
         .toList());
     loadedAssets.addAll(tempLoadedAssets);
     setState(() {
@@ -58,19 +62,23 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
 
   void initPhotos() async {
     final eventState = Provider.of<AddEventState>(context, listen: false);
-    var result = await PhotoManager.requestPermissionExtend();
-    if (result.isAuth) {
+    var result = await PhotoManager.requestPermission();
+    if (result) {
       eventState.textMode = false;
       final albums = await PhotoManager.getAssetPathList(onlyAll: true);
       final album = albums.first;
       final recentAssets = await album.getAssetListPaged(page, 20);
-      List<Map<String, dynamic>> tempLoadedAssets = await Future.wait(
-          recentAssets
-              .map((asset) async =>
-                  {"asset": asset, "thumb": await asset.thumbData})
+      List<Map<String, dynamic>> tempLoadedAssets =
+          await Future.wait(recentAssets
+              .map((asset) async => {
+                    "asset": asset,
+                    "thumb": await asset.thumbData,
+                    "valid": await asset.exists && asset.type == AssetType.image
+                  })
               .toList());
 
-      eventState.selectedImage = recentAssets.first;
+      eventState.selectedImage =
+          tempLoadedAssets.firstWhere((assetMap) => assetMap["valid"])["asset"];
       setState(() {
         loadedAssets = tempLoadedAssets;
         page = 1;
@@ -96,8 +104,12 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
           mainAxisSpacing: 1.0,
           crossAxisCount: 4,
           children: loadedAssets
+              .where((map) => map['valid'] ?? false)
               .map((assetMap) => InkWell(
-                  onTap: () => eventState.selectedImage = assetMap['asset'],
+                  onTap: () {
+                    print(assetMap);
+                    return eventState.selectedImage = assetMap['asset'];
+                  },
                   child: Stack(
                     fit: StackFit.expand,
                     children: [

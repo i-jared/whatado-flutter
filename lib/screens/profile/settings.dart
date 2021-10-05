@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/welcome.dart';
 import 'package:whatado/screens/profile/change_password.dart';
 import 'package:whatado/screens/profile/change_personal_info.dart';
@@ -42,7 +43,34 @@ class Settings extends StatelessWidget {
           ),
           SettingsItem(
             title: 'REMOVE ACCOUNT',
-            onPressed: () => null,
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                          title: Text('Remove Account?'),
+                          content: Text(
+                              'Are you sure you want to remove your account? All events and forums you created will be delted'),
+                          actions: [
+                            TextButton(
+                                child: Text("Cancel"),
+                                onPressed: () => Navigator.pop(context)),
+                            TextButton(
+                              child: Text("Delete"),
+                              onPressed: () async {
+                                final provider = UserGqlProvider();
+                                await provider.removeAccount().then((_) {
+                                  authenticationService.forgetTokens();
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              WelcomeScreen()),
+                                      (route) => false);
+                                });
+                              },
+                            ),
+                          ]));
+            },
             showIcon: false,
             color: Colors.red,
           ),

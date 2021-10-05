@@ -32,6 +32,7 @@ class _ChatsState extends State<Chats> {
           GroupMembersRow(event: widget.event),
           MessagesBody(),
           MessagesTextField(),
+          SizedBox(height: 10),
         ]),
       ),
     );

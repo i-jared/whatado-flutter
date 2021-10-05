@@ -240,6 +240,7 @@ type Mutation {
   helloMutation(message: String!): Boolean!
   login(options: UserInput!): UserApiResponse!
   register(options: UserInput!): UserApiResponse!
+  removeAccount: BoolApiResponse!
   updateBio(bio: String!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventFilterInput!): EventApiResponse!

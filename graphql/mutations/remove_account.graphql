@@ -1,0 +1,10 @@
+mutation removeAccount{
+  removeAccount{
+    ok
+    nodes 
+    errors {
+      field
+      message
+    }
+  }
+}

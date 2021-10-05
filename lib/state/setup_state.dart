@@ -11,6 +11,7 @@ class SetupState extends ChangeNotifier {
   List<Interest> customInterests;
   List<Interest> popularInterests;
   TextEditingController bioController;
+  TextEditingController dateController;
 
   File? _profilePhoto;
   Uint8List? _profileImageData;
@@ -23,10 +24,10 @@ class SetupState extends ChangeNotifier {
         customInterests = [],
         _photosImageData = [],
         _photos = [],
-        bioController = TextEditingController() {
-    bioController.addListener(() {
-      notifyListeners();
-    });
+        bioController = TextEditingController(),
+        dateController = TextEditingController() {
+    bioController.addListener(notifyListeners);
+    dateController.addListener(notifyListeners);
     init();
   }
 
@@ -70,11 +71,6 @@ class SetupState extends ChangeNotifier {
     final result = await provider.popular();
     popularInterests.addAll(result.data ?? []);
     notifyListeners();
-  }
-
-  Future<void> saveBio() async {
-    final provider = UserGqlProvider();
-    await provider.updateBio(bioController.text);
   }
 
   Future<void> saveInterests() async {

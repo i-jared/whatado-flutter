@@ -133,19 +133,22 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
-    return Scaffold(
-        appBar: widget.getAppBar(homeState.bottomBarPageNo),
-        body: homeState.bottomBarPageNo == 0
-            ? PageView(
-                key: PageStorageKey(9),
-                onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
-                controller: homeState.homePageController,
-                children: [AllEvents(), MyEvents(), MyForums()],
-              )
-            : MyProfile(),
-        bottomNavigationBar: MyNavigationBar(
-          indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
-          selectedIndex: homeState.bottomBarPageNo,
-        ));
+    return Container(
+      color: Colors.pink,
+      child: Scaffold(
+          appBar: widget.getAppBar(homeState.bottomBarPageNo),
+          body: homeState.bottomBarPageNo == 0
+              ? PageView(
+                  key: PageStorageKey(9),
+                  onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
+                  controller: homeState.homePageController,
+                  children: [AllEvents(), MyEvents(), MyForums()],
+                )
+              : MyProfile(),
+          bottomNavigationBar: MyNavigationBar(
+            indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
+            selectedIndex: homeState.bottomBarPageNo,
+          )),
+    );
   }
 }
