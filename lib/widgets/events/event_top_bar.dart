@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
+import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:whatado/state/home_state.dart';
@@ -18,11 +19,13 @@ class EventTopBar extends StatelessWidget {
     final homeState = Provider.of<HomeState>(context);
     return Row(children: [
       InkWell(
-        onTap: () => Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    UserProfile(initialUserData: event.creator))),
+        onTap: () => event.creator.id == userState.user?.id
+            ? homeState.bottomBarPageNo = 1
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        UserProfile(initialUserData: event.creator))),
         child: CircleAvatar(
           radius: 17,
           backgroundImage: NetworkImage(event.creator.imageUrl),

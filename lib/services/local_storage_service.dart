@@ -10,6 +10,9 @@ class LocalStorageService {
   set flavor(String? flavor) => _set('flavor', flavor);
   String? get flavor => _fetch<String?>('flavor');
 
+  set initialized(bool? initialized) => _set('initialized', initialized);
+  bool? get initialized => _fetch<bool?>('initialized');
+
   set refreshToken(String? token) => _set('refreshToken', token);
   String? get refreshToken => _fetch<String?>('refreshToken');
   Future<void> deleteRefreshToken() async => await _delete('refreshToken');

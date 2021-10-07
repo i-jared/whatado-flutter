@@ -29,7 +29,9 @@ class RegisterGqlQuery {
     }
 
     final root = result.data?['register'];
-    final data = User.fromGqlData(root?['nodes']);
+    final data = root != null && root?['nodes'] != null
+        ? User.fromGqlData(root?['nodes'])
+        : null;
     final accessToken = root?['jwt']?['accessToken'];
     final refreshToken = root?['jwt']?['refreshToken'];
     final ok = root?['ok'] ?? false;

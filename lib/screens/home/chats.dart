@@ -28,12 +28,21 @@ class _ChatsState extends State<Chats> {
           forum: widget.forum,
           event: widget.event,
         ),
-        child: Column(children: [
-          GroupMembersRow(event: widget.event),
-          MessagesBody(),
-          MessagesTextField(),
-          SizedBox(height: 10),
-        ]),
+        child: Stack(
+          children: [
+            Column(children: [
+              GroupMembersRow(event: widget.event),
+              MessagesBody(),
+              SizedBox(height: 70),
+            ]),
+            Positioned(
+                bottom: 10,
+                right: 0,
+                child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: MessagesTextField())),
+          ],
+        ),
       ),
     );
   }

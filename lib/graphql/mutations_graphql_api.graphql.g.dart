@@ -1190,6 +1190,53 @@ Map<String, dynamic> _$Register$MutationToJson(Register$Mutation instance) =>
       'register': instance.register.toJson(),
     };
 
+RemoveAccount$Mutation$RemoveAccount$Errors
+    _$RemoveAccount$Mutation$RemoveAccount$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return RemoveAccount$Mutation$RemoveAccount$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$RemoveAccount$Mutation$RemoveAccount$ErrorsToJson(
+        RemoveAccount$Mutation$RemoveAccount$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+RemoveAccount$Mutation$RemoveAccount
+    _$RemoveAccount$Mutation$RemoveAccountFromJson(Map<String, dynamic> json) {
+  return RemoveAccount$Mutation$RemoveAccount()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => RemoveAccount$Mutation$RemoveAccount$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$RemoveAccount$Mutation$RemoveAccountToJson(
+        RemoveAccount$Mutation$RemoveAccount instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+RemoveAccount$Mutation _$RemoveAccount$MutationFromJson(
+    Map<String, dynamic> json) {
+  return RemoveAccount$Mutation()
+    ..removeAccount = RemoveAccount$Mutation$RemoveAccount.fromJson(
+        json['removeAccount'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$RemoveAccount$MutationToJson(
+        RemoveAccount$Mutation instance) =>
+    <String, dynamic>{
+      'removeAccount': instance.removeAccount.toJson(),
+    };
+
 UpdateBio$Mutation$UpdateBio$Errors
     _$UpdateBio$Mutation$UpdateBio$ErrorsFromJson(Map<String, dynamic> json) {
   return UpdateBio$Mutation$UpdateBio$Errors()
@@ -1699,53 +1746,6 @@ Map<String, dynamic> _$UpdateWannago$MutationToJson(
         UpdateWannago$Mutation instance) =>
     <String, dynamic>{
       'updateWannago': instance.updateWannago.toJson(),
-    };
-
-RemoveAccount$Mutation$RemoveAccount$Errors
-    _$RemoveAccount$Mutation$RemoveAccount$ErrorsFromJson(
-        Map<String, dynamic> json) {
-  return RemoveAccount$Mutation$RemoveAccount$Errors()
-    ..field = json['field'] as String?
-    ..message = json['message'] as String;
-}
-
-Map<String, dynamic> _$RemoveAccount$Mutation$RemoveAccount$ErrorsToJson(
-        RemoveAccount$Mutation$RemoveAccount$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-RemoveAccount$Mutation$RemoveAccount
-    _$RemoveAccount$Mutation$RemoveAccountFromJson(Map<String, dynamic> json) {
-  return RemoveAccount$Mutation$RemoveAccount()
-    ..ok = json['ok'] as bool?
-    ..nodes = json['nodes'] as bool?
-    ..errors = (json['errors'] as List<dynamic>?)
-        ?.map((e) => RemoveAccount$Mutation$RemoveAccount$Errors.fromJson(
-            e as Map<String, dynamic>))
-        .toList();
-}
-
-Map<String, dynamic> _$RemoveAccount$Mutation$RemoveAccountToJson(
-        RemoveAccount$Mutation$RemoveAccount instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-RemoveAccount$Mutation _$RemoveAccount$MutationFromJson(
-    Map<String, dynamic> json) {
-  return RemoveAccount$Mutation()
-    ..removeAccount = RemoveAccount$Mutation$RemoveAccount.fromJson(
-        json['removeAccount'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$RemoveAccount$MutationToJson(
-        RemoveAccount$Mutation instance) =>
-    <String, dynamic>{
-      'removeAccount': instance.removeAccount.toJson(),
     };
 
 AddInterestsArguments _$AddInterestsArgumentsFromJson(

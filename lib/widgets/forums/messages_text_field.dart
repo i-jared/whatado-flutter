@@ -10,7 +10,6 @@ class MessagesTextField extends StatelessWidget {
     final chatState = Provider.of<ChatState>(context);
     final userState = Provider.of<UserState>(context);
     return Container(
-      // height: height,
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,

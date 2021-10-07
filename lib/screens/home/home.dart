@@ -2,6 +2,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
+import 'package:showcaseview/showcaseview.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
@@ -59,7 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ));
         }
-      } else if (message.data['type'] == 'event') {
+      } else if (message.data['type'] == 'chat') {
         final homeState = Provider.of<HomeState>(context, listen: false);
         // homeState.addChatNotification();
         // TODO add chat notification? i guess. but how to load chat notifications on start?
@@ -133,9 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
-    return Container(
-      color: Colors.pink,
-      child: Scaffold(
+    return ShowCaseWidget(
+      onFinish: () => localStorageService.initialized = true,
+      builder: Builder(builder: (context) {
+        return Scaffold(
           appBar: widget.getAppBar(homeState.bottomBarPageNo),
           body: homeState.bottomBarPageNo == 0
               ? PageView(
@@ -148,7 +150,9 @@ class _HomeScreenState extends State<HomeScreen> {
           bottomNavigationBar: MyNavigationBar(
             indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
             selectedIndex: homeState.bottomBarPageNo,
-          )),
+          ),
+        );
+      }),
     );
   }
 }

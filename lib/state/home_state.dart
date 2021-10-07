@@ -12,6 +12,11 @@ class HomeState extends ChangeNotifier {
   int _skip;
   DateTime? _selectedDate;
 
+  GlobalKey showcase_1;
+  GlobalKey showcase_2;
+  GlobalKey showcase_3;
+  GlobalKey showcase_4;
+
   RefreshController refreshController;
   RefreshController myEventsRefreshController;
   PageController homePageController;
@@ -26,6 +31,10 @@ class HomeState extends ChangeNotifier {
       : _appBarPageNo = 0,
         _bottomBarPageNo = 0,
         _skip = 0,
+        showcase_1 = GlobalKey(),
+        showcase_2 = GlobalKey(),
+        showcase_3 = GlobalKey(),
+        showcase_4 = GlobalKey(),
         homePageController = PageController(keepPage: true),
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),

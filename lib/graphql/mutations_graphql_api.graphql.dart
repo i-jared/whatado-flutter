@@ -1365,6 +1365,63 @@ class Register$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class RemoveAccount$Mutation$RemoveAccount$Errors extends JsonSerializable
+    with EquatableMixin {
+  RemoveAccount$Mutation$RemoveAccount$Errors();
+
+  factory RemoveAccount$Mutation$RemoveAccount$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$RemoveAccount$Mutation$RemoveAccount$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RemoveAccount$Mutation$RemoveAccount$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RemoveAccount$Mutation$RemoveAccount extends JsonSerializable
+    with EquatableMixin {
+  RemoveAccount$Mutation$RemoveAccount();
+
+  factory RemoveAccount$Mutation$RemoveAccount.fromJson(
+          Map<String, dynamic> json) =>
+      _$RemoveAccount$Mutation$RemoveAccountFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<RemoveAccount$Mutation$RemoveAccount$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RemoveAccount$Mutation$RemoveAccountToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RemoveAccount$Mutation extends JsonSerializable with EquatableMixin {
+  RemoveAccount$Mutation();
+
+  factory RemoveAccount$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$RemoveAccount$MutationFromJson(json);
+
+  late RemoveAccount$Mutation$RemoveAccount removeAccount;
+
+  @override
+  List<Object?> get props => [removeAccount];
+  @override
+  Map<String, dynamic> toJson() => _$RemoveAccount$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class UpdateBio$Mutation$UpdateBio$Errors extends JsonSerializable
     with EquatableMixin {
   UpdateBio$Mutation$UpdateBio$Errors();
@@ -1952,63 +2009,6 @@ class UpdateWannago$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [updateWannago];
   @override
   Map<String, dynamic> toJson() => _$UpdateWannago$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class RemoveAccount$Mutation$RemoveAccount$Errors extends JsonSerializable
-    with EquatableMixin {
-  RemoveAccount$Mutation$RemoveAccount$Errors();
-
-  factory RemoveAccount$Mutation$RemoveAccount$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$RemoveAccount$Mutation$RemoveAccount$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$RemoveAccount$Mutation$RemoveAccount$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class RemoveAccount$Mutation$RemoveAccount extends JsonSerializable
-    with EquatableMixin {
-  RemoveAccount$Mutation$RemoveAccount();
-
-  factory RemoveAccount$Mutation$RemoveAccount.fromJson(
-          Map<String, dynamic> json) =>
-      _$RemoveAccount$Mutation$RemoveAccountFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<RemoveAccount$Mutation$RemoveAccount$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$RemoveAccount$Mutation$RemoveAccountToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class RemoveAccount$Mutation extends JsonSerializable with EquatableMixin {
-  RemoveAccount$Mutation();
-
-  factory RemoveAccount$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$RemoveAccount$MutationFromJson(json);
-
-  late RemoveAccount$Mutation$RemoveAccount removeAccount;
-
-  @override
-  List<Object?> get props => [removeAccount];
-  @override
-  Map<String, dynamic> toJson() => _$RemoveAccount$MutationToJson(this);
 }
 
 enum Gender {
@@ -4132,6 +4132,71 @@ class RegisterMutation
       Register$Mutation.fromJson(json);
 }
 
+final REMOVE_ACCOUNT_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'removeAccount'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'removeAccount'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class RemoveAccountMutation
+    extends GraphQLQuery<RemoveAccount$Mutation, JsonSerializable> {
+  RemoveAccountMutation();
+
+  @override
+  final DocumentNode document = REMOVE_ACCOUNT_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'removeAccount';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  RemoveAccount$Mutation parse(Map<String, dynamic> json) =>
+      RemoveAccount$Mutation.fromJson(json);
+}
+
 @JsonSerializable(explicitToJson: true)
 class UpdateBioArguments extends JsonSerializable with EquatableMixin {
   UpdateBioArguments({required this.bio});
@@ -4987,69 +5052,4 @@ class UpdateWannagoMutation
   @override
   UpdateWannago$Mutation parse(Map<String, dynamic> json) =>
       UpdateWannago$Mutation.fromJson(json);
-}
-
-final REMOVE_ACCOUNT_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'removeAccount'),
-      variableDefinitions: [],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'removeAccount'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class RemoveAccountMutation
-    extends GraphQLQuery<RemoveAccount$Mutation, JsonSerializable> {
-  RemoveAccountMutation();
-
-  @override
-  final DocumentNode document = REMOVE_ACCOUNT_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'removeAccount';
-
-  @override
-  List<Object?> get props => [document, operationName];
-  @override
-  RemoveAccount$Mutation parse(Map<String, dynamic> json) =>
-      RemoveAccount$Mutation.fromJson(json);
 }

@@ -7,20 +7,22 @@ class MessagesBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chatState = Provider.of<ChatState>(context);
-    return Expanded(
-      child: chatState.chats != null
-          ? Container(
+    return chatState.chats != null
+        ? Expanded(
+            child: Container(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
               child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: BouncingScrollPhysics(),
                   controller: chatState.scrollController,
                   reverse: true,
                   itemCount: chatState.chats!.length,
                   itemBuilder: (context, i) =>
                       ChatBubble(chat: chatState.chats![i])),
-            )
-          : Center(
-              child: CircularProgressIndicator(),
             ),
-    );
+          )
+        : Center(
+            child: CircularProgressIndicator(),
+          );
   }
 }

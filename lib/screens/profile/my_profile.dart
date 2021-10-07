@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -25,38 +26,53 @@ class MyProfile extends StatelessWidget {
       return Center(child: CircularProgressIndicator());
     }
     return SingleChildScrollView(
-        child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(height: headingSpacing),
-          Center(
-              child: CircleAvatar(
-            radius: 60,
-            backgroundImage: NetworkImage(userState.user!.imageUrl),
-          )),
-          SizedBox(height: sectionSpacing),
-          Text('BIO', style: headingStyle),
-          SizedBox(height: headingSpacing),
-          Text(userState.user!.bio, style: TextStyle(fontSize: 18)),
-          SizedBox(height: sectionSpacing),
-          Text('PHOTOS', style: headingStyle),
-          SizedBox(height: headingSpacing),
-          Wrap(
-              spacing: imageSpacing,
-              runSpacing: 10.0,
-              children: userState.user!.photoUrls
-                  .map((url) => Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10)),
-                      width: imageWidth,
-                      height: imageWidth,
-                      child: Image.network(url, fit: BoxFit.cover)))
-                  .toList()),
-          SizedBox(height: sectionSpacing),
-          Row(
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        CarouselSlider(
+          items: [Image.network(userState.user!.imageUrl)],
+          options: CarouselOptions(
+              height: MediaQuery.of(context).size.width,
+              autoPlay: false,
+              enableInfiniteScroll: false,
+              viewportFraction: 1.0),
+        ),
+        SizedBox(height: sectionSpacing),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: Text('BIO', style: headingStyle),
+        ),
+        SizedBox(height: headingSpacing),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: Text(userState.user!.bio, style: TextStyle(fontSize: 18)),
+        ),
+        Divider(),
+        SizedBox(height: sectionSpacing),
+        // Padding(
+        // padding: EdgeInsets.symmetric(horizontal: padding),
+        // child: Text('PHOTOS', style: headingStyle),
+        // ),
+        // SizedBox(height: headingSpacing),
+        // Padding(
+        // padding: EdgeInsets.symmetric(horizontal: padding),
+        // child: Wrap(
+        // spacing: imageSpacing,
+        // runSpacing: 10.0,
+        // children: userState.user!.photoUrls
+        // .map((url) => Container(
+        // clipBehavior: Clip.antiAlias,
+        // decoration: BoxDecoration(
+        // borderRadius: BorderRadius.circular(10)),
+        // width: imageWidth,
+        // height: imageWidth,
+        // child: Image.network(url, fit: BoxFit.cover)))
+        // .toList()),
+        // ),
+        // SizedBox(height: sectionSpacing),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: Row(
             children: [
               Text('INTERESTS', style: headingStyle),
               SizedBox(width: 10),
@@ -64,8 +80,11 @@ class MyProfile extends StatelessWidget {
                   style: TextStyle(fontSize: 15, color: Colors.grey)),
             ],
           ),
-          SizedBox(height: headingSpacing),
-          Wrap(
+        ),
+        SizedBox(height: headingSpacing),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: Wrap(
             spacing: 10.0,
             runSpacing: 0.0,
             children: userState.user!.interests
@@ -76,9 +95,9 @@ class MyProfile extends StatelessWidget {
                     ))
                 .toList(),
           ),
-          SizedBox(height: 50),
-        ],
-      ),
+        ),
+        SizedBox(height: 50),
+      ],
     ));
   }
 }
