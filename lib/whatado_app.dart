@@ -5,7 +5,10 @@ import 'package:flutter/scheduler.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/screens/entry/choose_interests.dart';
+import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/welcome.dart';
+import 'package:whatado/screens/entry/write_bio.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/environment_config.dart';
 import 'package:whatado/services/service_provider.dart';
@@ -61,42 +64,51 @@ class _MyAppState extends State<MyApp> {
     return RefreshConfiguration(
       headerTriggerDistance: 120,
       child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
-          ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
-          ChangeNotifierProvider<UserState>(create: (_) => UserState()),
-          ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
-        ],
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-              primarySwatch: MaterialColor(
-            0xFF000000,
-            <int, Color>{
-              50: Color(0xFF000000),
-              100: Color(0xFF000000),
-              200: Color(0xFF000000),
-              300: Color(0xFF000000),
-              400: Color(0xFF000000),
-              500: Color(0xFF000000),
-              600: Color(0xFF000000),
-              700: Color(0xFF000000),
-              800: Color(0xFF000000),
-              900: Color(0xFF000000),
-            },
-          )),
-          home: loading
-              ? Container(
-                  color: Colors.grey[50],
-                  child: Center(
-                    child: Image.asset('assets/logo_badge.png'),
-                  ))
-              : loginService.loggedIn
-                  ? HomeScreen()
-                  : WelcomeScreen(),
-        ),
-      ),
+          providers: [
+            ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
+            ChangeNotifierProvider<AddEventState>(
+                create: (_) => AddEventState()),
+            ChangeNotifierProvider<UserState>(create: (_) => UserState()),
+            ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
+          ],
+          builder: (BuildContext context, _) {
+            final userState = Provider.of<UserState>(context);
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: ThemeData(
+                  primarySwatch: MaterialColor(
+                0xFF000000,
+                <int, Color>{
+                  50: Color(0xFF000000),
+                  100: Color(0xFF000000),
+                  200: Color(0xFF000000),
+                  300: Color(0xFF000000),
+                  400: Color(0xFF000000),
+                  500: Color(0xFF000000),
+                  600: Color(0xFF000000),
+                  700: Color(0xFF000000),
+                  800: Color(0xFF000000),
+                  900: Color(0xFF000000),
+                },
+              )),
+              home: loading
+                  ? Container(
+                      color: Colors.grey[50],
+                      child: Center(
+                        child: Image.asset('assets/logo_badge.png'),
+                      ))
+                  : loginService.loggedIn
+                      ? userState.user?.interests.isEmpty ?? true
+                          ? ChooseInterestsScreen()
+                          : userState.user?.bio.isEmpty ?? true
+                              ? WriteBioScreen()
+                              : userState.user?.photoUrls.isEmpty ?? true
+                                  ? SelectPhotosScreen()
+                                  : HomeScreen()
+                      : WelcomeScreen(),
+            );
+          }),
     );
   }
 }

@@ -31,6 +31,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
   final padding = 30.0;
   final sectionSpacing = 35.0;
   final imageSpacing = 10.0;
+  final paragraphStyle = TextStyle(fontSize: 20);
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +70,6 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
     void onPressed(int userId) async {
       setState(() => loading = true);
       // upload images to cloud
-      final tempImageData = setupState.profileImageData;
-      if (tempImageData == null) return;
-      final profileUrl = await cloudStorageService
-          .uploadImage(tempImageData, userId, userImage: true);
-
       final List<String?> photoUrls = await Future.wait(
           setupState.photosImageData.map<Future<String?>>((data) {
         if (data == null) return Future.value(null);
@@ -82,8 +78,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
 
       // save urls to user profile
       final provider = UserGqlProvider();
-      if (profileUrl == null || photoUrls.contains(null)) return;
-      await provider.updateProfilePhoto(profileUrl);
+      if (photoUrls.contains(null)) return;
       await provider.updatePhotos(List<String>.from(photoUrls));
       setState(() => loading = false);
       // reload user object
@@ -112,29 +107,10 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                         child: Image.asset("assets/text_logo.png", height: 100),
                       ),
                       SizedBox(height: sectionSpacing),
-                      Text('Select Profile Photo', style: headingStyle),
+                      Text('Profile Pictures', style: headingStyle),
                       SizedBox(height: headingSpacing),
-                      Text('Great!  Now add a couple pictures.'),
-                      SizedBox(height: headingSpacing),
-                      SelectProfileImageBox(
-                          photoBytes: setupState.profileImageData,
-                          imageWidth: imageWidth,
-                          onRemove: () {
-                            setupState.profilePhoto = null;
-                            setupState.profileImageData = null;
-                          },
-                          onPressed: () async {
-                            final image = await cloudStorageService.pickImage();
-                            if (image != null) {
-                              final updatedPhotoData =
-                                  cloudStorageService.resize(file: image);
-                              //update
-                              setupState.profilePhoto = image;
-                              setupState.profileImageData = updatedPhotoData;
-                            }
-                          }),
-                      SizedBox(height: sectionSpacing),
-                      Text('Select Other Photos', style: headingStyle),
+                      Text('Great!  Now add a few pictures.',
+                          style: paragraphStyle),
                       SizedBox(height: headingSpacing),
                       Wrap(
                           spacing: imageSpacing,
@@ -145,8 +121,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                         child: loading
                             ? Center(child: CircularProgressIndicator())
                             : RoundedArrowButton(
-                                disabled: setupState.photos.length == 0 ||
-                                    setupState.profilePhoto == null,
+                                disabled: setupState.photos.length == 0,
                                 text: "Continue",
                                 onPressed: userState.user == null
                                     ? null

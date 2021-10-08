@@ -25,6 +25,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
   late TextEditingController bioController;
   late TextEditingController textController;
   late List<Interest> interests;
+  late List<String> photos;
 
   bool listsEqual<T>(List<T>? one, List<T>? two) {
     bool val = true;
@@ -43,6 +44,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
     textController = TextEditingController();
     textController.addListener(() => setState(() {}));
     interests = List<Interest>.from(widget.user!.interests);
+    photos = widget.user!.photoUrls ?? [];
   }
 
   @override
@@ -91,7 +93,6 @@ class _EditMyProfileState extends State<EditMyProfile> {
                     }))
           ];
 
-    print(userState.photos!.isNotEmpty);
     return Scaffold(
       appBar: SavingAppBar(
           title: 'Edit Profile',
@@ -103,13 +104,12 @@ class _EditMyProfileState extends State<EditMyProfile> {
           },
           disabled: userState.loading ||
               (bioController.text == widget.user!.bio &&
-                  listsEqual<Interest>(interests, widget.user!.interests) &&
-                  listsEqual<Uint8List>(userState.photos, userState.ogphotos) &&
-                  userState.photo == userState.ogphoto) ||
-              (userState.photos!.isEmpty ||
-                  bioController.text.isEmpty ||
-                  interests.isEmpty ||
-                  userState.photo == null)),
+                      listsEqual<Interest>(interests, widget.user!.interests) &&
+                      listsEqual<Uint8List>(
+                          userState.photos, userState.ogphotos) ||
+                  (userState.photos!.isEmpty ||
+                      bioController.text.isEmpty ||
+                      interests.isEmpty))),
       body: widget.user == null
           ? Container()
           : userState.loading

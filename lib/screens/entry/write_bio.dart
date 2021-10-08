@@ -20,6 +20,7 @@ class WriteBioScreen extends StatelessWidget {
     final padding = 30.0;
     final sectionSpacing = 35.0;
     final dateFormat = DateFormat('EEE, M-d-y');
+    final paragraphStyle = TextStyle(fontSize: 20);
 
     return Scaffold(
         body: Form(
@@ -41,9 +42,11 @@ class WriteBioScreen extends StatelessWidget {
                         child: Image.asset("assets/text_logo.png", height: 100),
                       ),
                       SizedBox(height: sectionSpacing),
-                      Text('Write Bio', style: headingStyle),
+                      Text('Bio', style: headingStyle),
                       SizedBox(height: headingSpacing),
-                      Text('Next tell us a little about yourself.'),
+                      Text(
+                          'Next, tell us a little about yourself. People will see your bio when you create or attend an event.',
+                          style: paragraphStyle),
                       SizedBox(height: headingSpacing),
                       MyTextField(
                         hintText: 'Write bio here',
@@ -59,8 +62,9 @@ class WriteBioScreen extends StatelessWidget {
                         onTap: () => DatePicker.showDatePicker(context,
                             onConfirm: (time) => setupState
                                 .dateController.text = dateFormat.format(time),
-                            minTime: DateTime.now(),
-                            maxTime: DateTime.now().add(Duration(days: 100))),
+                            currentTime: DateTime(2000, 1, 1),
+                            minTime: DateTime(1950, 1, 1),
+                            maxTime: DateTime.now()),
                         decoration: InputDecoration(
                           isDense: true,
                           hintText: 'Date',

@@ -12,18 +12,9 @@ import 'package:whatado/services/service_provider.dart';
 class UserState extends ChangeNotifier {
   User? _user;
   List<Uint8List>? _photos;
-  Uint8List? _photo;
-  Uint8List? ogphoto;
   List<Uint8List>? ogphotos;
   List<String>? _urls;
   bool _loading;
-
-  Uint8List? get photo => _photo;
-
-  set photo(Uint8List? photo) {
-    _photo = photo;
-    notifyListeners();
-  }
 
   bool get loading => _loading;
 
@@ -41,10 +32,6 @@ class UserState extends ChangeNotifier {
             .asUint8List())
         .toList());
     photos = initialPhotoData;
-    photo = (await NetworkAssetBundle(Uri.parse(imageUrl)).load(imageUrl))
-        .buffer
-        .asUint8List();
-    ogphoto = photo;
     ogphotos = List.from(initialPhotoData);
   }
 
@@ -75,12 +62,6 @@ class UserState extends ChangeNotifier {
       _user!.interests = interests;
     }
     List<String?> photoUrls = user!.photoUrls;
-    String? photoUrl = user!.imageUrl;
-    if (photo != ogphoto) {
-      photoUrl = await cloudStorageService.uploadImage(photo!, user!.id,
-          userImage: true);
-      filter.profilePhotoUrl = photoUrl;
-    }
     if (photos != ogphotos) {
       photoUrls = await Future.wait(photos!.map<Future<String?>>((data) {
         return cloudStorageService.uploadImage(data, user!.id, userImage: true);
@@ -91,7 +72,6 @@ class UserState extends ChangeNotifier {
     await provider.updateUser(filter);
     _user!.bio = bio;
     _user!.photoUrls = List<String>.from(photoUrls);
-    _user!.imageUrl = photoUrl!;
     notifyListeners();
   }
 

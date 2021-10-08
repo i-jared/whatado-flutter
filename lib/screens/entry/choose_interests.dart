@@ -38,6 +38,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
     final userState = Provider.of<UserState>(context);
     final setupState = Provider.of<SetupState>(context);
     final headingStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
+    final paragraphStyle = TextStyle(fontSize: 20);
     final headingSpacing = 10.0;
     final padding = 30.0;
     final sectionSpacing = 35.0;
@@ -63,10 +64,11 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                         child: Image.asset("assets/text_logo.png", height: 100),
                       ),
                       SizedBox(height: sectionSpacing),
-                      Text('Choose interests', style: headingStyle),
+                      Text('Welcome!', style: headingStyle),
                       SizedBox(height: headingSpacing),
                       Text(
-                          '''Welcome! First add some of your interests to help connect you with like-minded people.'''),
+                          '''First, add some of your interests to help connect you with like-minded people.''',
+                          style: paragraphStyle),
                       SizedBox(height: headingSpacing),
                       InterestWrap(
                           interests: setupState.popularInterests,

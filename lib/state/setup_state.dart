@@ -13,8 +13,6 @@ class SetupState extends ChangeNotifier {
   TextEditingController bioController;
   TextEditingController dateController;
 
-  File? _profilePhoto;
-  Uint8List? _profileImageData;
   List<File?> _photos;
   List<Uint8List?> _photosImageData;
 
@@ -29,20 +27,6 @@ class SetupState extends ChangeNotifier {
     bioController.addListener(notifyListeners);
     dateController.addListener(notifyListeners);
     init();
-  }
-
-  Uint8List? get profileImageData => _profileImageData;
-
-  set profileImageData(Uint8List? profileImageData) {
-    _profileImageData = profileImageData;
-    notifyListeners();
-  }
-
-  File? get profilePhoto => _profilePhoto;
-
-  set profilePhoto(File? profilePhoto) {
-    _profilePhoto = profilePhoto;
-    notifyListeners();
   }
 
   List<Uint8List?> get photosImageData => _photosImageData;
