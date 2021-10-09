@@ -38,15 +38,15 @@ mixin EventFieldsMixin {
 }
 mixin EventUserMixin {
   late int id;
-  late String username;
+  late String name;
   late String photoUrls;
 }
 mixin UserFieldsMixin {
   late int id;
   late String photoUrls;
-  late String email;
+  late String phone;
   late bool verified;
-  late String username;
+  late String name;
   @JsonKey(
       fromJson: fromGraphQLDateTimeToDartDateTime,
       toJson: fromDartDateTimeToGraphQLDateTime)
@@ -211,7 +211,7 @@ class EventFieldsMixin$Creator extends JsonSerializable
       _$EventFieldsMixin$CreatorFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, photoUrls];
+  List<Object?> get props => [id, name, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
 }
@@ -225,7 +225,7 @@ class EventFieldsMixin$Invited extends JsonSerializable
       _$EventFieldsMixin$InvitedFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, photoUrls];
+  List<Object?> get props => [id, name, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
 }
@@ -239,7 +239,7 @@ class EventFieldsMixin$Wannago$User extends JsonSerializable
       _$EventFieldsMixin$Wannago$UserFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, photoUrls];
+  List<Object?> get props => [id, name, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
 }
@@ -434,7 +434,7 @@ class CreateChat$Mutation$CreateChat$Nodes$Author extends JsonSerializable
       _$CreateChat$Mutation$CreateChat$Nodes$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, photoUrls];
+  List<Object?> get props => [id, name, photoUrls];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateChat$Mutation$CreateChat$Nodes$AuthorToJson(this);
@@ -1243,7 +1243,7 @@ class Login$Mutation extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class UserInput extends JsonSerializable with EquatableMixin {
-  UserInput({this.birthday, this.email, required this.password, this.username});
+  UserInput({this.birthday, this.name, required this.password, this.phone});
 
   factory UserInput.fromJson(Map<String, dynamic> json) =>
       _$UserInputFromJson(json);
@@ -1253,14 +1253,14 @@ class UserInput extends JsonSerializable with EquatableMixin {
       toJson: fromDartDateTimeNullableToGraphQLDateTimeNullable)
   DateTime? birthday;
 
-  String? email;
+  String? name;
 
   late String password;
 
-  String? username;
+  String? phone;
 
   @override
-  List<Object?> get props => [birthday, email, password, username];
+  List<Object?> get props => [birthday, name, password, phone];
   @override
   Map<String, dynamic> toJson() => _$UserInputToJson(this);
 }
@@ -1660,9 +1660,9 @@ class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
   List<Object?> get props => [
         id,
         photoUrls,
-        email,
+        phone,
         verified,
-        username,
+        name,
         birthday,
         bio,
         interests,
@@ -1787,10 +1787,10 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
       {this.bio,
       this.birthday,
       this.deviceId,
-      this.email,
       this.id,
+      this.name,
+      this.phone,
       this.photoUrls,
-      this.username,
       this.verified});
 
   factory UserFilterInput.fromJson(Map<String, dynamic> json) =>
@@ -1805,19 +1805,19 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
 
   String? deviceId;
 
-  String? email;
-
   int? id;
 
-  String? photoUrls;
+  String? name;
 
-  String? username;
+  String? phone;
+
+  String? photoUrls;
 
   bool? verified;
 
   @override
   List<Object?> get props =>
-      [bio, birthday, deviceId, email, id, photoUrls, username, verified];
+      [bio, birthday, deviceId, id, name, phone, photoUrls, verified];
   @override
   Map<String, dynamic> toJson() => _$UserFilterInputToJson(this);
 }
@@ -2223,7 +2223,7 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'username'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2493,7 +2493,7 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'username'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2736,7 +2736,7 @@ final CREATE_CHAT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'username'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2997,7 +2997,7 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'username'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3620,16 +3620,16 @@ class FlagUserMutation
 
 @JsonSerializable(explicitToJson: true)
 class ForgotPasswordArguments extends JsonSerializable with EquatableMixin {
-  ForgotPasswordArguments({required this.email});
+  ForgotPasswordArguments({required this.phone});
 
   @override
   factory ForgotPasswordArguments.fromJson(Map<String, dynamic> json) =>
       _$ForgotPasswordArgumentsFromJson(json);
 
-  late String email;
+  late String phone;
 
   @override
-  List<Object?> get props => [email];
+  List<Object?> get props => [phone];
   @override
   Map<String, dynamic> toJson() => _$ForgotPasswordArgumentsToJson(this);
 }
@@ -3640,7 +3640,7 @@ final FORGOT_PASSWORD_MUTATION_DOCUMENT = DocumentNode(definitions: [
       name: NameNode(value: 'forgotPassword'),
       variableDefinitions: [
         VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'email')),
+            variable: VariableNode(name: NameNode(value: 'phone')),
             type:
                 NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
             defaultValue: DefaultValueNode(value: null),
@@ -3653,8 +3653,8 @@ final FORGOT_PASSWORD_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [
               ArgumentNode(
-                  name: NameNode(value: 'email'),
-                  value: VariableNode(name: NameNode(value: 'email')))
+                  name: NameNode(value: 'phone'),
+                  value: VariableNode(name: NameNode(value: 'phone')))
             ],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
@@ -4302,7 +4302,7 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'username'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4528,7 +4528,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'email'),
+            name: NameNode(value: 'phone'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4540,7 +4540,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'username'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],

@@ -16,7 +16,7 @@ class RegisterGqlQuery {
         userInput: UserInput(
             password: password,
             phone: phone,
-            username: name,
+            name: name,
             birthday: DateTime.now()),
       ),
     );

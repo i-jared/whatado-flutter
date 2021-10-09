@@ -11,7 +11,7 @@ Chats$Query$Chats$Nodes$Author _$Chats$Query$Chats$Nodes$AuthorFromJson(
     Map<String, dynamic> json) {
   return Chats$Query$Chats$Nodes$Author()
     ..id = json['id'] as int
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String;
 }
 
@@ -19,7 +19,7 @@ Map<String, dynamic> _$Chats$Query$Chats$Nodes$AuthorToJson(
         Chats$Query$Chats$Nodes$Author instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'username': instance.username,
+      'name': instance.name,
       'photoUrls': instance.photoUrls,
     };
 
@@ -221,7 +221,7 @@ EventFieldsMixin$Creator _$EventFieldsMixin$CreatorFromJson(
     Map<String, dynamic> json) {
   return EventFieldsMixin$Creator()
     ..id = json['id'] as int
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String;
 }
 
@@ -229,7 +229,7 @@ Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
         EventFieldsMixin$Creator instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'username': instance.username,
+      'name': instance.name,
       'photoUrls': instance.photoUrls,
     };
 
@@ -237,7 +237,7 @@ EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
     Map<String, dynamic> json) {
   return EventFieldsMixin$Invited()
     ..id = json['id'] as int
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String;
 }
 
@@ -245,7 +245,7 @@ Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
         EventFieldsMixin$Invited instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'username': instance.username,
+      'name': instance.name,
       'photoUrls': instance.photoUrls,
     };
 
@@ -253,7 +253,7 @@ EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
     Map<String, dynamic> json) {
   return EventFieldsMixin$Wannago$User()
     ..id = json['id'] as int
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String;
 }
 
@@ -261,7 +261,7 @@ Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
         EventFieldsMixin$Wannago$User instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'username': instance.username,
+      'name': instance.name,
       'photoUrls': instance.photoUrls,
     };
 
@@ -426,7 +426,7 @@ EventUserPreview$Query$UsersById$Nodes
         Map<String, dynamic> json) {
   return EventUserPreview$Query$UsersById$Nodes()
     ..id = json['id'] as int
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String;
 }
 
@@ -434,7 +434,7 @@ Map<String, dynamic> _$EventUserPreview$Query$UsersById$NodesToJson(
         EventUserPreview$Query$UsersById$Nodes instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'username': instance.username,
+      'name': instance.name,
       'photoUrls': instance.photoUrls,
     };
 
@@ -478,7 +478,7 @@ FlaggedChats$Query$FlaggedChats$Nodes$Author
         Map<String, dynamic> json) {
   return FlaggedChats$Query$FlaggedChats$Nodes$Author()
     ..id = json['id'] as int
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String;
 }
 
@@ -486,7 +486,7 @@ Map<String, dynamic> _$FlaggedChats$Query$FlaggedChats$Nodes$AuthorToJson(
         FlaggedChats$Query$FlaggedChats$Nodes$Author instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'username': instance.username,
+      'name': instance.name,
       'photoUrls': instance.photoUrls,
     };
 
@@ -666,9 +666,9 @@ FlaggedUsers$Query$FlaggedUsers$Nodes
   return FlaggedUsers$Query$FlaggedUsers$Nodes()
     ..id = json['id'] as int
     ..photoUrls = json['photoUrls'] as String
-    ..email = json['email'] as String
+    ..phone = json['phone'] as String
     ..verified = json['verified'] as bool
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String)
     ..bio = json['bio'] as String
     ..interests = (json['interests'] as List<dynamic>)
@@ -690,9 +690,9 @@ Map<String, dynamic> _$FlaggedUsers$Query$FlaggedUsers$NodesToJson(
     <String, dynamic>{
       'id': instance.id,
       'photoUrls': instance.photoUrls,
-      'email': instance.email,
+      'phone': instance.phone,
       'verified': instance.verified,
-      'username': instance.username,
+      'name': instance.name,
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
       'bio': instance.bio,
       'interests': instance.interests.map((e) => e.toJson()).toList(),
@@ -1019,7 +1019,7 @@ LastChat$Query$LastChat$Nodes$Author
     _$LastChat$Query$LastChat$Nodes$AuthorFromJson(Map<String, dynamic> json) {
   return LastChat$Query$LastChat$Nodes$Author()
     ..id = json['id'] as int
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String;
 }
 
@@ -1027,7 +1027,7 @@ Map<String, dynamic> _$LastChat$Query$LastChat$Nodes$AuthorToJson(
         LastChat$Query$LastChat$Nodes$Author instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'username': instance.username,
+      'name': instance.name,
       'photoUrls': instance.photoUrls,
     };
 
@@ -1087,9 +1087,9 @@ Me$Query$Me$Nodes _$Me$Query$Me$NodesFromJson(Map<String, dynamic> json) {
   return Me$Query$Me$Nodes()
     ..id = json['id'] as int
     ..photoUrls = json['photoUrls'] as String
-    ..email = json['email'] as String
+    ..phone = json['phone'] as String
     ..verified = json['verified'] as bool
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String)
     ..bio = json['bio'] as String
     ..interests = (json['interests'] as List<dynamic>)
@@ -1110,9 +1110,9 @@ Map<String, dynamic> _$Me$Query$Me$NodesToJson(Me$Query$Me$Nodes instance) =>
     <String, dynamic>{
       'id': instance.id,
       'photoUrls': instance.photoUrls,
-      'email': instance.email,
+      'phone': instance.phone,
       'verified': instance.verified,
-      'username': instance.username,
+      'name': instance.name,
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
       'bio': instance.bio,
       'interests': instance.interests.map((e) => e.toJson()).toList(),
@@ -1397,9 +1397,9 @@ User$Query$User$Nodes _$User$Query$User$NodesFromJson(
   return User$Query$User$Nodes()
     ..id = json['id'] as int
     ..photoUrls = json['photoUrls'] as String
-    ..email = json['email'] as String
+    ..phone = json['phone'] as String
     ..verified = json['verified'] as bool
-    ..username = json['username'] as String
+    ..name = json['name'] as String
     ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String)
     ..bio = json['bio'] as String
     ..interests = (json['interests'] as List<dynamic>)
@@ -1421,9 +1421,9 @@ Map<String, dynamic> _$User$Query$User$NodesToJson(
     <String, dynamic>{
       'id': instance.id,
       'photoUrls': instance.photoUrls,
-      'email': instance.email,
+      'phone': instance.phone,
       'verified': instance.verified,
-      'username': instance.username,
+      'name': instance.name,
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
       'bio': instance.bio,
       'interests': instance.interests.map((e) => e.toJson()).toList(),

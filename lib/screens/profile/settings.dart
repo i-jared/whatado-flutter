@@ -6,12 +6,14 @@ import 'package:whatado/screens/profile/change_password.dart';
 import 'package:whatado/screens/profile/change_personal_info.dart';
 import 'package:whatado/screens/profile/eula.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/settings/settings_item.dart';
 
 class Settings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final userState = Provider.of<UserState>(context);
     return Scaffold(
       appBar: DefaultAppBar(title: 'Settings'),
       body: Column(
@@ -22,7 +24,7 @@ class Settings extends StatelessWidget {
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ChangePersonalInfo()))),
+                      builder: (context) => ChangePersonalInfo(user: userState.user!)))),
           SettingsItem(
               title: 'CHANGE PASSWORD',
               onPressed: () => Navigator.push(context,

@@ -80,7 +80,7 @@ class _SignupScreenState extends State<StatefulWidget> {
                               errorText: phoneError,
                               validator: (val) {
                                 String pattern =
-                                    r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$';
+                                    r'^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$';
                                 RegExp regExp = new RegExp(pattern);
                                 if (val == null || !regExp.hasMatch(val))
                                   return 'please enter a valid phone number';

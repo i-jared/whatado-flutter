@@ -284,15 +284,15 @@ type User {
   chatNotifications: [ChatNotification!]!
   createdAt: DateTime!
   deviceId: String!
-  email: String!
   flags: Int!
   id: Int!
   interests: [Interest!]!
   myEvents: [Event!]!
+  name: String!
+  phone: String!
   photoUrls: String!
   refreshCount: Int!
   updatedAt: DateTime!
-  username: String!
   verified: Boolean!
 }
 
@@ -307,18 +307,18 @@ input UserFilterInput {
   bio: String
   birthday: DateTime
   deviceId: String
-  email: String
   id: Int
+  name: String
+  phone: String
   photoUrls: String
-  username: String
   verified: Boolean
 }
 
 input UserInput {
   birthday: DateTime
-  email: String
+  name: String
   password: String!
-  username: String
+  phone: String
 }
 
 type UsersApiResponse {

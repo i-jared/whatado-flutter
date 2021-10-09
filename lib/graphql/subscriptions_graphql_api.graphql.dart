@@ -10,7 +10,7 @@ part 'subscriptions_graphql_api.graphql.g.dart';
 
 mixin EventUserMixin {
   late int id;
-  late String username;
+  late String name;
   late String photoUrls;
 }
 
@@ -24,7 +24,7 @@ class Chat$Subscription$ChatSubscription$Author extends JsonSerializable
       _$Chat$Subscription$ChatSubscription$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, photoUrls];
+  List<Object?> get props => [id, name, photoUrls];
   @override
   Map<String, dynamic> toJson() =>
       _$Chat$Subscription$ChatSubscription$AuthorToJson(this);
@@ -168,7 +168,7 @@ final CHAT_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'username'),
+            name: NameNode(value: 'name'),
             alias: null,
             arguments: [],
             directives: [],
