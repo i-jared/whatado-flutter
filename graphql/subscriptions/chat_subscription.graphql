@@ -1,12 +1,10 @@
-subscription chat ($forumId: Int!){
-  chatSubscription (forumId: $forumId){
+subscription chat($forumId: Int!) {
+  chatSubscription(forumId: $forumId) {
     id
     createdAt
     text
     author {
-      id
-      profilePhotoUrl
-      username
+      ...EventUser
     }
   }
 }

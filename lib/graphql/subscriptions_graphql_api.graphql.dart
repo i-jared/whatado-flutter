@@ -8,23 +8,23 @@ import 'package:gql/ast.dart';
 import 'package:whatado/utils/coercers.dart';
 part 'subscriptions_graphql_api.graphql.g.dart';
 
+mixin EventUserMixin {
+  late int id;
+  late String username;
+  late String photoUrls;
+}
+
 @JsonSerializable(explicitToJson: true)
 class Chat$Subscription$ChatSubscription$Author extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, EventUserMixin {
   Chat$Subscription$ChatSubscription$Author();
 
   factory Chat$Subscription$ChatSubscription$Author.fromJson(
           Map<String, dynamic> json) =>
       _$Chat$Subscription$ChatSubscription$AuthorFromJson(json);
 
-  late int id;
-
-  late String profilePhotoUrl;
-
-  late String username;
-
   @override
-  List<Object?> get props => [id, profilePhotoUrl, username];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() =>
       _$Chat$Subscription$ChatSubscription$AuthorToJson(this);
@@ -150,26 +150,35 @@ final CHAT_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'profilePhotoUrl'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'username'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
                   ]))
             ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ]))
 ]);
 

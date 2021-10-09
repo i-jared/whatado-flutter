@@ -46,7 +46,7 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                   child: CircleAvatar(
                                       radius: 28,
                                       backgroundImage:
-                                          NetworkImage(user.imageUrl)),
+                                          NetworkImage(user.photoUrls)),
                                 ),
                                 Text(user.name),
                               ],

@@ -12,16 +12,16 @@ Chat$Subscription$ChatSubscription$Author
         Map<String, dynamic> json) {
   return Chat$Subscription$ChatSubscription$Author()
     ..id = json['id'] as int
-    ..profilePhotoUrl = json['profilePhotoUrl'] as String
-    ..username = json['username'] as String;
+    ..username = json['username'] as String
+    ..photoUrls = json['photoUrls'] as String;
 }
 
 Map<String, dynamic> _$Chat$Subscription$ChatSubscription$AuthorToJson(
         Chat$Subscription$ChatSubscription$Author instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'profilePhotoUrl': instance.profilePhotoUrl,
       'username': instance.username,
+      'photoUrls': instance.photoUrls,
     };
 
 Chat$Subscription$ChatSubscription _$Chat$Subscription$ChatSubscriptionFromJson(

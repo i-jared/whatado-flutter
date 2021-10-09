@@ -23,9 +23,8 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void updatePhotos() async {
-    if (user == null || user!.imageUrl.isEmpty) return;
-    final imageUrl = user!.imageUrl;
+  Future<void> updatePhotos() async {
+    if (user == null) return;
     final initialPhotoData = await Future.wait(user!.photoUrls
         .map((url) async => (await NetworkAssetBundle(Uri.parse(url)).load(url))
             .buffer
@@ -79,7 +78,7 @@ class UserState extends ChangeNotifier {
     final query = UserGqlProvider();
     final response = await query.me();
     _user = response.data;
-    updatePhotos();
+    await updatePhotos();
     notifyListeners();
   }
 

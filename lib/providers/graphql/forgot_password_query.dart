@@ -6,10 +6,10 @@ import 'package:whatado/models/user.dart';
 import 'package:whatado/services/service_provider.dart';
 
 class ForgotPasswordGqlQuery {
-  Future<MyQueryResponse<User?>> forgotPassword({required String email}) async {
+  Future<MyQueryResponse<User?>> forgotPassword({required String phone}) async {
     final mutation = ForgotPasswordMutation(
       variables: ForgotPasswordArguments(
-        email: email,
+        phone: phone,
       ),
     );
     final result = await graphqlClientService.mutate(mutation);

@@ -121,7 +121,7 @@ class _ForumCardState extends State<ForumCard> {
                                         .map((eventUser) => CircleAvatar(
                                               radius: 13,
                                               backgroundImage: NetworkImage(
-                                                  eventUser.imageUrl),
+                                                  eventUser.photoUrls),
                                             ))
                                         .toList()),
                           ),

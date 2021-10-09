@@ -48,7 +48,7 @@ class SelectWannago extends StatelessWidget {
                           builder: (context) =>
                               UserProfile(initialUserData: wannago.user))),
                   leading: CircleAvatar(
-                    backgroundImage: NetworkImage(wannago.user.imageUrl),
+                    backgroundImage: NetworkImage(wannago.user.photoUrls),
                   ),
                   title: Text(wannago.user.name),
                   trailing: Container(

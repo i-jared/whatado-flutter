@@ -18,12 +18,12 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
   late bool loading;
-  String? emailError;
+  String? phoneError;
   String? nameError;
   String? passwordError;
   late TextEditingController passwordController;
   late TextEditingController confirmController;
-  late TextEditingController emailController;
+  late TextEditingController phoneController;
   late TextEditingController nameController;
 
   @override
@@ -31,7 +31,7 @@ class _SignupScreenState extends State<StatefulWidget> {
     super.initState();
     passwordController = TextEditingController();
     confirmController = TextEditingController();
-    emailController = TextEditingController();
+    phoneController = TextEditingController();
     nameController = TextEditingController();
 
     loading = false;
@@ -75,15 +75,15 @@ class _SignupScreenState extends State<StatefulWidget> {
                             ),
                             const SizedBox(height: 20),
                             MyTextField(
-                              hintText: 'Email',
-                              controller: emailController,
-                              errorText: emailError,
+                              hintText: 'Phone Number',
+                              controller: phoneController,
+                              errorText: phoneError,
                               validator: (val) {
                                 String pattern =
-                                    r'^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$';
+                                    r'^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$';
                                 RegExp regExp = new RegExp(pattern);
                                 if (val == null || !regExp.hasMatch(val))
-                                  return 'please enter a valid email';
+                                  return 'please enter a valid phone number';
                               },
                             ),
                             const SizedBox(height: 20),
@@ -154,13 +154,13 @@ class _SignupScreenState extends State<StatefulWidget> {
     final userState = Provider.of<UserState>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       setState(() {
-        emailError = null;
+        phoneError = null;
         passwordError = null;
         loading = true;
       });
       final loginMutation = RegisterGqlQuery();
       final res = await loginMutation.register(
-        email: emailController.text,
+        phone: phoneController.text,
         password: passwordController.text,
         name: nameController.text,
       );
@@ -173,8 +173,8 @@ class _SignupScreenState extends State<StatefulWidget> {
             MaterialPageRoute(builder: (ctx) => ChooseInterestsScreen()));
       } else {
         setState(() {
-          emailError = res.errors?.firstWhere(
-              (element) => element['field'] == 'email',
+          phoneError = res.errors?.firstWhere(
+              (element) => element['field'] == 'phone',
               orElse: () => {})['message'];
           passwordError = res.errors?.firstWhere(
               (element) => element['field'] == 'password',

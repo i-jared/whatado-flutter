@@ -11,7 +11,6 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
-import 'package:whatado/widgets/entry/select_profile_image_box.dart';
 import 'package:whatado/widgets/interests/input_interest_bubble.dart';
 
 class EditMyProfile extends StatefulWidget {
@@ -25,7 +24,6 @@ class _EditMyProfileState extends State<EditMyProfile> {
   late TextEditingController bioController;
   late TextEditingController textController;
   late List<Interest> interests;
-  late List<String> photos;
 
   bool listsEqual<T>(List<T>? one, List<T>? two) {
     bool val = true;
@@ -44,7 +42,6 @@ class _EditMyProfileState extends State<EditMyProfile> {
     textController = TextEditingController();
     textController.addListener(() => setState(() {}));
     interests = List<Interest>.from(widget.user!.interests);
-    photos = widget.user!.photoUrls ?? [];
   }
 
   @override
@@ -120,24 +117,6 @@ class _EditMyProfileState extends State<EditMyProfile> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: headingSpacing),
-                      Center(
-                          child: SelectProfileImageBox(
-                              imageWidth: imageWidth,
-                              photoBytes: userState.photo,
-                              onRemove: () {
-                                userState.photo = null;
-                              },
-                              onPressed: () async {
-                                final image =
-                                    await cloudStorageService.pickImage();
-                                if (image != null) {
-                                  final updatedPhotoData =
-                                      cloudStorageService.resize(file: image);
-                                  //update
-                                  userState.photo = updatedPhotoData;
-                                }
-                              })),
                       SizedBox(height: headingSpacing),
                       Text('BIO', style: headingStyle),
                       SizedBox(height: headingSpacing),

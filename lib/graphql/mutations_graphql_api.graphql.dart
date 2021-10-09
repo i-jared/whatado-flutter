@@ -39,11 +39,10 @@ mixin EventFieldsMixin {
 mixin EventUserMixin {
   late int id;
   late String username;
-  late String profilePhotoUrl;
+  late String photoUrls;
 }
 mixin UserFieldsMixin {
   late int id;
-  late String profilePhotoUrl;
   late String photoUrls;
   late String email;
   late bool verified;
@@ -212,7 +211,7 @@ class EventFieldsMixin$Creator extends JsonSerializable
       _$EventFieldsMixin$CreatorFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
 }
@@ -226,7 +225,7 @@ class EventFieldsMixin$Invited extends JsonSerializable
       _$EventFieldsMixin$InvitedFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
 }
@@ -240,7 +239,7 @@ class EventFieldsMixin$Wannago$User extends JsonSerializable
       _$EventFieldsMixin$Wannago$UserFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
 }
@@ -427,21 +426,15 @@ class BlockUser$Mutation extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class CreateChat$Mutation$CreateChat$Nodes$Author extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, EventUserMixin {
   CreateChat$Mutation$CreateChat$Nodes$Author();
 
   factory CreateChat$Mutation$CreateChat$Nodes$Author.fromJson(
           Map<String, dynamic> json) =>
       _$CreateChat$Mutation$CreateChat$Nodes$AuthorFromJson(json);
 
-  late int id;
-
-  late String username;
-
-  late String profilePhotoUrl;
-
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateChat$Mutation$CreateChat$Nodes$AuthorToJson(this);
@@ -1422,61 +1415,6 @@ class RemoveAccount$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class UpdateBio$Mutation$UpdateBio$Errors extends JsonSerializable
-    with EquatableMixin {
-  UpdateBio$Mutation$UpdateBio$Errors();
-
-  factory UpdateBio$Mutation$UpdateBio$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateBio$Mutation$UpdateBio$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateBio$Mutation$UpdateBio$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateBio$Mutation$UpdateBio extends JsonSerializable
-    with EquatableMixin {
-  UpdateBio$Mutation$UpdateBio();
-
-  factory UpdateBio$Mutation$UpdateBio.fromJson(Map<String, dynamic> json) =>
-      _$UpdateBio$Mutation$UpdateBioFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<UpdateBio$Mutation$UpdateBio$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() => _$UpdateBio$Mutation$UpdateBioToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateBio$Mutation extends JsonSerializable with EquatableMixin {
-  UpdateBio$Mutation();
-
-  factory UpdateBio$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$UpdateBio$MutationFromJson(json);
-
-  late UpdateBio$Mutation$UpdateBio updateBio;
-
-  @override
-  List<Object?> get props => [updateBio];
-  @override
-  Map<String, dynamic> toJson() => _$UpdateBio$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
     with EquatableMixin, EventFieldsMixin {
   UpdateEvent$Mutation$UpdateEvent$Nodes();
@@ -1710,63 +1648,6 @@ class UpdatePhotos$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class UpdateProfilePhoto$Mutation$UpdateProfilePhoto$Errors
-    extends JsonSerializable with EquatableMixin {
-  UpdateProfilePhoto$Mutation$UpdateProfilePhoto$Errors();
-
-  factory UpdateProfilePhoto$Mutation$UpdateProfilePhoto$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateProfilePhoto$Mutation$UpdateProfilePhoto$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateProfilePhoto$Mutation$UpdateProfilePhoto$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateProfilePhoto$Mutation$UpdateProfilePhoto extends JsonSerializable
-    with EquatableMixin {
-  UpdateProfilePhoto$Mutation$UpdateProfilePhoto();
-
-  factory UpdateProfilePhoto$Mutation$UpdateProfilePhoto.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateProfilePhoto$Mutation$UpdateProfilePhotoFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<UpdateProfilePhoto$Mutation$UpdateProfilePhoto$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateProfilePhoto$Mutation$UpdateProfilePhotoToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateProfilePhoto$Mutation extends JsonSerializable with EquatableMixin {
-  UpdateProfilePhoto$Mutation();
-
-  factory UpdateProfilePhoto$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$UpdateProfilePhoto$MutationFromJson(json);
-
-  late UpdateProfilePhoto$Mutation$UpdateProfilePhoto updateProfilePhoto;
-
-  @override
-  List<Object?> get props => [updateProfilePhoto];
-  @override
-  Map<String, dynamic> toJson() => _$UpdateProfilePhoto$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
     with EquatableMixin, UserFieldsMixin {
   UpdateUser$Mutation$UpdateUser$Nodes();
@@ -1778,7 +1659,6 @@ class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
   @override
   List<Object?> get props => [
         id,
-        profilePhotoUrl,
         photoUrls,
         email,
         verified,
@@ -1910,7 +1790,6 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
       this.email,
       this.id,
       this.photoUrls,
-      this.profilePhotoUrl,
       this.username,
       this.verified});
 
@@ -1932,24 +1811,13 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
 
   String? photoUrls;
 
-  String? profilePhotoUrl;
-
   String? username;
 
   bool? verified;
 
   @override
-  List<Object?> get props => [
-        bio,
-        birthday,
-        deviceId,
-        email,
-        id,
-        photoUrls,
-        profilePhotoUrl,
-        username,
-        verified
-      ];
+  List<Object?> get props =>
+      [bio, birthday, deviceId, email, id, photoUrls, username, verified];
   @override
   Map<String, dynamic> toJson() => _$UserFilterInputToJson(this);
 }
@@ -2361,7 +2229,7 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2631,7 +2499,7 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2829,24 +2697,9 @@ final CREATE_CHAT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                         arguments: [],
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'username'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'profilePhotoUrl'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
+                          FragmentSpreadNode(
+                              name: NameNode(value: 'EventUser'),
+                              directives: [])
                         ]))
                   ])),
               FieldNode(
@@ -2869,6 +2722,31 @@ final CREATE_CHAT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: null)
                   ]))
             ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ]))
 ]);
 
@@ -3125,7 +3003,7 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4198,101 +4076,6 @@ class RemoveAccountMutation
 }
 
 @JsonSerializable(explicitToJson: true)
-class UpdateBioArguments extends JsonSerializable with EquatableMixin {
-  UpdateBioArguments({required this.bio});
-
-  @override
-  factory UpdateBioArguments.fromJson(Map<String, dynamic> json) =>
-      _$UpdateBioArgumentsFromJson(json);
-
-  late String bio;
-
-  @override
-  List<Object?> get props => [bio];
-  @override
-  Map<String, dynamic> toJson() => _$UpdateBioArgumentsToJson(this);
-}
-
-final UPDATE_BIO_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'updateBio'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'bio')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'updateBio'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'bio'),
-                  value: VariableNode(name: NameNode(value: 'bio')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class UpdateBioMutation
-    extends GraphQLQuery<UpdateBio$Mutation, UpdateBioArguments> {
-  UpdateBioMutation({required this.variables});
-
-  @override
-  final DocumentNode document = UPDATE_BIO_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'updateBio';
-
-  @override
-  final UpdateBioArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  UpdateBio$Mutation parse(Map<String, dynamic> json) =>
-      UpdateBio$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
 class UpdateEventArguments extends JsonSerializable with EquatableMixin {
   UpdateEventArguments({required this.eventInput});
 
@@ -4525,7 +4308,7 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4651,101 +4434,6 @@ class UpdatePhotosMutation
 }
 
 @JsonSerializable(explicitToJson: true)
-class UpdateProfilePhotoArguments extends JsonSerializable with EquatableMixin {
-  UpdateProfilePhotoArguments({required this.url});
-
-  @override
-  factory UpdateProfilePhotoArguments.fromJson(Map<String, dynamic> json) =>
-      _$UpdateProfilePhotoArgumentsFromJson(json);
-
-  late String url;
-
-  @override
-  List<Object?> get props => [url];
-  @override
-  Map<String, dynamic> toJson() => _$UpdateProfilePhotoArgumentsToJson(this);
-}
-
-final UPDATE_PROFILE_PHOTO_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'updateProfilePhoto'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'url')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'updateProfilePhoto'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'url'),
-                  value: VariableNode(name: NameNode(value: 'url')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class UpdateProfilePhotoMutation extends GraphQLQuery<
-    UpdateProfilePhoto$Mutation, UpdateProfilePhotoArguments> {
-  UpdateProfilePhotoMutation({required this.variables});
-
-  @override
-  final DocumentNode document = UPDATE_PROFILE_PHOTO_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = 'updateProfilePhoto';
-
-  @override
-  final UpdateProfilePhotoArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  UpdateProfilePhoto$Mutation parse(Map<String, dynamic> json) =>
-      UpdateProfilePhoto$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
 class UpdateUserArguments extends JsonSerializable with EquatableMixin {
   UpdateUserArguments({required this.userInput});
 
@@ -4829,12 +4517,6 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
       selectionSet: SelectionSetNode(selections: [
         FieldNode(
             name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
             alias: null,
             arguments: [],
             directives: [],

@@ -8,6 +8,11 @@ import 'package:gql/ast.dart';
 import 'package:whatado/utils/coercers.dart';
 part 'queries_graphql_api.graphql.g.dart';
 
+mixin EventUserMixin {
+  late int id;
+  late String username;
+  late String photoUrls;
+}
 mixin EventFieldsMixin {
   late int id;
   @JsonKey(
@@ -36,14 +41,8 @@ mixin EventFieldsMixin {
   late Gender filterGender;
   late String filterAge;
 }
-mixin EventUserMixin {
-  late int id;
-  late String username;
-  late String profilePhotoUrl;
-}
 mixin UserFieldsMixin {
   late int id;
-  late String profilePhotoUrl;
   late String photoUrls;
   late String email;
   late bool verified;
@@ -60,20 +59,14 @@ mixin UserFieldsMixin {
 
 @JsonSerializable(explicitToJson: true)
 class Chats$Query$Chats$Nodes$Author extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, EventUserMixin {
   Chats$Query$Chats$Nodes$Author();
 
   factory Chats$Query$Chats$Nodes$Author.fromJson(Map<String, dynamic> json) =>
       _$Chats$Query$Chats$Nodes$AuthorFromJson(json);
 
-  late int id;
-
-  late String profilePhotoUrl;
-
-  late String username;
-
   @override
-  List<Object?> get props => [id, profilePhotoUrl, username];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$Chats$Query$Chats$Nodes$AuthorToJson(this);
 }
@@ -244,7 +237,7 @@ class EventFieldsMixin$Creator extends JsonSerializable
       _$EventFieldsMixin$CreatorFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
 }
@@ -258,7 +251,7 @@ class EventFieldsMixin$Invited extends JsonSerializable
       _$EventFieldsMixin$InvitedFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
 }
@@ -272,7 +265,7 @@ class EventFieldsMixin$Wannago$User extends JsonSerializable
       _$EventFieldsMixin$Wannago$UserFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
 }
@@ -441,21 +434,15 @@ class EventUserPreview$Query$UsersById$Errors extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class EventUserPreview$Query$UsersById$Nodes extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, EventUserMixin {
   EventUserPreview$Query$UsersById$Nodes();
 
   factory EventUserPreview$Query$UsersById$Nodes.fromJson(
           Map<String, dynamic> json) =>
       _$EventUserPreview$Query$UsersById$NodesFromJson(json);
 
-  late int id;
-
-  late String profilePhotoUrl;
-
-  late String username;
-
   @override
-  List<Object?> get props => [id, profilePhotoUrl, username];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() =>
       _$EventUserPreview$Query$UsersById$NodesToJson(this);
@@ -508,7 +495,7 @@ class FlaggedChats$Query$FlaggedChats$Nodes$Author extends JsonSerializable
       _$FlaggedChats$Query$FlaggedChats$Nodes$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() =>
       _$FlaggedChats$Query$FlaggedChats$Nodes$AuthorToJson(this);
@@ -699,7 +686,6 @@ class FlaggedUsers$Query$FlaggedUsers$Nodes extends JsonSerializable
   @override
   List<Object?> get props => [
         id,
-        profilePhotoUrl,
         photoUrls,
         email,
         verified,
@@ -1097,21 +1083,15 @@ class LastChat$Query$LastChat$Errors extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class LastChat$Query$LastChat$Nodes$Author extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, EventUserMixin {
   LastChat$Query$LastChat$Nodes$Author();
 
   factory LastChat$Query$LastChat$Nodes$Author.fromJson(
           Map<String, dynamic> json) =>
       _$LastChat$Query$LastChat$Nodes$AuthorFromJson(json);
 
-  late int id;
-
-  late String username;
-
-  late String profilePhotoUrl;
-
   @override
-  List<Object?> get props => [id, username, profilePhotoUrl];
+  List<Object?> get props => [id, username, photoUrls];
   @override
   Map<String, dynamic> toJson() =>
       _$LastChat$Query$LastChat$Nodes$AuthorToJson(this);
@@ -1187,7 +1167,6 @@ class Me$Query$Me$Nodes extends JsonSerializable
   @override
   List<Object?> get props => [
         id,
-        profilePhotoUrl,
         photoUrls,
         email,
         verified,
@@ -1491,24 +1470,26 @@ class SearchInterests$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class User$Query$User$Nodes extends JsonSerializable with EquatableMixin {
+class User$Query$User$Nodes extends JsonSerializable
+    with EquatableMixin, UserFieldsMixin {
   User$Query$User$Nodes();
 
   factory User$Query$User$Nodes.fromJson(Map<String, dynamic> json) =>
       _$User$Query$User$NodesFromJson(json);
 
-  late int id;
-
-  late String bio;
-
-  late String profilePhotoUrl;
-
-  late String photoUrls;
-
-  late String username;
-
   @override
-  List<Object?> get props => [id, bio, profilePhotoUrl, photoUrls, username];
+  List<Object?> get props => [
+        id,
+        photoUrls,
+        email,
+        verified,
+        username,
+        birthday,
+        bio,
+        interests,
+        myEvents,
+        chatNotifications
+      ];
   @override
   Map<String, dynamic> toJson() => _$User$Query$User$NodesToJson(this);
 }
@@ -1671,24 +1652,9 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         arguments: [],
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'profilePhotoUrl'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'username'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
+                          FragmentSpreadNode(
+                              name: NameNode(value: 'EventUser'),
+                              directives: [])
                         ]))
                   ])),
               FieldNode(
@@ -1711,6 +1677,31 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         selectionSet: null)
                   ]))
             ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ]))
 ]);
 
@@ -1964,7 +1955,7 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2244,7 +2235,7 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2343,26 +2334,35 @@ final EVENT_USER_PREVIEW_QUERY_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'profilePhotoUrl'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'username'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
                   ]))
             ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ]))
 ]);
 
@@ -2480,7 +2480,7 @@ final FLAGGED_CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2711,7 +2711,7 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2793,12 +2793,6 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
       selectionSet: SelectionSetNode(selections: [
         FieldNode(
             name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3315,27 +3309,37 @@ final LAST_CHAT_QUERY_DOCUMENT = DocumentNode(definitions: [
                         arguments: [],
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'username'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'profilePhotoUrl'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
+                          FragmentSpreadNode(
+                              name: NameNode(value: 'EventUser'),
+                              directives: [])
                         ]))
                   ]))
             ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ]))
 ]);
 
@@ -3415,12 +3419,6 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
       selectionSet: SelectionSetNode(selections: [
         FieldNode(
             name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3736,7 +3734,7 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'profilePhotoUrl'),
+            name: NameNode(value: 'photoUrls'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3997,36 +3995,8 @@ final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'bio'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'profilePhotoUrl'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'photoUrls'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'username'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'UserFields'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -4047,6 +4017,106 @@ final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: null)
                   ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'UserFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'email'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'verified'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'username'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'interests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'myEvents'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'chatNotifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'notifications'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'muted'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);

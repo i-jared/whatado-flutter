@@ -2,11 +2,7 @@ query user($id: Int!) {
   user(id: $id) {
     ok
     nodes {
-      id
-      bio
-      profilePhotoUrl
-      photoUrls
-      username
+      ...UserFields
     }
     errors {
       field

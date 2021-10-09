@@ -6,9 +6,7 @@ mutation createChat($chatInput: ChatInput!) {
       text
       createdAt
       author {
-        id
-        username
-        profilePhotoUrl
+      ...EventUser
       }
     }
     errors {

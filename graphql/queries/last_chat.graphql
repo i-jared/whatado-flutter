@@ -10,9 +10,7 @@ query lastChat($forumId: Int!) {
       text
       createdAt
       author {
-        id
-        username
-        profilePhotoUrl
+        ...EventUser
       }
     }
   }

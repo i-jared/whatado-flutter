@@ -9,8 +9,8 @@ class MyBottomSheet extends StatefulWidget {
 }
 
 class _MyBottomSheetState extends State<MyBottomSheet> {
-  late TextEditingController emailController;
-  String? emailError;
+  late TextEditingController phoneController;
+  String? phoneError;
   late bool success;
   late bool loading;
 
@@ -19,7 +19,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
     super.initState();
     loading = false;
     success = true;
-    emailController = TextEditingController();
+    phoneController = TextEditingController();
   }
 
   @override
@@ -36,14 +36,14 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
               SizedBox(height: 35),
               MyTextField(
-                hintText: 'Email or Username',
-                controller: emailController,
-                errorText: emailError,
+                hintText: 'Phone Number',
+                controller: phoneController,
+                errorText: phoneError,
               ),
               SizedBox(height: 50),
               RoundedArrowButton(
                   onPressed: loading || success ? () => null : forgotPassword,
-                  text: 'Send Email'),
+                  text: 'Send Text'),
               SizedBox(height: 30),
               if (loading)
                 Center(child: CircularProgressIndicator(value: null)),
@@ -59,19 +59,19 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
   void forgotPassword() async {
     setState(() => loading = true);
     final mutation = ForgotPasswordGqlQuery();
-    final response = await mutation.forgotPassword(email: emailController.text);
+    final response = await mutation.forgotPassword(phone: phoneController.text);
     setState(() => loading = false);
     if (response.ok) {
-      print('email sent');
+      print('text sent');
       setState(() {
         success = true;
-        emailError = null;
+        phoneError = null;
       });
-      emailController.clear();
+      phoneController.clear();
     } else {
       print(response);
-      emailError = response.errors?.firstWhere(
-          (element) => element['field'] == 'email',
+      phoneError = response.errors?.firstWhere(
+          (element) => element['field'] == 'phone',
           orElse: () => {})['message'];
     }
   }

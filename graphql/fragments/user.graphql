@@ -1,10 +1,9 @@
 fragment UserFields on User {
   id
-  profilePhotoUrl
   photoUrls
-  email
+  phone
   verified
-  username
+  name
   birthday
   bio
   interests {

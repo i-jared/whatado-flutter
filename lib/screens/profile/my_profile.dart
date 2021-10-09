@@ -30,7 +30,9 @@ class MyProfile extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CarouselSlider(
-          items: [Image.network(userState.user!.imageUrl)],
+          items: userState.user!.photoUrls
+              .map((url) => Image.network(url))
+              .toList(),
           options: CarouselOptions(
               height: MediaQuery.of(context).size.width,
               autoPlay: false,

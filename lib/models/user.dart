@@ -4,9 +4,8 @@ import 'package:whatado/models/interest.dart';
 
 class User {
   int id;
-  String email;
+  String phone;
   String name;
-  String imageUrl;
   String bio;
   String deviceId;
   List<Interest> interests;
@@ -14,9 +13,8 @@ class User {
   User({
     required this.id,
     required this.name,
-    required this.imageUrl,
     required this.deviceId,
-    this.email = '',
+    this.phone = '',
     this.bio = '',
     this.photoUrls = const [],
     this.interests = const [],
@@ -25,8 +23,7 @@ class User {
   factory User.fromGqlData(Map data) {
     return User(
         id: data['id'],
-        email: data['email'] ?? '',
-        imageUrl: data['profilePhotoUrl'] ?? '',
+        phone: data['phone'] ?? '',
         deviceId: data['deviceId'] ?? '',
         name: data['username'] ?? '',
         bio: data['bio'] ?? '',

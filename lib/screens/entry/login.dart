@@ -17,10 +17,10 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   late bool loading = false;
-  String? emailError;
+  String? phoneError;
   String? passwordError;
 
   @override
@@ -42,9 +42,9 @@ class _LoginScreenState extends State<StatefulWidget> {
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
               SizedBox(height: 35),
               MyTextField(
-                hintText: 'Email or Username',
-                controller: emailController,
-                errorText: emailError,
+                hintText: 'Phone Number',
+                controller: phoneController,
+                errorText: phoneError,
               ),
               const SizedBox(height: 20),
               MyPasswordField(
@@ -104,13 +104,13 @@ class _LoginScreenState extends State<StatefulWidget> {
     final userState = Provider.of<UserState>(context, listen: false);
     if (_formKey.currentState!.validate()) {
       setState(() {
-        emailError = null;
+        phoneError = null;
         passwordError = null;
         loading = true;
       });
       final loginMutation = LoginGqlQuery();
       final res = await loginMutation.login(
-          email: emailController.text, password: passwordController.text);
+          phone: phoneController.text, password: passwordController.text);
       setState(() => loading = false);
       if (res.ok) {
         authenticationService.updateTokens(
@@ -122,8 +122,8 @@ class _LoginScreenState extends State<StatefulWidget> {
             (route) => false);
       } else {
         setState(() {
-          emailError = res.errors?.firstWhere(
-              (element) => element['field'] == 'email',
+          phoneError = res.errors?.firstWhere(
+              (element) => element['field'] == 'phone',
               orElse: () => {})['message'];
           passwordError = res.errors?.firstWhere(
               (element) => element['field'] == 'password',

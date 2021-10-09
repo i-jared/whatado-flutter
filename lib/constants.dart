@@ -15,11 +15,10 @@ String get PROD => "PROD";
 // ignore: non_constant_identifier_names
 String get LOCAL_DEV => "LOCAL_DEV";
 
-//TODO: finish forgot password support and email
+//TODO: finish forgot password text
 
 //TODO: implement chatnotifications
 //TODO: populate customized feed
-//TODO: implement registration email and verification
 
 //TODO: create management console
 

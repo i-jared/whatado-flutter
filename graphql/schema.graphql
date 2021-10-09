@@ -236,17 +236,15 @@ type Mutation {
   deleteWannago(id: Int!): BoolApiResponse!
   flagEvent(eventId: Int!): BoolApiResponse!
   flagUser(userId: Int!): BoolApiResponse!
-  forgotPassword(email: String!): BoolApiResponse!
+  forgotPassword(phone: String!): BoolApiResponse!
   helloMutation(message: String!): Boolean!
   login(options: UserInput!): UserApiResponse!
   register(options: UserInput!): UserApiResponse!
   removeAccount: BoolApiResponse!
-  updateBio(bio: String!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventFilterInput!): EventApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
   updatePhotos(urls: [String!]!): BoolApiResponse!
-  updateProfilePhoto(url: String!): BoolApiResponse!
   updateUser(options: UserFilterInput!): UserApiResponse!
   updateWannago(declined: Boolean!, id: Int!): BoolApiResponse!
 }
@@ -292,7 +290,6 @@ type User {
   interests: [Interest!]!
   myEvents: [Event!]!
   photoUrls: String!
-  profilePhotoUrl: String!
   refreshCount: Int!
   updatedAt: DateTime!
   username: String!
@@ -313,7 +310,6 @@ input UserFilterInput {
   email: String
   id: Int
   photoUrls: String
-  profilePhotoUrl: String
   username: String
   verified: Boolean
 }

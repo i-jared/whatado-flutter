@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event_user.dart';
@@ -44,116 +45,110 @@ class _StateUserProfile extends State<UserProfile> {
             3.0;
     return Scaffold(
       appBar: DefaultAppBar(title: widget.initialUserData.name),
-      body: SingleChildScrollView(
-          child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: padding),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: headingSpacing),
-            Stack(
+      body: (user == null)
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Center(
-                    child: CircleAvatar(
-                  radius: 60,
-                  backgroundImage:
-                      NetworkImage(widget.initialUserData.imageUrl),
-                )),
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: PopupMenuButton(
-                      onSelected: (value) async {
-                        final userProvider = UserGqlProvider();
-                        if (value == 'report') {
-                          await userProvider
-                              .flagUser(widget.initialUserData.id);
-                        }
-                        if (value == 'block') {
-                          await userProvider
-                              .blockUser(widget.initialUserData.id);
-                        }
-                      },
-                      itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: Row(children: [
-                                Icon(Icons.report_outlined, size: 30),
-                                SizedBox(width: 10),
-                                Text('report')
-                              ]),
-                              value: 'report',
-                            ),
-                            PopupMenuItem(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.block_outlined,
-                                      color: Colors.red, size: 30),
-                                  SizedBox(width: 10),
-                                  Text('block',
-                                      style: TextStyle(color: Colors.red))
-                                ],
-                              ),
-                              value: 'block',
-                            )
-                          ]),
+                CarouselSlider(
+                  items:
+                      user!.photoUrls.map((url) => Image.network(url)).toList(),
+                  options: CarouselOptions(
+                      height: MediaQuery.of(context).size.width,
+                      autoPlay: false,
+                      enableInfiniteScroll: false,
+                      viewportFraction: 1.0),
                 ),
-              ],
-            ),
-            SizedBox(height: sectionSpacing),
-            Text('BIO', style: headingStyle),
-            SizedBox(height: headingSpacing),
-            loading || user == null
-                ? Shimmer.fromColors(
-                    baseColor: Colors.grey[200] ?? Colors.grey,
-                    highlightColor: Colors.white,
-                    child: Column(
+                SizedBox(height: sectionSpacing),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            color: Colors.grey[100],
-                            height: 15,
-                            width: MediaQuery.of(context).size.width),
-                        Container(
-                            margin: EdgeInsets.only(bottom: 5),
-                            color: Colors.grey[100],
-                            height: 15,
-                            width: MediaQuery.of(context).size.width),
-                        Container(
-                            color: Colors.grey[100], height: 15, width: 100),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: padding),
+                          child: Text('BIO', style: headingStyle),
+                        ),
+                        SizedBox(height: headingSpacing),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: padding),
+                          child: loading || user == null
+                              ? Shimmer.fromColors(
+                                  baseColor: Colors.grey[200] ?? Colors.grey,
+                                  highlightColor: Colors.white,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Container(
+                                          margin: EdgeInsets.only(bottom: 5),
+                                          color: Colors.grey[100],
+                                          height: 15,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width),
+                                      Container(
+                                          margin: EdgeInsets.only(bottom: 5),
+                                          color: Colors.grey[100],
+                                          height: 15,
+                                          width: MediaQuery.of(context)
+                                              .size
+                                              .width),
+                                      Container(
+                                          color: Colors.grey[100],
+                                          height: 15,
+                                          width: 100),
+                                    ],
+                                  ))
+                              : Text(user!.bio, style: TextStyle(fontSize: 18)),
+                        ),
                       ],
-                    ))
-                : Text(user!.bio, style: TextStyle(fontSize: 18)),
-            SizedBox(height: sectionSpacing),
-            Text('PHOTOS', style: headingStyle),
-            SizedBox(height: headingSpacing),
-            Wrap(
-              spacing: imageSpacing,
-              runSpacing: 10.0,
-              children: loading || user == null
-                  ? List<Widget>.generate(
-                      6,
-                      (i) => Shimmer.fromColors(
-                          baseColor: Colors.grey[200] ?? Colors.grey,
-                          highlightColor: Colors.white,
-                          child: Container(
-                              width: imageWidth,
-                              height: imageWidth,
-                              color: Colors.grey)))
-                  : user!.photoUrls
-                      .map((url) => Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10)),
-                          width: imageWidth,
-                          height: imageWidth,
-                          child: Image.network(url, fit: BoxFit.cover)))
-                      .toList(),
-            ),
-            SizedBox(height: 50),
-          ],
-        ),
-      )),
+                    ),
+                    PopupMenuButton(
+                        padding: EdgeInsets.zero,
+                        onSelected: (value) async {
+                          final userProvider = UserGqlProvider();
+                          if (value == 'report') {
+                            await userProvider
+                                .flagUser(widget.initialUserData.id);
+                          }
+                          if (value == 'block') {
+                            await userProvider
+                                .blockUser(widget.initialUserData.id);
+                          }
+                        },
+                        itemBuilder: (context) => [
+                              PopupMenuItem(
+                                child: Row(children: [
+                                  Icon(Icons.report_outlined, size: 30),
+                                  SizedBox(width: 10),
+                                  Text('report')
+                                ]),
+                                value: 'report',
+                              ),
+                              PopupMenuItem(
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.block_outlined,
+                                        color: Colors.red, size: 30),
+                                    SizedBox(width: 10),
+                                    Text('block',
+                                        style: TextStyle(color: Colors.red))
+                                  ],
+                                ),
+                                value: 'block',
+                              )
+                            ]),
+                  ],
+                ),
+                SizedBox(height: headingSpacing),
+              ],
+            )),
     );
   }
 }

@@ -7,10 +7,10 @@ import 'package:whatado/services/service_provider.dart';
 
 class LoginGqlQuery {
   Future<MyQueryResponse<User?>> login(
-      {required String email, required String password}) async {
+      {required String phone, required String password}) async {
     final mutation = LoginMutation(
       variables: LoginArguments(
-        userInput: UserInput(password: password, email: email),
+        userInput: UserInput(password: password, phone: phone),
       ),
     );
     final result = await graphqlClientService.mutate(mutation);

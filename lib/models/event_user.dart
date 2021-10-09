@@ -1,17 +1,17 @@
 class EventUser {
   int id;
   String name;
-  String imageUrl;
+  String photoUrls;
   EventUser({
     required this.id,
     required this.name,
-    required this.imageUrl,
+    required this.photoUrls,
   });
 
   factory EventUser.fromGqlData(Map data) {
     return EventUser(
       id: data['id'],
-      imageUrl: data['profilePhotoUrl'] ?? '',
+      photoUrls: data['photoUrls'] ?? '',
       name: data['username'] ?? '',
     );
   }

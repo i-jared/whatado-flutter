@@ -7,7 +7,7 @@ import 'package:whatado/services/service_provider.dart';
 
 class RegisterGqlQuery {
   Future<MyQueryResponse<User?>> register({
-    required String email,
+    required String phone,
     required String password,
     required String name,
   }) async {
@@ -15,7 +15,7 @@ class RegisterGqlQuery {
       variables: RegisterArguments(
         userInput: UserInput(
             password: password,
-            email: email,
+            phone: phone,
             username: name,
             birthday: DateTime.now()),
       ),
