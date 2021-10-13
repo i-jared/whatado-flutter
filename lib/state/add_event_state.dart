@@ -160,7 +160,7 @@ class AddEventState extends ChangeNotifier {
   }
 
   void savePhotoInfo() {
-    _scale = photoController.scale!.toDouble();
+    _scale = photoController.scale?.toDouble() ?? 0.0;
     _offsetx = photoController.position.dx;
     _offsety = photoController.position.dy;
   }
@@ -178,6 +178,11 @@ class AddEventState extends ChangeNotifier {
     timeController.clear();
     textModeController.clear();
     addInterestController.clear();
+    selectedInterests = [];
+    customInterests = [];
+    filterAgeEnd = 40;
+    filterAgeStart = 18;
+    selectedGender = Gender.both;
   }
 
   Future<Uint8List> cropResizeImage(double deviceWidth) async {
@@ -210,8 +215,4 @@ class AddEventState extends ChangeNotifier {
     final resizedFace = copyResize(rerotatedImage, height: 700, width: 700);
     return Uint8List.fromList(encodePng(resizedFace));
   }
-
-  void selectInterest(Interest interest) {}
-
-  void unselectInterest(Interest interest) {}
 }

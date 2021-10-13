@@ -1,7 +1,9 @@
+import 'dart:convert';
+
 class EventUser {
   int id;
   String name;
-  String photoUrls;
+  List<String> photoUrls;
   EventUser({
     required this.id,
     required this.name,
@@ -11,8 +13,8 @@ class EventUser {
   factory EventUser.fromGqlData(Map data) {
     return EventUser(
       id: data['id'],
-      photoUrls: data['photoUrls'] ?? '',
-      name: data['username'] ?? '',
+      photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
+      name: data['name'] ?? '',
     );
   }
 }

@@ -1,17 +1,17 @@
 class ChatNotification {
   int id;
-  int notifications;
+  DateTime lastAccessed;
   bool muted;
 
   ChatNotification({
     required this.id,
-    required this.notifications,
+    required this.lastAccessed,
     required this.muted,
   });
   factory ChatNotification.fromGqlData(Map data) {
     return ChatNotification(
         id: data['id'],
-        notifications: data['notifications'],
+        lastAccessed: DateTime.parse(data['lastAccessed']),
         muted: data['muted']);
   }
 }

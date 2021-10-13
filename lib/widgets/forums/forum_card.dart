@@ -1,13 +1,20 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/models/chat.dart';
+import 'package:whatado/models/chat_notification.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:whatado/providers/graphql/chat_provider.dart';
+import 'package:whatado/providers/graphql/events_provider.dart';
+import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/chats.dart';
+import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/state/home_state.dart';
 
 class ForumCard extends StatefulWidget {
   final Event event;
@@ -32,35 +39,73 @@ class _ForumCardState extends State<ForumCard> {
 
   @override
   Widget build(BuildContext context) {
+    final homeState = Provider.of<HomeState>(context);
     final hasImage =
         widget.event.imageUrl != null && widget.event.imageUrl!.isNotEmpty;
+    print(widget.forum.userNotification.lastAccessed);
+    final unread = widget.forum.chats.isEmpty
+        ? false
+        : widget.forum.userNotification.lastAccessed
+            .isBefore(widget.forum.chats.first.createdAt);
     return InkWell(
-      onTap: () => Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  Chats(event: widget.event, forum: widget.forum))),
+      onTap: () async {
+        final provider = ForumsGqlProvider();
+        final result = await provider.access(widget.forum.userNotification.id);
+        if (result.ok) homeState.accessForum(widget.forum);
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    Chats(event: widget.event, forum: widget.forum)));
+      },
       child: Stack(
         children: [
           Positioned(
             top: 0,
             right: 0,
             child: PopupMenuButton(
-                onSelected: (value) {
-                  if (value == 'mute') print('mute');
-                  if (value == 'leave') print('leave');
-                  // TODO: implement leave along with unsubscribing from FCM topic
+                onSelected: (value) async {
+                  if (value == 'unmute') {
+                    final provider = ForumsGqlProvider();
+                    await provider.unmute(widget.forum.userNotification.id);
+                    await FirebaseMessaging.instance
+                        .unsubscribeFromTopic('${widget.forum.id}');
+                  }
+                  if (value == 'mute') {
+                    final provider = ForumsGqlProvider();
+                    await provider.mute(widget.forum.userNotification.id);
+                    await FirebaseMessaging.instance
+                        .unsubscribeFromTopic('${widget.forum.id}');
+                  }
+                  if (value == 'leave') {
+                    final provider = EventsGqlProvider();
+                    await provider.removeInvite(
+                        eventId: widget.event.id, userId: loginService.userId!);
+                    await FirebaseMessaging.instance
+                        .unsubscribeFromTopic('${widget.forum.id}');
+                  }
                 },
                 itemBuilder: (context) => [
-                      PopupMenuItem(
-                        child: Row(children: [
-                          Icon(Icons.volume_off_outlined,
-                              color: Colors.blue, size: 30),
-                          SizedBox(width: 10),
-                          Text('mute', style: TextStyle(color: Colors.blue))
-                        ]),
-                        value: 'mute',
-                      ),
+                      if (widget.forum.userNotification.muted)
+                        PopupMenuItem(
+                          child: Row(children: [
+                            Icon(Icons.volume_up_outlined,
+                                color: Colors.blue, size: 30),
+                            SizedBox(width: 10),
+                            Text('unmute', style: TextStyle(color: Colors.blue))
+                          ]),
+                          value: 'unmute',
+                        ),
+                      if (!widget.forum.userNotification.muted)
+                        PopupMenuItem(
+                          child: Row(children: [
+                            Icon(Icons.volume_off_outlined,
+                                color: Colors.blue, size: 30),
+                            SizedBox(width: 10),
+                            Text('mute', style: TextStyle(color: Colors.blue))
+                          ]),
+                          value: 'mute',
+                        ),
                       PopupMenuItem(
                         child: Row(
                           children: [
@@ -98,7 +143,10 @@ class _ForumCardState extends State<ForumCard> {
                           Text(widget.event.title,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold)),
+                                  fontSize: 22,
+                                  fontWeight: unread
+                                      ? FontWeight.bold
+                                      : FontWeight.normal)),
                           SizedBox(height: 4),
                           Container(
                             height: 26,
@@ -121,7 +169,7 @@ class _ForumCardState extends State<ForumCard> {
                                         .map((eventUser) => CircleAvatar(
                                               radius: 13,
                                               backgroundImage: NetworkImage(
-                                                  eventUser.photoUrls),
+                                                  eventUser.photoUrls.first),
                                             ))
                                         .toList()),
                           ),
@@ -142,10 +190,12 @@ class _ForumCardState extends State<ForumCard> {
                                     )
                                   : Flexible(
                                       flex: 5,
-                                      child: Text(
-                                        lastMessage?.text ?? '',
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                      child: Text(lastMessage?.text ?? '',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: unread
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal)),
                                     ),
                               const SizedBox(width: 20),
                               loading
@@ -161,11 +211,16 @@ class _ForumCardState extends State<ForumCard> {
                                     )
                                   : Flexible(
                                       flex: 1,
-                                      child: Text(lastMessage != null
-                                          ? timeago.format(
-                                              lastMessage!.createdAt,
-                                              locale: 'en_short')
-                                          : ''),
+                                      child: Text(
+                                          lastMessage != null
+                                              ? timeago.format(
+                                                  lastMessage!.createdAt,
+                                                  locale: 'en_short')
+                                              : '',
+                                          style: TextStyle(
+                                              fontWeight: unread
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal)),
                                     ),
                             ],
                           )

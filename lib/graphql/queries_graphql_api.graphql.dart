@@ -56,6 +56,16 @@ mixin UserFieldsMixin {
   late List<UserFieldsMixin$MyEvents> myEvents;
   late List<UserFieldsMixin$ChatNotifications> chatNotifications;
 }
+mixin ForumFieldsMixin {
+  late int id;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+  late List<ForumFieldsMixin$UserNotifications> userNotifications;
+  late List<ForumFieldsMixin$Chats> chats;
+  late ForumFieldsMixin$Event event;
+}
 
 @JsonSerializable(explicitToJson: true)
 class Chats$Query$Chats$Nodes$Author extends JsonSerializable
@@ -798,12 +808,15 @@ class UserFieldsMixin$ChatNotifications extends JsonSerializable
           Map<String, dynamic> json) =>
       _$UserFieldsMixin$ChatNotificationsFromJson(json);
 
-  late int notifications;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime lastAccessed;
 
   late bool muted;
 
   @override
-  List<Object?> get props => [notifications, muted];
+  List<Object?> get props => [lastAccessed, muted];
   @override
   Map<String, dynamic> toJson() =>
       _$UserFieldsMixin$ChatNotificationsToJson(this);
@@ -830,63 +843,16 @@ class Forum$Query$ForumsByEventId$Errors extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
-class Forum$Query$ForumsByEventId$Nodes$UserNotifications
-    extends JsonSerializable with EquatableMixin {
-  Forum$Query$ForumsByEventId$Nodes$UserNotifications();
-
-  factory Forum$Query$ForumsByEventId$Nodes$UserNotifications.fromJson(
-          Map<String, dynamic> json) =>
-      _$Forum$Query$ForumsByEventId$Nodes$UserNotificationsFromJson(json);
-
-  late int id;
-
-  late int notifications;
-
-  late bool muted;
-
-  @override
-  List<Object?> get props => [id, notifications, muted];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Forum$Query$ForumsByEventId$Nodes$UserNotificationsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class Forum$Query$ForumsByEventId$Nodes$Event extends JsonSerializable
-    with EquatableMixin {
-  Forum$Query$ForumsByEventId$Nodes$Event();
-
-  factory Forum$Query$ForumsByEventId$Nodes$Event.fromJson(
-          Map<String, dynamic> json) =>
-      _$Forum$Query$ForumsByEventId$Nodes$EventFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$Forum$Query$ForumsByEventId$Nodes$EventToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class Forum$Query$ForumsByEventId$Nodes extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, ForumFieldsMixin {
   Forum$Query$ForumsByEventId$Nodes();
 
   factory Forum$Query$ForumsByEventId$Nodes.fromJson(
           Map<String, dynamic> json) =>
       _$Forum$Query$ForumsByEventId$NodesFromJson(json);
 
-  late int id;
-
-  late List<Forum$Query$ForumsByEventId$Nodes$UserNotifications>
-      userNotifications;
-
-  late Forum$Query$ForumsByEventId$Nodes$Event event;
-
   @override
-  List<Object?> get props => [id, userNotifications, event];
+  List<Object?> get props => [id, updatedAt, userNotifications, chats, event];
   @override
   Map<String, dynamic> toJson() =>
       _$Forum$Query$ForumsByEventId$NodesToJson(this);
@@ -927,6 +893,68 @@ class Forum$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class ForumFieldsMixin$UserNotifications extends JsonSerializable
+    with EquatableMixin {
+  ForumFieldsMixin$UserNotifications();
+
+  factory ForumFieldsMixin$UserNotifications.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForumFieldsMixin$UserNotificationsFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime lastAccessed;
+
+  late bool muted;
+
+  @override
+  List<Object?> get props => [id, lastAccessed, muted];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForumFieldsMixin$UserNotificationsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumFieldsMixin$Chats extends JsonSerializable with EquatableMixin {
+  ForumFieldsMixin$Chats();
+
+  factory ForumFieldsMixin$Chats.fromJson(Map<String, dynamic> json) =>
+      _$ForumFieldsMixin$ChatsFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  late String text;
+
+  @override
+  List<Object?> get props => [id, createdAt, text];
+  @override
+  Map<String, dynamic> toJson() => _$ForumFieldsMixin$ChatsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumFieldsMixin$Event extends JsonSerializable with EquatableMixin {
+  ForumFieldsMixin$Event();
+
+  factory ForumFieldsMixin$Event.fromJson(Map<String, dynamic> json) =>
+      _$ForumFieldsMixin$EventFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$ForumFieldsMixin$EventToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class ForumsByEventId$Query$ForumsByEventId$Errors extends JsonSerializable
     with EquatableMixin {
   ForumsByEventId$Query$ForumsByEventId$Errors();
@@ -947,65 +975,16 @@ class ForumsByEventId$Query$ForumsByEventId$Errors extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
-class ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications
-    extends JsonSerializable with EquatableMixin {
-  ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications();
-
-  factory ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications.fromJson(
-          Map<String, dynamic> json) =>
-      _$ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotificationsFromJson(
-          json);
-
-  late int id;
-
-  late int notifications;
-
-  late bool muted;
-
-  @override
-  List<Object?> get props => [id, notifications, muted];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotificationsToJson(
-          this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class ForumsByEventId$Query$ForumsByEventId$Nodes$Event extends JsonSerializable
-    with EquatableMixin {
-  ForumsByEventId$Query$ForumsByEventId$Nodes$Event();
-
-  factory ForumsByEventId$Query$ForumsByEventId$Nodes$Event.fromJson(
-          Map<String, dynamic> json) =>
-      _$ForumsByEventId$Query$ForumsByEventId$Nodes$EventFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$ForumsByEventId$Query$ForumsByEventId$Nodes$EventToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class ForumsByEventId$Query$ForumsByEventId$Nodes extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, ForumFieldsMixin {
   ForumsByEventId$Query$ForumsByEventId$Nodes();
 
   factory ForumsByEventId$Query$ForumsByEventId$Nodes.fromJson(
           Map<String, dynamic> json) =>
       _$ForumsByEventId$Query$ForumsByEventId$NodesFromJson(json);
 
-  late int id;
-
-  late List<ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications>
-      userNotifications;
-
-  late ForumsByEventId$Query$ForumsByEventId$Nodes$Event event;
-
   @override
-  List<Object?> get props => [id, userNotifications, event];
+  List<Object?> get props => [id, updatedAt, userNotifications, chats, event];
   @override
   Map<String, dynamic> toJson() =>
       _$ForumsByEventId$Query$ForumsByEventId$NodesToJson(this);
@@ -2872,7 +2851,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                  name: NameNode(value: 'notifications'),
+                  name: NameNode(value: 'lastAccessed'),
                   alias: null,
                   arguments: [],
                   directives: [],
@@ -2974,51 +2953,91 @@ final FORUM_QUERY_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'userNotifications'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'notifications'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'muted'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'event'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ]))
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'ForumFields'), directives: [])
                   ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'ForumFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Forum'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'userNotifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'lastAccessed'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'muted'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'chats'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'createdAt'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'text'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'event'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);
@@ -3114,51 +3133,91 @@ final FORUMS_BY_EVENT_ID_QUERY_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'userNotifications'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'notifications'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null),
-                          FieldNode(
-                              name: NameNode(value: 'muted'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ])),
-                    FieldNode(
-                        name: NameNode(value: 'event'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ]))
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'ForumFields'), directives: [])
                   ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'ForumFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Forum'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'userNotifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'lastAccessed'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'muted'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'chats'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'createdAt'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'text'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'event'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);
@@ -3498,7 +3557,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                  name: NameNode(value: 'notifications'),
+                  name: NameNode(value: 'lastAccessed'),
                   alias: null,
                   arguments: [],
                   directives: [],
@@ -4106,7 +4165,7 @@ final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                  name: NameNode(value: 'notifications'),
+                  name: NameNode(value: 'lastAccessed'),
                   alias: null,
                   arguments: [],
                   directives: [],

@@ -62,8 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
         }
       } else if (message.data['type'] == 'chat') {
         final homeState = Provider.of<HomeState>(context, listen: false);
-        // homeState.addChatNotification();
-        // TODO add chat notification? i guess. but how to load chat notifications on start?
+        await homeState.getMyForums();
       }
     });
 

@@ -67,7 +67,7 @@ class _EventDetailsState extends State<EventDetails> {
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: NetworkImage(event.creator.photoUrls),
+                  backgroundImage: NetworkImage(event.creator.photoUrls.first),
                 ),
                 SizedBox(width: 20),
                 Text(event.creator.name)
@@ -90,8 +90,8 @@ class _EventDetailsState extends State<EventDetails> {
                                             initialUserData: eventUser))),
                                 child: CircleAvatar(
                                     radius: circleRadius,
-                                    backgroundImage:
-                                        NetworkImage(eventUser.photoUrls)),
+                                    backgroundImage: NetworkImage(
+                                        eventUser.photoUrls.first)),
                               ))
                           .toList()
                           .take(5),
@@ -114,7 +114,7 @@ class _EventDetailsState extends State<EventDetails> {
                             child: CircleAvatar(
                                 radius: circleRadius,
                                 backgroundImage:
-                                    NetworkImage(eventUser.photoUrls)),
+                                    NetworkImage(eventUser.photoUrls.first)),
                           ))
                       .toList(),
             ),

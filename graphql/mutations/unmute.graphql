@@ -1,0 +1,10 @@
+mutation unmute($id: Int!) {
+  unmute(id: $id) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes
+  }
+}

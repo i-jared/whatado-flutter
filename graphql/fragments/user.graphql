@@ -14,7 +14,7 @@ fragment UserFields on User {
     id
   }
   chatNotifications {
-    notifications
+    lastAccessed
     muted
   }
 }

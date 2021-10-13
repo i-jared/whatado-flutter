@@ -36,6 +36,12 @@ class _HomeAppBarState extends State<HomeAppBar> {
       homeState.turnPage(newPageNo);
     }
 
+    final unread = homeState.myForums?.any((forum) => forum.chats.isEmpty
+            ? false
+            : forum.userNotification.lastAccessed
+                .isBefore(forum.chats.first.createdAt)) ??
+        false;
+
     final switcherHeight = 42.0;
     final switcherMargin = (widget.preferredSize.height - switcherHeight) / 2;
     return AppBar(
@@ -127,24 +133,42 @@ class _HomeAppBarState extends State<HomeAppBar> {
                             )),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 12),
-                      child: Showcase(
-                        key: homeState.showcase_3,
-                        title: 'Forums',
-                        description: 'Chat with your event groups in forums!',
-                        titleTextStyle: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
-                        descTextStyle: TextStyle(fontSize: 18),
-                        child: IconButton(
-                            padding: EdgeInsets.zero,
-                            onPressed: () => turnPage(2),
-                            icon: Icon(
-                              Icons.forum_outlined,
-                              size: 30,
-                              color: iconColor(2),
-                            )),
-                      ),
+                    Stack(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(right: 12),
+                          child: Showcase(
+                            key: homeState.showcase_3,
+                            title: 'Forums',
+                            description:
+                                'Chat with your event groups in forums!',
+                            titleTextStyle: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                            descTextStyle: TextStyle(fontSize: 18),
+                            child: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () => turnPage(2),
+                                icon: Icon(
+                                  Icons.forum_outlined,
+                                  size: 30,
+                                  color: iconColor(2),
+                                )),
+                          ),
+                        ),
+                        if (unread)
+                          Positioned(
+                            top: 5,
+                            right: 15,
+                            child: Container(
+                              height: 10,
+                              width: 10,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: Color(0xffe85c3f),
+                              ),
+                            ),
+                          )
+                      ],
                     )
                   ],
                 ),

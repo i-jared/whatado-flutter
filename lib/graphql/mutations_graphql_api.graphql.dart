@@ -41,6 +41,16 @@ mixin EventUserMixin {
   late String name;
   late String photoUrls;
 }
+mixin ForumFieldsMixin {
+  late int id;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+  late List<ForumFieldsMixin$UserNotifications> userNotifications;
+  late List<ForumFieldsMixin$Chats> chats;
+  late ForumFieldsMixin$Event event;
+}
 mixin UserFieldsMixin {
   late int id;
   late String photoUrls;
@@ -712,38 +722,16 @@ class EventInput extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class CreateForum$Mutation$CreateForum$Nodes$Event extends JsonSerializable
-    with EquatableMixin {
-  CreateForum$Mutation$CreateForum$Nodes$Event();
-
-  factory CreateForum$Mutation$CreateForum$Nodes$Event.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateForum$Mutation$CreateForum$Nodes$EventFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateForum$Mutation$CreateForum$Nodes$EventToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class CreateForum$Mutation$CreateForum$Nodes extends JsonSerializable
-    with EquatableMixin {
+    with EquatableMixin, ForumFieldsMixin {
   CreateForum$Mutation$CreateForum$Nodes();
 
   factory CreateForum$Mutation$CreateForum$Nodes.fromJson(
           Map<String, dynamic> json) =>
       _$CreateForum$Mutation$CreateForum$NodesFromJson(json);
 
-  late int id;
-
-  late CreateForum$Mutation$CreateForum$Nodes$Event event;
-
   @override
-  List<Object?> get props => [id, event];
+  List<Object?> get props => [id, updatedAt, userNotifications, chats, event];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateForum$Mutation$CreateForum$NodesToJson(this);
@@ -804,6 +792,68 @@ class CreateForum$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [createForum];
   @override
   Map<String, dynamic> toJson() => _$CreateForum$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumFieldsMixin$UserNotifications extends JsonSerializable
+    with EquatableMixin {
+  ForumFieldsMixin$UserNotifications();
+
+  factory ForumFieldsMixin$UserNotifications.fromJson(
+          Map<String, dynamic> json) =>
+      _$ForumFieldsMixin$UserNotificationsFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime lastAccessed;
+
+  late bool muted;
+
+  @override
+  List<Object?> get props => [id, lastAccessed, muted];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$ForumFieldsMixin$UserNotificationsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumFieldsMixin$Chats extends JsonSerializable with EquatableMixin {
+  ForumFieldsMixin$Chats();
+
+  factory ForumFieldsMixin$Chats.fromJson(Map<String, dynamic> json) =>
+      _$ForumFieldsMixin$ChatsFromJson(json);
+
+  late int id;
+
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+
+  late String text;
+
+  @override
+  List<Object?> get props => [id, createdAt, text];
+  @override
+  Map<String, dynamic> toJson() => _$ForumFieldsMixin$ChatsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumFieldsMixin$Event extends JsonSerializable with EquatableMixin {
+  ForumFieldsMixin$Event();
+
+  factory ForumFieldsMixin$Event.fromJson(Map<String, dynamic> json) =>
+      _$ForumFieldsMixin$EventFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$ForumFieldsMixin$EventToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1770,12 +1820,15 @@ class UserFieldsMixin$ChatNotifications extends JsonSerializable
           Map<String, dynamic> json) =>
       _$UserFieldsMixin$ChatNotificationsFromJson(json);
 
-  late int notifications;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime lastAccessed;
 
   late bool muted;
 
   @override
-  List<Object?> get props => [notifications, muted];
+  List<Object?> get props => [lastAccessed, muted];
   @override
   Map<String, dynamic> toJson() =>
       _$UserFieldsMixin$ChatNotificationsToJson(this);
@@ -1789,6 +1842,7 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
       this.deviceId,
       this.id,
       this.name,
+      this.password,
       this.phone,
       this.photoUrls,
       this.verified});
@@ -1809,6 +1863,8 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
 
   String? name;
 
+  String? password;
+
   String? phone;
 
   String? photoUrls;
@@ -1817,7 +1873,7 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
 
   @override
   List<Object?> get props =>
-      [bio, birthday, deviceId, id, name, phone, photoUrls, verified];
+      [bio, birthday, deviceId, id, name, password, phone, photoUrls, verified];
   @override
   Map<String, dynamic> toJson() => _$UserFilterInputToJson(this);
 }
@@ -1877,6 +1933,308 @@ class UpdateWannago$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [updateWannago];
   @override
   Map<String, dynamic> toJson() => _$UpdateWannago$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidation$Mutation$CheckValidation$Errors extends JsonSerializable
+    with EquatableMixin {
+  CheckValidation$Mutation$CheckValidation$Errors();
+
+  factory CheckValidation$Mutation$CheckValidation$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$CheckValidation$Mutation$CheckValidation$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CheckValidation$Mutation$CheckValidation$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidation$Mutation$CheckValidation extends JsonSerializable
+    with EquatableMixin {
+  CheckValidation$Mutation$CheckValidation();
+
+  factory CheckValidation$Mutation$CheckValidation.fromJson(
+          Map<String, dynamic> json) =>
+      _$CheckValidation$Mutation$CheckValidationFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<CheckValidation$Mutation$CheckValidation$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CheckValidation$Mutation$CheckValidationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidation$Mutation extends JsonSerializable with EquatableMixin {
+  CheckValidation$Mutation();
+
+  factory CheckValidation$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CheckValidation$MutationFromJson(json);
+
+  late CheckValidation$Mutation$CheckValidation checkValidation;
+
+  @override
+  List<Object?> get props => [checkValidation];
+  @override
+  Map<String, dynamic> toJson() => _$CheckValidation$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Access$Mutation$Access$Errors extends JsonSerializable
+    with EquatableMixin {
+  Access$Mutation$Access$Errors();
+
+  factory Access$Mutation$Access$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Access$Mutation$Access$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Access$Mutation$Access$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Access$Mutation$Access extends JsonSerializable with EquatableMixin {
+  Access$Mutation$Access();
+
+  factory Access$Mutation$Access.fromJson(Map<String, dynamic> json) =>
+      _$Access$Mutation$AccessFromJson(json);
+
+  bool? ok;
+
+  List<Access$Mutation$Access$Errors>? errors;
+
+  bool? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() => _$Access$Mutation$AccessToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Access$Mutation extends JsonSerializable with EquatableMixin {
+  Access$Mutation();
+
+  factory Access$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$Access$MutationFromJson(json);
+
+  late Access$Mutation$Access access;
+
+  @override
+  List<Object?> get props => [access];
+  @override
+  Map<String, dynamic> toJson() => _$Access$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Mute$Mutation$Mute$Errors extends JsonSerializable with EquatableMixin {
+  Mute$Mutation$Mute$Errors();
+
+  factory Mute$Mutation$Mute$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Mute$Mutation$Mute$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Mute$Mutation$Mute$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Mute$Mutation$Mute extends JsonSerializable with EquatableMixin {
+  Mute$Mutation$Mute();
+
+  factory Mute$Mutation$Mute.fromJson(Map<String, dynamic> json) =>
+      _$Mute$Mutation$MuteFromJson(json);
+
+  bool? ok;
+
+  List<Mute$Mutation$Mute$Errors>? errors;
+
+  bool? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() => _$Mute$Mutation$MuteToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Mute$Mutation extends JsonSerializable with EquatableMixin {
+  Mute$Mutation();
+
+  factory Mute$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$Mute$MutationFromJson(json);
+
+  late Mute$Mutation$Mute mute;
+
+  @override
+  List<Object?> get props => [mute];
+  @override
+  Map<String, dynamic> toJson() => _$Mute$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Unmute$Mutation$Unmute$Errors extends JsonSerializable
+    with EquatableMixin {
+  Unmute$Mutation$Unmute$Errors();
+
+  factory Unmute$Mutation$Unmute$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Unmute$Mutation$Unmute$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Unmute$Mutation$Unmute$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Unmute$Mutation$Unmute extends JsonSerializable with EquatableMixin {
+  Unmute$Mutation$Unmute();
+
+  factory Unmute$Mutation$Unmute.fromJson(Map<String, dynamic> json) =>
+      _$Unmute$Mutation$UnmuteFromJson(json);
+
+  bool? ok;
+
+  List<Unmute$Mutation$Unmute$Errors>? errors;
+
+  bool? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() => _$Unmute$Mutation$UnmuteToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Unmute$Mutation extends JsonSerializable with EquatableMixin {
+  Unmute$Mutation();
+
+  factory Unmute$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$Unmute$MutationFromJson(json);
+
+  late Unmute$Mutation$Unmute unmute;
+
+  @override
+  List<Object?> get props => [unmute];
+  @override
+  Map<String, dynamic> toJson() => _$Unmute$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RemoveInvite$Mutation$RemoveInvite$Nodes extends JsonSerializable
+    with EquatableMixin, EventFieldsMixin {
+  RemoveInvite$Mutation$RemoveInvite$Nodes();
+
+  factory RemoveInvite$Mutation$RemoveInvite$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$RemoveInvite$Mutation$RemoveInvite$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        title,
+        description,
+        creator,
+        invited,
+        wannago,
+        time,
+        location,
+        pictureUrl,
+        relatedInterests,
+        filterLocation,
+        filterRadius,
+        filterGender,
+        filterAge
+      ];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RemoveInvite$Mutation$RemoveInvite$Errors extends JsonSerializable
+    with EquatableMixin {
+  RemoveInvite$Mutation$RemoveInvite$Errors();
+
+  factory RemoveInvite$Mutation$RemoveInvite$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$RemoveInvite$Mutation$RemoveInvite$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RemoveInvite$Mutation$RemoveInvite$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RemoveInvite$Mutation$RemoveInvite extends JsonSerializable
+    with EquatableMixin {
+  RemoveInvite$Mutation$RemoveInvite();
+
+  factory RemoveInvite$Mutation$RemoveInvite.fromJson(
+          Map<String, dynamic> json) =>
+      _$RemoveInvite$Mutation$RemoveInviteFromJson(json);
+
+  bool? ok;
+
+  RemoveInvite$Mutation$RemoveInvite$Nodes? nodes;
+
+  List<RemoveInvite$Mutation$RemoveInvite$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RemoveInvite$Mutation$RemoveInviteToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RemoveInvite$Mutation extends JsonSerializable with EquatableMixin {
+  RemoveInvite$Mutation();
+
+  factory RemoveInvite$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$RemoveInvite$MutationFromJson(json);
+
+  late RemoveInvite$Mutation$RemoveInvite removeInvite;
+
+  @override
+  List<Object?> get props => [removeInvite];
+  @override
+  Map<String, dynamic> toJson() => _$RemoveInvite$MutationToJson(this);
 }
 
 enum Gender {
@@ -3082,25 +3440,8 @@ final CREATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'id'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'event'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: SelectionSetNode(selections: [
-                          FieldNode(
-                              name: NameNode(value: 'id'),
-                              alias: null,
-                              arguments: [],
-                              directives: [],
-                              selectionSet: null)
-                        ]))
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'ForumFields'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -3121,6 +3462,88 @@ final CREATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: null)
                   ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'ForumFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Forum'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'userNotifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'lastAccessed'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'muted'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'chats'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'createdAt'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'text'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'event'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);
@@ -4596,7 +5019,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FieldNode(
-                  name: NameNode(value: 'notifications'),
+                  name: NameNode(value: 'lastAccessed'),
                   alias: null,
                   arguments: [],
                   directives: [],
@@ -4734,4 +5157,648 @@ class UpdateWannagoMutation
   @override
   UpdateWannago$Mutation parse(Map<String, dynamic> json) =>
       UpdateWannago$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidationArguments extends JsonSerializable with EquatableMixin {
+  CheckValidationArguments({required this.code});
+
+  @override
+  factory CheckValidationArguments.fromJson(Map<String, dynamic> json) =>
+      _$CheckValidationArgumentsFromJson(json);
+
+  late String code;
+
+  @override
+  List<Object?> get props => [code];
+  @override
+  Map<String, dynamic> toJson() => _$CheckValidationArgumentsToJson(this);
+}
+
+final CHECK_VALIDATION_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'checkValidation'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'code')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'checkValidation'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'code'),
+                  value: VariableNode(name: NameNode(value: 'code')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class CheckValidationMutation
+    extends GraphQLQuery<CheckValidation$Mutation, CheckValidationArguments> {
+  CheckValidationMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CHECK_VALIDATION_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'checkValidation';
+
+  @override
+  final CheckValidationArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CheckValidation$Mutation parse(Map<String, dynamic> json) =>
+      CheckValidation$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AccessArguments extends JsonSerializable with EquatableMixin {
+  AccessArguments({required this.id});
+
+  @override
+  factory AccessArguments.fromJson(Map<String, dynamic> json) =>
+      _$AccessArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$AccessArgumentsToJson(this);
+}
+
+final ACCESS_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'access'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'access'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class AccessMutation extends GraphQLQuery<Access$Mutation, AccessArguments> {
+  AccessMutation({required this.variables});
+
+  @override
+  final DocumentNode document = ACCESS_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'access';
+
+  @override
+  final AccessArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Access$Mutation parse(Map<String, dynamic> json) =>
+      Access$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class MuteArguments extends JsonSerializable with EquatableMixin {
+  MuteArguments({required this.id});
+
+  @override
+  factory MuteArguments.fromJson(Map<String, dynamic> json) =>
+      _$MuteArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$MuteArgumentsToJson(this);
+}
+
+final MUTE_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'mute'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'mute'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class MuteMutation extends GraphQLQuery<Mute$Mutation, MuteArguments> {
+  MuteMutation({required this.variables});
+
+  @override
+  final DocumentNode document = MUTE_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'mute';
+
+  @override
+  final MuteArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Mute$Mutation parse(Map<String, dynamic> json) =>
+      Mute$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UnmuteArguments extends JsonSerializable with EquatableMixin {
+  UnmuteArguments({required this.id});
+
+  @override
+  factory UnmuteArguments.fromJson(Map<String, dynamic> json) =>
+      _$UnmuteArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$UnmuteArgumentsToJson(this);
+}
+
+final UNMUTE_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'unmute'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'unmute'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class UnmuteMutation extends GraphQLQuery<Unmute$Mutation, UnmuteArguments> {
+  UnmuteMutation({required this.variables});
+
+  @override
+  final DocumentNode document = UNMUTE_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'unmute';
+
+  @override
+  final UnmuteArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Unmute$Mutation parse(Map<String, dynamic> json) =>
+      Unmute$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RemoveInviteArguments extends JsonSerializable with EquatableMixin {
+  RemoveInviteArguments({required this.eventId, required this.userId});
+
+  @override
+  factory RemoveInviteArguments.fromJson(Map<String, dynamic> json) =>
+      _$RemoveInviteArgumentsFromJson(json);
+
+  late int eventId;
+
+  late int userId;
+
+  @override
+  List<Object?> get props => [eventId, userId];
+  @override
+  Map<String, dynamic> toJson() => _$RemoveInviteArgumentsToJson(this);
+}
+
+final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'removeInvite'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'userId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'removeInvite'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'eventId'),
+                  value: VariableNode(name: NameNode(value: 'eventId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'userId'),
+                  value: VariableNode(name: NameNode(value: 'userId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventFields'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'createdAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'title'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'creator'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'invited'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'wannago'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'declined'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'user'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ]))
+            ])),
+        FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'pictureUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'filterLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterRadius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterGender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class RemoveInviteMutation
+    extends GraphQLQuery<RemoveInvite$Mutation, RemoveInviteArguments> {
+  RemoveInviteMutation({required this.variables});
+
+  @override
+  final DocumentNode document = REMOVE_INVITE_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'removeInvite';
+
+  @override
+  final RemoveInviteArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  RemoveInvite$Mutation parse(Map<String, dynamic> json) =>
+      RemoveInvite$Mutation.fromJson(json);
 }

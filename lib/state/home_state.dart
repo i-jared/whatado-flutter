@@ -1,8 +1,11 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/models/chat.dart';
+import 'package:whatado/models/chat_notification.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
+import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 
@@ -26,6 +29,7 @@ class HomeState extends ChangeNotifier {
   List<Event>? allEvents;
   List<Event>? myEvents;
   List<Forum>? myForums;
+  List<ChatNotification>? myChatNotifications;
 
   HomeState()
       : _appBarPageNo = 0,
@@ -150,6 +154,12 @@ class HomeState extends ChangeNotifier {
     }
   }
 
+  Future<Chat?> getLastChat(int forumId) async {
+    final chatQuery = ChatGqlProvider();
+    final chatResult = await chatQuery.lastChat(forumId);
+    return chatResult.data;
+  }
+
   void updateEvent(Event event) {
     int index = allEvents!.indexWhere((val) => val.id == event.id);
     if (index == -1) {
@@ -174,6 +184,16 @@ class HomeState extends ChangeNotifier {
       return;
     }
     myEvents![myindex] = event;
+    notifyListeners();
+  }
+
+  void accessForum(Forum forum) {
+    final int myindex = myForums!.indexWhere((val) => val.id == forum.id);
+    if (myindex == -1) {
+      return;
+    }
+    forum.userNotification.lastAccessed = DateTime.now();
+    myForums![myindex] = forum;
     notifyListeners();
   }
 }

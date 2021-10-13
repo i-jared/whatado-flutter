@@ -1,0 +1,10 @@
+mutation access($id: Int!) {
+  access(id: $id) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes
+  }
+}

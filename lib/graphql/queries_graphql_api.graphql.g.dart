@@ -777,14 +777,15 @@ Map<String, dynamic> _$UserFieldsMixin$MyEventsToJson(
 UserFieldsMixin$ChatNotifications _$UserFieldsMixin$ChatNotificationsFromJson(
     Map<String, dynamic> json) {
   return UserFieldsMixin$ChatNotifications()
-    ..notifications = json['notifications'] as int
+    ..lastAccessed =
+        fromGraphQLDateTimeToDartDateTime(json['lastAccessed'] as String)
     ..muted = json['muted'] as bool;
 }
 
 Map<String, dynamic> _$UserFieldsMixin$ChatNotificationsToJson(
         UserFieldsMixin$ChatNotifications instance) =>
     <String, dynamic>{
-      'notifications': instance.notifications,
+      'lastAccessed': fromDartDateTimeToGraphQLDateTime(instance.lastAccessed),
       'muted': instance.muted,
     };
 
@@ -802,55 +803,30 @@ Map<String, dynamic> _$Forum$Query$ForumsByEventId$ErrorsToJson(
       'message': instance.message,
     };
 
-Forum$Query$ForumsByEventId$Nodes$UserNotifications
-    _$Forum$Query$ForumsByEventId$Nodes$UserNotificationsFromJson(
-        Map<String, dynamic> json) {
-  return Forum$Query$ForumsByEventId$Nodes$UserNotifications()
-    ..id = json['id'] as int
-    ..notifications = json['notifications'] as int
-    ..muted = json['muted'] as bool;
-}
-
-Map<String, dynamic>
-    _$Forum$Query$ForumsByEventId$Nodes$UserNotificationsToJson(
-            Forum$Query$ForumsByEventId$Nodes$UserNotifications instance) =>
-        <String, dynamic>{
-          'id': instance.id,
-          'notifications': instance.notifications,
-          'muted': instance.muted,
-        };
-
-Forum$Query$ForumsByEventId$Nodes$Event
-    _$Forum$Query$ForumsByEventId$Nodes$EventFromJson(
-        Map<String, dynamic> json) {
-  return Forum$Query$ForumsByEventId$Nodes$Event()..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$Forum$Query$ForumsByEventId$Nodes$EventToJson(
-        Forum$Query$ForumsByEventId$Nodes$Event instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
 Forum$Query$ForumsByEventId$Nodes _$Forum$Query$ForumsByEventId$NodesFromJson(
     Map<String, dynamic> json) {
   return Forum$Query$ForumsByEventId$Nodes()
     ..id = json['id'] as int
+    ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
     ..userNotifications = (json['userNotifications'] as List<dynamic>)
-        .map((e) =>
-            Forum$Query$ForumsByEventId$Nodes$UserNotifications.fromJson(
-                e as Map<String, dynamic>))
+        .map((e) => ForumFieldsMixin$UserNotifications.fromJson(
+            e as Map<String, dynamic>))
         .toList()
-    ..event = Forum$Query$ForumsByEventId$Nodes$Event.fromJson(
-        json['event'] as Map<String, dynamic>);
+    ..chats = (json['chats'] as List<dynamic>)
+        .map((e) => ForumFieldsMixin$Chats.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..event =
+        ForumFieldsMixin$Event.fromJson(json['event'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$Forum$Query$ForumsByEventId$NodesToJson(
         Forum$Query$ForumsByEventId$Nodes instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'userNotifications':
           instance.userNotifications.map((e) => e.toJson()).toList(),
+      'chats': instance.chats.map((e) => e.toJson()).toList(),
       'event': instance.event.toJson(),
     };
 
@@ -887,6 +863,50 @@ Map<String, dynamic> _$Forum$QueryToJson(Forum$Query instance) =>
       'forumsByEventId': instance.forumsByEventId.toJson(),
     };
 
+ForumFieldsMixin$UserNotifications _$ForumFieldsMixin$UserNotificationsFromJson(
+    Map<String, dynamic> json) {
+  return ForumFieldsMixin$UserNotifications()
+    ..id = json['id'] as int
+    ..lastAccessed =
+        fromGraphQLDateTimeToDartDateTime(json['lastAccessed'] as String)
+    ..muted = json['muted'] as bool;
+}
+
+Map<String, dynamic> _$ForumFieldsMixin$UserNotificationsToJson(
+        ForumFieldsMixin$UserNotifications instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'lastAccessed': fromDartDateTimeToGraphQLDateTime(instance.lastAccessed),
+      'muted': instance.muted,
+    };
+
+ForumFieldsMixin$Chats _$ForumFieldsMixin$ChatsFromJson(
+    Map<String, dynamic> json) {
+  return ForumFieldsMixin$Chats()
+    ..id = json['id'] as int
+    ..createdAt = fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+    ..text = json['text'] as String;
+}
+
+Map<String, dynamic> _$ForumFieldsMixin$ChatsToJson(
+        ForumFieldsMixin$Chats instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'text': instance.text,
+    };
+
+ForumFieldsMixin$Event _$ForumFieldsMixin$EventFromJson(
+    Map<String, dynamic> json) {
+  return ForumFieldsMixin$Event()..id = json['id'] as int;
+}
+
+Map<String, dynamic> _$ForumFieldsMixin$EventToJson(
+        ForumFieldsMixin$Event instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
 ForumsByEventId$Query$ForumsByEventId$Errors
     _$ForumsByEventId$Query$ForumsByEventId$ErrorsFromJson(
         Map<String, dynamic> json) {
@@ -902,58 +922,31 @@ Map<String, dynamic> _$ForumsByEventId$Query$ForumsByEventId$ErrorsToJson(
       'message': instance.message,
     };
 
-ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications
-    _$ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotificationsFromJson(
-        Map<String, dynamic> json) {
-  return ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications()
-    ..id = json['id'] as int
-    ..notifications = json['notifications'] as int
-    ..muted = json['muted'] as bool;
-}
-
-Map<String, dynamic>
-    _$ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotificationsToJson(
-            ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications
-                instance) =>
-        <String, dynamic>{
-          'id': instance.id,
-          'notifications': instance.notifications,
-          'muted': instance.muted,
-        };
-
-ForumsByEventId$Query$ForumsByEventId$Nodes$Event
-    _$ForumsByEventId$Query$ForumsByEventId$Nodes$EventFromJson(
-        Map<String, dynamic> json) {
-  return ForumsByEventId$Query$ForumsByEventId$Nodes$Event()
-    ..id = json['id'] as int;
-}
-
-Map<String, dynamic> _$ForumsByEventId$Query$ForumsByEventId$Nodes$EventToJson(
-        ForumsByEventId$Query$ForumsByEventId$Nodes$Event instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-    };
-
 ForumsByEventId$Query$ForumsByEventId$Nodes
     _$ForumsByEventId$Query$ForumsByEventId$NodesFromJson(
         Map<String, dynamic> json) {
   return ForumsByEventId$Query$ForumsByEventId$Nodes()
     ..id = json['id'] as int
+    ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
     ..userNotifications = (json['userNotifications'] as List<dynamic>)
-        .map((e) =>
-            ForumsByEventId$Query$ForumsByEventId$Nodes$UserNotifications
-                .fromJson(e as Map<String, dynamic>))
+        .map((e) => ForumFieldsMixin$UserNotifications.fromJson(
+            e as Map<String, dynamic>))
         .toList()
-    ..event = ForumsByEventId$Query$ForumsByEventId$Nodes$Event.fromJson(
-        json['event'] as Map<String, dynamic>);
+    ..chats = (json['chats'] as List<dynamic>)
+        .map((e) => ForumFieldsMixin$Chats.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..event =
+        ForumFieldsMixin$Event.fromJson(json['event'] as Map<String, dynamic>);
 }
 
 Map<String, dynamic> _$ForumsByEventId$Query$ForumsByEventId$NodesToJson(
         ForumsByEventId$Query$ForumsByEventId$Nodes instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'userNotifications':
           instance.userNotifications.map((e) => e.toJson()).toList(),
+      'chats': instance.chats.map((e) => e.toJson()).toList(),
       'event': instance.event.toJson(),
     };
 

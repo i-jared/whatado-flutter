@@ -28,7 +28,7 @@ class EventTopBar extends StatelessWidget {
                         UserProfile(initialUserData: event.creator))),
         child: CircleAvatar(
           radius: 17,
-          backgroundImage: NetworkImage(event.creator.photoUrls),
+          backgroundImage: NetworkImage(event.creator.photoUrls.first),
         ),
       ),
       SizedBox(width: 10),

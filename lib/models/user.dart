@@ -25,7 +25,7 @@ class User {
         id: data['id'],
         phone: data['phone'] ?? '',
         deviceId: data['deviceId'] ?? '',
-        name: data['username'] ?? '',
+        name: data['name'] ?? '',
         bio: data['bio'] ?? '',
         photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
         interests: List<Interest>.from(data['interests']

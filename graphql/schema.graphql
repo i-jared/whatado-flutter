@@ -44,11 +44,20 @@ input ChatInput {
 }
 
 type ChatNotification {
+  createdAt: DateTime!
   forum: Forum!
   id: Int!
+  lastAccessed: DateTime!
   muted: Boolean!
-  notifications: Int!
+  updatedAt: DateTime!
   user: User!
+}
+
+type ChatNotificationsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [ChatNotification!]
+  ok: Boolean
 }
 
 type ChatsApiResponse {
@@ -147,10 +156,10 @@ type FieldError {
 
 type Forum {
   chats: [Chat!]!
-  createdAt: String!
+  createdAt: DateTime!
   event: Event!
   id: Int!
-  updatedAt: String!
+  updatedAt: DateTime!
   userNotifications: [ChatNotification!]!
 }
 
@@ -221,11 +230,12 @@ type JwtResponse {
 }
 
 type Mutation {
+  access(id: Int!): BoolApiResponse!
   addInterests(interestsText: [String!]!): BoolApiResponse!
   addInvite(eventId: Int!, userId: Int!): EventApiResponse!
   addWannago(eventId: Int!, userId: Int!): EventApiResponse!
   blockUser(userId: Int!): BoolApiResponse!
-  changeUsername(username: String!): BoolApiResponse!
+  checkValidation(code: String!): BoolApiResponse!
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
   createForum(eventId: Int!): ForumApiResponse!
@@ -239,8 +249,11 @@ type Mutation {
   forgotPassword(phone: String!): BoolApiResponse!
   helloMutation(message: String!): Boolean!
   login(options: UserInput!): UserApiResponse!
+  mute(id: Int!): BoolApiResponse!
   register(options: UserInput!): UserApiResponse!
   removeAccount: BoolApiResponse!
+  removeInvite(eventId: Int!, userId: Int!): EventApiResponse!
+  unmute(id: Int!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventFilterInput!): EventApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
@@ -263,6 +276,7 @@ type Query {
   interest(id: Int!): InterestApiResponse!
   lastChat(forumId: Int!): ChatApiResponse!
   me: UserApiResponse!
+  myChatNotifications: ChatNotificationsApiResponse!
   myEvents: EventsApiResponse!
   popularInterests: InterestsApiResponse!
   searchInterests(partial: String!): InterestsApiResponse!
@@ -274,7 +288,6 @@ type Query {
 type Subscription {
   chatSubscription(forumId: Int!): Chat!
   helloSubscription: String!
-  me_sub: String!
 }
 
 type User {
@@ -309,6 +322,7 @@ input UserFilterInput {
   deviceId: String
   id: Int
   name: String
+  password: String
   phone: String
   photoUrls: String
   verified: Boolean
@@ -329,8 +343,10 @@ type UsersApiResponse {
 }
 
 type Wannago {
+  createdAt: String!
   declined: Boolean!
   event: Event!
   id: Int!
+  updatedAt: String!
   user: User!
 }

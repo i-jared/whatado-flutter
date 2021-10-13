@@ -2,10 +2,7 @@ mutation createForum($eventId: Int!) {
   createForum(eventId: $eventId) {
     ok
     nodes {
-      id
-      event {
-        id
-      }
+      ...ForumFields
     }
     errors {
       field

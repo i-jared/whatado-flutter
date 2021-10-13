@@ -18,6 +18,10 @@ class Chat {
         id: data['id'],
         createdAt: DateTime.parse(data['createdAt']),
         text: data['text'],
-        author: EventUser.fromGqlData(data['author']));
+        author: data['author'] == null
+            ? EventUser(id: 0, name: 'jared', photoUrls: [
+                'https://styles.redditmedia.com/t5_2ldvug/styles/communityIcon_aq22b2qb50u41.png'
+              ])
+            : EventUser.fromGqlData(data['author']));
   }
 }

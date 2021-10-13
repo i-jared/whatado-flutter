@@ -1,0 +1,10 @@
+mutation checkValidation($code: String!) {
+  checkValidation(code: $code) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

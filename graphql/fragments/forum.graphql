@@ -1,0 +1,17 @@
+fragment ForumFields on Forum {
+  id
+  updatedAt
+  userNotifications {
+    id
+    lastAccessed
+    muted
+  }
+  chats {
+    id
+    createdAt
+    text
+  }
+  event {
+    id
+  }
+}

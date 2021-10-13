@@ -92,9 +92,9 @@ class _TargetAudienceState extends State<TargetAudience> {
                   selectedInterests: eventState.selectedInterests,
                   onSelected: (bool notSelected, Interest interest) {
                     if (notSelected) {
-                      eventState.selectInterest(interest);
+                      eventState.addInterest(interest);
                     } else {
-                      eventState.unselectInterest(interest);
+                      eventState.removeInterest(interest);
                     }
                   }),
               SizedBox(height: 35),

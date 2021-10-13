@@ -1,0 +1,10 @@
+mutation mute($id: Int!) {
+  mute(id: $id) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes
+  }
+}

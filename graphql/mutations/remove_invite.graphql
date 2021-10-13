@@ -1,0 +1,12 @@
+mutation removeInvite($eventId: Int!, $userId: Int!) {
+  removeInvite(eventId: $eventId, userId: $userId) {
+    ok
+    nodes {
+      ...EventFields 
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

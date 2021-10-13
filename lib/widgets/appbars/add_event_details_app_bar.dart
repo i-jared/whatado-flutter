@@ -88,9 +88,6 @@ class AddEventDetailsAppBar extends StatelessWidget
                               .map((i) => i.title)
                               .toList())
                       ]);
-                      print('jcl this');
-                      print(interests.errors);
-                      print(interests.data);
 
                       // make query
                       final query = CreateEventGqlQuery();
@@ -119,8 +116,6 @@ class AddEventDetailsAppBar extends StatelessWidget
                         invitedIds: [],
                         // TODO: add group size / tags
                       ));
-                      await homeState.getMyEvents();
-                      await homeState.getMyForums();
                     } catch (e) {
                       print(e.toString());
                       eventState.clear();
@@ -128,9 +123,11 @@ class AddEventDetailsAppBar extends StatelessWidget
                       eventState.postLoading = false;
                       return;
                     }
-                    eventState.clear();
                     eventState.succeeded = true;
                     eventState.postLoading = false;
+                    await homeState.getMyEvents();
+                    await homeState.getMyForums();
+                    eventState.clear();
                   },
           ),
         ),

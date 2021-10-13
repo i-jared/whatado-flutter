@@ -215,6 +215,32 @@ class EventsGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<Event>> removeInvite(
+      {required int eventId, required int userId}) async {
+    final mutation = AddInviteMutation(
+        variables: AddInviteArguments(eventId: eventId, userId: userId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+    print('add Invite $result');
+    final root = result.data?['removeInvite'];
+    final data = root != null && root['nodes'] != null
+        ? Event.fromGqlData(root?['nodes'])
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<Event>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<bool>> updateWannago(
       {required int wannagoId, required bool declined}) async {
     final mutation = UpdateWannagoMutation(

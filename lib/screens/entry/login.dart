@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/login_query.dart';
 import 'package:whatado/screens/entry/signup.dart';
@@ -7,7 +8,6 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/bottom_sheet.dart';
-import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -17,9 +17,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController phoneController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  late bool loading = false;
+  String phoneNumber = '';
+  bool loading = false;
   String? phoneError;
   String? passwordError;
 
@@ -41,10 +41,15 @@ class _LoginScreenState extends State<StatefulWidget> {
               Text('Log In',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
               SizedBox(height: 35),
-              MyTextField(
-                hintText: 'Phone Number',
-                controller: phoneController,
-                errorText: phoneError,
+              InternationalPhoneNumberInput(
+                initialValue: PhoneNumber(isoCode: 'US'),
+                locale: 'US',
+                autoValidateMode: AutovalidateMode.onUserInteraction,
+                onInputChanged: (PhoneNumber value) {
+                  setState(() {
+                    phoneNumber = value.toString();
+                  });
+                },
               ),
               const SizedBox(height: 20),
               MyPasswordField(
@@ -110,7 +115,7 @@ class _LoginScreenState extends State<StatefulWidget> {
       });
       final loginMutation = LoginGqlQuery();
       final res = await loginMutation.login(
-          phone: phoneController.text, password: passwordController.text);
+          phone: phoneNumber, password: passwordController.text);
       setState(() => loading = false);
       if (res.ok) {
         authenticationService.updateTokens(
@@ -122,11 +127,8 @@ class _LoginScreenState extends State<StatefulWidget> {
             (route) => false);
       } else {
         setState(() {
-          phoneError = res.errors?.firstWhere(
-              (element) => element['field'] == 'phone',
-              orElse: () => {})['message'];
           passwordError = res.errors?.firstWhere(
-              (element) => element['field'] == 'password',
+              (element) => element['field'] == 'login',
               orElse: () => {})['message'];
         });
         passwordController.clear();

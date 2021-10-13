@@ -69,7 +69,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                       Text(
                           '''First, add some of your interests to help connect you with like-minded people.''',
                           style: paragraphStyle),
-                      SizedBox(height: headingSpacing),
+                      SizedBox(height: sectionSpacing),
                       InterestWrap(
                           interests: setupState.popularInterests,
                           selectedInterests: setupState.selectedInterests,

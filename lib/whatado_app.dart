@@ -10,6 +10,7 @@ import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/welcome.dart';
 import 'package:whatado/screens/entry/write_bio.dart';
 import 'package:whatado/screens/home/home.dart';
+import 'package:whatado/screens/home/shimmer_screen.dart';
 import 'package:whatado/services/environment_config.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/services/startup.dart';
@@ -99,13 +100,15 @@ class _MyAppState extends State<MyApp> {
                         child: Image.asset('assets/logo_badge.png'),
                       ))
                   : loginService.loggedIn
-                      ? userState.user?.interests.isEmpty ?? true
-                          ? ChooseInterestsScreen()
-                          : userState.user?.bio.isEmpty ?? true
-                              ? WriteBioScreen()
-                              : userState.user?.photoUrls.isEmpty ?? true
-                                  ? SelectPhotosScreen()
-                                  : HomeScreen()
+                      ? userState.user == null
+                          ? ShimmerScreen()
+                          : userState.user!.interests.isEmpty
+                              ? ChooseInterestsScreen()
+                              : userState.user!.bio.isEmpty
+                                  ? WriteBioScreen()
+                                  : userState.user!.photoUrls.isEmpty
+                                      ? SelectPhotosScreen()
+                                      : HomeScreen()
                       : WelcomeScreen(),
             );
           }),

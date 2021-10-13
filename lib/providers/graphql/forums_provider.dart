@@ -81,4 +81,70 @@ class ForumsGqlProvider {
       errors: errors,
     );
   }
+
+  Future<MyQueryResponse<bool>> access(int forumId) async {
+    final query = AccessMutation(variables: AccessArguments(id: forumId));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['access'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> unmute(int cnId) async {
+    final query = UnmuteMutation(variables: UnmuteArguments(id: cnId));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['unmute'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> mute(int cnId) async {
+    final query = MuteMutation(variables: MuteArguments(id: cnId));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['mute'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
 }

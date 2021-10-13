@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/register_query.dart';
-import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/login.dart';
+import 'package:whatado/screens/entry/validate.dart';
 import 'package:whatado/screens/profile/eula.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
@@ -74,10 +75,14 @@ class _SignupScreenState extends State<StatefulWidget> {
                                   : null,
                             ),
                             const SizedBox(height: 20),
-                            MyTextField(
-                              hintText: 'Phone Number',
-                              controller: phoneController,
-                              errorText: phoneError,
+                            InternationalPhoneNumberInput(
+                              initialValue: PhoneNumber(isoCode: 'US'),
+                              locale: 'US',
+                              autoValidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              onInputChanged: (PhoneNumber value) {},
+                              textFieldController: phoneController,
+                              errorMessage: phoneError,
                               validator: (val) {
                                 String pattern =
                                     r'^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$';
@@ -170,7 +175,7 @@ class _SignupScreenState extends State<StatefulWidget> {
         userState.getUser();
         setState(() => loading = false);
         Navigator.push(context,
-            MaterialPageRoute(builder: (ctx) => ChooseInterestsScreen()));
+            MaterialPageRoute(builder: (ctx) => ValidatePhoneScreen()));
       } else {
         setState(() {
           phoneError = res.errors?.firstWhere(
