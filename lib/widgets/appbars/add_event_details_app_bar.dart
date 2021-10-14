@@ -123,11 +123,11 @@ class AddEventDetailsAppBar extends StatelessWidget
                       eventState.postLoading = false;
                       return;
                     }
-                    eventState.succeeded = true;
-                    eventState.postLoading = false;
                     await homeState.getMyEvents();
                     await homeState.getMyForums();
                     eventState.clear();
+                    eventState.succeeded = true;
+                    eventState.postLoading = false;
                   },
           ),
         ),

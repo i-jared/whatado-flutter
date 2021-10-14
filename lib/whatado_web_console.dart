@@ -10,6 +10,7 @@ import 'package:whatado/services/environment_config.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/services/startup.dart';
 import 'package:flutter/services.dart';
+import 'package:whatado/state/user_state.dart';
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,41 +47,43 @@ class _MyConsoleState extends State<MyConsole> {
     return RefreshConfiguration(
       headerTriggerDistance: 120,
       child: MultiProvider(
-        providers: [
-          // ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
-          // ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
-          // ChangeNotifierProvider<UserState>(create: (_) => UserState()),
-          // ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
-        ],
-        child: MaterialApp(
-          title: 'Whatado Console',
-          theme: ThemeData(
-              primarySwatch: MaterialColor(
-            0xFF000000,
-            <int, Color>{
-              50: Color(0xFF000000),
-              100: Color(0xFF000000),
-              200: Color(0xFF000000),
-              300: Color(0xFF000000),
-              400: Color(0xFF000000),
-              500: Color(0xFF000000),
-              600: Color(0xFF000000),
-              700: Color(0xFF000000),
-              800: Color(0xFF000000),
-              900: Color(0xFF000000),
-            },
-          )),
-          home: loading
-              ? Container(
-                  color: Colors.grey[50],
-                  child: Center(
-                    child: Image.asset('assets/logo_badge.png'),
-                  ))
-              : loginService.loggedIn
-                  ? ConsoleHomeScreen()
-                  : LoginScreen(),
-        ),
-      ),
+          providers: [
+            // ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
+            // ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
+            // ChangeNotifierProvider<UserState>(create: (_) => UserState()),
+            // ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
+          ],
+          builder: (BuildContext context, _) {
+            final userState = Provider.of<UserState>(context);
+            return MaterialApp(
+              title: 'Whatado Console',
+              theme: ThemeData(
+                  primarySwatch: MaterialColor(
+                0xFF000000,
+                <int, Color>{
+                  50: Color(0xFF000000),
+                  100: Color(0xFF000000),
+                  200: Color(0xFF000000),
+                  300: Color(0xFF000000),
+                  400: Color(0xFF000000),
+                  500: Color(0xFF000000),
+                  600: Color(0xFF000000),
+                  700: Color(0xFF000000),
+                  800: Color(0xFF000000),
+                  900: Color(0xFF000000),
+                },
+              )),
+              home: loading
+                  ? Container(
+                      color: Colors.grey[50],
+                      child: Center(
+                        child: Image.asset('assets/logo_badge.png'),
+                      ))
+                  : userState.loggedIn
+                      ? ConsoleHomeScreen()
+                      : LoginScreen(),
+            );
+          }),
     );
   }
 }

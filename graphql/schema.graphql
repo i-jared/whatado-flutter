@@ -253,6 +253,7 @@ type Mutation {
   register(options: UserInput!): UserApiResponse!
   removeAccount: BoolApiResponse!
   removeInvite(eventId: Int!, userId: Int!): EventApiResponse!
+  sendCode: BoolApiResponse!
   unmute(id: Int!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventFilterInput!): EventApiResponse!

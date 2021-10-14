@@ -1,0 +1,10 @@
+mutation sendCode {
+  sendCode {
+    nodes
+    ok
+    errors {
+      field
+      message
+    }
+  }
+}

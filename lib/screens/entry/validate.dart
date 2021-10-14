@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
@@ -49,7 +50,7 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                       SizedBox(height: sectionSpacing),
                       Text('Phone Verification', style: headingStyle),
                       SizedBox(height: headingSpacing),
-                      Text('Enter the 5-digit code sent we texted to you.',
+                      Text('Enter the 5-digit code we texted to you.',
                           style: paragraphStyle),
                       SizedBox(height: headingSpacing),
                       MyTextField(
@@ -60,6 +61,21 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                         errorText: errorText,
                       ),
                       SizedBox(height: sectionSpacing),
+                      TextButton(
+                        style: ButtonStyle(
+                            padding:
+                                MaterialStateProperty.all(EdgeInsets.zero)),
+                        child: Text(
+                          'Resend Code',
+                          style: TextStyle(color: Color(0xffe85c3f)),
+                        ),
+                        onPressed: () async {
+                          final provider = UserGqlProvider();
+                          final result = await provider.sendCode();
+                          print(result.errors);
+                          print(result.data);
+                        },
+                      ),
                       Spacer(),
                       Center(
                         child: RoundedArrowButton(
@@ -70,6 +86,8 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                             final result = await provider
                                 .checkValidation(otpController.text);
                             if (result.ok) {
+                              await provider
+                                  .updateUser(UserFilterInput(verified: true));
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

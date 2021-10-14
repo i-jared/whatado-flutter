@@ -1978,6 +1978,50 @@ Map<String, dynamic> _$RemoveInvite$MutationToJson(
       'removeInvite': instance.removeInvite.toJson(),
     };
 
+SendCode$Mutation$SendCode$Errors _$SendCode$Mutation$SendCode$ErrorsFromJson(
+    Map<String, dynamic> json) {
+  return SendCode$Mutation$SendCode$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$SendCode$Mutation$SendCode$ErrorsToJson(
+        SendCode$Mutation$SendCode$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+SendCode$Mutation$SendCode _$SendCode$Mutation$SendCodeFromJson(
+    Map<String, dynamic> json) {
+  return SendCode$Mutation$SendCode()
+    ..nodes = json['nodes'] as bool?
+    ..ok = json['ok'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => SendCode$Mutation$SendCode$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$SendCode$Mutation$SendCodeToJson(
+        SendCode$Mutation$SendCode instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'ok': instance.ok,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+SendCode$Mutation _$SendCode$MutationFromJson(Map<String, dynamic> json) {
+  return SendCode$Mutation()
+    ..sendCode = SendCode$Mutation$SendCode.fromJson(
+        json['sendCode'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$SendCode$MutationToJson(SendCode$Mutation instance) =>
+    <String, dynamic>{
+      'sendCode': instance.sendCode.toJson(),
+    };
+
 AddInterestsArguments _$AddInterestsArgumentsFromJson(
     Map<String, dynamic> json) {
   return AddInterestsArguments(

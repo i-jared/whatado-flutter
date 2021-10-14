@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/select_photos.dart';
+import 'package:whatado/screens/entry/validate.dart';
 import 'package:whatado/screens/entry/welcome.dart';
 import 'package:whatado/screens/entry/write_bio.dart';
 import 'package:whatado/screens/home/home.dart';
@@ -102,13 +103,15 @@ class _MyAppState extends State<MyApp> {
                   : loginService.loggedIn
                       ? userState.user == null
                           ? ShimmerScreen()
-                          : userState.user!.interests.isEmpty
-                              ? ChooseInterestsScreen()
-                              : userState.user!.bio.isEmpty
-                                  ? WriteBioScreen()
-                                  : userState.user!.photoUrls.isEmpty
-                                      ? SelectPhotosScreen()
-                                      : HomeScreen()
+                          : !userState.user!.verified
+                              ? ValidatePhoneScreen()
+                              : userState.user!.interests.isEmpty
+                                  ? ChooseInterestsScreen()
+                                  : userState.user!.bio.isEmpty
+                                      ? WriteBioScreen()
+                                      : userState.user!.photoUrls.isEmpty
+                                          ? SelectPhotosScreen()
+                                          : HomeScreen()
                       : WelcomeScreen(),
             );
           }),

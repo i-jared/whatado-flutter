@@ -201,6 +201,28 @@ class UserGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<bool>> sendCode() async {
+    final mutation = SendCodeMutation();
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['sendCode'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<bool>> flagUser(int userId) async {
     final mutation =
         FlagUserMutation(variables: FlagUserArguments(userId: userId));

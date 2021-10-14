@@ -19,6 +19,7 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<StatefulWidget> {
   final _formKey = GlobalKey<FormState>();
   late bool loading;
+  late String phoneNumber;
   String? phoneError;
   String? nameError;
   String? passwordError;
@@ -30,6 +31,7 @@ class _SignupScreenState extends State<StatefulWidget> {
   @override
   void initState() {
     super.initState();
+    phoneNumber = '';
     passwordController = TextEditingController();
     confirmController = TextEditingController();
     phoneController = TextEditingController();
@@ -80,7 +82,9 @@ class _SignupScreenState extends State<StatefulWidget> {
                               locale: 'US',
                               autoValidateMode:
                                   AutovalidateMode.onUserInteraction,
-                              onInputChanged: (PhoneNumber value) {},
+                              onInputChanged: (PhoneNumber value) {
+                                setState(() => phoneNumber = value.toString());
+                              },
                               textFieldController: phoneController,
                               errorMessage: phoneError,
                               validator: (val) {
@@ -91,6 +95,9 @@ class _SignupScreenState extends State<StatefulWidget> {
                                   return 'please enter a valid phone number';
                               },
                             ),
+                            if (phoneError != null)
+                              Text(phoneError ?? '',
+                                  style: TextStyle(color: Colors.red)),
                             const SizedBox(height: 20),
                             MyPasswordField(
                               hintText: 'Password',
@@ -165,7 +172,7 @@ class _SignupScreenState extends State<StatefulWidget> {
       });
       final loginMutation = RegisterGqlQuery();
       final res = await loginMutation.register(
-        phone: phoneController.text,
+        phone: phoneNumber,
         password: passwordController.text,
         name: nameController.text,
       );

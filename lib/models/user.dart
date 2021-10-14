@@ -8,12 +8,14 @@ class User {
   String name;
   String bio;
   String deviceId;
+  bool verified;
   List<Interest> interests;
   List<String> photoUrls;
   User({
     required this.id,
     required this.name,
     required this.deviceId,
+    required this.verified,
     this.phone = '',
     this.bio = '',
     this.photoUrls = const [],
@@ -27,6 +29,7 @@ class User {
         deviceId: data['deviceId'] ?? '',
         name: data['name'] ?? '',
         bio: data['bio'] ?? '',
+        verified: data['verified'] ?? false,
         photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
         interests: List<Interest>.from(data['interests']
                 ?.map((val) => Interest.fromGqlData(val))

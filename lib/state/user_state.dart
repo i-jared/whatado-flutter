@@ -15,6 +15,14 @@ class UserState extends ChangeNotifier {
   List<Uint8List>? ogphotos;
   List<String>? _urls;
   bool _loading;
+  bool _loggedIn;
+
+  bool get loggedIn => _loggedIn;
+
+  set loggedIn(bool loggedIn) {
+    _loggedIn = loggedIn;
+    notifyListeners();
+  }
 
   bool get loading => _loading;
 
@@ -34,7 +42,9 @@ class UserState extends ChangeNotifier {
     ogphotos = List.from(initialPhotoData);
   }
 
-  UserState() : _loading = false {
+  UserState()
+      : _loading = false,
+        _loggedIn = false {
     getUser();
   }
 

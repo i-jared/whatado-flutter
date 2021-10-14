@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/login_query.dart';
+import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/signup.dart';
+import 'package:whatado/screens/entry/validate.dart';
+import 'package:whatado/screens/entry/write_bio.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/bottom_sheet.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
+
+import 'choose_interests.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -25,6 +30,7 @@ class _LoginScreenState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final userState = Provider.of<UserState>(context);
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: Form(
@@ -51,6 +57,8 @@ class _LoginScreenState extends State<StatefulWidget> {
                   });
                 },
               ),
+              if (phoneError != null)
+                Text(phoneError ?? '', style: TextStyle(color: Colors.red)),
               const SizedBox(height: 20),
               MyPasswordField(
                 hintText: 'Password',
@@ -78,10 +86,58 @@ class _LoginScreenState extends State<StatefulWidget> {
                 ),
               ),
               const SizedBox(height: 10),
-              RoundedArrowButton(
-                onPressed: loading ? () => null : () => attemptSignIn(context),
-                text: "Sign In",
-              ),
+              if (!loading)
+                RoundedArrowButton(
+                  onPressed: loading
+                      ? null
+                      : () async {
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              phoneError = null;
+                              passwordError = null;
+                              loading = true;
+                            });
+                            final loginMutation = LoginGqlQuery();
+                            final res = await loginMutation.login(
+                                phone: phoneNumber,
+                                password: passwordController.text);
+                            if (res.ok) {
+                              authenticationService.updateTokens(
+                                  res.accessToken ?? '',
+                                  res.refreshToken ?? '');
+                              await userState.getUser();
+                              userState.loggedIn = true;
+
+                              final route = !userState.user!.verified
+                                  ? ValidatePhoneScreen()
+                                  : userState.user!.interests.isEmpty
+                                      ? ChooseInterestsScreen()
+                                      : userState.user!.bio.isEmpty
+                                          ? WriteBioScreen()
+                                          : userState.user!.photoUrls.isEmpty
+                                              ? SelectPhotosScreen()
+                                              : HomeScreen();
+
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(builder: (ctx) => route),
+                                  (route) => false);
+                            } else {
+                              setState(() => loading = false);
+                              setState(() {
+                                phoneError = res.errors?.firstWhere(
+                                    (element) => element['field'] == 'phone',
+                                    orElse: () => {})['message'];
+                                passwordError = res.errors?.firstWhere(
+                                    (element) => element['field'] == 'login',
+                                    orElse: () => {})['message'];
+                              });
+                              passwordController.clear();
+                            }
+                          }
+                        },
+                  text: "Sign In",
+                ),
               SizedBox(height: 30),
               if (loading)
                 Center(child: CircularProgressIndicator(value: null)),
@@ -103,36 +159,5 @@ class _LoginScreenState extends State<StatefulWidget> {
             ]),
           ),
         ));
-  }
-
-  void attemptSignIn(BuildContext context) async {
-    final userState = Provider.of<UserState>(context, listen: false);
-    if (_formKey.currentState!.validate()) {
-      setState(() {
-        phoneError = null;
-        passwordError = null;
-        loading = true;
-      });
-      final loginMutation = LoginGqlQuery();
-      final res = await loginMutation.login(
-          phone: phoneNumber, password: passwordController.text);
-      setState(() => loading = false);
-      if (res.ok) {
-        authenticationService.updateTokens(
-            res.accessToken ?? '', res.refreshToken ?? '');
-        userState.getUser();
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (ctx) => HomeScreen()),
-            (route) => false);
-      } else {
-        setState(() {
-          passwordError = res.errors?.firstWhere(
-              (element) => element['field'] == 'login',
-              orElse: () => {})['message'];
-        });
-        passwordController.clear();
-      }
-    }
   }
 }

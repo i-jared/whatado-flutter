@@ -2237,6 +2237,60 @@ class RemoveInvite$Mutation extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$RemoveInvite$MutationToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class SendCode$Mutation$SendCode$Errors extends JsonSerializable
+    with EquatableMixin {
+  SendCode$Mutation$SendCode$Errors();
+
+  factory SendCode$Mutation$SendCode$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$SendCode$Mutation$SendCode$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$SendCode$Mutation$SendCode$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SendCode$Mutation$SendCode extends JsonSerializable with EquatableMixin {
+  SendCode$Mutation$SendCode();
+
+  factory SendCode$Mutation$SendCode.fromJson(Map<String, dynamic> json) =>
+      _$SendCode$Mutation$SendCodeFromJson(json);
+
+  bool? nodes;
+
+  bool? ok;
+
+  List<SendCode$Mutation$SendCode$Errors>? errors;
+
+  @override
+  List<Object?> get props => [nodes, ok, errors];
+  @override
+  Map<String, dynamic> toJson() => _$SendCode$Mutation$SendCodeToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SendCode$Mutation extends JsonSerializable with EquatableMixin {
+  SendCode$Mutation();
+
+  factory SendCode$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$SendCode$MutationFromJson(json);
+
+  late SendCode$Mutation$SendCode sendCode;
+
+  @override
+  List<Object?> get props => [sendCode];
+  @override
+  Map<String, dynamic> toJson() => _$SendCode$MutationToJson(this);
+}
+
 enum Gender {
   @JsonValue('BOTH')
   both,
@@ -5801,4 +5855,69 @@ class RemoveInviteMutation
   @override
   RemoveInvite$Mutation parse(Map<String, dynamic> json) =>
       RemoveInvite$Mutation.fromJson(json);
+}
+
+final SEND_CODE_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'sendCode'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'sendCode'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class SendCodeMutation
+    extends GraphQLQuery<SendCode$Mutation, JsonSerializable> {
+  SendCodeMutation();
+
+  @override
+  final DocumentNode document = SEND_CODE_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'sendCode';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  SendCode$Mutation parse(Map<String, dynamic> json) =>
+      SendCode$Mutation.fromJson(json);
 }
