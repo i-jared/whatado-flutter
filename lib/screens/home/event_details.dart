@@ -5,6 +5,7 @@ import 'package:whatado/models/event.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 
@@ -27,6 +28,7 @@ class _EventDetailsState extends State<EventDetails> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
+    final userState = Provider.of<UserState>(context);
     final event = homeState.myEvents?.firstWhere((e) => e.id == widget.event.id,
             orElse: () => widget.event) ??
         widget.event;
@@ -119,18 +121,19 @@ class _EventDetailsState extends State<EventDetails> {
                       .toList(),
             ),
             SizedBox(height: sectionSpacing),
-            RoundedArrowButton(
-                disabled: event.wannago.length == 0,
-                onPressed: () async {
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SelectWannago(event: event)));
-                  // event = homeState.myEvents
-                  // .firstWhere((e) => e.id == widget.event.id);
-                  // setState(() {});
-                },
-                text: '${event.wannago.length} people wannago'),
+            if (event.creator.id == userState.user?.id)
+              RoundedArrowButton(
+                  disabled: event.wannago.length == 0,
+                  onPressed: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectWannago(event: event)));
+                    // event = homeState.myEvents
+                    // .firstWhere((e) => e.id == widget.event.id);
+                    // setState(() {});
+                  },
+                  text: '${event.wannago.length} people wannago'),
             SizedBox(height: 50),
           ]),
         )));

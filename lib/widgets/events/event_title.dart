@@ -21,6 +21,10 @@ class EventTitle extends StatelessWidget {
         fontWeight: FontWeight.bold,
         fontSize: event.imageUrl!.isNotEmpty ? 22 : 30);
     if (userState.user == null) return SizedBox.shrink();
+    final wannago =
+        event.wannago.map((w) => w.user.id).contains(userState.user!.id);
+    final invited = event.invited.map((u) => u.id).contains(userState.user?.id);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -43,15 +47,11 @@ class EventTitle extends StatelessWidget {
               if (showButton)
                 Flexible(
                     flex: 3,
-                    child: event.creator.id == userState.user!.id
+                    child: event.creator.id == userState.user?.id
                         ? NoJoinButton(text: 'My Event')
-                        : !event.wannago
-                                .map((w) => w.user.id)
-                                .contains(userState.user!.id)
+                        : !wannago && !invited
                             ? JoinButton(event: event)
-                            : !event.invited
-                                    .map((u) => u.id)
-                                    .contains(userState.user!.id)
+                            : wannago && !invited
                                 ? LeaveButton(event: event)
                                 : NoJoinButton(text: 'Going'))
             ]),
