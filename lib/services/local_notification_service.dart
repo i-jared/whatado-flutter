@@ -22,7 +22,9 @@ class LocalNotificationService {
         AndroidInitializationSettings('launcher_icon');
     final IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
-            onDidReceiveLocalNotification: (_, __, ___, ____) async {});
+            onDidReceiveLocalNotification: (_, __, ___, ____) async {
+      print('Did Receive Local Notification $_, $__, $___, $____');
+    });
     final MacOSInitializationSettings initializationSettingsMacOS =
         MacOSInitializationSettings();
     final InitializationSettings initializationSettings =
