@@ -56,8 +56,6 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     setState(() {
       loadedAssets = loadedAssets;
     });
-    print('length ${loadedAssets.length}');
-    print('page: $page');
   }
 
   void initPhotos() async {
@@ -107,7 +105,6 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
               .where((map) => map['valid'] ?? false)
               .map((assetMap) => InkWell(
                   onTap: () {
-                    print(assetMap);
                     return eventState.selectedImage = assetMap['asset'];
                   },
                   child: Stack(

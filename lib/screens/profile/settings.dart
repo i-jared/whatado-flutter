@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/welcome.dart';
+import 'package:whatado/screens/profile/blocked_users.dart';
 import 'package:whatado/screens/profile/change_password.dart';
 import 'package:whatado/screens/profile/change_personal_info.dart';
 import 'package:whatado/screens/profile/eula.dart';
@@ -24,11 +25,16 @@ class Settings extends StatelessWidget {
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => ChangePersonalInfo(user: userState.user!)))),
+                      builder: (context) =>
+                          ChangePersonalInfo(user: userState.user!)))),
           SettingsItem(
               title: 'CHANGE PASSWORD',
               onPressed: () => Navigator.push(context,
                   MaterialPageRoute(builder: (context) => ChangePassword()))),
+          SettingsItem(
+              title: 'BLOCKED USERS',
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => BlockedUsers()))),
           SettingsItem(
               title: 'LEGAL',
               onPressed: () => Navigator.push(

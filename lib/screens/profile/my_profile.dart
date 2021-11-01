@@ -5,7 +5,13 @@ import 'package:provider/provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 
-class MyProfile extends StatelessWidget {
+class MyProfile extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _MyProfileState();
+}
+
+class _MyProfileState extends State<MyProfile> {
+  late int selectedIndex;
   final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   final headingSpacing = 10.0;
   final padding = 30.0;
@@ -13,12 +19,14 @@ class MyProfile extends StatelessWidget {
   final sectionSpacing = 30.0;
 
   @override
+  void initState() {
+    super.initState();
+    selectedIndex = 0;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
-    final imageWidth =
-        (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) /
-            3.0;
-
     if (userState.user == null) {
       SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
         userState.getUser();
@@ -34,11 +42,28 @@ class MyProfile extends StatelessWidget {
               .map((url) => Image.network(url))
               .toList(),
           options: CarouselOptions(
+              onPageChanged: (i, _) => setState(() => selectedIndex = i),
               height: MediaQuery.of(context).size.width,
               autoPlay: false,
               enableInfiniteScroll: false,
               viewportFraction: 1.0),
         ),
+        SizedBox(height: 5),
+        Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List<Widget>.generate(
+                (userState.user?.photoUrls.length ?? 0) * 2,
+                (i) => i.isEven
+                    ? Container(
+                        height: 10,
+                        width: 10,
+                        decoration: BoxDecoration(
+                            color: i / 2 == selectedIndex
+                                ? Colors.black
+                                : Colors.grey,
+                            shape: BoxShape.circle),
+                      )
+                    : Container(width: 5))),
         SizedBox(height: sectionSpacing),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: padding),

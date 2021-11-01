@@ -1,0 +1,10 @@
+mutation unblockUser($userId: Int!) {
+  unblockUser (userId: $userId) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

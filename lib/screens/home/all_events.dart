@@ -41,7 +41,8 @@ class AllEvents extends StatelessWidget {
                 if (homeState.allEvents != null &&
                     homeState.allEvents!.isNotEmpty)
                   ...homeState.allEvents!
-                      .where((event) => !(userState.user?.blockedUserIds
+                      .where((event) => !(userState.user?.blockedUsers
+                              .map((u) => u.id)
                               .contains(event.creator.id) ??
                           false))
                       .map((e) => EventDisplay(event: e))

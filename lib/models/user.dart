@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/interest.dart';
 
 class User {
@@ -11,7 +12,7 @@ class User {
   bool verified;
   List<Interest> interests;
   List<String> photoUrls;
-  List<int> blockedUserIds;
+  List<EventUser> blockedUsers;
   User({
     required this.id,
     required this.name,
@@ -21,23 +22,25 @@ class User {
     this.bio = '',
     this.photoUrls = const [],
     this.interests = const [],
-    this.blockedUserIds = const [],
+    this.blockedUsers = const [],
   });
 
   factory User.fromGqlData(Map data) {
     return User(
-      id: data['id'],
-      phone: data['phone'] ?? '',
-      deviceId: data['deviceId'] ?? '',
-      name: data['name'] ?? '',
-      bio: data['bio'] ?? '',
-      verified: data['verified'] ?? false,
-      photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
-      interests: List<Interest>.from(
-          data['interests']?.map((val) => Interest.fromGqlData(val)).toList() ??
-              []),
-      blockedUserIds: List<int>.from(
-          data['blockedUsers']?.map((user) => user.id).toList() ?? []),
-    );
+        id: data['id'],
+        phone: data['phone'] ?? '',
+        deviceId: data['deviceId'] ?? '',
+        name: data['name'] ?? '',
+        bio: data['bio'] ?? '',
+        verified: data['verified'] ?? false,
+        photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
+        interests: List<Interest>.from(data['interests']
+                ?.map((val) => Interest.fromGqlData(val))
+                .toList() ??
+            []),
+        blockedUsers: List<EventUser>.from(data['blockedUsers']
+                ?.map((user) => EventUser.fromGqlData(user))
+                .toList() ??
+            []));
   }
 }

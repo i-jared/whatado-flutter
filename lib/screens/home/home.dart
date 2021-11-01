@@ -103,7 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> setupTokenSaving() async {
     final token = await FirebaseMessaging.instance.getToken();
-    print(token);
     await saveDeviceToken(token);
     FirebaseMessaging.instance.onTokenRefresh.listen(saveDeviceToken);
   }

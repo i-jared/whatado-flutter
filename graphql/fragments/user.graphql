@@ -7,7 +7,7 @@ fragment UserFields on User {
   birthday
   bio
   blockedUsers {
-    id
+    ...EventUser
   }
   interests {
     id

@@ -85,7 +85,6 @@ class _EditMyProfileState extends State<EditMyProfile> {
                         temp?.add(cloudStorageService.resize(file: image));
                         //update
                         userState.photos = temp;
-                        print(userState.photos?.length);
                       }
                     }))
           ];

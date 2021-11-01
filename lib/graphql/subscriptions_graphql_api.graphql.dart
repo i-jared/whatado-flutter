@@ -12,21 +12,7 @@ mixin EventUserMixin {
   late int id;
   late String name;
   late String photoUrls;
-}
-
-@JsonSerializable(explicitToJson: true)
-class Hello$Subscription extends JsonSerializable with EquatableMixin {
-  Hello$Subscription();
-
-  factory Hello$Subscription.fromJson(Map<String, dynamic> json) =>
-      _$Hello$SubscriptionFromJson(json);
-
-  late String helloSubscription;
-
-  @override
-  List<Object?> get props => [helloSubscription];
-  @override
-  Map<String, dynamic> toJson() => _$Hello$SubscriptionToJson(this);
+  late String bio;
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -39,7 +25,7 @@ class Chat$Subscription$ChatSubscription$Author extends JsonSerializable
       _$Chat$Subscription$ChatSubscription$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls];
+  List<Object?> get props => [id, name, photoUrls, bio];
   @override
   Map<String, dynamic> toJson() =>
       _$Chat$Subscription$ChatSubscription$AuthorToJson(this);
@@ -87,37 +73,19 @@ class Chat$Subscription extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$Chat$SubscriptionToJson(this);
 }
 
-final HELLO_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.subscription,
-      name: NameNode(value: 'hello'),
-      variableDefinitions: [],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'helloSubscription'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
+@JsonSerializable(explicitToJson: true)
+class Hello$Subscription extends JsonSerializable with EquatableMixin {
+  Hello$Subscription();
 
-class HelloSubscription
-    extends GraphQLQuery<Hello$Subscription, JsonSerializable> {
-  HelloSubscription();
+  factory Hello$Subscription.fromJson(Map<String, dynamic> json) =>
+      _$Hello$SubscriptionFromJson(json);
+
+  late String helloSubscription;
 
   @override
-  final DocumentNode document = HELLO_SUBSCRIPTION_DOCUMENT;
-
+  List<Object?> get props => [helloSubscription];
   @override
-  final String operationName = 'hello';
-
-  @override
-  List<Object?> get props => [document, operationName];
-  @override
-  Hello$Subscription parse(Map<String, dynamic> json) =>
-      Hello$Subscription.fromJson(json);
+  Map<String, dynamic> toJson() => _$Hello$SubscriptionToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -211,6 +179,12 @@ final CHAT_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -232,4 +206,37 @@ class ChatSubscription extends GraphQLQuery<Chat$Subscription, ChatArguments> {
   @override
   Chat$Subscription parse(Map<String, dynamic> json) =>
       Chat$Subscription.fromJson(json);
+}
+
+final HELLO_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.subscription,
+      name: NameNode(value: 'hello'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'helloSubscription'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class HelloSubscription
+    extends GraphQLQuery<Hello$Subscription, JsonSerializable> {
+  HelloSubscription();
+
+  @override
+  final DocumentNode document = HELLO_SUBSCRIPTION_DOCUMENT;
+
+  @override
+  final String operationName = 'hello';
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  Hello$Subscription parse(Map<String, dynamic> json) =>
+      Hello$Subscription.fromJson(json);
 }

@@ -1,12 +1,12 @@
 query me {
-    me {
-        ok
-        nodes {
-            ...UserFields
-        }
-        errors {
-            field
-            message
-        }
+  me {
+    ok
+    nodes {
+      ...UserFields
     }
+    errors {
+      field
+      message
+    }
+  }
 }

@@ -30,7 +30,7 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<User>> user(int id) async {
+  Future<MyQueryResponse<EventUser>> user(int id) async {
     final query = UserQuery(variables: UserArguments(id: id));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
@@ -42,12 +42,12 @@ class UserGqlProvider {
 
     final root = result.data?['user'];
     final data = root != null && root['nodes'] != null
-        ? User.fromGqlData(root['nodes'])
+        ? EventUser.fromGqlData(root['nodes'])
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<User>(
+    return MyQueryResponse<EventUser>(
       ok: ok,
       data: data,
       errors: errors,
@@ -92,8 +92,6 @@ class UserGqlProvider {
         print(element.message);
       });
     }
-
-    print(result);
 
     final root = result.data?['updateUser'];
     final data =
@@ -258,6 +256,29 @@ class UserGqlProvider {
     }
 
     final root = result.data?['blockUser'];
+    final data = root?['ok'] ?? false;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> unblockUser(int userId) async {
+    final mutation =
+        UnblockUserMutation(variables: UnblockUserArguments(userId: userId));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['unblockUser'];
     final data = root?['ok'] ?? false;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];

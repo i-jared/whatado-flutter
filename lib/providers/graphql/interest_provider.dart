@@ -19,7 +19,6 @@ class InterestGqlProvider {
         print(element.message);
       });
     }
-    print(result);
     final root = result.data?['createInterest'];
     final data = List<int>.from(root?['nodes'] ?? []);
     final ok = root?['ok'] ?? false;

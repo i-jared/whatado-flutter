@@ -89,34 +89,41 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                   homeState.selectedDate = indexedDate.dateTime;
                   homeState.refreshController.requestRefresh();
                 },
-                child: Container(
-                    decoration: BoxDecoration(
+                child: Material(
+                  clipBehavior: Clip.antiAlias,
+                  shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                    Radius.circular(7),
+                  )),
+                  child: Container(
+                      decoration: BoxDecoration(
                         color: homeState.selectedDate == indexedDate.dateTime
                             ? Color(0xff204865)
                             : Colors.white,
-                        borderRadius: BorderRadius.circular(10)),
-                    height: double.infinity,
-                    width: (width - monthWidth) / 6,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(indexedDate.dateTime.day.toString(),
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
+                      ),
+                      height: double.infinity,
+                      width: (width - monthWidth) / 6,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(indexedDate.dateTime.day.toString(),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: homeState.selectedDate ==
+                                          indexedDate.dateTime
+                                      ? Colors.white
+                                      : Colors.black,
+                                  fontSize: 18)),
+                          Text(DateFormat('EE').format(indexedDate.dateTime),
+                              style: TextStyle(
                                 color: homeState.selectedDate ==
                                         indexedDate.dateTime
                                     ? Colors.white
                                     : Colors.black,
-                                fontSize: 18)),
-                        Text(DateFormat('EE').format(indexedDate.dateTime),
-                            style: TextStyle(
-                              color:
-                                  homeState.selectedDate == indexedDate.dateTime
-                                      ? Colors.white
-                                      : Colors.black,
-                            )),
-                      ],
-                    )),
+                              )),
+                        ],
+                      )),
+                ),
               ))
           .toList();
     }
@@ -134,22 +141,42 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                 homeState.selectedDate = null;
                 homeState.refreshController.requestRefresh();
               },
-              child: Container(
-                width: monthWidth,
-                height: double.infinity,
-                decoration: BoxDecoration(
-                    color: Color(0xffe85c3f),
-                    borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(50),
-                        bottomRight: Radius.circular(50))),
-                child: Center(
-                    child: Text(
-                        DateFormat('MMM')
-                            .format(DateTime(now.year, scrollingMonth)),
-                        style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white))),
+              child: Stack(
+                children: [
+                  Container(
+                    width: monthWidth,
+                    height: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Color(0xffe85c3f),
+                        borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(50),
+                            bottomRight: Radius.circular(50))),
+                    child: Center(
+                        child: Text(
+                            DateFormat('MMM')
+                                .format(DateTime(now.year, scrollingMonth)),
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white))),
+                  ),
+                  if (homeState.selectedDate == null)
+                    Material(
+                        clipBehavior: Clip.antiAlias,
+                        shape: BeveledRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(20),
+                                bottomRight: Radius.circular(20))),
+                        child: Container(
+                            height: double.infinity,
+                            width: 15,
+                            decoration: BoxDecoration(
+                              color: Color(0xff204865),
+                              // borderRadius: BorderRadius.only(
+                              // topRight: Radius.circular(10),
+                              // bottomRight: Radius.circular(10))
+                            )))
+                ],
               ),
             ),
             Expanded(

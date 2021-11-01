@@ -62,7 +62,6 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                   //update
                   setupState.photos = updatedPhotos;
                   setupState.photosImageData = updatedPhotosData;
-                  print(setupState.photosImageData.length);
                 }
               }))
     ];

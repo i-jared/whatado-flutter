@@ -10,7 +10,6 @@ class LoginService {
 
   Future<bool> attemptAutoLogin() async {
     final response = await authenticationService.requestUserId();
-    print('response: $response');
     if (response != null) {
       loggedIn = true;
       userId = response;

@@ -2,4 +2,5 @@ fragment EventUser on User {
     id
     name
     photoUrls
+    bio
 }

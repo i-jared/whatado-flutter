@@ -2,7 +2,7 @@ query user($id: Int!) {
   user(id: $id) {
     ok
     nodes {
-      ...UserFields
+      ...EventUser
     }
     errors {
       field

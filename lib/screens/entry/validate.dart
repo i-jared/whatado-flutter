@@ -71,9 +71,7 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                         ),
                         onPressed: () async {
                           final provider = UserGqlProvider();
-                          final result = await provider.sendCode();
-                          print(result.errors);
-                          print(result.data);
+                          await provider.sendCode();
                         },
                       ),
                       Spacer(),

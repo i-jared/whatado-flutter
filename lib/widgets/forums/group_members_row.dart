@@ -81,6 +81,5 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
       users = result.data ?? [];
       loading = false;
     });
-    print(result.data);
   }
 }

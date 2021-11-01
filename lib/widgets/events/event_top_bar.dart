@@ -79,9 +79,12 @@ class EventTopBar extends StatelessWidget {
                 homeState.removeEvent(event);
               }
               if (value == 'block') {
-                await userProvider.blockUser(event.creator.id);
-                await eventProvider.flagEvent(event.creator.id);
-                homeState.removeEvent(event);
+                final result = await userProvider.blockUser(event.creator.id);
+                if (result.ok) {
+                  await eventProvider.flagEvent(event.creator.id);
+                  await userState.getUser();
+                  homeState.removeEvent(event);
+                }
               }
             },
             itemBuilder: (context) => [

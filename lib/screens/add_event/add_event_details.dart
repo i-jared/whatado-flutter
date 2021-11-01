@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/screens/add_event/post_failed.dart';
-import 'package:whatado/screens/add_event/post_loading.dart';
-import 'package:whatado/screens/add_event/post_succeeded.dart';
 import 'package:whatado/screens/add_event/target_audience.dart';
 import 'package:whatado/state/add_event_state.dart';
-import 'package:whatado/widgets/appbars/add_event_details_app_bar.dart';
+import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -34,15 +31,14 @@ class _AddEventDetailsState extends State<AddEventDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final eventState = Provider.of<AddEventState>(context);
-    if (eventState.postLoading)
-      return PostLoading();
-    else if (eventState.failed)
-      return PostFailed();
-    else if (eventState.succeeded) return PostSucceeded();
-
     return Scaffold(
-        appBar: AddEventDetailsAppBar(), body: chooseWidget(context));
+        appBar: SavingAppBar(
+          title: 'Add Event',
+          buttonTitle: 'NEXT',
+          onSave: () => Navigator.push(context,
+              MaterialPageRoute(builder: (context) => TargetAudience())),
+        ),
+        body: chooseWidget(context));
   }
 
   Widget chooseWidget(BuildContext context) {
