@@ -42,7 +42,6 @@ class _ForumCardState extends State<ForumCard> {
     final homeState = Provider.of<HomeState>(context);
     final hasImage =
         widget.event.imageUrl != null && widget.event.imageUrl!.isNotEmpty;
-    print(widget.forum.userNotification.lastAccessed);
     final unread = widget.forum.chats.isEmpty
         ? false
         : widget.forum.userNotification.lastAccessed
@@ -68,21 +67,19 @@ class _ForumCardState extends State<ForumCard> {
                   if (value == 'unmute') {
                     final provider = ForumsGqlProvider();
                     await provider.unmute(widget.forum.userNotification.id);
-                    await FirebaseMessaging.instance
-                        .unsubscribeFromTopic('${widget.forum.id}');
+                    Forum copy = widget.forum..userNotification.muted = false;
+                    homeState.updateForum(copy);
                   }
                   if (value == 'mute') {
                     final provider = ForumsGqlProvider();
                     await provider.mute(widget.forum.userNotification.id);
-                    await FirebaseMessaging.instance
-                        .unsubscribeFromTopic('${widget.forum.id}');
+                    Forum copy = widget.forum..userNotification.muted = false;
+                    homeState.updateForum(copy);
                   }
                   if (value == 'leave') {
                     final provider = EventsGqlProvider();
                     await provider.removeInvite(
                         eventId: widget.event.id, userId: loginService.userId!);
-                    await FirebaseMessaging.instance
-                        .unsubscribeFromTopic('${widget.forum.id}');
                   }
                 },
                 itemBuilder: (context) => [

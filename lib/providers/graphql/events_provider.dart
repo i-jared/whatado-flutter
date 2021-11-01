@@ -146,7 +146,6 @@ class EventsGqlProvider {
         print(element.message);
       });
     }
-
     final root = result.data?['flaggedEvents'];
     final data = root != null && root['nodes'] != null
         ? List<Event>.from((root?['nodes']).map((event) {
@@ -200,7 +199,6 @@ class EventsGqlProvider {
         print(element.message);
       });
     }
-    print('add Invite $result');
     final root = result.data?['addInvite'];
     final data = root != null && root['nodes'] != null
         ? Event.fromGqlData(root?['nodes'])
@@ -217,8 +215,8 @@ class EventsGqlProvider {
 
   Future<MyQueryResponse<Event>> removeInvite(
       {required int eventId, required int userId}) async {
-    final mutation = AddInviteMutation(
-        variables: AddInviteArguments(eventId: eventId, userId: userId));
+    final mutation = RemoveInviteMutation(
+        variables: RemoveInviteArguments(eventId: eventId, userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -226,7 +224,7 @@ class EventsGqlProvider {
         print(element.message);
       });
     }
-    print('add Invite $result');
+
     final root = result.data?['removeInvite'];
     final data = root != null && root['nodes'] != null
         ? Event.fromGqlData(root?['nodes'])

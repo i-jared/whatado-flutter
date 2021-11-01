@@ -1,8 +1,6 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/models/chat.dart';
-import 'package:whatado/models/chat_notification.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
@@ -29,7 +27,6 @@ class HomeState extends ChangeNotifier {
   List<Event>? allEvents;
   List<Event>? myEvents;
   List<Forum>? myForums;
-  List<ChatNotification>? myChatNotifications;
 
   HomeState()
       : _appBarPageNo = 0,
@@ -127,9 +124,6 @@ class HomeState extends ChangeNotifier {
     final response =
         await query.myForums(myEvents?.map((event) => event.id).toList() ?? []);
     myForums = response.data ?? [];
-    await Future.wait(myForums!.map((forum) async {
-      await FirebaseMessaging.instance.subscribeToTopic('${forum.id}');
-    }));
     notifyListeners();
   }
 
@@ -194,6 +188,15 @@ class HomeState extends ChangeNotifier {
     }
     forum.userNotification.lastAccessed = DateTime.now();
     myForums![myindex] = forum;
+    notifyListeners();
+  }
+
+  void updateForum(Forum forum) {
+    final int i = myForums!.indexWhere((val) => val.id == forum.id);
+    if (i == -1) {
+      return;
+    }
+    myForums![i] = forum;
     notifyListeners();
   }
 }

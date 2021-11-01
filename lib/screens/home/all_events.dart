@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/event_display.dart';
 import 'package:whatado/widgets/home/calendar_selector.dart';
 
@@ -10,6 +11,7 @@ class AllEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final homeState = Provider.of<HomeState>(context);
+    final userState = Provider.of<UserState>(context);
 
     return Column(
       children: [
@@ -39,6 +41,9 @@ class AllEvents extends StatelessWidget {
                 if (homeState.allEvents != null &&
                     homeState.allEvents!.isNotEmpty)
                   ...homeState.allEvents!
+                      .where((event) => !(userState.user?.blockedUserIds
+                              .contains(event.creator.id) ??
+                          false))
                       .map((e) => EventDisplay(event: e))
                       .toList()
               ],
