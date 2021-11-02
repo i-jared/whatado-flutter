@@ -10,7 +10,7 @@ class MessagesBody extends StatelessWidget {
     return chatState.chats != null
         ? Expanded(
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              padding: EdgeInsets.only(right: 30.0, left: 10.0),
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: BouncingScrollPhysics(),
