@@ -39,7 +39,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
   Future<void> loadMorePhotos() async {
     final albums = await PhotoManager.getAssetPathList(onlyAll: true);
     final album = albums.first;
-    final nextAssets = await album.getAssetListPaged(page, 20);
+    final nextAssets = await album.getAssetListPaged(page, 40);
     if (nextAssets.isEmpty) {
       setState(() => paginationDone = true);
     }
@@ -60,12 +60,12 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
 
   void initPhotos() async {
     final eventState = Provider.of<AddEventState>(context, listen: false);
-    var result = await PhotoManager.requestPermission();
-    if (result) {
+    var result = await PhotoManager.requestPermissionExtend();
+    if (result.isAuth) {
       eventState.textMode = false;
       final albums = await PhotoManager.getAssetPathList(onlyAll: true);
       final album = albums.first;
-      final recentAssets = await album.getAssetListPaged(page, 20);
+      final recentAssets = await album.getAssetListPaged(page, 40);
       List<Map<String, dynamic>> tempLoadedAssets =
           await Future.wait(recentAssets
               .map((asset) async => {
@@ -77,6 +77,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
 
       eventState.selectedImage =
           tempLoadedAssets.firstWhere((assetMap) => assetMap["valid"])["asset"];
+
       setState(() {
         loadedAssets = tempLoadedAssets;
         page = 1;
@@ -104,9 +105,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
           children: loadedAssets
               .where((map) => map['valid'] ?? false)
               .map((assetMap) => InkWell(
-                  onTap: () {
-                    return eventState.selectedImage = assetMap['asset'];
-                  },
+                  onTap: () => eventState.selectedImage = assetMap['asset'],
                   child: Stack(
                     fit: StackFit.expand,
                     children: [

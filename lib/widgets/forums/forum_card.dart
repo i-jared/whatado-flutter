@@ -1,8 +1,6 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/chat.dart';
-import 'package:whatado/models/chat_notification.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/forum.dart';

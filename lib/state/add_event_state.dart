@@ -99,7 +99,6 @@ class AddEventState extends ChangeNotifier {
     final provider = InterestGqlProvider();
     final result = await provider.popular();
     popularInterests.addAll(result.data ?? []);
-    print(popularInterests);
     notifyListeners();
   }
 

@@ -10,7 +10,6 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
-import 'package:whatado/widgets/entry/select_profile_image_box.dart';
 
 class SelectPhotosScreen extends StatefulWidget {
   @override

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/user_state.dart';

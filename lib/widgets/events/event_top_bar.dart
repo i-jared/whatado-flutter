@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
-import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:whatado/state/home_state.dart';

@@ -45,12 +45,14 @@ class _AddEventState extends State<AddEvent> {
                           future: eventState.selectedImage?.originBytes,
                           builder: (context, snapshot) {
                             if (snapshot.data == null) return Container();
-                            final bytes = snapshot.data as Uint8List;
 
+                            final bytes = snapshot.data as Uint8List;
                             return FadeIn(
                                 key: ValueKey(snapshot.data),
                                 duration: Duration(milliseconds: 200),
                                 child: PhotoView(
+                                    loadingBuilder: (context, _) => Center(
+                                        child: CircularProgressIndicator()),
                                     controller: eventState.photoController,
                                     minScale: PhotoViewComputedScale.covered,
                                     backgroundDecoration:
