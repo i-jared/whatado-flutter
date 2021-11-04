@@ -65,7 +65,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return KeyboardDismisser(
-      gestures: [GestureType.onTap, GestureType.onPanUpdateDownDirection],
       child: RefreshConfiguration(
         headerTriggerDistance: 120,
         child: MultiProvider(
