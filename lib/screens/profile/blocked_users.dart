@@ -34,7 +34,7 @@ class _BlockedUsersState extends State<BlockedUsers> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    UserProfile(initialUserData: blockedUser))),
+                                    UserProfile(user: blockedUser))),
                         leading: CircleAvatar(
                           backgroundImage:
                               NetworkImage(blockedUser.photoUrls.first),

@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
+import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
+import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 
 class EventDetails extends StatefulWidget {
@@ -67,9 +70,21 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(height: headingSpacing),
             Row(
               children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: NetworkImage(event.creator.photoUrls.first),
+                InkWell(
+                  onTap: () {
+                    if (event.creator.id != userState.user?.id) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  UserProfile(user: event.creator)));
+                    }
+                  },
+                  child: CircleAvatar(
+                    radius: 20,
+                    backgroundImage:
+                        NetworkImage(event.creator.photoUrls.first),
+                  ),
                 ),
                 SizedBox(width: 20),
                 Text(event.creator.name)
@@ -88,8 +103,8 @@ class _EventDetailsState extends State<EventDetails> {
                                 onTap: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => UserProfile(
-                                            initialUserData: eventUser))),
+                                        builder: (context) =>
+                                            UserProfile(user: eventUser))),
                                 child: CircleAvatar(
                                     radius: circleRadius,
                                     backgroundImage: NetworkImage(
@@ -111,8 +126,8 @@ class _EventDetailsState extends State<EventDetails> {
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => UserProfile(
-                                        initialUserData: eventUser))),
+                                    builder: (context) =>
+                                        UserProfile(user: eventUser))),
                             child: CircleAvatar(
                                 radius: circleRadius,
                                 backgroundImage:
@@ -123,7 +138,7 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(height: sectionSpacing),
             if (event.creator.id == userState.user?.id)
               RoundedArrowButton(
-                  disabled: event.wannago.length == 0,
+                  disabled: event.wannago.where((w) => !w.declined).length == 0,
                   onPressed: () async {
                     await Navigator.push(
                         context,
@@ -133,7 +148,8 @@ class _EventDetailsState extends State<EventDetails> {
                     // .firstWhere((e) => e.id == widget.event.id);
                     // setState(() {});
                   },
-                  text: '${event.wannago.length} people wannago'),
+                  text:
+                      '${event.wannago.where((w) => !w.declined).length} people wannago'),
             SizedBox(height: 50),
           ]),
         )));

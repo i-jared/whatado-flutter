@@ -41,8 +41,8 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                   onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => UserProfile(
-                                              initialUserData: user))),
+                                          builder: (context) =>
+                                              UserProfile(user: user))),
                                   child: CircleAvatar(
                                       radius: 28,
                                       backgroundImage:

@@ -46,9 +46,9 @@ class ChatBubble extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) =>
-                                  UserProfile(initialUserData: chat.author)))),
+                                  UserProfile(user: chat.author)))),
                   SizedBox(width: 5),
-                  bubble
+                  Flexible(child: bubble)
                 ],
               ));
   }

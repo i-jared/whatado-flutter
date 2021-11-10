@@ -23,8 +23,7 @@ class EventTopBar extends StatelessWidget {
             : Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        UserProfile(initialUserData: event.creator))),
+                    builder: (context) => UserProfile(user: event.creator))),
         child: CircleAvatar(
           radius: 17,
           backgroundImage: NetworkImage(event.creator.photoUrls.first),

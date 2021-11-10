@@ -41,6 +41,8 @@ class _SelectWannagoState extends State<SelectWannago> {
       } else {
         final result =
             await provider.updateWannago(wannagoId: w.id, declined: true);
+        print(result.ok);
+        print(result.errors);
         if (result.ok) {
           final i = widget.event.wannago.indexOf(w);
           widget.event.wannago[i].declined = true;
@@ -57,12 +59,13 @@ class _SelectWannagoState extends State<SelectWannago> {
           ? Center(child: CircularProgressIndicator())
           : ListView(
               children: widget.event.wannago
+                  .where((w) => !w.declined)
                   .map((wannago) => ListTile(
                         onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => UserProfile(
-                                    initialUserData: wannago.user))),
+                                builder: (context) =>
+                                    UserProfile(user: wannago.user))),
                         leading: CircleAvatar(
                           backgroundImage:
                               NetworkImage(wannago.user.photoUrls.first),
