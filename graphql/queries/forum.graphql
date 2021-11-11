@@ -1,5 +1,5 @@
 query forum($forumId: Int!) {
-  forumsByEventId(id: $forumId) {
+  forum(id: $forumId) {
     ok
     errors {
       field

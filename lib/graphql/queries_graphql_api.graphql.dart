@@ -840,13 +840,11 @@ class UserFieldsMixin$ChatNotifications extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
-class Forum$Query$ForumsByEventId$Errors extends JsonSerializable
-    with EquatableMixin {
-  Forum$Query$ForumsByEventId$Errors();
+class Forum$Query$Forum$Errors extends JsonSerializable with EquatableMixin {
+  Forum$Query$Forum$Errors();
 
-  factory Forum$Query$ForumsByEventId$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$Forum$Query$ForumsByEventId$ErrorsFromJson(json);
+  factory Forum$Query$Forum$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Forum$Query$Forum$ErrorsFromJson(json);
 
   String? field;
 
@@ -855,43 +853,40 @@ class Forum$Query$ForumsByEventId$Errors extends JsonSerializable
   @override
   List<Object?> get props => [field, message];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Forum$Query$ForumsByEventId$ErrorsToJson(this);
+  Map<String, dynamic> toJson() => _$Forum$Query$Forum$ErrorsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Forum$Query$ForumsByEventId$Nodes extends JsonSerializable
+class Forum$Query$Forum$Nodes extends JsonSerializable
     with EquatableMixin, ForumFieldsMixin {
-  Forum$Query$ForumsByEventId$Nodes();
+  Forum$Query$Forum$Nodes();
 
-  factory Forum$Query$ForumsByEventId$Nodes.fromJson(
-          Map<String, dynamic> json) =>
-      _$Forum$Query$ForumsByEventId$NodesFromJson(json);
+  factory Forum$Query$Forum$Nodes.fromJson(Map<String, dynamic> json) =>
+      _$Forum$Query$Forum$NodesFromJson(json);
 
   @override
   List<Object?> get props => [id, updatedAt, userNotifications, chats, event];
   @override
-  Map<String, dynamic> toJson() =>
-      _$Forum$Query$ForumsByEventId$NodesToJson(this);
+  Map<String, dynamic> toJson() => _$Forum$Query$Forum$NodesToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class Forum$Query$ForumsByEventId extends JsonSerializable with EquatableMixin {
-  Forum$Query$ForumsByEventId();
+class Forum$Query$Forum extends JsonSerializable with EquatableMixin {
+  Forum$Query$Forum();
 
-  factory Forum$Query$ForumsByEventId.fromJson(Map<String, dynamic> json) =>
-      _$Forum$Query$ForumsByEventIdFromJson(json);
+  factory Forum$Query$Forum.fromJson(Map<String, dynamic> json) =>
+      _$Forum$Query$ForumFromJson(json);
 
   bool? ok;
 
-  List<Forum$Query$ForumsByEventId$Errors>? errors;
+  List<Forum$Query$Forum$Errors>? errors;
 
-  List<Forum$Query$ForumsByEventId$Nodes>? nodes;
+  Forum$Query$Forum$Nodes? nodes;
 
   @override
   List<Object?> get props => [ok, errors, nodes];
   @override
-  Map<String, dynamic> toJson() => _$Forum$Query$ForumsByEventIdToJson(this);
+  Map<String, dynamic> toJson() => _$Forum$Query$ForumToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -901,10 +896,10 @@ class Forum$Query extends JsonSerializable with EquatableMixin {
   factory Forum$Query.fromJson(Map<String, dynamic> json) =>
       _$Forum$QueryFromJson(json);
 
-  late Forum$Query$ForumsByEventId forumsByEventId;
+  late Forum$Query$Forum forum;
 
   @override
-  List<Object?> get props => [forumsByEventId];
+  List<Object?> get props => [forum];
   @override
   Map<String, dynamic> toJson() => _$Forum$QueryToJson(this);
 }
@@ -2996,7 +2991,7 @@ final FORUM_QUERY_DOCUMENT = DocumentNode(definitions: [
       directives: [],
       selectionSet: SelectionSetNode(selections: [
         FieldNode(
-            name: NameNode(value: 'forumsByEventId'),
+            name: NameNode(value: 'forum'),
             alias: null,
             arguments: [
               ArgumentNode(

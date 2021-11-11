@@ -27,6 +27,7 @@ class HomeState extends ChangeNotifier {
   List<Event>? allEvents;
   List<Event>? myEvents;
   List<Forum>? myForums;
+  List<Map<String, dynamic>>? lastMessages;
 
   HomeState()
       : _appBarPageNo = 0,
@@ -49,8 +50,14 @@ class HomeState extends ChangeNotifier {
     });
     // get initial events
     getNewEvents();
-    getMyEvents().then((myEvents) =>
-        myEvents == null || myEvents.isEmpty ? myForums = [] : getMyForums());
+    getMyEvents().then((myEvents) {
+      if (myEvents == null || myEvents.isEmpty) {
+        myForums = [];
+        lastMessages = [];
+      } else {
+        getMyForums().then((_) => getFirstChats());
+      }
+    });
   }
 
   @override
@@ -119,11 +126,41 @@ class HomeState extends ChangeNotifier {
     return myEvents;
   }
 
-  Future<void> getMyForums() async {
+  Future<List<Forum>?> getMyForums() async {
     final query = ForumsGqlProvider();
     final response =
         await query.myForums(myEvents?.map((event) => event.id).toList() ?? []);
     myForums = response.data ?? [];
+    await getFirstChats();
+    notifyListeners();
+    return myForums;
+  }
+
+  Future<List<Map<String, dynamic>>?> getFirstChats() async {
+    final chatQuery = ChatGqlProvider();
+    if (myForums == null) return [];
+    final List<Map<String, dynamic>> tempChats = [];
+    await Future.wait(myForums!.map((forum) async {
+      final response = await chatQuery.lastChat(forum.id);
+      tempChats.add({'forumId': forum.id, 'chat': response.data});
+    }));
+    lastMessages = tempChats;
+    notifyListeners();
+    sortForumsChats();
+    return tempChats;
+  }
+
+  void sortForumsChats() {
+    lastMessages?.sort((a, b) {
+      if (a['chat'] == null && b['chat'] == null) return 0;
+      if (a['chat'] == null) return 1;
+      if (b['chat'] == null) return -1;
+      return b['chat']?.createdAt.compareTo(a['chat'].createdAt);
+    });
+    myForums?.sort((a, b) =>
+        lastMessages?.indexWhere((obj) => obj['forumId'] == a.id).compareTo(
+            lastMessages?.indexWhere((obj) => obj['forumId'] == b.id) ?? 1) ??
+        0.compareTo(1));
     notifyListeners();
   }
 

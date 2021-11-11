@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
-import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
-import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
-import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 
 class EventDetails extends StatefulWidget {
@@ -45,6 +42,7 @@ class _EventDetailsState extends State<EventDetails> {
             padding * 2.0 -
             circleSpacing * 2.0) /
         6.0;
+    final wannago = event.wannago.where((w) => !w.declined);
 
     return Scaffold(
         appBar: EventAppBar(event: event),
@@ -64,7 +62,7 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(height: sectionSpacing),
             Text('TIME', style: headingStyle),
             SizedBox(height: headingSpacing),
-            Text(dateFormat.format(event.time)),
+            Text(dateFormat.format(event.time.toLocal())),
             SizedBox(height: sectionSpacing),
             Text('ORGANIZER', style: headingStyle),
             SizedBox(height: headingSpacing),
@@ -138,7 +136,7 @@ class _EventDetailsState extends State<EventDetails> {
             SizedBox(height: sectionSpacing),
             if (event.creator.id == userState.user?.id)
               RoundedArrowButton(
-                  disabled: event.wannago.where((w) => !w.declined).length == 0,
+                  disabled: wannago.isEmpty,
                   onPressed: () async {
                     await Navigator.push(
                         context,
@@ -148,8 +146,7 @@ class _EventDetailsState extends State<EventDetails> {
                     // .firstWhere((e) => e.id == widget.event.id);
                     // setState(() {});
                   },
-                  text:
-                      '${event.wannago.where((w) => !w.declined).length} people wannago'),
+                  text: '${wannago.length} people wannago'),
             SizedBox(height: 50),
           ]),
         )));

@@ -62,12 +62,12 @@ class ChatState extends ChangeNotifier {
     final stream = graphqlClientService.subscribe(subscription).map((event) {
       return Chat.fromGqlData(event.data?['chatSubscription']);
     });
-    stream.handleError((e) => print('jcl stream error $e'));
+    stream.handleError((e) => print('stream error $e'));
     streamSubscription = stream.listen((event) {
       chats?.insert(0, event);
       notifyListeners();
     });
-    streamSubscription?.onError((e) => print('jcl sub error $e'));
+    streamSubscription?.onError((e) => print('sub error $e'));
   }
 
   void sendMessage(int authorId) async {

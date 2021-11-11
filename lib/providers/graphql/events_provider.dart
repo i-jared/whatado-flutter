@@ -317,6 +317,7 @@ class EventsGqlProvider {
         print(element.message);
       });
     }
+    print('event $result');
 
     final root = result.data?['event'];
     final data = root != null && root['nodes'] != null

@@ -6,7 +6,6 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -17,14 +16,14 @@ import 'package:whatado/state/home_state.dart';
 class ForumCard extends StatefulWidget {
   final Event event;
   final Forum forum;
-  ForumCard({required this.event, required this.forum});
+  final Chat? lastChat;
+  ForumCard({required this.event, required this.forum, this.lastChat});
 
   @override
   _ForumCardState createState() => _ForumCardState();
 }
 
 class _ForumCardState extends State<ForumCard> {
-  Chat? lastMessage;
   List<EventUser>? firstInvited;
   late bool loading;
 
@@ -160,13 +159,19 @@ class _ForumCardState extends State<ForumCard> {
                                                       Colors.grey,
                                                   highlightColor: Colors.white),
                                             ))
-                                    : firstInvited!
-                                        .map((eventUser) => CircleAvatar(
-                                              radius: 13,
-                                              backgroundImage: NetworkImage(
-                                                  eventUser.photoUrls.first),
-                                            ))
-                                        .toList()),
+                                    : List<Widget>.generate(
+                                        firstInvited?.length ?? 0,
+                                        (i) => Positioned(
+                                              left: i * 15,
+                                              bottom: 0,
+                                              child: CircleAvatar(
+                                                radius: 13,
+                                                backgroundImage: NetworkImage(
+                                                    firstInvited![i]
+                                                        .photoUrls
+                                                        .first),
+                                              ),
+                                            )).toList()),
                           ),
                           SizedBox(height: 4),
                           Row(
@@ -185,7 +190,7 @@ class _ForumCardState extends State<ForumCard> {
                                     )
                                   : Flexible(
                                       flex: 5,
-                                      child: Text(lastMessage?.text ?? '',
+                                      child: Text(widget.lastChat?.text ?? '',
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
                                               fontWeight: unread
@@ -207,9 +212,9 @@ class _ForumCardState extends State<ForumCard> {
                                   : Flexible(
                                       flex: 1,
                                       child: Text(
-                                          lastMessage != null
+                                          widget.lastChat != null
                                               ? timeago.format(
-                                                  lastMessage!.createdAt,
+                                                  widget.lastChat!.createdAt,
                                                   locale: 'en_short')
                                               : '',
                                           style: TextStyle(
@@ -237,11 +242,8 @@ class _ForumCardState extends State<ForumCard> {
       ...widget.event.invited.map((eu) => eu.id).toList(),
       widget.event.creator.id
     ]);
-    final chatQuery = ChatGqlProvider();
-    final chatResult = await chatQuery.lastChat(widget.forum.id);
     setState(() {
       firstInvited = result.data;
-      lastMessage = chatResult.data;
       loading = false;
     });
   }

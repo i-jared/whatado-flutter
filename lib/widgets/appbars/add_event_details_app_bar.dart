@@ -42,7 +42,6 @@ class AddEventDetailsAppBar extends StatelessWidget
                 : () async {
                     eventState.postLoading = true;
                     if (userState.user == null) {
-                      print('fail: user null');
                       await userState.getUser();
                     }
 
@@ -57,7 +56,6 @@ class AddEventDetailsAppBar extends StatelessWidget
                       }
 
                       if (!eventState.textMode && downloadUrl == null) {
-                        print('fail: downloadUrl null');
                         eventState.clear();
                         eventState.failed = true;
                         eventState.postLoading = false;
@@ -117,7 +115,6 @@ class AddEventDetailsAppBar extends StatelessWidget
                         // TODO: add group size / tags
                       ));
                     } catch (e) {
-                      print(e.toString());
                       eventState.clear();
                       eventState.failed = true;
                       eventState.postLoading = false;

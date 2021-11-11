@@ -9,7 +9,7 @@ class MyForums extends StatelessWidget {
     final homeState = Provider.of<HomeState>(context);
     final myForums = homeState.myForums;
     final myEvents = homeState.myEvents;
-    return myForums == null
+    return myForums == null || homeState.lastMessages == null
         ? Center(child: CircularProgressIndicator())
         : myForums.isNotEmpty
             ? ListView.separated(
@@ -19,7 +19,11 @@ class MyForums extends StatelessWidget {
                   final forum = myForums[i];
                   final event = myEvents!
                       .firstWhere((event) => event.id == forum.eventId);
-                  return ForumCard(event: event, forum: forum);
+                  final lastChat = homeState.lastMessages!.firstWhere((obj) {
+                    return obj['forumId'] == forum.id;
+                  });
+                  return ForumCard(
+                      event: event, forum: forum, lastChat: lastChat['chat']);
                 })
             : Container(child: Center(child: Text('no forums')));
   }

@@ -39,7 +39,7 @@ class EventTitle extends StatelessWidget {
                   children: [
                     Text(event.title, style: textFormat),
                     SizedBox(height: 5),
-                    Text(dateFormat.format(event.time),
+                    Text(dateFormat.format(event.time.toLocal()),
                         style: TextStyle(fontSize: 14, color: Colors.grey)),
                   ],
                 ),

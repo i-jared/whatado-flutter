@@ -67,6 +67,7 @@ class ForumsGqlProvider {
         print(element.message);
       });
     }
+    print('forum $result');
 
     final root = result.data?['forum'];
     final data = root != null && root['nodes'] != null

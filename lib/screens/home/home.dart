@@ -72,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _handleMessage(RemoteMessage message) async {
     if (message.data['type'] == 'chat') {
-      final eventId = message.data['eventId'];
-      final forumId = message.data['forumId'];
+      final eventId = int.parse(message.data['eventId']);
+      final forumId = int.parse(message.data['forumId']);
       final eventProvider = EventsGqlProvider();
       final forumProvider = ForumsGqlProvider();
       final eventResult = await eventProvider.event(eventId);
