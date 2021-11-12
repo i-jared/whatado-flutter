@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
+import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/user_state.dart';
 
 class GroupMembersRow extends StatefulWidget {
   final Event event;
@@ -25,6 +29,39 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
 
   @override
   Widget build(BuildContext context) {
+    final userState = Provider.of<UserState>(context);
+    final homeState = Provider.of<HomeState>(context);
+    final removeUser = (EventUser user) => userState.user?.id ==
+                widget.event.creator.id &&
+            userState.user?.id != user.id
+        ? () => showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                    title: Text('Remove from event?'),
+                    content: Text(
+                        'Are you sure you want to remove ${user.name} from the event and chat?'),
+                    actions: [
+                      TextButton(
+                          child: Text("Cancel"),
+                          onPressed: () => Navigator.pop(context)),
+                      TextButton(
+                        child: Text("Remove"),
+                        onPressed: () async {
+                          final provider = EventsGqlProvider();
+                          final result = await provider.removeInvite(
+                              eventId: widget.event.id,
+                              userId: userState.user!.id);
+                          if (result.ok) {
+                            users.removeWhere((u) => u.id == user.id);
+                            setState(() => users = users);
+                          }
+                          await homeState.myEventsRefresh();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ]))
+        : null;
+
     return Container(
       width: MediaQuery.of(context).size.width,
       child: SingleChildScrollView(
@@ -38,16 +75,16 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                             child: Column(
                               children: [
                                 InkWell(
-                                  onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              UserProfile(user: user))),
-                                  child: CircleAvatar(
-                                      radius: 28,
-                                      backgroundImage:
-                                          NetworkImage(user.photoUrls.first)),
-                                ),
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UserProfile(user: user))),
+                                    child: CircleAvatar(
+                                        radius: 28,
+                                        backgroundImage:
+                                            NetworkImage(user.photoUrls.first)),
+                                    onLongPress: removeUser(user)),
                                 Text(user.name),
                               ],
                             ),

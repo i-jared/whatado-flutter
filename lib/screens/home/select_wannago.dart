@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/wannago.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
@@ -16,46 +17,47 @@ class SelectWannago extends StatefulWidget {
 
 class _SelectWannagoState extends State<SelectWannago> {
   late bool loading;
-  late final Event event;
 
   @override
   void initState() {
     super.initState();
     loading = false;
-    event = widget.event;
   }
 
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
+    final event =
+        homeState.myEvents!.firstWhere((e) => e.id == widget.event.id);
+    List<Wannago> wannago = event.wannago
+        .where((w) =>
+            !w.declined && !event.invited.map((i) => i.id).contains(w.user.id))
+        .toList();
     Future<void> decide(Wannago w, bool accepted) async {
       setState(() => loading = true);
       final provider = EventsGqlProvider();
       if (accepted) {
-        print('accepted');
-        await provider.deleteWannago(wannagoId: w.id);
         final result =
             await provider.addInvite(eventId: event.id, userId: w.user.id);
-        if (result.data != null) {
-          print('deleted');
-          event.wannago.remove(w);
-          homeState.updateEvent(result.data as Event);
-          homeState.updateMyEvent(result.data as Event);
+        if (result.ok) {
+          final tempEvent = result.data!;
+          homeState.updateEvent(tempEvent);
+          homeState.updateMyEvent(tempEvent);
         }
       } else {
         final result =
             await provider.updateWannago(wannagoId: w.id, declined: true);
         if (result.ok) {
-          final i = event.wannago.indexOf(w);
-          event.wannago[i].declined = true;
-          homeState.updateEvent(event);
-          homeState.updateMyEvent(event);
+          final i = event.wannago.indexWhere((i) => i.id == w.id);
+          final Wannago x = event.wannago[i];
+          x.declined = true;
+          final Event tempEvent = event..wannago[i] = x;
+          homeState.updateEvent(tempEvent);
+          homeState.updateMyEvent(tempEvent);
         }
       }
       setState(() => loading = false);
     }
-
-    final Iterable<Wannago> wannago = event.wannago.where((w) => !w.declined);
 
     return Scaffold(
       appBar: DefaultAppBar(title: 'Invite'),

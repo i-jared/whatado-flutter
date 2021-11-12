@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/models/event_user.dart';
+import 'package:whatado/models/wannago.dart';
+import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
@@ -29,9 +32,6 @@ class _EventDetailsState extends State<EventDetails> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final userState = Provider.of<UserState>(context);
-    final event = homeState.myEvents?.firstWhere((e) => e.id == widget.event.id,
-            orElse: () => widget.event) ??
-        widget.event;
     final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
     final headingSpacing = 10.0;
     final padding = 30.0;
@@ -42,7 +42,41 @@ class _EventDetailsState extends State<EventDetails> {
             padding * 2.0 -
             circleSpacing * 2.0) /
         6.0;
-    final wannago = event.wannago.where((w) => !w.declined);
+    final event = homeState.myEvents?.firstWhere((e) => e.id == widget.event.id,
+            orElse: () => widget.event) ??
+        widget.event;
+    final wannago = event.wannago
+        .where((w) =>
+            !w.declined && !event.invited.map((i) => i.id).contains(w.user.id))
+        .toList();
+
+    final removeUser = (EventUser user) => userState.user?.id ==
+                event.creator.id &&
+            userState.user?.id != user.id
+        ? () => showDialog(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+                    title: Text('Remove from event?'),
+                    content: Text(
+                        'Are you sure you want to remove ${user.name} from the event and chat?'),
+                    actions: [
+                      TextButton(
+                          child: Text("Cancel"),
+                          onPressed: () => Navigator.pop(context)),
+                      TextButton(
+                        child: Text("Remove"),
+                        onPressed: () async {
+                          final provider = EventsGqlProvider();
+                          final result = await provider.removeInvite(
+                              eventId: event.id, userId: userState.user!.id);
+                          if (result.ok) {
+                            await homeState.myEventsRefresh();
+                          }
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ]))
+        : null;
 
     return Scaffold(
         appBar: EventAppBar(event: event),
@@ -121,6 +155,7 @@ class _EventDetailsState extends State<EventDetails> {
                     ]
                   : event.invited
                       .map((eventUser) => InkWell(
+                            onLongPress: removeUser(eventUser),
                             onTap: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(

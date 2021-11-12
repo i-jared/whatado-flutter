@@ -16,6 +16,7 @@ import 'package:whatado/widgets/appbars/home_app_bar.dart';
 import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
 
+import 'event_details.dart';
 import 'my_events.dart';
 import 'my_forums.dart';
 
@@ -90,7 +91,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     if (message.data['type'] == 'event') {
       final homeState = Provider.of<HomeState>(context, listen: false);
+      final eventProvider = EventsGqlProvider();
+      final eventResult =
+          await eventProvider.event(int.parse(message.data['eventId']));
       await homeState.myEventsRefresh();
+      if (eventResult.ok) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EventDetails(event: eventResult.data!)));
+      }
     }
   }
 

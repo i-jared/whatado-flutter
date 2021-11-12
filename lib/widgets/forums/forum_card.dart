@@ -10,8 +10,8 @@ import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/chats.dart';
-import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/user_state.dart';
 
 class ForumCard extends StatefulWidget {
   final Event event;
@@ -37,6 +37,7 @@ class _ForumCardState extends State<ForumCard> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
+    final userState = Provider.of<UserState>(context);
     final hasImage =
         widget.event.imageUrl != null && widget.event.imageUrl!.isNotEmpty;
     final unread = widget.forum.chats.isEmpty
@@ -76,7 +77,8 @@ class _ForumCardState extends State<ForumCard> {
                   if (value == 'leave') {
                     final provider = EventsGqlProvider();
                     await provider.removeInvite(
-                        eventId: widget.event.id, userId: loginService.userId!);
+                        eventId: widget.event.id, userId: userState.user!.id);
+                    await homeState.myEventsRefresh();
                   }
                 },
                 itemBuilder: (context) => [

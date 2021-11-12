@@ -75,6 +75,7 @@ class AddEventState extends ChangeNotifier {
         _offsetx = 0,
         _offsety = 0 {
     titleController.addListener(() => notifyListeners());
+    textModeController.addListener(() => notifyListeners());
     descriptionController.addListener(() => notifyListeners());
     locationController.addListener(() => notifyListeners());
     dateController.addListener(() => notifyListeners());

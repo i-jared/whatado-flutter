@@ -7,17 +7,15 @@ class MyForums extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
-    final myForums = homeState.myForums;
-    final myEvents = homeState.myEvents;
-    return myForums == null || homeState.lastMessages == null
+    return homeState.myForums == null || homeState.lastMessages == null
         ? Center(child: CircularProgressIndicator())
-        : myForums.isNotEmpty
+        : homeState.myForums!.isNotEmpty
             ? ListView.separated(
                 separatorBuilder: (context, i) => SizedBox(height: 30),
-                itemCount: myForums.length,
+                itemCount: homeState.myForums!.length,
                 itemBuilder: (context, i) {
-                  final forum = myForums[i];
-                  final event = myEvents!
+                  final forum = homeState.myForums![i];
+                  final event = homeState.myEvents!
                       .firstWhere((event) => event.id == forum.eventId);
                   final lastChat = homeState.lastMessages!.firstWhere((obj) {
                     return obj['forumId'] == forum.id;

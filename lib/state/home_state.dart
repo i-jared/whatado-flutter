@@ -55,7 +55,7 @@ class HomeState extends ChangeNotifier {
         myForums = [];
         lastMessages = [];
       } else {
-        getMyForums().then((_) => getFirstChats());
+        getMyForums();
       }
     });
   }

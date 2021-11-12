@@ -217,13 +217,16 @@ class EventsGqlProvider {
       {required int eventId, required int userId}) async {
     final mutation = RemoveInviteMutation(
         variables: RemoveInviteArguments(eventId: eventId, userId: userId));
+    print('before mutate');
     final result = await graphqlClientService.mutate(mutation);
+    print('after mutate');
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
         print(element.message);
       });
     }
+    print('remove $result');
 
     final root = result.data?['removeInvite'];
     final data = root != null && root['nodes'] != null
@@ -295,7 +298,6 @@ class EventsGqlProvider {
         print(element.message);
       });
     }
-    print('delete wannago $result');
     final root = result.data?['deleteWannago'];
     final data = root?['ok'] ?? false;
     final ok = root?['ok'] ?? false;
