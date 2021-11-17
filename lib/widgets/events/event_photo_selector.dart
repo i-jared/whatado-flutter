@@ -14,6 +14,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
   late bool paginationDone;
   late bool loading;
   late int page;
+  late bool noImages;
   late List<Map<String, dynamic>> loadedAssets;
   late List<Uint8List> thumbdata;
   late ScrollController _controller;
@@ -21,6 +22,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
   @override
   void initState() {
     super.initState();
+    noImages = false;
     loading = true;
     paginationDone = false;
     page = 0;
@@ -37,7 +39,8 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
   }
 
   Future<void> loadMorePhotos() async {
-    final albums = await PhotoManager.getAssetPathList(onlyAll: true);
+    final albums = await PhotoManager.getAssetPathList(
+        onlyAll: true, type: RequestType.image);
     final album = albums.first;
     final nextAssets = await album.getAssetListPaged(page, 40);
     if (nextAssets.isEmpty) {
@@ -62,29 +65,32 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     final eventState = Provider.of<AddEventState>(context, listen: false);
     var result = await PhotoManager.requestPermissionExtend();
     if (result.isAuth) {
-      eventState.textMode = false;
-      final albums = await PhotoManager.getAssetPathList(onlyAll: true);
-      final album = albums.first;
-      final recentAssets = await album.getAssetListPaged(page, 40);
-      List<Map<String, dynamic>> tempLoadedAssets =
-          await Future.wait(recentAssets
-              .map((asset) async => {
-                    "asset": asset,
-                    "thumb": await asset.thumbData,
-                    "valid": await asset.exists && asset.type == AssetType.image
-                  })
-              .toList());
-
-      eventState.selectedImage =
-          tempLoadedAssets.firstWhere((assetMap) => assetMap["valid"])["asset"];
-
-      setState(() {
-        loadedAssets = tempLoadedAssets;
-        page = 1;
-      });
-      setState(() => loading = false);
+      try {
+        eventState.textMode = false;
+        final albums = await PhotoManager.getAssetPathList(
+            onlyAll: true, type: RequestType.image);
+        final album = albums.first;
+        final recentAssets = await album.getAssetListPaged(page, 40);
+        List<Map<String, dynamic>> tempLoadedAssets =
+            await Future.wait(recentAssets
+                .map((asset) async => {
+                      "asset": asset,
+                      "thumb": await asset.thumbData,
+                      "valid":
+                          await asset.exists && asset.type == AssetType.image
+                    })
+                .toList());
+        eventState.selectedImage = tempLoadedAssets
+            .firstWhere((assetMap) => assetMap["valid"])["asset"];
+        setState(() {
+          loadedAssets = tempLoadedAssets;
+          page = 1;
+        });
+      } catch (e) {
+        setState(() => noImages = true);
+      }
     } else {
-      eventState.textMode = true;
+      setState(() => noImages = true);
     }
     setState(() => loading = false);
   }
@@ -95,27 +101,40 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     if (loading) {
       return Center(child: CircularProgressIndicator());
     }
-    return Container(
-      color: Colors.grey[50],
-      child: GridView.count(
-          controller: _controller,
-          crossAxisSpacing: 1.0,
-          mainAxisSpacing: 1.0,
-          crossAxisCount: 4,
-          children: loadedAssets
-              .where((map) => map['valid'] ?? false)
-              .map((assetMap) => InkWell(
-                  onTap: () => eventState.selectedImage = assetMap['asset'],
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      Image.memory(assetMap['thumb'], fit: BoxFit.cover),
-                      if (eventState.selectedImage == assetMap['asset'])
-                        Opacity(
-                            opacity: 0.3, child: Container(color: Colors.blue))
-                    ],
-                  )))
-              .toList()),
-    );
+    return noImages
+        ? Center(
+            child: Wrap(alignment: WrapAlignment.center, children: [
+            Text(
+              'No images? Make sure you allow Whatado to access your photos. ',
+              textAlign: TextAlign.center,
+            ),
+            TextButton(
+                onPressed: PhotoManager.openSetting,
+                child: Text('open settings'))
+          ]))
+        : Container(
+            color: Colors.grey[50],
+            child: GridView.count(
+                controller: _controller,
+                crossAxisSpacing: 1.0,
+                mainAxisSpacing: 1.0,
+                crossAxisCount: 4,
+                children: loadedAssets
+                    .where((map) => map['valid'] ?? false)
+                    .map((assetMap) => InkWell(
+                        onTap: () =>
+                            eventState.selectedImage = assetMap['asset'],
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.memory(assetMap['thumb'], fit: BoxFit.cover),
+                            if (eventState.selectedImage == assetMap['asset'])
+                              Opacity(
+                                  opacity: 0.3,
+                                  child: Container(color: Colors.blue))
+                          ],
+                        )))
+                    .toList()),
+          );
   }
 }

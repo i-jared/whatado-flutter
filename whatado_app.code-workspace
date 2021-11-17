@@ -17,7 +17,7 @@
         "label": "build_runner_local_dev",
         "command": "dart",
         "type": "shell",
-        "args": ["scripts/build_graphql.dart", "http://192.168.86.148:4000/get_schema"]
+        "args": ["scripts/build_graphql.dart", "http://192.168.86.209:4000/get_schema"]
       }
     ]
   },
