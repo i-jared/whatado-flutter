@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
-import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/add_event_state.dart';
@@ -15,21 +14,6 @@ class AddEvent extends StatefulWidget {
 }
 
 class _AddEventState extends State<AddEvent> {
-  late bool auth;
-  @override
-  void initState() {
-    super.initState();
-    auth = true;
-    init();
-  }
-
-  Future<void> init() async {
-    var result = await PhotoManager.requestPermissionExtend();
-    if (result.isAuth) {
-      setState(() => auth = true);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
@@ -39,43 +23,42 @@ class _AddEventState extends State<AddEvent> {
       body: Column(
         children: [
           Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.width,
-            child: eventState.textMode
-                ? Center(
-                    child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                    child: TextFormField(
-                      controller: eventState.textModeController,
-                      textAlign: TextAlign.center,
-                      maxLines: null,
-                      decoration: InputDecoration(
-                          hintText: "What are your plans?",
-                          border: InputBorder.none),
-                      style: TextStyle(fontSize: 30),
-                    ),
-                  ))
-                : eventState.selectedImage == null
-                    ? Container()
-                    : FutureBuilder(
-                        future: eventState.selectedImage?.originBytes,
-                        builder: (context, snapshot) {
-                          if (snapshot.data == null) return Container();
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.width,
+              child: eventState.textMode
+                  ? Center(
+                      child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                      child: TextFormField(
+                        controller: eventState.textModeController,
+                        textAlign: TextAlign.center,
+                        maxLines: null,
+                        decoration: InputDecoration(
+                            hintText: "What are your plans?",
+                            border: InputBorder.none),
+                        style: TextStyle(fontSize: 30),
+                      ),
+                    ))
+                  : eventState.selectedImage == null
+                      ? Container()
+                      : FutureBuilder(
+                          future: eventState.selectedImage?.originBytes,
+                          builder: (context, snapshot) {
+                            if (snapshot.data == null) return Container();
 
-                          final bytes = snapshot.data as Uint8List;
-                          return FadeIn(
-                              key: ValueKey(snapshot.data),
-                              duration: Duration(milliseconds: 200),
-                              child: PhotoView(
-                                  loadingBuilder: (context, _) => Center(
-                                      child: CircularProgressIndicator()),
-                                  controller: eventState.photoController,
-                                  minScale: PhotoViewComputedScale.covered,
-                                  backgroundDecoration:
-                                      BoxDecoration(color: Colors.grey[200]),
-                                  imageProvider: MemoryImage(bytes)));
-                        }),
-          ),
+                            final bytes = snapshot.data as Uint8List;
+                            return FadeIn(
+                                key: ValueKey(snapshot.data),
+                                duration: Duration(milliseconds: 200),
+                                child: PhotoView(
+                                    loadingBuilder: (context, _) => Center(
+                                        child: CircularProgressIndicator()),
+                                    controller: eventState.photoController,
+                                    minScale: PhotoViewComputedScale.covered,
+                                    backgroundDecoration:
+                                        BoxDecoration(color: Colors.grey[200]),
+                                    imageProvider: MemoryImage(bytes)));
+                          })),
           Flexible(
               flex: 1,
               fit: FlexFit.tight,
@@ -104,11 +87,7 @@ class _AddEventState extends State<AddEvent> {
           Flexible(
               fit: FlexFit.tight,
               flex: 5,
-              child: eventState.textMode
-                  ? Container()
-                  : auth
-                      ? EventPhotoSelector()
-                      : Container(child: Center(child: Text('not auth')))),
+              child: eventState.textMode ? Container() : EventPhotoSelector()),
         ],
       ),
     );
