@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/add_event_state.dart';
@@ -35,14 +36,15 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
           await loadMorePhotos();
         }
       });
-    initPhotos();
+    SchedulerBinding.instance?.scheduleFrameCallback((_) => initPhotos());
   }
 
   Future<void> loadMorePhotos() async {
     final albums = await PhotoManager.getAssetPathList(
         onlyAll: true, type: RequestType.image);
     final album = albums.first;
-    final nextAssets = await album.getAssetListPaged(page, 40);
+    final nextAssets = await album.getAssetListPaged(page, 20);
+
     if (nextAssets.isEmpty) {
       setState(() => paginationDone = true);
     }
@@ -51,6 +53,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     List<Map<String, dynamic>> tempLoadedAssets = await Future.wait(nextAssets
         .map((asset) async => {
               "asset": asset,
+              "id": asset.id,
               "thumb": await asset.thumbData,
               "valid": await asset.exists && asset.type == AssetType.image
             })
@@ -63,35 +66,33 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
 
   void initPhotos() async {
     final eventState = Provider.of<AddEventState>(context, listen: false);
-    var result = await PhotoManager.requestPermissionExtend();
-    if (result.isAuth) {
-      try {
-        eventState.textMode = false;
-        final albums = await PhotoManager.getAssetPathList(
-            onlyAll: true, type: RequestType.image);
-        final album = albums.first;
-        final recentAssets = await album.getAssetListPaged(page, 40);
-        List<Map<String, dynamic>> tempLoadedAssets =
-            await Future.wait(recentAssets
-                .map((asset) async => {
-                      "asset": asset,
-                      "thumb": await asset.thumbData,
-                      "valid":
-                          await asset.exists && asset.type == AssetType.image
-                    })
-                .toList());
-        eventState.selectedImage = tempLoadedAssets
-            .firstWhere((assetMap) => assetMap["valid"])["asset"];
-        setState(() {
-          loadedAssets = tempLoadedAssets;
-          page = 1;
-        });
-      } catch (e) {
-        setState(() => noImages = true);
-      }
-    } else {
+    try {
+      eventState.textMode = false;
+      final albums = await PhotoManager.getAssetPathList(
+          onlyAll: true, type: RequestType.image);
+      final album = albums.first;
+      final recentAssets = await album.getAssetListPaged(page, 20);
+      List<Map<String, dynamic>> tempLoadedAssets =
+          await Future.wait(recentAssets
+              .map((asset) async => {
+                    "asset": asset,
+                    "id": asset.id,
+                    "thumb": await asset.thumbData,
+                    "valid": await asset.exists && asset.type == AssetType.image
+                  })
+              .toList());
+      eventState.selectedImage =
+          tempLoadedAssets.firstWhere((assetMap) => assetMap["valid"])["asset"];
+      setState(() {
+        loadedAssets = tempLoadedAssets;
+        page = 1;
+      });
+    } catch (e) {
       setState(() => noImages = true);
     }
+    // } else {
+    // setState(() => noImages = true);
+    // }
     setState(() => loading = false);
   }
 
@@ -124,6 +125,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
                     .map((assetMap) => InkWell(
                         onTap: () =>
                             eventState.selectedImage = assetMap['asset'],
+                        // eventState.selectedId = assetMap['id'],
                         child: Stack(
                           fit: StackFit.expand,
                           children: [
