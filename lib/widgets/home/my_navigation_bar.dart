@@ -34,8 +34,7 @@ class MyNavigationBar extends StatelessWidget {
             ),
             IconButton(
               padding: EdgeInsets.zero,
-              onPressed: () async {
-                eventState.resetPhotos();
+              onPressed: () {
                 eventState.clear();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => AddEvent()));

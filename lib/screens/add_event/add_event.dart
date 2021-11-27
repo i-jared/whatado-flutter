@@ -24,11 +24,9 @@ class _AddEventState extends State<AddEvent> {
   }
 
   Future<void> init() async {
-    final eventState = Provider.of<AddEventState>(context, listen: false);
     var result = await PhotoManager.requestPermissionExtend();
     if (result.isAuth) {
       setState(() => auth = true);
-      await eventState.loadPhotos();
     }
   }
 
@@ -41,44 +39,43 @@ class _AddEventState extends State<AddEvent> {
       body: Column(
         children: [
           Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-              child: eventState.textMode
-                  ? Center(
-                      child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: TextFormField(
-                        controller: eventState.textModeController,
-                        textAlign: TextAlign.center,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                            hintText: "What are your plans?",
-                            border: InputBorder.none),
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ))
-                  : eventState.selectedImage == null
-                      ? Container()
-                      : Container()
-              // : FutureBuilder(
-              // future: eventState.selectedImage?.originBytes,
-              // builder: (context, snapshot) {
-              // if (snapshot.data == null) return Container();
-//
-              // final bytes = snapshot.data as Uint8List;
-              // return FadeIn(
-              // key: ValueKey(snapshot.data),
-              // duration: Duration(milliseconds: 200),
-              // child: PhotoView(
-              // loadingBuilder: (context, _) => Center(
-              // child: CircularProgressIndicator()),
-              // controller: eventState.photoController,
-              // minScale: PhotoViewComputedScale.covered,
-              // backgroundDecoration:
-              // BoxDecoration(color: Colors.grey[200]),
-              // imageProvider: MemoryImage(bytes)));
-              // }),
-              ),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width,
+            child: eventState.textMode
+                ? Center(
+                    child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: TextFormField(
+                      controller: eventState.textModeController,
+                      textAlign: TextAlign.center,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                          hintText: "What are your plans?",
+                          border: InputBorder.none),
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  ))
+                : eventState.selectedImage == null
+                    ? Container()
+                    : FutureBuilder(
+                        future: eventState.selectedImage?.originBytes,
+                        builder: (context, snapshot) {
+                          if (snapshot.data == null) return Container();
+
+                          final bytes = snapshot.data as Uint8List;
+                          return FadeIn(
+                              key: ValueKey(snapshot.data),
+                              duration: Duration(milliseconds: 200),
+                              child: PhotoView(
+                                  loadingBuilder: (context, _) => Center(
+                                      child: CircularProgressIndicator()),
+                                  controller: eventState.photoController,
+                                  minScale: PhotoViewComputedScale.covered,
+                                  backgroundDecoration:
+                                      BoxDecoration(color: Colors.grey[200]),
+                                  imageProvider: MemoryImage(bytes)));
+                        }),
+          ),
           Flexible(
               flex: 1,
               fit: FlexFit.tight,

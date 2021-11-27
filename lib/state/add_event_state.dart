@@ -18,13 +18,11 @@ class AddEventState extends ChangeNotifier {
   TextEditingController timeController;
   TextEditingController textModeController;
   TextEditingController addInterestController;
-  ScrollController thumbScrollController;
   Gender _selectedGender;
   AssetEntity? _selectedImage;
   double _scale;
   double _offsetx;
   double _offsety;
-  int page;
 
   double _filterAgeStart;
   double _filterAgeEnd;
@@ -36,11 +34,29 @@ class AddEventState extends ChangeNotifier {
   List<Interest> popularInterests = [];
   List<Interest> customInterests = [];
   List<Interest> selectedInterests = [];
-  List<AssetEntity?>? _photoAssets;
+
+  void addInterest(Interest interest) {
+    selectedInterests.add(interest);
+    notifyListeners();
+  }
+
+  void removeInterest(Interest interest) {
+    selectedInterests.remove(interest);
+    notifyListeners();
+  }
+
+  void addCustomInterest(Interest interest) {
+    customInterests.add(interest);
+    notifyListeners();
+  }
+
+  void removeCustomInterest(Interest interest) {
+    customInterests.remove(interest);
+    notifyListeners();
+  }
 
   AddEventState()
       : photoController = PhotoViewController(),
-        thumbScrollController = ScrollController(),
         titleController = TextEditingController(),
         descriptionController = TextEditingController(),
         locationController = TextEditingController(),
@@ -57,21 +73,13 @@ class AddEventState extends ChangeNotifier {
         _failed = false,
         _scale = 0,
         _offsetx = 0,
-        _offsety = 0,
-        page = 0 {
+        _offsety = 0 {
     titleController.addListener(() => notifyListeners());
     textModeController.addListener(() => notifyListeners());
     descriptionController.addListener(() => notifyListeners());
     locationController.addListener(() => notifyListeners());
     dateController.addListener(() => notifyListeners());
     timeController.addListener(() => notifyListeners());
-    thumbScrollController.addListener(() async {
-      if (photoAssets != [] &&
-          thumbScrollController.position.atEdge &&
-          thumbScrollController.position.pixels != 0) {
-        await loadPhotos();
-      }
-    });
     init();
   }
 
@@ -92,13 +100,6 @@ class AddEventState extends ChangeNotifier {
     final provider = InterestGqlProvider();
     final result = await provider.popular();
     popularInterests.addAll(result.data ?? []);
-    notifyListeners();
-  }
-
-  List<AssetEntity?>? get photoAssets => _photoAssets;
-
-  set photoAssets(List<AssetEntity?>? photoAssets) {
-    _photoAssets = photoAssets;
     notifyListeners();
   }
 
@@ -158,26 +159,6 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addInterest(Interest interest) {
-    selectedInterests.add(interest);
-    notifyListeners();
-  }
-
-  void removeInterest(Interest interest) {
-    selectedInterests.remove(interest);
-    notifyListeners();
-  }
-
-  void addCustomInterest(Interest interest) {
-    customInterests.add(interest);
-    notifyListeners();
-  }
-
-  void removeCustomInterest(Interest interest) {
-    customInterests.remove(interest);
-    notifyListeners();
-  }
-
   void savePhotoInfo() {
     _scale = photoController.scale?.toDouble() ?? 0.0;
     _offsetx = photoController.position.dx;
@@ -233,30 +214,5 @@ class AddEventState extends ChangeNotifier {
     final rerotatedImage = copyRotate(face, -_selectedImage!.orientation);
     final resizedFace = copyResize(rerotatedImage, height: 700, width: 700);
     return Uint8List.fromList(encodePng(resizedFace));
-  }
-
-  Future<void> loadPhotos() async {
-    try {
-      final albums = await PhotoManager.getAssetPathList(
-          onlyAll: true, type: RequestType.image);
-      final album = albums.first;
-      final pagedAssets = await album.getAssetListPaged(page, 20);
-      if (photoAssets == null) {
-        photoAssets = pagedAssets;
-      } else {
-        photoAssets!.addAll(pagedAssets);
-      }
-      page += 1;
-    } catch (e) {
-      print(e.toString());
-    }
-    notifyListeners();
-  }
-
-  void resetPhotos() {
-    _photoAssets = null;
-    _selectedImage = null;
-    page = 0;
-    notifyListeners();
   }
 }
