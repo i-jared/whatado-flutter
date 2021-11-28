@@ -31,6 +31,14 @@
         "preLaunchTask": "build_runner_prod"
       },
       {
+        "name": "release_prod",
+        "request": "launch",
+        "type": "dart",
+        "program": "lib/main.dart",
+        "preLaunchTask": "build_runner_prod",
+        "args": ["--release"]
+      },
+      {
         "name": "debug_local_dev",
         "request": "launch",
         "type": "dart",
