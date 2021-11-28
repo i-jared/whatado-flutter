@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
+import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/add_event_state.dart';
@@ -42,14 +44,16 @@ class _AddEventState extends State<AddEvent> {
                   : eventState.selectedImage == null
                       ? Container()
                       : FutureBuilder(
-                          future: eventState.selectedImage?.originBytes,
+                          future: eventState.selectedImage?.loadFile(),
                           builder: (context, snapshot) {
-                            if (snapshot.data == null) return Container();
-
-                            final bytes = snapshot.data as Uint8List;
+                            if (snapshot.data == null ||
+                                snapshot.connectionState !=
+                                    ConnectionState.done) return Container();
+                            final File file = snapshot.data as File;
+                            final bytes = file.readAsBytesSync();
                             return FadeIn(
-                                key: ValueKey(snapshot.data),
-                                duration: Duration(milliseconds: 200),
+                                key: ValueKey(bytes),
+                                duration: Duration(milliseconds: 500),
                                 child: PhotoView(
                                     loadingBuilder: (context, _) => Center(
                                         child: CircularProgressIndicator()),
