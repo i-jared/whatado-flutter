@@ -853,6 +853,78 @@ Map<String, dynamic> _$AddInterests$MutationToJson(
       'addInterests': instance.addInterests.toJson(),
     };
 
+CheckValidationLogin$Mutation$CheckValidationLogin$Jwt
+    _$CheckValidationLogin$Mutation$CheckValidationLogin$JwtFromJson(
+        Map<String, dynamic> json) {
+  return CheckValidationLogin$Mutation$CheckValidationLogin$Jwt()
+    ..accessToken = json['accessToken'] as String
+    ..refreshToken = json['refreshToken'] as String;
+}
+
+Map<String, dynamic>
+    _$CheckValidationLogin$Mutation$CheckValidationLogin$JwtToJson(
+            CheckValidationLogin$Mutation$CheckValidationLogin$Jwt instance) =>
+        <String, dynamic>{
+          'accessToken': instance.accessToken,
+          'refreshToken': instance.refreshToken,
+        };
+
+CheckValidationLogin$Mutation$CheckValidationLogin$Errors
+    _$CheckValidationLogin$Mutation$CheckValidationLogin$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return CheckValidationLogin$Mutation$CheckValidationLogin$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String,
+    dynamic> _$CheckValidationLogin$Mutation$CheckValidationLogin$ErrorsToJson(
+        CheckValidationLogin$Mutation$CheckValidationLogin$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+CheckValidationLogin$Mutation$CheckValidationLogin
+    _$CheckValidationLogin$Mutation$CheckValidationLoginFromJson(
+        Map<String, dynamic> json) {
+  return CheckValidationLogin$Mutation$CheckValidationLogin()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..jwt = json['jwt'] == null
+        ? null
+        : CheckValidationLogin$Mutation$CheckValidationLogin$Jwt.fromJson(
+            json['jwt'] as Map<String, dynamic>)
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) =>
+            CheckValidationLogin$Mutation$CheckValidationLogin$Errors.fromJson(
+                e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$CheckValidationLogin$Mutation$CheckValidationLoginToJson(
+        CheckValidationLogin$Mutation$CheckValidationLogin instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'jwt': instance.jwt?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+CheckValidationLogin$Mutation _$CheckValidationLogin$MutationFromJson(
+    Map<String, dynamic> json) {
+  return CheckValidationLogin$Mutation()
+    ..checkValidationLogin =
+        CheckValidationLogin$Mutation$CheckValidationLogin.fromJson(
+            json['checkValidationLogin'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$CheckValidationLogin$MutationToJson(
+        CheckValidationLogin$Mutation instance) =>
+    <String, dynamic>{
+      'checkValidationLogin': instance.checkValidationLogin.toJson(),
+    };
+
 Login$Mutation$Login$Nodes _$Login$Mutation$Login$NodesFromJson(
     Map<String, dynamic> json) {
   return Login$Mutation$Login$Nodes()..id = json['id'] as int;
@@ -2200,6 +2272,21 @@ Map<String, dynamic> _$AddInterestsArgumentsToJson(
         AddInterestsArguments instance) =>
     <String, dynamic>{
       'interestsText': instance.interestsText,
+    };
+
+CheckValidationLoginArguments _$CheckValidationLoginArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return CheckValidationLoginArguments(
+    code: json['code'] as String,
+    phone: json['phone'] as String,
+  );
+}
+
+Map<String, dynamic> _$CheckValidationLoginArgumentsToJson(
+        CheckValidationLoginArguments instance) =>
+    <String, dynamic>{
+      'code': instance.code,
+      'phone': instance.phone,
     };
 
 LoginArguments _$LoginArgumentsFromJson(Map<String, dynamic> json) {

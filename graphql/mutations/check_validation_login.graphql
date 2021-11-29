@@ -1,0 +1,14 @@
+mutation checkValidationLogin($code: String!, $phone: String!) {
+  checkValidationLogin(code: $code, phone: $phone) {
+    ok
+    nodes
+    jwt {
+      accessToken
+      refreshToken
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

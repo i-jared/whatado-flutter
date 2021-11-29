@@ -167,11 +167,41 @@ class UserGqlProvider {
     final root = result.data?['updatePhotos'];
     final data = root?['nodes'] ?? false;
     final ok = root?['ok'] ?? false;
+    final accessToken = root?['jwt']?['accessToken'];
+    final refreshToken = root?['jwt']?['refreshToken'];
     final errors = root?['errors'];
 
     return MyQueryResponse<bool>(
       ok: ok,
       data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> checkValidationLogin(
+      String code, String phone) async {
+    final mutation = CheckValidationLoginMutation(
+        variables: CheckValidationLoginArguments(code: code, phone: phone));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['checkValidationLogin'];
+    final data = root?['ok'] ?? false;
+    final accessToken = root?['jwt']?['accessToken'];
+    final refreshToken = root?['jwt']?['refreshToken'];
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      accessToken: accessToken,
+      refreshToken: refreshToken,
       errors: errors,
     );
   }

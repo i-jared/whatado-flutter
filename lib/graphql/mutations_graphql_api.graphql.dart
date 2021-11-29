@@ -956,6 +956,86 @@ class AddInterests$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class CheckValidationLogin$Mutation$CheckValidationLogin$Jwt
+    extends JsonSerializable with EquatableMixin {
+  CheckValidationLogin$Mutation$CheckValidationLogin$Jwt();
+
+  factory CheckValidationLogin$Mutation$CheckValidationLogin$Jwt.fromJson(
+          Map<String, dynamic> json) =>
+      _$CheckValidationLogin$Mutation$CheckValidationLogin$JwtFromJson(json);
+
+  late String accessToken;
+
+  late String refreshToken;
+
+  @override
+  List<Object?> get props => [accessToken, refreshToken];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CheckValidationLogin$Mutation$CheckValidationLogin$JwtToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidationLogin$Mutation$CheckValidationLogin$Errors
+    extends JsonSerializable with EquatableMixin {
+  CheckValidationLogin$Mutation$CheckValidationLogin$Errors();
+
+  factory CheckValidationLogin$Mutation$CheckValidationLogin$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$CheckValidationLogin$Mutation$CheckValidationLogin$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CheckValidationLogin$Mutation$CheckValidationLogin$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidationLogin$Mutation$CheckValidationLogin
+    extends JsonSerializable with EquatableMixin {
+  CheckValidationLogin$Mutation$CheckValidationLogin();
+
+  factory CheckValidationLogin$Mutation$CheckValidationLogin.fromJson(
+          Map<String, dynamic> json) =>
+      _$CheckValidationLogin$Mutation$CheckValidationLoginFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  CheckValidationLogin$Mutation$CheckValidationLogin$Jwt? jwt;
+
+  List<CheckValidationLogin$Mutation$CheckValidationLogin$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, jwt, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CheckValidationLogin$Mutation$CheckValidationLoginToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidationLogin$Mutation extends JsonSerializable
+    with EquatableMixin {
+  CheckValidationLogin$Mutation();
+
+  factory CheckValidationLogin$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CheckValidationLogin$MutationFromJson(json);
+
+  late CheckValidationLogin$Mutation$CheckValidationLogin checkValidationLogin;
+
+  @override
+  List<Object?> get props => [checkValidationLogin];
+  @override
+  Map<String, dynamic> toJson() => _$CheckValidationLogin$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Login$Mutation$Login$Nodes extends JsonSerializable with EquatableMixin {
   Login$Mutation$Login$Nodes();
 
@@ -3720,6 +3800,132 @@ class AddInterestsMutation
   @override
   AddInterests$Mutation parse(Map<String, dynamic> json) =>
       AddInterests$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CheckValidationLoginArguments extends JsonSerializable
+    with EquatableMixin {
+  CheckValidationLoginArguments({required this.code, required this.phone});
+
+  @override
+  factory CheckValidationLoginArguments.fromJson(Map<String, dynamic> json) =>
+      _$CheckValidationLoginArgumentsFromJson(json);
+
+  late String code;
+
+  late String phone;
+
+  @override
+  List<Object?> get props => [code, phone];
+  @override
+  Map<String, dynamic> toJson() => _$CheckValidationLoginArgumentsToJson(this);
+}
+
+final CHECK_VALIDATION_LOGIN_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'checkValidationLogin'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'code')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'phone')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'checkValidationLogin'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'code'),
+                  value: VariableNode(name: NameNode(value: 'code'))),
+              ArgumentNode(
+                  name: NameNode(value: 'phone'),
+                  value: VariableNode(name: NameNode(value: 'phone')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'jwt'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'accessToken'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'refreshToken'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class CheckValidationLoginMutation extends GraphQLQuery<
+    CheckValidationLogin$Mutation, CheckValidationLoginArguments> {
+  CheckValidationLoginMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CHECK_VALIDATION_LOGIN_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'checkValidationLogin';
+
+  @override
+  final CheckValidationLoginArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CheckValidationLogin$Mutation parse(Map<String, dynamic> json) =>
+      CheckValidationLogin$Mutation.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)

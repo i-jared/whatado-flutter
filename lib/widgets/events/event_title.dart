@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/join_button.dart';
 import 'package:whatado/widgets/events/leave_button.dart';
@@ -48,7 +49,14 @@ class EventTitle extends StatelessWidget {
                 Flexible(
                     flex: 3,
                     child: event.creator.id == userState.user?.id
-                        ? NoJoinButton(text: 'My Event')
+                        ? NoJoinButton(
+                            text: 'My Event',
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        EventDetails(event: event))),
+                          )
                         : !wannago && !invited
                             ? JoinButton(event: event)
                             : wannago && !invited

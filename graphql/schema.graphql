@@ -236,6 +236,7 @@ type Mutation {
   addWannago(eventId: Int!, userId: Int!): EventApiResponse!
   blockUser(userId: Int!): BoolApiResponse!
   checkValidation(code: String!): BoolApiResponse!
+  checkValidationLogin(code: String!, phone: String!): BoolApiResponse!
   createChat(options: ChatInput!): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
   createForum(eventId: Int!): ForumApiResponse!

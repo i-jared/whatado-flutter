@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/providers/graphql/forgot_password_query.dart';
 import 'package:whatado/providers/graphql/login_query.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -49,13 +51,6 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
         SizedBox(height: 35),
         MyPasswordField(
-            hintText: 'Current Password',
-            controller: currentPasswordController,
-            validator: (val) {
-              if ((val?.length ?? 0) == 0) return 'please enter your password';
-            }),
-        SizedBox(height: 35),
-        MyPasswordField(
             hintText: 'New Password',
             controller: newPasswordController,
             errorText: passwordError,
@@ -79,7 +74,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
                 ? null
                 : () async {
                     if (_formKey.currentState?.validate() ?? false)
-                      await resetPassword();
+                      await resetPassword(context);
                   },
             text: 'Reset Password'),
         SizedBox(height: 30),
@@ -149,18 +144,18 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
     }
   }
 
-  Future<void> resetPassword() async {
+  Future<void> resetPassword(BuildContext context) async {
+    final userState = Provider.of<UserState>(context, listen: false);
     setState(() => loading = true);
     final provider = UserGqlProvider();
-    final loginMutation = LoginGqlQuery();
-    final res = await loginMutation.login(
-        phone: phoneNumber, password: currentPasswordController.text);
+    final res =
+        await provider.checkValidationLogin(codeController.text, phoneNumber);
     authenticationService.updateTokens(
         res.accessToken ?? '', res.refreshToken ?? '');
-    final valid = await provider.checkValidation(codeController.text);
-    if (valid.ok) {
+    if (res.ok) {
       final response = await provider
           .updateUser(UserFilterInput(password: newPasswordController.text));
+      userState.getUser();
       phoneController.clear();
       setState(() => loading = false);
       if (response.ok) {
@@ -172,7 +167,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             orElse: () => {})['message'];
       }
     } else {
-      phoneError = valid.errors?.firstWhere(
+      phoneError = res.errors?.firstWhere(
           (element) => element['field'] == 'phone',
           orElse: () => {})['message'];
     }
