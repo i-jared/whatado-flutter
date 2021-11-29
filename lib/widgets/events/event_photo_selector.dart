@@ -80,8 +80,8 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
                           await asset.exists && asset.type == AssetType.image
                     })
                 .toList());
-        eventState.selectedImage = tempLoadedAssets
-            .firstWhere((assetMap) => assetMap["valid"])["asset"];
+        await eventState.setImage(tempLoadedAssets
+            .firstWhere((assetMap) => assetMap["valid"])["asset"]);
         setState(() {
           loadedAssets = tempLoadedAssets;
           page = 1;
@@ -122,8 +122,9 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
                 children: loadedAssets
                     .where((map) => map['valid'] ?? false)
                     .map((assetMap) => InkWell(
-                        onTap: () =>
-                            eventState.selectedImage = assetMap['asset'],
+                        onTap: () async {
+                          await eventState.setImage(assetMap['asset']);
+                        },
                         child: Stack(
                           fit: StackFit.expand,
                           children: [

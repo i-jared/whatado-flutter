@@ -25,44 +25,53 @@ class _AddEventState extends State<AddEvent> {
       body: Column(
         children: [
           Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.width,
-              child: eventState.textMode
-                  ? Center(
-                      child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: TextFormField(
-                        controller: eventState.textModeController,
-                        textAlign: TextAlign.center,
-                        maxLines: null,
-                        decoration: InputDecoration(
-                            hintText: "What are your plans?",
-                            border: InputBorder.none),
-                        style: TextStyle(fontSize: 30),
-                      ),
-                    ))
-                  : eventState.selectedImage == null
-                      ? Container()
-                      : FutureBuilder(
-                          future: eventState.selectedImage?.loadFile(),
-                          builder: (context, snapshot) {
-                            if (snapshot.data == null ||
-                                snapshot.connectionState !=
-                                    ConnectionState.done) return Container();
-                            final File file = snapshot.data as File;
-                            final bytes = file.readAsBytesSync();
-                            return FadeIn(
-                                key: ValueKey(bytes),
-                                duration: Duration(milliseconds: 500),
-                                child: PhotoView(
-                                    loadingBuilder: (context, _) => Center(
-                                        child: CircularProgressIndicator()),
-                                    controller: eventState.photoController,
-                                    minScale: PhotoViewComputedScale.covered,
-                                    backgroundDecoration:
-                                        BoxDecoration(color: Colors.grey[200]),
-                                    imageProvider: MemoryImage(bytes)));
-                          })),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width,
+            child: eventState.textMode
+                ? Center(
+                    child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                    child: TextFormField(
+                      controller: eventState.textModeController,
+                      textAlign: TextAlign.center,
+                      maxLines: null,
+                      decoration: InputDecoration(
+                          hintText: "What are your plans?",
+                          border: InputBorder.none),
+                      style: TextStyle(fontSize: 30),
+                    ),
+                  ))
+                : eventState.selectedImage == null ||
+                        eventState.selectedImageFile == null ||
+                        eventState.selectedImageBytes == null
+                    ? Center(child: CircularProgressIndicator())
+                    : FadeIn(
+                        key: ValueKey(eventState.selectedImageBytes),
+                        duration: Duration(milliseconds: 500),
+                        child: PhotoView(
+                            loadingBuilder: (context, _) =>
+                                Center(child: CircularProgressIndicator()),
+                            controller: eventState.photoController,
+                            minScale: PhotoViewComputedScale.covered,
+                            backgroundDecoration:
+                                BoxDecoration(color: Colors.grey[200]),
+                            imageProvider:
+                                MemoryImage(eventState.selectedImageBytes!))),
+
+            // final bytes = file.readAsBytesSync();
+            // final widget = FadeIn(
+            //     key: ValueKey(bytes),
+            //     duration: Duration(milliseconds: 500),
+            //     child: PhotoView(
+            //         loadingBuilder: (context, _) => Center(
+            //             child: CircularProgressIndicator()),
+            //         controller: eventState.photoController,
+            //         minScale: PhotoViewComputedScale.covered,
+            //         backgroundDecoration:
+            //             BoxDecoration(color: Colors.grey[200]),
+            //         imageProvider: MemoryImage(bytes)));
+            // return widget;
+          ),
           Flexible(
               flex: 1,
               fit: FlexFit.tight,

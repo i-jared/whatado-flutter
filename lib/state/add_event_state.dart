@@ -1,7 +1,9 @@
+import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:image/image.dart';
@@ -19,7 +21,9 @@ class AddEventState extends ChangeNotifier {
   TextEditingController textModeController;
   TextEditingController addInterestController;
   Gender _selectedGender;
-  AssetEntity? _selectedImage;
+  AssetEntity? selectedImage;
+  File? selectedImageFile;
+  Uint8List? selectedImageBytes;
   double _scale;
   double _offsetx;
   double _offsety;
@@ -152,10 +156,18 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
-  AssetEntity? get selectedImage => _selectedImage;
+  Future<void> setImage(AssetEntity? _selectedImage) async {
+    clearPhoto();
+    selectedImage = _selectedImage;
+    selectedImageFile = await _selectedImage?.loadFile();
+    selectedImageBytes = await selectedImageFile?.readAsBytes();
+    notifyListeners();
+  }
 
-  set selectedImage(AssetEntity? selectedImage) {
-    _selectedImage = selectedImage;
+  void clearPhoto() {
+    selectedImage = null;
+    selectedImageFile = null;
+    selectedImageBytes = null;
     notifyListeners();
   }
 
@@ -166,7 +178,7 @@ class AddEventState extends ChangeNotifier {
   }
 
   void clear() {
-    _selectedImage = null;
+    selectedImage = null;
     _succeeded = false;
     _failed = false;
     _postLoading = false;
@@ -186,9 +198,16 @@ class AddEventState extends ChangeNotifier {
   }
 
   Future<Uint8List> cropResizeImage(double deviceWidth) async {
-    if (_selectedImage == null) return Uint8List.fromList([]);
-    final width = _selectedImage!.orientatedWidth;
-    final height = _selectedImage!.orientatedHeight;
+    if (selectedImageBytes == null) return Uint8List.fromList([]);
+    // convert if heic
+    final isHeic = selectedImageFile!.path.toLowerCase().endsWith('heic');
+    if (isHeic) {
+      final jpgPath = await HeicToJpg.convert(selectedImageFile!.path);
+      selectedImageFile = File(jpgPath!);
+      selectedImageBytes = await selectedImageFile?.readAsBytes();
+    }
+    final width = selectedImage!.orientatedWidth;
+    final height = selectedImage!.orientatedHeight;
     // resizing image too small doesn't update controller on revert to min size
     final scale = max(deviceWidth / min(width, height), _scale);
     final offsetx = _offsetx / scale;
@@ -200,10 +219,9 @@ class AddEventState extends ChangeNotifier {
     final bottom = ((height / 2.0) - (length / 2.0) + offsety).round();
     final left = ((width / 2.0) - (length / 2.0) - offsetx).round();
     // crop image and encode it as png
-    final rawImage = await _selectedImage!.originBytes;
-    final decodedImage = decodeImage(List.from(rawImage ?? []));
+    final decodedImage = decodeImage(List.from(selectedImageBytes ?? []));
     if (decodedImage == null) return Uint8List.fromList([]);
-    final rotatedImage = copyRotate(decodedImage, _selectedImage!.orientation);
+    final rotatedImage = copyRotate(decodedImage, selectedImage!.orientation);
     final face = copyCrop(
       rotatedImage,
       left,
@@ -211,7 +229,7 @@ class AddEventState extends ChangeNotifier {
       width - right - left,
       height - top - bottom,
     );
-    final rerotatedImage = copyRotate(face, -_selectedImage!.orientation);
+    final rerotatedImage = copyRotate(face, -selectedImage!.orientation);
     final resizedFace = copyResize(rerotatedImage, height: 700, width: 700);
     return Uint8List.fromList(encodePng(resizedFace));
   }
