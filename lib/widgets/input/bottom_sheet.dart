@@ -3,7 +3,6 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/providers/graphql/forgot_password_query.dart';
-import 'package:whatado/providers/graphql/login_query.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/service_provider.dart';

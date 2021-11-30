@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
-import 'package:whatado/models/wannago.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/profile/user_profile.dart';

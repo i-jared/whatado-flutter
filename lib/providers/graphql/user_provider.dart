@@ -167,8 +167,6 @@ class UserGqlProvider {
     final root = result.data?['updatePhotos'];
     final data = root?['nodes'] ?? false;
     final ok = root?['ok'] ?? false;
-    final accessToken = root?['jwt']?['accessToken'];
-    final refreshToken = root?['jwt']?['refreshToken'];
     final errors = root?['errors'];
 
     return MyQueryResponse<bool>(

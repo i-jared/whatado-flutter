@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
-import 'package:whatado/providers/graphql/events_provider.dart';
-import 'package:whatado/state/home_state.dart';
-import 'package:whatado/state/user_state.dart';
 
 class LeaveButton extends StatelessWidget {
   final Event event;
   LeaveButton({required this.event});
   @override
   Widget build(BuildContext context) {
-    final homeState = Provider.of<HomeState>(context);
-    final userState = Provider.of<UserState>(context);
+    // final homeState = Provider.of<HomeState>(context);
+    // final userState = Provider.of<UserState>(context);
     return ElevatedButton(
         onPressed: null,
         //  () async {
