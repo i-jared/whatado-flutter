@@ -58,43 +58,48 @@ class _SelectWannagoState extends State<SelectWannago> {
       setState(() => loading = false);
     }
 
-    return Scaffold(
-      appBar: DefaultAppBar(title: 'Invite'),
-      body: loading
-          ? Center(child: CircularProgressIndicator())
-          : wannago.isEmpty
-              ? Center(child: Text('no one left'))
-              : ListView(
-                  children: wannago
-                      .map((wannago) => ListTile(
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        UserProfile(user: wannago.user))),
-                            leading: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(wannago.user.photoUrls.first),
-                            ),
-                            title: Text(wannago.user.name),
-                            trailing: Container(
-                              width: 200,
-                              child: Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () async =>
-                                          await decide(wannago, false),
-                                      icon: Icon(Icons.clear)),
-                                  IconButton(
-                                      onPressed: () async =>
-                                          await decide(wannago, true),
-                                      icon: Icon(Icons.check))
-                                ],
-                              ),
-                            ),
-                          ))
-                      .toList(),
-                ),
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+          appBar: DefaultAppBar(title: 'Invite'),
+          body: loading
+              ? Center(child: CircularProgressIndicator())
+              : wannago.isEmpty
+                  ? Center(child: Text('no one left'))
+                  : ListView(
+                      children: wannago
+                          .map((wannago) => ListTile(
+                                onTap: () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UserProfile(user: wannago.user))),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      wannago.user.photoUrls.first),
+                                ),
+                                title: Text(wannago.user.name),
+                                trailing: Container(
+                                  width: 200,
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                          onPressed: () async =>
+                                              await decide(wannago, false),
+                                          icon: Icon(Icons.clear)),
+                                      IconButton(
+                                          onPressed: () async =>
+                                              await decide(wannago, true),
+                                          icon: Icon(Icons.check))
+                                    ],
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+        ),
+      ),
     );
   }
 }

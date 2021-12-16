@@ -269,7 +269,7 @@ type Query {
   chat(id: Int!): ChatApiResponse!
   chats(forumId: Int!, skip: Int, take: Int): ChatsApiResponse!
   event(id: Int!): EventApiResponse!
-  events(dateRange: DateRangeInput!, skip: Int!, take: Int!): EventsApiResponse!
+  events(dateRange: DateRangeInput!, skip: Int!, sortType: SortType!, take: Int!): EventsApiResponse!
   flaggedChats: ChatsApiResponse!
   flaggedEvents: EventsApiResponse!
   flaggedUsers: UsersApiResponse!
@@ -288,6 +288,11 @@ type Query {
   usersById(ids: [Int!]!): UsersApiResponse!
 }
 
+enum SortType {
+  NEWEST
+  SOONEST
+}
+
 type Subscription {
   chatSubscription(forumId: Int!): Chat!
   helloSubscription: String!
@@ -301,6 +306,7 @@ type User {
   createdAt: DateTime!
   deviceId: String!
   flags: Int!
+  friends: [User!]!
   id: Int!
   interests: [Interest!]!
   myEvents: [Event!]!

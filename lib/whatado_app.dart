@@ -25,8 +25,9 @@ import 'package:whatado/state/user_state.dart';
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent)); //, Colors.grey[50]));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      systemNavigationBarColor: Colors.transparent,
+      statusBarColor: Colors.transparent));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp();
@@ -53,10 +54,6 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     loading = true;
-    // SchedulerBinding.instance?.addPostFrameCallback((timeStamp) async {
-    // await loginService.attemptAutoLogin();
-    // setState(() => loading = false);
-    // });
     SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
       await loginService.attemptAutoLogin();
       setState(() => loading = false);

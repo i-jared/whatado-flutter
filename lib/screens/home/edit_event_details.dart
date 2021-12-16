@@ -45,80 +45,89 @@ class _EditEventDetailsState extends State<EditEventDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: EventAppBar(event: widget.event, inEdit: true),
-        body: SingleChildScrollView(
-            child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: sectionSpacing),
-            Text('TITLE', style: headingStyle),
-            SizedBox(height: headingSpacing),
-            MyTextField(
-              controller: titleController,
-              hintText: 'Enter title',
-            ),
-            SizedBox(height: sectionSpacing),
-            Text('DESCRIPTION', style: headingStyle),
-            SizedBox(height: headingSpacing),
-            MyTextField(
-              controller: descriptionController,
-              hintText: 'Enter description',
-              maxLines: null,
-            ),
-            SizedBox(height: sectionSpacing),
-            Text('LOCATION', style: headingStyle),
-            SizedBox(height: headingSpacing),
-            MyTextField(
-              controller: locationController,
-              hintText: 'Enter location',
-            ),
-            SizedBox(height: sectionSpacing),
-            Text('TIME', style: headingStyle),
-            SizedBox(height: headingSpacing),
-            Row(
-              children: [
-                Flexible(
-                  child: TextFormField(
-                    readOnly: true,
-                    controller: dateController,
-                    onTap: () => DatePicker.showDatePicker(context,
-                        onConfirm: (time) =>
-                            dateController.text = dateFormat.format(time),
-                        minTime: DateTime.now(),
-                        maxTime: DateTime.now().add(Duration(days: 100))),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: 'Date',
-                      hintStyle: TextStyle(fontSize: 13),
-                      contentPadding: EdgeInsets.symmetric(vertical: 12),
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+            appBar: EventAppBar(event: widget.event, inEdit: true),
+            body: SingleChildScrollView(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: sectionSpacing),
+                    Text('TITLE', style: headingStyle),
+                    SizedBox(height: headingSpacing),
+                    MyTextField(
+                      controller: titleController,
+                      hintText: 'Enter title',
                     ),
-                  ),
-                ),
-                SizedBox(width: 20),
-                Flexible(
-                  child: TextFormField(
-                    readOnly: true,
-                    controller: timeController,
-                    onTap: () => DatePicker.showTime12hPicker(
-                      context,
-                      onConfirm: (time) =>
-                          timeController.text = timeFormat.format(time),
-                      currentTime: DateTime.now(),
+                    SizedBox(height: sectionSpacing),
+                    Text('DESCRIPTION', style: headingStyle),
+                    SizedBox(height: headingSpacing),
+                    MyTextField(
+                      controller: descriptionController,
+                      hintText: 'Enter description',
+                      maxLines: null,
                     ),
-                    decoration: InputDecoration(
-                      hintText: 'Time',
-                      isDense: true,
-                      hintStyle: TextStyle(fontSize: 13),
-                      contentPadding: EdgeInsets.symmetric(vertical: 12),
+                    SizedBox(height: sectionSpacing),
+                    Text('LOCATION', style: headingStyle),
+                    SizedBox(height: headingSpacing),
+                    MyTextField(
+                      controller: locationController,
+                      hintText: 'Enter location',
                     ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: sectionSpacing),
-          ]),
-        )));
+                    SizedBox(height: sectionSpacing),
+                    Text('TIME', style: headingStyle),
+                    SizedBox(height: headingSpacing),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: TextFormField(
+                            readOnly: true,
+                            controller: dateController,
+                            onTap: () => DatePicker.showDatePicker(context,
+                                onConfirm: (time) => dateController.text =
+                                    dateFormat.format(time),
+                                minTime: DateTime.now(),
+                                maxTime:
+                                    DateTime.now().add(Duration(days: 100))),
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: 'Date',
+                              hintStyle: TextStyle(fontSize: 13),
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 12),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 20),
+                        Flexible(
+                          child: TextFormField(
+                            readOnly: true,
+                            controller: timeController,
+                            onTap: () => DatePicker.showTime12hPicker(
+                              context,
+                              onConfirm: (time) =>
+                                  timeController.text = timeFormat.format(time),
+                              currentTime: DateTime.now(),
+                            ),
+                            decoration: InputDecoration(
+                              hintText: 'Time',
+                              isDense: true,
+                              hintStyle: TextStyle(fontSize: 13),
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 12),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: sectionSpacing),
+                  ]),
+            ))),
+      ),
+    );
   }
 }

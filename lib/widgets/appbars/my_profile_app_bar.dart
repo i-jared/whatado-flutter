@@ -23,15 +23,6 @@ class MyProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
               homeState.myProfileScrollController.offset > 10
           ? 1.0
           : 0.0,
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 15.0),
-        child: IconButton(
-          icon:
-              Icon(Icons.settings_outlined, color: Colors.grey[850], size: 30),
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Settings())),
-        ),
-      ),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 15.0),

@@ -23,41 +23,46 @@ class _BlockedUsersState extends State<BlockedUsers> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
 
-    return Scaffold(
-      appBar: DefaultAppBar(title: 'Blocked'),
-      body: loading
-          ? Center(child: CircularProgressIndicator())
-          : ListView(
-              children: userState.user!.blockedUsers
-                  .map((blockedUser) => ListTile(
-                        onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    UserProfile(user: blockedUser))),
-                        leading: CircleAvatar(
-                          backgroundImage:
-                              NetworkImage(blockedUser.photoUrls.first),
-                        ),
-                        title: Text(blockedUser.name),
-                        trailing: Container(
-                          width: 200,
-                          child: TextButton(
-                              child: Text('unblock'),
-                              onPressed: () async {
-                                setState(() => loading = true);
-                                final provider = UserGqlProvider();
-                                final result =
-                                    await provider.unblockUser(blockedUser.id);
-                                if (result.ok) {
-                                  await userState.getUser();
-                                }
-                                setState(() => loading = false);
-                              }),
-                        ),
-                      ))
-                  .toList(),
-            ),
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+          appBar: DefaultAppBar(title: 'Blocked'),
+          body: loading
+              ? Center(child: CircularProgressIndicator())
+              : ListView(
+                  children: userState.user!.blockedUsers
+                      .map((blockedUser) => ListTile(
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        UserProfile(user: blockedUser))),
+                            leading: CircleAvatar(
+                              backgroundImage:
+                                  NetworkImage(blockedUser.photoUrls.first),
+                            ),
+                            title: Text(blockedUser.name),
+                            trailing: Container(
+                              width: 200,
+                              child: TextButton(
+                                  child: Text('unblock'),
+                                  onPressed: () async {
+                                    setState(() => loading = true);
+                                    final provider = UserGqlProvider();
+                                    final result = await provider
+                                        .unblockUser(blockedUser.id);
+                                    if (result.ok) {
+                                      await userState.getUser();
+                                    }
+                                    setState(() => loading = false);
+                                  }),
+                            ),
+                          ))
+                      .toList(),
+                ),
+        ),
+      ),
     );
   }
 }

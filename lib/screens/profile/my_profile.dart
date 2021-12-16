@@ -25,6 +25,18 @@ class _MyProfileState extends State<MyProfile> {
   }
 
   @override
+  void didChangeDependencies() {
+    final userState = Provider.of<UserState>(context, listen: false);
+    final images =
+        userState.user?.photoUrls.map((url) => Image.network(url)).toList() ??
+            [];
+    for (Image image in images) {
+      precacheImage(image.image, context);
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     if (userState.user == null) {

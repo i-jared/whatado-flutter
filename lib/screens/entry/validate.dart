@@ -28,84 +28,90 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
     final sectionSpacing = 35.0;
     final paragraphStyle = TextStyle(fontSize: 20);
 
-    return Scaffold(
-        body: Form(
-      child: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-              minWidth: constraints.maxWidth,
-            ),
-            child: IntrinsicHeight(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 50),
-                      Center(
-                        child: Image.asset("assets/text_logo.png", height: 100),
-                      ),
-                      SizedBox(height: sectionSpacing),
-                      Text('Phone Verification', style: headingStyle),
-                      SizedBox(height: headingSpacing),
-                      Text('Enter the 5-digit code we texted to you.',
-                          style: paragraphStyle),
-                      SizedBox(height: headingSpacing),
-                      MyTextField(
-                        maxLength: 5,
-                        hintText: 'text code',
-                        maxLines: 1,
-                        controller: otpController,
-                        errorText: errorText,
-                      ),
-                      SizedBox(height: sectionSpacing),
-                      TextButton(
-                        style: ButtonStyle(
-                            padding:
-                                MaterialStateProperty.all(EdgeInsets.zero)),
-                        child: Text(
-                          'Resend Code',
-                          style: TextStyle(color: Color(0xffe85c3f)),
-                        ),
-                        onPressed: () async {
-                          final provider = UserGqlProvider();
-                          await provider.sendCode();
-                        },
-                      ),
-                      Spacer(),
-                      Center(
-                        child: RoundedArrowButton(
-                          disabled: otpController.text.length < 5,
-                          onPressed: () async {
-                            setState(() => errorText = null);
-                            final provider = UserGqlProvider();
-                            final result = await provider
-                                .checkValidation(otpController.text);
-                            if (result.ok) {
-                              await provider
-                                  .updateUser(UserFilterInput(verified: true));
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          ChooseInterestsScreen()));
-                            } else {
-                              otpController.clear();
-                              setState(() => errorText = 'incorrect code');
-                            }
-                          },
-                          text: "Continue",
-                        ),
-                      ),
-                      SizedBox(height: sectionSpacing)
-                    ]),
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+            body: Form(
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                  minWidth: constraints.maxWidth,
+                ),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: padding),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 50),
+                          Center(
+                            child: Image.asset("assets/text_logo.png",
+                                height: 100),
+                          ),
+                          SizedBox(height: sectionSpacing),
+                          Text('Phone Verification', style: headingStyle),
+                          SizedBox(height: headingSpacing),
+                          Text('Enter the 5-digit code we texted to you.',
+                              style: paragraphStyle),
+                          SizedBox(height: headingSpacing),
+                          MyTextField(
+                            maxLength: 5,
+                            hintText: 'text code',
+                            maxLines: 1,
+                            controller: otpController,
+                            errorText: errorText,
+                          ),
+                          SizedBox(height: sectionSpacing),
+                          TextButton(
+                            style: ButtonStyle(
+                                padding:
+                                    MaterialStateProperty.all(EdgeInsets.zero)),
+                            child: Text(
+                              'Resend Code',
+                              style: TextStyle(color: Color(0xffe85c3f)),
+                            ),
+                            onPressed: () async {
+                              final provider = UserGqlProvider();
+                              await provider.sendCode();
+                            },
+                          ),
+                          Spacer(),
+                          Center(
+                            child: RoundedArrowButton(
+                              disabled: otpController.text.length < 5,
+                              onPressed: () async {
+                                setState(() => errorText = null);
+                                final provider = UserGqlProvider();
+                                final result = await provider
+                                    .checkValidation(otpController.text);
+                                if (result.ok) {
+                                  await provider.updateUser(
+                                      UserFilterInput(verified: true));
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ChooseInterestsScreen()));
+                                } else {
+                                  otpController.clear();
+                                  setState(() => errorText = 'incorrect code');
+                                }
+                              },
+                              text: "Continue",
+                            ),
+                          ),
+                          SizedBox(height: sectionSpacing)
+                        ]),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        )),
       ),
-    ));
+    );
   }
 }

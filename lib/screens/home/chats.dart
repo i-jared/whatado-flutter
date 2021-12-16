@@ -21,27 +21,32 @@ class Chats extends StatefulWidget {
 class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: DefaultAppBar(title: widget.event.title),
-      body: ChangeNotifierProvider<ChatState>(
-        create: (BuildContext context) => ChatState(
-          forum: widget.forum,
-          event: widget.event,
-        ),
-        child: Stack(
-          children: [
-            Column(children: [
-              GroupMembersRow(event: widget.event),
-              MessagesBody(),
-              SizedBox(height: 70),
-            ]),
-            Positioned(
-                bottom: 10,
-                right: 0,
-                child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: MessagesTextField())),
-          ],
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+          appBar: DefaultAppBar(title: widget.event.title),
+          body: ChangeNotifierProvider<ChatState>(
+            create: (BuildContext context) => ChatState(
+              forum: widget.forum,
+              event: widget.event,
+            ),
+            child: Stack(
+              children: [
+                Column(children: [
+                  GroupMembersRow(event: widget.event),
+                  MessagesBody(),
+                  SizedBox(height: 70),
+                ]),
+                Positioned(
+                    bottom: 10,
+                    right: 0,
+                    child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: MessagesTextField())),
+              ],
+            ),
+          ),
         ),
       ),
     );

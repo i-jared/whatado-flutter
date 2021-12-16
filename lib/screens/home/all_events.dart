@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/events/all_events_sort_bar.dart';
 import 'package:whatado/widgets/events/event_display.dart';
 import 'package:whatado/widgets/home/calendar_selector.dart';
 
@@ -38,6 +39,12 @@ class AllEvents extends StatelessWidget {
                       child: Text('no events in your area.. :('),
                     ),
                   ),
+                if (homeState.allEvents != null &&
+                    homeState.allEvents!.isNotEmpty)
+                  AllEventsSortBar(),
+                if (homeState.allEvents != null &&
+                    homeState.allEvents!.isNotEmpty)
+                  Divider(height: 1.0),
                 if (homeState.allEvents != null &&
                     homeState.allEvents!.isNotEmpty)
                   ...homeState.allEvents!

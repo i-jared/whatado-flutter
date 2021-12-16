@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -10,8 +13,10 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/all_events.dart';
 import 'package:whatado/screens/home/chats.dart';
 import 'package:whatado/screens/profile/my_profile.dart';
+import 'package:whatado/screens/profile/settings.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/appbars/home_app_bar.dart';
 import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
@@ -24,6 +29,10 @@ class HomeScreen extends StatefulWidget {
   PreferredSizeWidget? getAppBar(int pageNo) {
     if (pageNo == 0)
       return HomeAppBar();
+    else if (pageNo == 1)
+      return DefaultAppBar(title: "Search");
+    else if (pageNo == 2)
+      return DefaultAppBar(title: "Settings");
     else
       return MyProfileAppBar();
   }
@@ -134,6 +143,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      systemNavigationBarColor: Colors.grey[50],
+      statusBarColor: Colors.transparent,
+    ));
     setupPermissions();
     setupTokenSaving();
     setupInteractedMessage();
@@ -145,19 +158,28 @@ class _HomeScreenState extends State<HomeScreen> {
     return ShowCaseWidget(
       onFinish: () => localStorageService.initialized = true,
       builder: Builder(builder: (context) {
-        return Scaffold(
-          appBar: widget.getAppBar(homeState.bottomBarPageNo),
-          body: homeState.bottomBarPageNo == 0
-              ? PageView(
-                  key: PageStorageKey(9),
-                  onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
-                  controller: homeState.homePageController,
-                  children: [AllEvents(), MyEvents(), MyForums()],
-                )
-              : MyProfile(),
-          bottomNavigationBar: MyNavigationBar(
-            indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
-            selectedIndex: homeState.bottomBarPageNo,
+        return Container(
+          color: Colors.grey[50],
+          child: SafeArea(
+            child: Scaffold(
+              appBar: widget.getAppBar(homeState.bottomBarPageNo),
+              body: homeState.bottomBarPageNo == 0
+                  ? PageView(
+                      onPageChanged: (pageNo) =>
+                          homeState.appBarPageNo = pageNo,
+                      controller: homeState.homePageController,
+                      children: [AllEvents(), MyEvents(), MyForums()],
+                    )
+                  : homeState.bottomBarPageNo == 1
+                      ? Center(child: Text('search'))
+                      : homeState.bottomBarPageNo == 2
+                          ? Settings()
+                          : MyProfile(),
+              bottomNavigationBar: MyNavigationBar(
+                indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
+                selectedIndex: homeState.bottomBarPageNo,
+              ),
+            ),
           ),
         );
       }),

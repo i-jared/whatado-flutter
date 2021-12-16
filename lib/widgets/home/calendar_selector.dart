@@ -91,9 +91,9 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                 },
                 child: Material(
                   clipBehavior: Clip.antiAlias,
-                  shape: BeveledRectangleBorder(
+                  shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
-                    Radius.circular(7),
+                    Radius.circular(50),
                   )),
                   child: Container(
                       decoration: BoxDecoration(

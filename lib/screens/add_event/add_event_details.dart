@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/add_event/target_audience.dart';
@@ -26,6 +27,10 @@ class _AddEventDetailsState extends State<AddEventDetails> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      systemNavigationBarColor: Colors.grey[50],
+      statusBarColor: Colors.transparent,
+    ));
     selectedSize = 'Any';
   }
 
@@ -155,14 +160,19 @@ class _AddEventDetailsState extends State<AddEventDetails> {
         eventState.dateController.text.isNotEmpty &&
         eventState.locationController.text.isNotEmpty &&
         (eventState.textMode || eventState.titleController.text.isNotEmpty);
-    return Scaffold(
-        appBar: SavingAppBar(
-          title: 'Add Event',
-          buttonTitle: 'NEXT',
-          disabled: !ready,
-          onSave: () => Navigator.push(context,
-              MaterialPageRoute(builder: (context) => TargetAudience())),
-        ),
-        body: chooseWidget(context));
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+            appBar: SavingAppBar(
+              title: 'Add Event',
+              buttonTitle: 'NEXT',
+              disabled: !ready,
+              onSave: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => TargetAudience())),
+            ),
+            body: chooseWidget(context)),
+      ),
+    );
   }
 }

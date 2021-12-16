@@ -20,40 +20,44 @@ class WelcomeScreen extends StatelessWidget {
 
       // front page elements. all padded 30 horizontally
       // slogan text
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-          SizedBox(height: 50),
-          Image.asset('assets/text_logo.png', height: 100),
-          SizedBox(height: 20),
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    TextSpan(text: 'Putting the '),
-                    TextSpan(
-                      text: 'social ',
-                      style: TextStyle(fontSize: 20, color: Color(0xffe85c3f)),
-                    ),
-                    TextSpan(text: 'back in social media.'),
-                  ],
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+      SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            SizedBox(height: 50),
+            Image.asset('assets/text_logo.png', height: 100),
+            SizedBox(height: 20),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      TextSpan(text: 'Putting the '),
+                      TextSpan(
+                        text: 'social ',
+                        style:
+                            TextStyle(fontSize: 20, color: Color(0xffe85c3f)),
+                      ),
+                      TextSpan(text: 'back in social media.'),
+                    ],
+                    style: TextStyle(fontSize: 20, color: Colors.black),
+                  ),
                 ),
               ),
             ),
-          ),
-          // continue arrow button @ bottom
-          Spacer(),
-          RoundedArrowButton(
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
-            text: "Let's Go!",
-          ),
-          SizedBox(height: 30)
-        ]),
+            // continue arrow button @ bottom
+            Spacer(),
+            RoundedArrowButton(
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
+              text: "Let's Go!",
+            ),
+            SizedBox(height: 30)
+          ]),
+        ),
       ),
     ]));
   }

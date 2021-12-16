@@ -89,133 +89,144 @@ class _EditMyProfileState extends State<EditMyProfile> {
                     }))
           ];
 
-    return Scaffold(
-      appBar: SavingAppBar(
-          title: 'Edit Profile',
-          onSave: () async {
-            userState.loading = true;
-            await userState.save(interests, bioController.text);
-            userState.loading = false;
-            Navigator.pop(context);
-          },
-          disabled: userState.loading ||
-              (bioController.text == widget.user!.bio &&
-                      listsEqual<Interest>(interests, widget.user!.interests) &&
-                      listsEqual<Uint8List>(
-                          userState.photos, userState.ogphotos) ||
-                  (userState.photos!.isEmpty ||
-                      bioController.text.isEmpty ||
-                      interests.isEmpty))),
-      body: widget.user == null
-          ? Container()
-          : userState.loading
-              ? Center(child: CircularProgressIndicator())
-              : SingleChildScrollView(
-                  child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: padding),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: headingSpacing),
-                      Text('BIO', style: headingStyle),
-                      SizedBox(height: headingSpacing),
-                      TextFormField(
-                          maxLines: null,
-                          controller: bioController,
-                          style: TextStyle(fontSize: 18)),
-                      SizedBox(height: sectionSpacing),
-                      Text('PHOTOS', style: headingStyle),
-                      SizedBox(height: headingSpacing),
-                      Wrap(
-                        spacing: imageSpacing,
-                        runSpacing: 10.0,
-                        children: theList,
-                      ),
-                      SizedBox(height: sectionSpacing),
-                      Row(
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+          appBar: SavingAppBar(
+              title: 'Edit Profile',
+              onSave: () async {
+                userState.loading = true;
+                await userState.save(interests, bioController.text);
+                userState.loading = false;
+                Navigator.pop(context);
+              },
+              disabled: userState.loading ||
+                  (bioController.text == widget.user!.bio &&
+                          listsEqual<Interest>(
+                              interests, widget.user!.interests) &&
+                          listsEqual<Uint8List>(
+                              userState.photos, userState.ogphotos) ||
+                      (userState.photos!.isEmpty ||
+                          bioController.text.isEmpty ||
+                          interests.isEmpty))),
+          body: widget.user == null
+              ? Container()
+              : userState.loading
+                  ? Center(child: CircularProgressIndicator())
+                  : SingleChildScrollView(
+                      child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: padding),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('INTERESTS', style: headingStyle),
-                          SizedBox(width: 10),
-                          Text('(ONLY VISIBLE TO YOU)',
-                              style:
-                                  TextStyle(fontSize: 15, color: Colors.grey)),
-                        ],
-                      ),
-                      SizedBox(height: headingSpacing),
-                      Wrap(
-                        spacing: 10.0,
-                        runSpacing: 0.0,
-                        children: interests
-                            .map((interest) => InputInterestBubble(
-                                  interest: interest,
-                                  onDeleted: () => setState(() {
-                                    interests.remove(interest);
-                                    setState(() => interests = interests);
-                                  }),
-                                ))
-                            .toList(),
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TypeAheadFormField(
-                              noItemsFoundBuilder: (context) =>
-                                  SizedBox.shrink(),
-                              onSuggestionSelected: (Interest interest) {
-                                if (interests
-                                    .map((val) => val.title)
-                                    .contains(interest.title)) return;
-                                interests.add(interest);
-                                setState(() => interests = interests);
-                                textController.clear();
-                              },
-                              suggestionsCallback: (String pattern) {
-                                final provider = InterestGqlProvider();
-                                final result = provider.search(pattern);
-                                return result;
-                              },
-                              itemBuilder: (context, Interest interest) =>
-                                  ListTile(title: Text(interest.title)),
-                              textFieldConfiguration: TextFieldConfiguration(
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  hintText: 'Add your interest here...',
-                                  hintStyle: TextStyle(fontSize: 13),
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 12),
-                                ),
-                                controller: textController,
-                              ),
-                            ),
+                          SizedBox(height: headingSpacing),
+                          Text('BIO', style: headingStyle),
+                          SizedBox(height: headingSpacing),
+                          TextFormField(
+                              maxLines: null,
+                              controller: bioController,
+                              style: TextStyle(fontSize: 18)),
+                          SizedBox(height: sectionSpacing),
+                          Text('PHOTOS', style: headingStyle),
+                          SizedBox(height: headingSpacing),
+                          Wrap(
+                            spacing: imageSpacing,
+                            runSpacing: 10.0,
+                            children: theList,
                           ),
-                          const SizedBox(width: 10),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(Icons.add_circle_outline,
-                                color: textController.text.isEmpty
-                                    ? Colors.grey[400]
-                                    : Color(0xffe85c3f),
-                                size: 35),
-                            onPressed: textController.text.isEmpty
-                                ? null
-                                : () {
+                          SizedBox(height: sectionSpacing),
+                          Row(
+                            children: [
+                              Text('INTERESTS', style: headingStyle),
+                              SizedBox(width: 10),
+                              Text('(ONLY VISIBLE TO YOU)',
+                                  style: TextStyle(
+                                      fontSize: 15, color: Colors.grey)),
+                            ],
+                          ),
+                          SizedBox(height: headingSpacing),
+                          Wrap(
+                            spacing: 10.0,
+                            runSpacing: 0.0,
+                            children: interests
+                                .map((interest) => InputInterestBubble(
+                                      interest: interest,
+                                      onDeleted: () => setState(() {
+                                        interests.remove(interest);
+                                        setState(() => interests = interests);
+                                      }),
+                                    ))
+                                .toList(),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: TypeAheadFormField(
+                                  direction: AxisDirection.up,
+                                  noItemsFoundBuilder: (context) =>
+                                      SizedBox.shrink(),
+                                  onSuggestionSelected: (Interest interest) {
                                     if (interests
                                         .map((val) => val.title)
-                                        .contains(textController.text.trim()))
-                                      return;
-                                    interests.add(Interest(
-                                        id: 1,
-                                        title: textController.text.trim()));
+                                        .contains(interest.title)) return;
+                                    interests.add(interest);
                                     setState(() => interests = interests);
                                     textController.clear();
                                   },
+                                  suggestionsCallback: (String pattern) {
+                                    final provider = InterestGqlProvider();
+                                    final result = provider.search(pattern);
+                                    return result;
+                                  },
+                                  itemBuilder: (context, Interest interest) =>
+                                      ListTile(title: Text(interest.title)),
+                                  textFieldConfiguration:
+                                      TextFieldConfiguration(
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      hintText: 'Add your interest here...',
+                                      hintStyle: TextStyle(fontSize: 13),
+                                      contentPadding:
+                                          EdgeInsets.symmetric(vertical: 12),
+                                    ),
+                                    textCapitalization:
+                                        TextCapitalization.words,
+                                    controller: textController,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              IconButton(
+                                padding: EdgeInsets.zero,
+                                icon: Icon(Icons.add_circle_outline,
+                                    color: textController.text.isEmpty
+                                        ? Colors.grey[400]
+                                        : Color(0xffe85c3f),
+                                    size: 35),
+                                onPressed: textController.text.isEmpty
+                                    ? null
+                                    : () {
+                                        if (interests
+                                            .map((val) => val.title)
+                                            .contains(
+                                                textController.text.trim()))
+                                          return;
+                                        interests.add(Interest(
+                                            id: 1,
+                                            title: textController.text.trim()));
+                                        setState(() => interests = interests);
+                                        textController.clear();
+                                      },
+                              ),
+                            ],
                           ),
+                          SizedBox(height: 150),
                         ],
                       ),
-                      SizedBox(height: 150),
-                    ],
-                  ),
-                )),
+                    )),
+        ),
+      ),
     );
   }
 }

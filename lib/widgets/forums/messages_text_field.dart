@@ -9,36 +9,36 @@ class MessagesTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     final chatState = Provider.of<ChatState>(context);
     final userState = Provider.of<UserState>(context);
-    return SafeArea(
-      child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: chatState.textController,
-                maxLines: null,
-                decoration: InputDecoration(
-                    hintText: "Type your message...", border: InputBorder.none),
-                style: TextStyle(fontSize: 20),
-              ),
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 30),
+      color: Colors.grey[50],
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Expanded(
+            child: TextFormField(
+              controller: chatState.textController,
+              textCapitalization: TextCapitalization.sentences,
+              maxLines: null,
+              decoration: InputDecoration(
+                  hintText: "Type your message...", border: InputBorder.none),
+              style: TextStyle(fontSize: 20),
             ),
-            Container(
-              height: height,
-              width: height,
-              decoration: BoxDecoration(
-                color: Color(0xffe85c3f),
-                borderRadius: BorderRadius.circular(height / 2.0),
-              ),
-              child: IconButton(
-                  onPressed: () => userState.user == null
-                      ? null
-                      : chatState.sendMessage(userState.user!.id),
-                  icon: Icon(Icons.send, color: Colors.white, size: 30)),
-            )
-          ],
-        ),
+          ),
+          Container(
+            height: height,
+            width: height,
+            decoration: BoxDecoration(
+              color: Color(0xffe85c3f),
+              borderRadius: BorderRadius.circular(height / 2.0),
+            ),
+            child: IconButton(
+                onPressed: () => userState.user == null
+                    ? null
+                    : chatState.sendMessage(userState.user!.id),
+                icon: Icon(Icons.send, color: Colors.white, size: 30)),
+          )
+        ],
       ),
     );
   }

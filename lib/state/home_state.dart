@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/models/chat.dart';
@@ -6,12 +8,14 @@ import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
+import 'package:whatado/graphql/queries_graphql_api.dart';
 
 class HomeState extends ChangeNotifier {
   int _appBarPageNo;
   int _bottomBarPageNo;
   int _skip;
   DateTime? _selectedDate;
+  SortType _sortType;
 
   GlobalKey showcase_1;
   GlobalKey showcase_2;
@@ -24,6 +28,8 @@ class HomeState extends ChangeNotifier {
   ScrollController allEventsScrollController;
   ScrollController myProfileScrollController;
 
+  StreamSubscription? appBarResetSub;
+  StreamController? appBarResetController;
   List<Event>? allEvents;
   List<Event>? myEvents;
   List<Forum>? myForums;
@@ -41,7 +47,8 @@ class HomeState extends ChangeNotifier {
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),
         refreshController = RefreshController(initialRefresh: false),
-        myEventsRefreshController = RefreshController(initialRefresh: false) {
+        myEventsRefreshController = RefreshController(initialRefresh: false),
+        _sortType = SortType.newest {
     allEventsScrollController.addListener(() async {
       if (allEventsScrollController.position.atEdge &&
           allEventsScrollController.position.pixels != 0) {
@@ -58,6 +65,12 @@ class HomeState extends ChangeNotifier {
         getMyForums();
       }
     });
+    // set up listener on _bottomBarPageNo and change _appBarPageNo to zero on changes
+    appBarResetController = StreamController<int>();
+    appBarResetSub = appBarResetController?.stream.listen((val) {
+      _appBarPageNo = 0;
+      notifyListeners();
+    });
   }
 
   @override
@@ -66,7 +79,15 @@ class HomeState extends ChangeNotifier {
     homePageController.dispose();
     refreshController.dispose();
     myEventsRefreshController.dispose();
+    appBarResetController?.close();
+    appBarResetSub?.cancel();
     super.dispose();
+  }
+
+  SortType get sortType => _sortType;
+  set sortType(SortType sortType) {
+    _sortType = sortType;
+    notifyListeners();
   }
 
   int get appBarPageNo => _appBarPageNo;
@@ -78,6 +99,7 @@ class HomeState extends ChangeNotifier {
   int get bottomBarPageNo => _bottomBarPageNo;
   set bottomBarPageNo(int newPageNo) {
     _bottomBarPageNo = newPageNo;
+    appBarResetController?.add(_bottomBarPageNo);
     notifyListeners();
   }
 
@@ -109,7 +131,7 @@ class HomeState extends ChangeNotifier {
     final start = _selectedDate ?? DateTime.now();
     final end = _selectedDate?.add(Duration(days: 1)) ??
         DateTime.now().add(Duration(days: 1000));
-    final response = await query.events(start, end, 20, _skip);
+    final response = await query.events(start, end, 20, _skip, _sortType);
     _skip += 20;
     if (allEvents == null)
       allEvents = response.data ?? [];

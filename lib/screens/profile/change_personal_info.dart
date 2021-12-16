@@ -33,40 +33,45 @@ class _ChangePersonalInfoState extends State<ChangePersonalInfo> {
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
-    return Scaffold(
-      appBar: SavingAppBar(
-          disabled: loading,
-          title: 'Personal Information',
-          onSave: () async {
-            setState(() => loading = true);
-            final provider = UserGqlProvider();
-            final result = await provider.updateUser(UserFilterInput(
-                phone: phoneController.text, name: nameController.text));
-            if (result.ok) {
-              await userState.getUser();
-              setState(() => loading = false);
-              Navigator.pop(context);
-            }
-          }),
-      body: Form(
-          child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30.0),
-        child: Column(
-          children: [
-            SizedBox(height: 20),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: MyTextField(
-                  hintText: 'Full Name', controller: nameController),
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+          appBar: SavingAppBar(
+              disabled: loading,
+              title: 'Personal Information',
+              onSave: () async {
+                setState(() => loading = true);
+                final provider = UserGqlProvider();
+                final result = await provider.updateUser(UserFilterInput(
+                    phone: phoneController.text, name: nameController.text));
+                if (result.ok) {
+                  await userState.getUser();
+                  setState(() => loading = false);
+                  Navigator.pop(context);
+                }
+              }),
+          body: Form(
+              child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: Column(
+              children: [
+                SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: MyTextField(
+                      hintText: 'Full Name', controller: nameController),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: MyTextField(
+                      hintText: 'Phone Number', controller: phoneController),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 20.0),
-              child: MyTextField(
-                  hintText: 'Phone Number', controller: phoneController),
-            ),
-          ],
+          )),
         ),
-      )),
+      ),
     );
   }
 }

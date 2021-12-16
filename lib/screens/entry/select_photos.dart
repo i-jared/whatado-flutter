@@ -85,54 +85,60 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
           MaterialPageRoute(builder: (context) => HomeScreen()), (_) => false);
     }
 
-    return Scaffold(
-        body: Form(
-      child: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-              minWidth: constraints.maxWidth,
-            ),
-            child: IntrinsicHeight(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 50),
-                      Center(
-                        child: Image.asset("assets/text_logo.png", height: 100),
-                      ),
-                      SizedBox(height: sectionSpacing),
-                      Text('Profile Pictures', style: headingStyle),
-                      SizedBox(height: headingSpacing),
-                      Text('Great!  Now add a few pictures.',
-                          style: paragraphStyle),
-                      SizedBox(height: headingSpacing),
-                      Wrap(
-                          spacing: imageSpacing,
-                          runSpacing: 10.0,
-                          children: theList),
-                      Spacer(),
-                      Center(
-                        child: loading
-                            ? Center(child: CircularProgressIndicator())
-                            : RoundedArrowButton(
-                                disabled: setupState.photos.length == 0,
-                                text: "Continue",
-                                onPressed: userState.user == null
-                                    ? null
-                                    : () => onPressed(userState.user!.id),
-                              ),
-                      ),
-                      SizedBox(height: 40)
-                    ]),
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+            body: Form(
+          child: LayoutBuilder(
+            builder: (context, constraints) => SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                  minWidth: constraints.maxWidth,
+                ),
+                child: IntrinsicHeight(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: padding),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 50),
+                          Center(
+                            child: Image.asset("assets/text_logo.png",
+                                height: 100),
+                          ),
+                          SizedBox(height: sectionSpacing),
+                          Text('Profile Pictures', style: headingStyle),
+                          SizedBox(height: headingSpacing),
+                          Text('Great!  Now add a few pictures.',
+                              style: paragraphStyle),
+                          SizedBox(height: headingSpacing),
+                          Wrap(
+                              spacing: imageSpacing,
+                              runSpacing: 10.0,
+                              children: theList),
+                          Spacer(),
+                          Center(
+                            child: loading
+                                ? Center(child: CircularProgressIndicator())
+                                : RoundedArrowButton(
+                                    disabled: setupState.photos.length == 0,
+                                    text: "Continue",
+                                    onPressed: userState.user == null
+                                        ? null
+                                        : () => onPressed(userState.user!.id),
+                                  ),
+                          ),
+                          SizedBox(height: 40)
+                        ]),
+                  ),
+                ),
               ),
             ),
           ),
-        ),
+        )),
       ),
-    ));
+    );
   }
 }

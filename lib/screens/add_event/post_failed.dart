@@ -20,31 +20,34 @@ class _PostFailedState extends State<PostFailed> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Center(
-          child: Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(
-                  color: Colors.red, borderRadius: BorderRadius.circular(50)),
-              child: Icon(Icons.clear, size: 70, color: Colors.white)),
-        ),
-        SizedBox(height: 30),
-        Text(
-          'Post Failed...',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 30),
-        ),
-        SizedBox(height: 10),
-        Text(
-          'please try again later',
-          textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 20),
-        )
-      ],
-    ));
+    return Container(
+      color: Colors.grey[50],
+      child: Scaffold(
+          body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+                height: 100,
+                width: 100,
+                decoration: BoxDecoration(
+                    color: Colors.red, borderRadius: BorderRadius.circular(50)),
+                child: Icon(Icons.clear, size: 70, color: Colors.white)),
+          ),
+          SizedBox(height: 30),
+          Text(
+            'Post Failed...',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 30),
+          ),
+          SizedBox(height: 10),
+          Text(
+            'please try again later',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20),
+          )
+        ],
+      )),
+    );
   }
 }
