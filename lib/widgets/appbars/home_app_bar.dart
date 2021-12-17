@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/user_state.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   @override
@@ -28,16 +29,22 @@ class _HomeAppBarState extends State<HomeAppBar> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
+    final userState = Provider.of<UserState>(context);
     Color? iconColor(int pageNo) =>
         homeState.appBarPageNo == pageNo ? Colors.white : Colors.grey[350];
     void turnPage(int newPageNo) {
       homeState.turnPage(newPageNo);
     }
 
-    final unread = homeState.myForums?.any((forum) => forum.chats.isEmpty
+    final haveUnread = homeState.myForums?.any((forum) => forum.chats.isEmpty
             ? false
             : forum.userNotification.lastAccessed
                 .isBefore(forum.chats.first.createdAt)) ??
+        false;
+
+    final haveWannago = homeState.myEvents?.any((event) =>
+            event.creator.id == userState.user?.id &&
+            event.wannago.any((wannago) => !wannago.declined)) ??
         false;
 
     final switcherHeight = 42.0;
@@ -112,24 +119,43 @@ class _HomeAppBarState extends State<HomeAppBar> {
                         ),
                       ),
                     ),
-                    Showcase(
-                      key: homeState.showcase_2,
-                      title: 'My Events',
-                      description:
-                          'This screen shows events you\'ve been invited to.',
-                      titleTextStyle:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                      descTextStyle: TextStyle(fontSize: 18),
-                      child: Container(
-                        child: IconButton(
-                            padding: EdgeInsets.symmetric(horizontal: 0),
-                            onPressed: () => turnPage(1),
-                            icon: Icon(
-                              Icons.event_available_outlined,
-                              size: 30,
-                              color: iconColor(1),
-                            )),
-                      ),
+                    Stack(
+                      children: [
+                        Showcase(
+                          key: homeState.showcase_2,
+                          title: 'My Events',
+                          description:
+                              'This screen shows events you\'ve been invited to.',
+                          titleTextStyle: TextStyle(
+                              fontSize: 25, fontWeight: FontWeight.bold),
+                          descTextStyle: TextStyle(fontSize: 18),
+                          child: Container(
+                            child: IconButton(
+                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                onPressed: () => turnPage(1),
+                                icon: Icon(
+                                  Icons.event_available_outlined,
+                                  size: 30,
+                                  color: iconColor(1),
+                                )),
+                          ),
+                        ),
+                        if (haveWannago)
+                          Positioned(
+                            top: 5,
+                            right: 10,
+                            child: Container(
+                              height: 10,
+                              width: 10,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: homeState.appBarPageNo == 1
+                                    ? Colors.grey[350]
+                                    : Color(0xffe85c3f),
+                              ),
+                            ),
+                          )
+                      ],
                     ),
                     Stack(
                       children: [
@@ -153,7 +179,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                                 )),
                           ),
                         ),
-                        if (unread)
+                        if (haveUnread)
                           Positioned(
                             top: 5,
                             right: 15,
@@ -162,7 +188,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
                               width: 10,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(5),
-                                color: Color(0xffe85c3f),
+                                color: homeState.appBarPageNo == 2
+                                    ? Colors.grey[350]
+                                    : Color(0xffe85c3f),
                               ),
                             ),
                           )
