@@ -40,8 +40,8 @@ class _TargetAudienceState extends State<TargetAudience> {
 
   final genders = [
     {'gender': Gender.both, 'text': 'BOTH'},
-    {'gender': Gender.female, 'text': 'GIRLS'},
-    {'gender': Gender.male, 'text': 'GUYS'},
+    {'gender': Gender.female, 'text': 'FEMALE'},
+    {'gender': Gender.male, 'text': 'MALE'},
   ];
 
   @override
@@ -55,127 +55,132 @@ class _TargetAudienceState extends State<TargetAudience> {
       return PostFailed();
     else if (eventState.succeeded) return PostSucceeded();
 
-    return SafeArea(
-      child: Scaffold(
-          appBar: AddEventDetailsAppBar(),
-          body: SingleChildScrollView(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: sectionSpacing),
-                Text('GENDER', style: headingStyle),
-                SizedBox(height: headingSpacing),
-                Wrap(
-                  runSpacing: 0.0,
-                  spacing: 10.0,
-                  children: genders
-                      .map((gender) => InterestBubble(
-                          text: gender['text'] as String,
-                          selected:
-                              eventState.selectedGender == gender['gender'],
-                          onSelected: (notSelected) {
-                            eventState.selectedGender =
-                                gender['gender'] as Gender;
-                          }))
-                      .toList(),
-                ),
-                SizedBox(height: sectionSpacing),
-                Text('AGE RANGE', style: headingStyle),
-                RangeSlider(
-                    labels: RangeLabels(
-                        eventState.filterAgeStart.round().toString(),
-                        eventState.filterAgeEnd.round().toString()),
-                    divisions: 22,
-                    min: 18,
-                    max: 40,
-                    values: RangeValues(
-                        eventState.filterAgeStart, eventState.filterAgeEnd),
-                    onChanged: (values) {
-                      eventState.filterAgeEnd = values.end;
-                      eventState.filterAgeStart = values.start;
-                    }),
-                SizedBox(height: sectionSpacing),
-                Text('INTERESTS', style: headingStyle),
-                SizedBox(height: headingSpacing),
-                InterestWrap(
-                    interests: userState.user?.interests ?? [],
-                    selectedInterests: eventState.selectedInterests,
-                    onSelected: (bool notSelected, Interest interest) {
-                      if (notSelected) {
-                        eventState.addInterest(interest);
-                      } else {
-                        eventState.removeInterest(interest);
-                      }
-                    }),
-                SizedBox(height: 35),
-                Text('Add interests',
-                    style:
-                        TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
-                SizedBox(height: 10),
-                Row(
-                  children: [
-                    Expanded(
-                      child: TypeAheadFormField(
-                        noItemsFoundBuilder: (context) => SizedBox.shrink(),
-                        onSuggestionSelected: (Interest interest) {
-                          if (eventState.customInterests
-                              .map((val) => val.title)
-                              .contains(interest.title)) return;
-                          eventState.addCustomInterest(interest);
-                          textController.clear();
-                        },
-                        suggestionsCallback: (String pattern) {
-                          final provider = InterestGqlProvider();
-                          final result = provider.search(pattern);
-                          return result;
-                        },
-                        itemBuilder: (context, Interest interest) =>
-                            ListTile(title: Text(interest.title)),
-                        textFieldConfiguration: TextFieldConfiguration(
-                          decoration: InputDecoration(
-                            isDense: true,
-                            hintText: 'Add your interest here...',
-                            hintStyle: TextStyle(fontSize: 13),
-                            contentPadding: EdgeInsets.symmetric(vertical: 12),
+    return Container(
+      color: Colors.grey[50],
+      child: SafeArea(
+        child: Scaffold(
+            appBar: AddEventDetailsAppBar(),
+            body: SingleChildScrollView(
+                child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: padding),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: sectionSpacing),
+                  Text('GENDER', style: headingStyle),
+                  SizedBox(height: headingSpacing),
+                  Wrap(
+                    runSpacing: 0.0,
+                    spacing: 10.0,
+                    children: genders
+                        .map((gender) => InterestBubble(
+                            text: gender['text'] as String,
+                            selected:
+                                eventState.selectedGender == gender['gender'],
+                            onSelected: (notSelected) {
+                              eventState.selectedGender =
+                                  gender['gender'] as Gender;
+                            }))
+                        .toList(),
+                  ),
+                  SizedBox(height: sectionSpacing),
+                  Text('AGE RANGE', style: headingStyle),
+                  RangeSlider(
+                      labels: RangeLabels(
+                          eventState.filterAgeStart.round().toString(),
+                          eventState.filterAgeEnd.round().toString()),
+                      divisions: 52,
+                      min: 18,
+                      max: 70,
+                      values: RangeValues(
+                          eventState.filterAgeStart, eventState.filterAgeEnd),
+                      onChanged: (values) {
+                        eventState.filterAgeEnd = values.end;
+                        eventState.filterAgeStart = values.start;
+                      }),
+                  SizedBox(height: sectionSpacing),
+                  Text('INTERESTS', style: headingStyle),
+                  SizedBox(height: headingSpacing),
+                  InterestWrap(
+                      interests: userState.user?.interests ?? [],
+                      selectedInterests: eventState.selectedInterests,
+                      onSelected: (bool notSelected, Interest interest) {
+                        if (notSelected) {
+                          eventState.addInterest(interest);
+                        } else {
+                          eventState.removeInterest(interest);
+                        }
+                      }),
+                  SizedBox(height: 35),
+                  Text('Add interests',
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TypeAheadFormField(
+                          noItemsFoundBuilder: (context) => SizedBox.shrink(),
+                          onSuggestionSelected: (Interest interest) {
+                            if (eventState.customInterests
+                                .map((val) => val.title)
+                                .contains(interest.title)) return;
+                            eventState.addCustomInterest(interest);
+                            textController.clear();
+                          },
+                          suggestionsCallback: (String pattern) {
+                            final provider = InterestGqlProvider();
+                            final result = provider.search(pattern);
+                            return result;
+                          },
+                          itemBuilder: (context, Interest interest) =>
+                              ListTile(title: Text(interest.title)),
+                          textFieldConfiguration: TextFieldConfiguration(
+                            decoration: InputDecoration(
+                              isDense: true,
+                              hintText: 'Add your interest here...',
+                              hintStyle: TextStyle(fontSize: 13),
+                              contentPadding:
+                                  EdgeInsets.symmetric(vertical: 12),
+                            ),
+                            controller: textController,
                           ),
-                          controller: textController,
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 10),
-                    IconButton(
-                      padding: EdgeInsets.zero,
-                      icon: Icon(Icons.add_circle_outline,
-                          color: textController.text.isEmpty
-                              ? Colors.grey[400]
-                              : Color(0xffe85c3f),
-                          size: 35),
-                      onPressed: textController.text.isEmpty
-                          ? null
-                          : () {
-                              if (eventState.customInterests
-                                  .map((val) => val.title)
-                                  .contains(textController.text.trim())) return;
-                              eventState.addCustomInterest(Interest(
-                                  id: 1, title: textController.text.trim()));
-                              textController.clear();
-                            },
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 15),
-                InputInterestWrap(
-                  customInterests: eventState.customInterests,
-                  onDeleted: (Interest interest) =>
-                      eventState.removeCustomInterest(interest),
-                ),
-                SizedBox(height: sectionSpacing),
-                SizedBox(height: sectionSpacing),
-              ],
-            ),
-          ))),
+                      const SizedBox(width: 10),
+                      IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(Icons.add_circle_outline,
+                            color: textController.text.isEmpty
+                                ? Colors.grey[400]
+                                : Color(0xffe85c3f),
+                            size: 35),
+                        onPressed: textController.text.isEmpty
+                            ? null
+                            : () {
+                                if (eventState.customInterests
+                                    .map((val) => val.title)
+                                    .contains(textController.text.trim()))
+                                  return;
+                                eventState.addCustomInterest(Interest(
+                                    id: 1, title: textController.text.trim()));
+                                textController.clear();
+                              },
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 15),
+                  InputInterestWrap(
+                    customInterests: eventState.customInterests,
+                    onDeleted: (Interest interest) =>
+                        eventState.removeCustomInterest(interest),
+                  ),
+                  SizedBox(height: sectionSpacing),
+                  SizedBox(height: sectionSpacing),
+                ],
+              ),
+            ))),
+      ),
     );
   }
 }

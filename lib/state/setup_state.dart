@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -13,6 +14,8 @@ class SetupState extends ChangeNotifier {
   TextEditingController bioController;
   TextEditingController dateController;
 
+  Gender _gender;
+
   List<File?> _photos;
   List<Uint8List?> _photosImageData;
 
@@ -22,11 +25,19 @@ class SetupState extends ChangeNotifier {
         customInterests = [],
         _photosImageData = [],
         _photos = [],
+        _gender = Gender.both,
         bioController = TextEditingController(),
         dateController = TextEditingController() {
     bioController.addListener(notifyListeners);
     dateController.addListener(notifyListeners);
     init();
+  }
+
+  Gender get gender => _gender;
+
+  set gender(Gender gender) {
+    _gender = gender;
+    notifyListeners();
   }
 
   List<Uint8List?> get photosImageData => _photosImageData;

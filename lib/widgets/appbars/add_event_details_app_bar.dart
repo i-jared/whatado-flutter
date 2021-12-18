@@ -93,10 +93,8 @@ class AddEventDetailsAppBar extends StatelessWidget
                           eventInput: EventInput(
                         creatorId: userState.user!.id,
                         description: eventState.descriptionController.text,
-                        filterAge: json.encode([
-                          eventState.filterAgeStart,
-                          eventState.filterAgeEnd
-                        ]),
+                        filterMinAge: eventState.filterAgeStart.toInt(),
+                        filterMaxAge: eventState.filterAgeEnd.toInt(),
                         filterGender: eventState.selectedGender,
                         filterLocation: '', // not yet used
                         filterRadius: 5, // not yet used

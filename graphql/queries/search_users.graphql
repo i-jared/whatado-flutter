@@ -1,0 +1,12 @@
+query searchUsers($partial: String!) {
+  searchUsers(partial: $partial) {
+    ok
+    nodes {
+      ...EventUser
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

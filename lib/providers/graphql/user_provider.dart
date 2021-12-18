@@ -340,4 +340,57 @@ class UserGqlProvider {
       errors: errors,
     );
   }
+
+  Future<MyQueryResponse<List<EventUser>>> friendsById(int id) async {
+    final query = FriendsByIdQuery(variables: FriendsByIdArguments(id: id));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['friendsById'];
+    final data = root != null && root['nodes'] != null
+        ? (root['nodes'] as List)
+            .map((val) => EventUser.fromGqlData(val))
+            .toList()
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<EventUser>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<List<EventUser>>> searchUsers(String partial) async {
+    final query =
+        SearchUsersQuery(variables: SearchUsersArguments(partial: partial));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['searchUsers'];
+    final data = root != null && root['nodes'] != null
+        ? (root['nodes'] as List)
+            .map((val) => EventUser.fromGqlData(val))
+            .toList()
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<EventUser>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
 }

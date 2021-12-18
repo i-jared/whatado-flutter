@@ -1,0 +1,12 @@
+query friendsById($id: Int!) {
+  friendsById(id: $id) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes {
+      ...EventUser
+    }
+  }
+}

@@ -9,6 +9,7 @@ import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
+import 'package:whatado/widgets/interests/interest_bubble.dart';
 
 class WriteBioScreen extends StatelessWidget {
   @override
@@ -21,6 +22,12 @@ class WriteBioScreen extends StatelessWidget {
     final sectionSpacing = 35.0;
     final dateFormat = DateFormat('EEE, M-d-y');
     final paragraphStyle = TextStyle(fontSize: 20);
+
+    final genders = [
+      {'gender': Gender.female, 'text': 'Female'},
+      {'gender': Gender.male, 'text': 'Male'},
+      {'gender': Gender.both, 'text': "Fuhgetaboutit"},
+    ];
 
     return Container(
       color: Colors.grey[50],
@@ -58,7 +65,25 @@ class WriteBioScreen extends StatelessWidget {
                             controller: setupState.bioController,
                           ),
                           SizedBox(height: sectionSpacing),
-                          Text('Birthday', style: headingStyle),
+                          Text('Gender & Birthday', style: headingStyle),
+                          SizedBox(height: headingSpacing),
+                          Text('These help you choose who sees your events.',
+                              style: paragraphStyle),
+                          SizedBox(height: headingSpacing),
+                          Wrap(
+                            runSpacing: 0.0,
+                            spacing: 10.0,
+                            children: genders
+                                .map((gender) => InterestBubble(
+                                    text: gender['text'] as String,
+                                    selected:
+                                        setupState.gender == gender['gender'],
+                                    onSelected: (notSelected) {
+                                      setupState.gender =
+                                          gender['gender'] as Gender;
+                                    }))
+                                .toList(),
+                          ),
                           SizedBox(height: headingSpacing),
                           TextFormField(
                             readOnly: true,
@@ -77,7 +102,6 @@ class WriteBioScreen extends StatelessWidget {
                                   EdgeInsets.symmetric(vertical: 12),
                             ),
                           ),
-                          SizedBox(height: sectionSpacing),
                           Spacer(),
                           Center(
                             child: RoundedArrowButton(

@@ -26,5 +26,6 @@ fragment EventFields on Event {
   filterLocation
   filterRadius
   filterGender
-  filterAge
+  filterMinAge
+  filterMaxAge
 }

@@ -127,7 +127,8 @@ AddInvite$Mutation$AddInvite$Nodes _$AddInvite$Mutation$AddInvite$NodesFromJson(
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown)
-    ..filterAge = json['filterAge'] as String;
+    ..filterMinAge = json['filterMinAge'] as int
+    ..filterMaxAge = json['filterMaxAge'] as int;
 }
 
 Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
@@ -149,7 +150,8 @@ Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
-      'filterAge': instance.filterAge,
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
     };
 
 K _$enumDecode<K, V>(
@@ -343,7 +345,8 @@ AddWannago$Mutation$AddWannago$Nodes
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown)
-    ..filterAge = json['filterAge'] as String;
+    ..filterMinAge = json['filterMinAge'] as int
+    ..filterMaxAge = json['filterMaxAge'] as int;
 }
 
 Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
@@ -365,7 +368,8 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
-      'filterAge': instance.filterAge,
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
     };
 
 AddWannago$Mutation$AddWannago$Errors
@@ -712,7 +716,8 @@ CreateEvent$Mutation$CreateEvent$Nodes
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown)
-    ..filterAge = json['filterAge'] as String;
+    ..filterMinAge = json['filterMinAge'] as int
+    ..filterMaxAge = json['filterMaxAge'] as int;
 }
 
 Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
@@ -734,7 +739,8 @@ Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
-      'filterAge': instance.filterAge,
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
     };
 
 CreateEvent$Mutation$CreateEvent$Errors
@@ -790,10 +796,11 @@ EventInput _$EventInputFromJson(Map<String, dynamic> json) {
   return EventInput(
     creatorId: json['creatorId'] as int,
     description: json['description'] as String,
-    filterAge: json['filterAge'] as String,
     filterGender: _$enumDecode(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown),
     filterLocation: json['filterLocation'] as String,
+    filterMaxAge: json['filterMaxAge'] as int,
+    filterMinAge: json['filterMinAge'] as int,
     filterRadius: (json['filterRadius'] as num).toDouble(),
     id: json['id'] as int?,
     invitedIds:
@@ -814,9 +821,10 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
     <String, dynamic>{
       'creatorId': instance.creatorId,
       'description': instance.description,
-      'filterAge': instance.filterAge,
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterLocation': instance.filterLocation,
+      'filterMaxAge': instance.filterMaxAge,
+      'filterMinAge': instance.filterMinAge,
       'filterRadius': instance.filterRadius,
       'id': instance.id,
       'invitedIds': instance.invitedIds,
@@ -1315,6 +1323,8 @@ UserInput _$UserInputFromJson(Map<String, dynamic> json) {
   return UserInput(
     birthday: fromGraphQLDateTimeNullableToDartDateTimeNullable(
         json['birthday'] as String?),
+    gender: _$enumDecodeNullable(_$GenderEnumMap, json['gender'],
+        unknownValue: Gender.artemisUnknown),
     name: json['name'] as String?,
     password: json['password'] as String,
     phone: json['phone'] as String?,
@@ -1324,10 +1334,22 @@ UserInput _$UserInputFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$UserInputToJson(UserInput instance) => <String, dynamic>{
       'birthday':
           fromDartDateTimeNullableToGraphQLDateTimeNullable(instance.birthday),
+      'gender': _$GenderEnumMap[instance.gender],
       'name': instance.name,
       'password': instance.password,
       'phone': instance.phone,
     };
+
+K? _$enumDecodeNullable<K, V>(
+  Map<K, V> enumValues,
+  dynamic source, {
+  K? unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
+}
 
 Mute$Mutation$Mute$Errors _$Mute$Mutation$Mute$ErrorsFromJson(
     Map<String, dynamic> json) {
@@ -1524,7 +1546,8 @@ RemoveInvite$Mutation$RemoveInvite$Nodes
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown)
-    ..filterAge = json['filterAge'] as String;
+    ..filterMinAge = json['filterMinAge'] as int
+    ..filterMaxAge = json['filterMaxAge'] as int;
 }
 
 Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
@@ -1546,7 +1569,8 @@ Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
-      'filterAge': instance.filterAge,
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
     };
 
 RemoveInvite$Mutation$RemoveInvite$Errors
@@ -1763,7 +1787,8 @@ UpdateEvent$Mutation$UpdateEvent$Nodes
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown)
-    ..filterAge = json['filterAge'] as String;
+    ..filterMinAge = json['filterMinAge'] as int
+    ..filterMaxAge = json['filterMaxAge'] as int;
 }
 
 Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
@@ -1785,7 +1810,8 @@ Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
-      'filterAge': instance.filterAge,
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
     };
 
 UpdateEvent$Mutation$UpdateEvent$Errors
@@ -1842,10 +1868,11 @@ EventFilterInput _$EventFilterInputFromJson(Map<String, dynamic> json) {
     createdAt: json['createdAt'] as String?,
     creatorId: json['creatorId'] as int?,
     description: json['description'] as String?,
-    filterAge: json['filterAge'] as String?,
     filterGender: _$enumDecodeNullable(_$GenderEnumMap, json['filterGender'],
         unknownValue: Gender.artemisUnknown),
     filterLocation: json['filterLocation'] as String?,
+    filterMaxAge: (json['filterMaxAge'] as num?)?.toDouble(),
+    filterMinAge: (json['filterMinAge'] as num?)?.toDouble(),
     filterRadius: (json['filterRadius'] as num?)?.toDouble(),
     forumId: json['forumId'] as int?,
     id: json['id'] as int?,
@@ -1870,9 +1897,10 @@ Map<String, dynamic> _$EventFilterInputToJson(EventFilterInput instance) =>
       'createdAt': instance.createdAt,
       'creatorId': instance.creatorId,
       'description': instance.description,
-      'filterAge': instance.filterAge,
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterLocation': instance.filterLocation,
+      'filterMaxAge': instance.filterMaxAge,
+      'filterMinAge': instance.filterMinAge,
       'filterRadius': instance.filterRadius,
       'forumId': instance.forumId,
       'id': instance.id,
@@ -1885,17 +1913,6 @@ Map<String, dynamic> _$EventFilterInputToJson(EventFilterInput instance) =>
       'updatedAt': instance.updatedAt,
       'wannagoIds': instance.wannagoIds,
     };
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
-}
 
 UpdatePhotos$Mutation$UpdatePhotos$Errors
     _$UpdatePhotos$Mutation$UpdatePhotos$ErrorsFromJson(
@@ -1958,6 +1975,17 @@ UpdateUser$Mutation$UpdateUser$Nodes
         .map((e) =>
             UserFieldsMixin$BlockedUsers.fromJson(e as Map<String, dynamic>))
         .toList()
+    ..friends = (json['friends'] as List<dynamic>)
+        .map((e) => UserFieldsMixin$Friends.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..requestedFriends = (json['requestedFriends'] as List<dynamic>)
+        .map((e) => UserFieldsMixin$RequestedFriends.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..friendRequests = (json['friendRequests'] as List<dynamic>)
+        .map((e) =>
+            UserFieldsMixin$FriendRequests.fromJson(e as Map<String, dynamic>))
+        .toList()
     ..interests = (json['interests'] as List<dynamic>)
         .map((e) =>
             UserFieldsMixin$Interests.fromJson(e as Map<String, dynamic>))
@@ -1983,6 +2011,10 @@ Map<String, dynamic> _$UpdateUser$Mutation$UpdateUser$NodesToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
       'bio': instance.bio,
       'blockedUsers': instance.blockedUsers.map((e) => e.toJson()).toList(),
+      'friends': instance.friends.map((e) => e.toJson()).toList(),
+      'requestedFriends':
+          instance.requestedFriends.map((e) => e.toJson()).toList(),
+      'friendRequests': instance.friendRequests.map((e) => e.toJson()).toList(),
       'interests': instance.interests.map((e) => e.toJson()).toList(),
       'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
       'chatNotifications':
@@ -2055,6 +2087,60 @@ Map<String, dynamic> _$UserFieldsMixin$BlockedUsersToJson(
       'bio': instance.bio,
     };
 
+UserFieldsMixin$Friends _$UserFieldsMixin$FriendsFromJson(
+    Map<String, dynamic> json) {
+  return UserFieldsMixin$Friends()
+    ..id = json['id'] as int
+    ..name = json['name'] as String
+    ..photoUrls = json['photoUrls'] as String
+    ..bio = json['bio'] as String;
+}
+
+Map<String, dynamic> _$UserFieldsMixin$FriendsToJson(
+        UserFieldsMixin$Friends instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+    };
+
+UserFieldsMixin$RequestedFriends _$UserFieldsMixin$RequestedFriendsFromJson(
+    Map<String, dynamic> json) {
+  return UserFieldsMixin$RequestedFriends()
+    ..id = json['id'] as int
+    ..name = json['name'] as String
+    ..photoUrls = json['photoUrls'] as String
+    ..bio = json['bio'] as String;
+}
+
+Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
+        UserFieldsMixin$RequestedFriends instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+    };
+
+UserFieldsMixin$FriendRequests _$UserFieldsMixin$FriendRequestsFromJson(
+    Map<String, dynamic> json) {
+  return UserFieldsMixin$FriendRequests()
+    ..id = json['id'] as int
+    ..name = json['name'] as String
+    ..photoUrls = json['photoUrls'] as String
+    ..bio = json['bio'] as String;
+}
+
+Map<String, dynamic> _$UserFieldsMixin$FriendRequestsToJson(
+        UserFieldsMixin$FriendRequests instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+    };
+
 UserFieldsMixin$Interests _$UserFieldsMixin$InterestsFromJson(
     Map<String, dynamic> json) {
   return UserFieldsMixin$Interests()
@@ -2101,6 +2187,8 @@ UserFilterInput _$UserFilterInputFromJson(Map<String, dynamic> json) {
     birthday: fromGraphQLDateTimeNullableToDartDateTimeNullable(
         json['birthday'] as String?),
     deviceId: json['deviceId'] as String?,
+    gender: _$enumDecodeNullable(_$GenderEnumMap, json['gender'],
+        unknownValue: Gender.artemisUnknown),
     id: json['id'] as int?,
     name: json['name'] as String?,
     password: json['password'] as String?,
@@ -2116,6 +2204,7 @@ Map<String, dynamic> _$UserFilterInputToJson(UserFilterInput instance) =>
       'birthday':
           fromDartDateTimeNullableToGraphQLDateTimeNullable(instance.birthday),
       'deviceId': instance.deviceId,
+      'gender': _$GenderEnumMap[instance.gender],
       'id': instance.id,
       'name': instance.name,
       'password': instance.password,

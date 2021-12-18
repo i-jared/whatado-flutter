@@ -40,7 +40,8 @@ mixin EventFieldsMixin {
   late double filterRadius;
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
   late Gender filterGender;
-  late String filterAge;
+  late int filterMinAge;
+  late int filterMaxAge;
 }
 mixin UserFieldsMixin {
   late int id;
@@ -54,6 +55,9 @@ mixin UserFieldsMixin {
   late DateTime birthday;
   late String bio;
   late List<UserFieldsMixin$BlockedUsers> blockedUsers;
+  late List<UserFieldsMixin$Friends> friends;
+  late List<UserFieldsMixin$RequestedFriends> requestedFriends;
+  late List<UserFieldsMixin$FriendRequests> friendRequests;
   late List<UserFieldsMixin$Interests> interests;
   late List<UserFieldsMixin$MyEvents> myEvents;
   late List<UserFieldsMixin$ChatNotifications> chatNotifications;
@@ -183,7 +187,8 @@ class Event$Query$Event$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() => _$Event$Query$Event$NodesToJson(this);
@@ -344,7 +349,8 @@ class Events$Query$Events$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() => _$Events$Query$Events$NodesToJson(this);
@@ -622,7 +628,8 @@ class FlaggedEvents$Query$FlaggedEvents$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -705,6 +712,9 @@ class FlaggedUsers$Query$FlaggedUsers$Nodes extends JsonSerializable
         birthday,
         bio,
         blockedUsers,
+        friends,
+        requestedFriends,
+        friendRequests,
         interests,
         myEvents,
         chatNotifications
@@ -782,6 +792,50 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
   List<Object?> get props => [id, name, photoUrls, bio];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$BlockedUsersToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$Friends extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$Friends();
+
+  factory UserFieldsMixin$Friends.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$FriendsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$RequestedFriends extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$RequestedFriends();
+
+  factory UserFieldsMixin$RequestedFriends.fromJson(
+          Map<String, dynamic> json) =>
+      _$UserFieldsMixin$RequestedFriendsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UserFieldsMixin$RequestedFriendsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$FriendRequests extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$FriendRequests();
+
+  factory UserFieldsMixin$FriendRequests.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$FriendRequestsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendRequestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1165,6 +1219,9 @@ class Me$Query$Me$Nodes extends JsonSerializable
         birthday,
         bio,
         blockedUsers,
+        friends,
+        requestedFriends,
+        friendRequests,
         interests,
         myEvents,
         chatNotifications
@@ -1249,7 +1306,8 @@ class MyEvents$Query$MyEvents$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() => _$MyEvents$Query$MyEvents$NodesToJson(this);
@@ -1524,6 +1582,148 @@ class User$Query extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [user];
   @override
   Map<String, dynamic> toJson() => _$User$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FriendsById$Query$FriendsById$Errors extends JsonSerializable
+    with EquatableMixin {
+  FriendsById$Query$FriendsById$Errors();
+
+  factory FriendsById$Query$FriendsById$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$FriendsById$Query$FriendsById$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$FriendsById$Query$FriendsById$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FriendsById$Query$FriendsById$Nodes extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  FriendsById$Query$FriendsById$Nodes();
+
+  factory FriendsById$Query$FriendsById$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$FriendsById$Query$FriendsById$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$FriendsById$Query$FriendsById$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FriendsById$Query$FriendsById extends JsonSerializable
+    with EquatableMixin {
+  FriendsById$Query$FriendsById();
+
+  factory FriendsById$Query$FriendsById.fromJson(Map<String, dynamic> json) =>
+      _$FriendsById$Query$FriendsByIdFromJson(json);
+
+  bool? ok;
+
+  List<FriendsById$Query$FriendsById$Errors>? errors;
+
+  List<FriendsById$Query$FriendsById$Nodes>? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() => _$FriendsById$Query$FriendsByIdToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FriendsById$Query extends JsonSerializable with EquatableMixin {
+  FriendsById$Query();
+
+  factory FriendsById$Query.fromJson(Map<String, dynamic> json) =>
+      _$FriendsById$QueryFromJson(json);
+
+  late FriendsById$Query$FriendsById friendsById;
+
+  @override
+  List<Object?> get props => [friendsById];
+  @override
+  Map<String, dynamic> toJson() => _$FriendsById$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchUsers$Query$SearchUsers$Nodes extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  SearchUsers$Query$SearchUsers$Nodes();
+
+  factory SearchUsers$Query$SearchUsers$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$SearchUsers$Query$SearchUsers$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$SearchUsers$Query$SearchUsers$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchUsers$Query$SearchUsers$Errors extends JsonSerializable
+    with EquatableMixin {
+  SearchUsers$Query$SearchUsers$Errors();
+
+  factory SearchUsers$Query$SearchUsers$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$SearchUsers$Query$SearchUsers$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$SearchUsers$Query$SearchUsers$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchUsers$Query$SearchUsers extends JsonSerializable
+    with EquatableMixin {
+  SearchUsers$Query$SearchUsers();
+
+  factory SearchUsers$Query$SearchUsers.fromJson(Map<String, dynamic> json) =>
+      _$SearchUsers$Query$SearchUsersFromJson(json);
+
+  bool? ok;
+
+  List<SearchUsers$Query$SearchUsers$Nodes>? nodes;
+
+  List<SearchUsers$Query$SearchUsers$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$SearchUsers$Query$SearchUsersToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchUsers$Query extends JsonSerializable with EquatableMixin {
+  SearchUsers$Query();
+
+  factory SearchUsers$Query.fromJson(Map<String, dynamic> json) =>
+      _$SearchUsers$QueryFromJson(json);
+
+  late SearchUsers$Query$SearchUsers searchUsers;
+
+  @override
+  List<Object?> get props => [searchUsers];
+  @override
+  Map<String, dynamic> toJson() => _$SearchUsers$QueryToJson(this);
 }
 
 enum Gender {
@@ -1925,7 +2125,13 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2226,7 +2432,13 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2720,7 +2932,13 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2875,6 +3093,33 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'blockedUsers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'friends'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'requestedFriends'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'friendRequests'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3635,6 +3880,33 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                   name: NameNode(value: 'EventUser'), directives: [])
             ])),
         FieldNode(
+            name: NameNode(value: 'friends'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'requestedFriends'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'friendRequests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
             name: NameNode(value: 'interests'),
             alias: null,
             arguments: [],
@@ -3915,7 +4187,13 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4280,4 +4558,261 @@ class UserQuery extends GraphQLQuery<User$Query, UserArguments> {
   List<Object?> get props => [document, operationName, variables];
   @override
   User$Query parse(Map<String, dynamic> json) => User$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class FriendsByIdArguments extends JsonSerializable with EquatableMixin {
+  FriendsByIdArguments({required this.id});
+
+  @override
+  factory FriendsByIdArguments.fromJson(Map<String, dynamic> json) =>
+      _$FriendsByIdArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$FriendsByIdArgumentsToJson(this);
+}
+
+final FRIENDS_BY_ID_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'friendsById'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'friendsById'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class FriendsByIdQuery
+    extends GraphQLQuery<FriendsById$Query, FriendsByIdArguments> {
+  FriendsByIdQuery({required this.variables});
+
+  @override
+  final DocumentNode document = FRIENDS_BY_ID_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'friendsById';
+
+  @override
+  final FriendsByIdArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  FriendsById$Query parse(Map<String, dynamic> json) =>
+      FriendsById$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class SearchUsersArguments extends JsonSerializable with EquatableMixin {
+  SearchUsersArguments({required this.partial});
+
+  @override
+  factory SearchUsersArguments.fromJson(Map<String, dynamic> json) =>
+      _$SearchUsersArgumentsFromJson(json);
+
+  late String partial;
+
+  @override
+  List<Object?> get props => [partial];
+  @override
+  Map<String, dynamic> toJson() => _$SearchUsersArgumentsToJson(this);
+}
+
+final SEARCH_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'searchUsers'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'partial')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'searchUsers'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'partial'),
+                  value: VariableNode(name: NameNode(value: 'partial')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class SearchUsersQuery
+    extends GraphQLQuery<SearchUsers$Query, SearchUsersArguments> {
+  SearchUsersQuery({required this.variables});
+
+  @override
+  final DocumentNode document = SEARCH_USERS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'searchUsers';
+
+  @override
+  final SearchUsersArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  SearchUsers$Query parse(Map<String, dynamic> json) =>
+      SearchUsers$Query.fromJson(json);
 }

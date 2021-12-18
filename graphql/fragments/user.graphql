@@ -9,6 +9,15 @@ fragment UserFields on User {
   blockedUsers {
     ...EventUser
   }
+  friends {
+    ...EventUser
+  }
+  requestedFriends {
+    ...EventUser
+  }
+  friendRequests {
+    ...EventUser
+  }
   interests {
     id
     title

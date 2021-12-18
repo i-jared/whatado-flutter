@@ -99,7 +99,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                       decoration: BoxDecoration(
                         color: homeState.selectedDate == indexedDate.dateTime
                             ? Color(0xff204865)
-                            : Colors.white,
+                            : Colors.grey[50],
                       ),
                       height: double.infinity,
                       width: (width - monthWidth) / 6,

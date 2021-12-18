@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/add_event/add_event_details.dart';
 import 'package:whatado/state/add_event_state.dart';
@@ -36,7 +37,11 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => AddEventDetails()));
+                              builder: (context) => AddEventDetails())).then(
+                          (_) => SystemChrome.setSystemUIOverlayStyle(
+                              SystemUiOverlayStyle(
+                                  systemNavigationBarColor: Colors.grey[50],
+                                  statusBarColor: Colors.grey[50])));
                     }),
         ),
       ],

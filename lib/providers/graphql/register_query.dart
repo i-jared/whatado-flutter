@@ -17,7 +17,8 @@ class RegisterGqlQuery {
             password: password,
             phone: phone,
             name: name,
-            birthday: DateTime.now()),
+            birthday: DateTime.now(),
+            gender: Gender.both),
       ),
     );
     final result = await graphqlClientService.mutate(mutation);

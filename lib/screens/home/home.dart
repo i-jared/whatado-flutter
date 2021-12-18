@@ -12,8 +12,9 @@ import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/all_events.dart';
 import 'package:whatado/screens/home/chats.dart';
+import 'package:whatado/screens/home/search_users.dart';
 import 'package:whatado/screens/profile/my_profile.dart';
-import 'package:whatado/screens/profile/settings.dart';
+import 'package:whatado/screens/home/settings.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
@@ -171,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [AllEvents(), MyEvents(), MyForums()],
                     )
                   : homeState.bottomBarPageNo == 1
-                      ? Center(child: Text('search'))
+                      ? SearchUsers()
                       : homeState.bottomBarPageNo == 2
                           ? Settings()
                           : MyProfile(),

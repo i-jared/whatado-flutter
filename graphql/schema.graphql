@@ -81,9 +81,10 @@ type Event {
   createdAt: DateTime!
   creator: User!
   description: String!
-  filterAge: String!
   filterGender: Gender!
   filterLocation: String!
+  filterMaxAge: Int!
+  filterMinAge: Int!
   filterRadius: Float!
   flags: Int!
   forum: Forum!
@@ -109,9 +110,10 @@ input EventFilterInput {
   createdAt: String
   creatorId: Int
   description: String
-  filterAge: String
   filterGender: Gender
   filterLocation: String
+  filterMaxAge: Float
+  filterMinAge: Float
   filterRadius: Float
   forumId: Int
   id: Int
@@ -128,9 +130,10 @@ input EventFilterInput {
 input EventInput {
   creatorId: Int!
   description: String!
-  filterAge: String!
   filterGender: Gender!
   filterLocation: String!
+  filterMaxAge: Int!
+  filterMinAge: Int!
   filterRadius: Float!
   id: Int
   invitedIds: [Int!]!
@@ -230,6 +233,7 @@ type JwtResponse {
 }
 
 type Mutation {
+  acceptFriend(id: Int!): BoolApiResponse!
   access(id: Int!): BoolApiResponse!
   addInterests(interestsText: [String!]!): BoolApiResponse!
   addInvite(eventId: Int!, userId: Int!): EventApiResponse!
@@ -254,9 +258,11 @@ type Mutation {
   register(options: UserInput!): UserApiResponse!
   removeAccount: BoolApiResponse!
   removeInvite(eventId: Int!, userId: Int!): EventApiResponse!
+  requestFriend(id: Int!): BoolApiResponse!
   sendCode: BoolApiResponse!
   unblockUser(userId: Int!): BoolApiResponse!
   unmute(id: Int!): BoolApiResponse!
+  unrequestFriend(id: Int!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventFilterInput!): EventApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
@@ -275,6 +281,7 @@ type Query {
   flaggedUsers: UsersApiResponse!
   forum(id: Int!): ForumApiResponse!
   forumsByEventId(ids: [Int!]!): ForumsApiResponse!
+  friendsById(id: Int!): UsersApiResponse!
   hello: String!
   interest(id: Int!): InterestApiResponse!
   lastChat(forumId: Int!): ChatApiResponse!
@@ -283,6 +290,7 @@ type Query {
   myEvents: EventsApiResponse!
   popularInterests: InterestsApiResponse!
   searchInterests(partial: String!): InterestsApiResponse!
+  searchUsers(partial: String!): UsersApiResponse!
   user(id: Int!): UserApiResponse!
   users: UsersApiResponse!
   usersById(ids: [Int!]!): UsersApiResponse!
@@ -306,7 +314,9 @@ type User {
   createdAt: DateTime!
   deviceId: String!
   flags: Int!
+  friendRequests: [User!]!
   friends: [User!]!
+  gender: Gender!
   id: Int!
   interests: [Interest!]!
   myEvents: [Event!]!
@@ -314,6 +324,7 @@ type User {
   phone: String!
   photoUrls: String!
   refreshCount: Int!
+  requestedFriends: [User!]!
   updatedAt: DateTime!
   verified: Boolean!
 }
@@ -329,6 +340,7 @@ input UserFilterInput {
   bio: String
   birthday: DateTime
   deviceId: String
+  gender: Gender
   id: Int
   name: String
   password: String
@@ -339,6 +351,7 @@ input UserFilterInput {
 
 input UserInput {
   birthday: DateTime
+  gender: Gender
   name: String
   password: String!
   phone: String

@@ -34,7 +34,8 @@ mixin EventFieldsMixin {
   late double filterRadius;
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
   late Gender filterGender;
-  late String filterAge;
+  late int filterMinAge;
+  late int filterMaxAge;
 }
 mixin EventUserMixin {
   late int id;
@@ -64,6 +65,9 @@ mixin UserFieldsMixin {
   late DateTime birthday;
   late String bio;
   late List<UserFieldsMixin$BlockedUsers> blockedUsers;
+  late List<UserFieldsMixin$Friends> friends;
+  late List<UserFieldsMixin$RequestedFriends> requestedFriends;
+  late List<UserFieldsMixin$FriendRequests> friendRequests;
   late List<UserFieldsMixin$Interests> interests;
   late List<UserFieldsMixin$MyEvents> myEvents;
   late List<UserFieldsMixin$ChatNotifications> chatNotifications;
@@ -204,7 +208,8 @@ class AddInvite$Mutation$AddInvite$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -371,7 +376,8 @@ class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -774,7 +780,8 @@ class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -843,9 +850,10 @@ class EventInput extends JsonSerializable with EquatableMixin {
   EventInput(
       {required this.creatorId,
       required this.description,
-      required this.filterAge,
       required this.filterGender,
       required this.filterLocation,
+      required this.filterMaxAge,
+      required this.filterMinAge,
       required this.filterRadius,
       this.id,
       required this.invitedIds,
@@ -863,12 +871,14 @@ class EventInput extends JsonSerializable with EquatableMixin {
 
   late String description;
 
-  late String filterAge;
-
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
   late Gender filterGender;
 
   late String filterLocation;
+
+  late int filterMaxAge;
+
+  late int filterMinAge;
 
   late double filterRadius;
 
@@ -895,9 +905,10 @@ class EventInput extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [
         creatorId,
         description,
-        filterAge,
         filterGender,
         filterLocation,
+        filterMaxAge,
+        filterMinAge,
         filterRadius,
         id,
         invitedIds,
@@ -1484,7 +1495,12 @@ class Login$Mutation extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class UserInput extends JsonSerializable with EquatableMixin {
-  UserInput({this.birthday, this.name, required this.password, this.phone});
+  UserInput(
+      {this.birthday,
+      this.gender,
+      this.name,
+      required this.password,
+      this.phone});
 
   factory UserInput.fromJson(Map<String, dynamic> json) =>
       _$UserInputFromJson(json);
@@ -1494,6 +1510,9 @@ class UserInput extends JsonSerializable with EquatableMixin {
       toJson: fromDartDateTimeNullableToGraphQLDateTimeNullable)
   DateTime? birthday;
 
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  Gender? gender;
+
   String? name;
 
   late String password;
@@ -1501,7 +1520,7 @@ class UserInput extends JsonSerializable with EquatableMixin {
   String? phone;
 
   @override
-  List<Object?> get props => [birthday, name, password, phone];
+  List<Object?> get props => [birthday, gender, name, password, phone];
   @override
   Map<String, dynamic> toJson() => _$UserInputToJson(this);
 }
@@ -1732,7 +1751,8 @@ class RemoveInvite$Mutation$RemoveInvite$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -1985,7 +2005,8 @@ class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
         filterLocation,
         filterRadius,
         filterGender,
-        filterAge
+        filterMinAge,
+        filterMaxAge
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -2055,9 +2076,10 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
       {this.createdAt,
       this.creatorId,
       this.description,
-      this.filterAge,
       this.filterGender,
       this.filterLocation,
+      this.filterMaxAge,
+      this.filterMinAge,
       this.filterRadius,
       this.forumId,
       this.id,
@@ -2079,12 +2101,14 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
 
   String? description;
 
-  String? filterAge;
-
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
   Gender? filterGender;
 
   String? filterLocation;
+
+  double? filterMaxAge;
+
+  double? filterMinAge;
 
   double? filterRadius;
 
@@ -2116,9 +2140,10 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
         createdAt,
         creatorId,
         description,
-        filterAge,
         filterGender,
         filterLocation,
+        filterMaxAge,
+        filterMinAge,
         filterRadius,
         forumId,
         id,
@@ -2211,6 +2236,9 @@ class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
         birthday,
         bio,
         blockedUsers,
+        friends,
+        requestedFriends,
+        friendRequests,
         interests,
         myEvents,
         chatNotifications
@@ -2290,6 +2318,50 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$Friends extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$Friends();
+
+  factory UserFieldsMixin$Friends.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$FriendsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$RequestedFriends extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$RequestedFriends();
+
+  factory UserFieldsMixin$RequestedFriends.fromJson(
+          Map<String, dynamic> json) =>
+      _$UserFieldsMixin$RequestedFriendsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UserFieldsMixin$RequestedFriendsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$FriendRequests extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$FriendRequests();
+
+  factory UserFieldsMixin$FriendRequests.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$FriendRequestsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendRequestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$Interests extends JsonSerializable with EquatableMixin {
   UserFieldsMixin$Interests();
 
@@ -2350,6 +2422,7 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
       {this.bio,
       this.birthday,
       this.deviceId,
+      this.gender,
       this.id,
       this.name,
       this.password,
@@ -2369,6 +2442,9 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
 
   String? deviceId;
 
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  Gender? gender;
+
   int? id;
 
   String? name;
@@ -2382,8 +2458,18 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
   bool? verified;
 
   @override
-  List<Object?> get props =>
-      [bio, birthday, deviceId, id, name, password, phone, photoUrls, verified];
+  List<Object?> get props => [
+        bio,
+        birthday,
+        deviceId,
+        gender,
+        id,
+        name,
+        password,
+        phone,
+        photoUrls,
+        verified
+      ];
   @override
   Map<String, dynamic> toJson() => _$UserFilterInputToJson(this);
 }
@@ -2863,7 +2949,13 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3139,7 +3231,13 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3876,7 +3974,13 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -5354,7 +5458,13 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -5873,7 +5983,13 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
-            name: NameNode(value: 'filterAge'),
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
             alias: null,
             arguments: [],
             directives: [],
@@ -6155,6 +6271,33 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'blockedUsers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'friends'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'requestedFriends'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'friendRequests'),
             alias: null,
             arguments: [],
             directives: [],
