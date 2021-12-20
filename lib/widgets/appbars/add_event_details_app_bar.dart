@@ -36,7 +36,7 @@ class AddEventDetailsAppBar extends StatelessWidget
           child: TextButton(
             child: Text('PUBLISH',
                 style:
-                    TextStyle(color: !ready ? Colors.grey : Color(0xffe85c3f))),
+                    TextStyle(color: !ready ? Colors.grey : Color(0xfff7941d))),
             onPressed: !ready || eventState.postLoading
                 ? null
                 : () async {

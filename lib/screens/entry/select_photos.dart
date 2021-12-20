@@ -105,7 +105,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                         children: [
                           SizedBox(height: 50),
                           Center(
-                            child: Image.asset("assets/text_logo.png",
+                            child: Image.asset("assets/Whatado_FullColor.png",
                                 height: 100),
                           ),
                           SizedBox(height: sectionSpacing),

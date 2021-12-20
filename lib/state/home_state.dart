@@ -10,12 +10,20 @@ import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
 
+enum MySortType {
+  current,
+  mine,
+  invited,
+  past,
+}
+
 class HomeState extends ChangeNotifier {
   int _appBarPageNo;
   int _bottomBarPageNo;
   int _skip;
   DateTime? _selectedDate;
   SortType _sortType;
+  MySortType _mySortType;
 
   GlobalKey showcase_1;
   GlobalKey showcase_2;
@@ -48,7 +56,8 @@ class HomeState extends ChangeNotifier {
         myProfileScrollController = ScrollController(),
         refreshController = RefreshController(initialRefresh: false),
         myEventsRefreshController = RefreshController(initialRefresh: false),
-        _sortType = SortType.newest {
+        _sortType = SortType.newest,
+        _mySortType = MySortType.current {
     allEventsScrollController.addListener(() async {
       if (allEventsScrollController.position.atEdge &&
           allEventsScrollController.position.pixels != 0) {
@@ -82,6 +91,13 @@ class HomeState extends ChangeNotifier {
     appBarResetController?.close();
     appBarResetSub?.cancel();
     super.dispose();
+  }
+
+  MySortType get mySortType => _mySortType;
+
+  set mySortType(MySortType myEventSortType) {
+    _mySortType = myEventSortType;
+    notifyListeners();
   }
 
   SortType get sortType => _sortType;

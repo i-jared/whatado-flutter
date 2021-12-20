@@ -19,7 +19,7 @@ class EventTopBar extends StatelessWidget {
     return Row(children: [
       InkWell(
         onTap: () => event.creator.id == userState.user?.id
-            ? homeState.bottomBarPageNo = 1
+            ? homeState.bottomBarPageNo = 3
             : Navigator.push(
                 context,
                 MaterialPageRoute(

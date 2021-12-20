@@ -11,7 +11,7 @@ class PostLoading extends StatelessWidget {
           height: 100,
           width: 100,
           color: Colors.grey[50],
-          child: CircularProgressIndicator(color: Color(0xffe85c3f)),
+          child: CircularProgressIndicator(color: Color(0xfff7941d)),
         )),
       ),
     );

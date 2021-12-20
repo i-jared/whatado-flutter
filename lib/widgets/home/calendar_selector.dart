@@ -98,7 +98,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                   child: Container(
                       decoration: BoxDecoration(
                         color: homeState.selectedDate == indexedDate.dateTime
-                            ? Color(0xff204865)
+                            ? Color(0xff0073ab)
                             : Colors.grey[50],
                       ),
                       height: double.infinity,
@@ -147,7 +147,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                     width: monthWidth,
                     height: double.infinity,
                     decoration: BoxDecoration(
-                        color: Color(0xffe85c3f),
+                        color: Color(0xfff7941d),
                         borderRadius: BorderRadius.only(
                             topRight: Radius.circular(50),
                             bottomRight: Radius.circular(50))),
@@ -171,7 +171,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                             height: double.infinity,
                             width: 15,
                             decoration: BoxDecoration(
-                              color: Color(0xff204865),
+                              color: Color(0xff0073ab),
                               // borderRadius: BorderRadius.only(
                               // topRight: Radius.circular(10),
                               // bottomRight: Radius.circular(10))

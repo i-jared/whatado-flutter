@@ -120,6 +120,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                     children: [
                       Expanded(
                         child: TypeAheadFormField(
+                          direction: AxisDirection.up,
                           noItemsFoundBuilder: (context) => SizedBox.shrink(),
                           onSuggestionSelected: (Interest interest) {
                             if (eventState.customInterests
@@ -153,7 +154,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                         icon: Icon(Icons.add_circle_outline,
                             color: textController.text.isEmpty
                                 ? Colors.grey[400]
-                                : Color(0xffe85c3f),
+                                : Color(0xfff7941d),
                             size: 35),
                         onPressed: textController.text.isEmpty
                             ? null

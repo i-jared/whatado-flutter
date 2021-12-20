@@ -63,7 +63,8 @@ class _SignupScreenState extends State<StatefulWidget> {
                               children: [
                                 SizedBox(height: 50),
                                 Center(
-                                  child: Image.asset('assets/text_logo.png',
+                                  child: Image.asset(
+                                      'assets/Whatado_FullColor.png',
                                       height: 100),
                                 ),
                                 SizedBox(height: 40),
@@ -140,7 +141,7 @@ class _SignupScreenState extends State<StatefulWidget> {
                                       child: Text(
                                         'Sign in.',
                                         style:
-                                            TextStyle(color: Color(0xffe85c3f)),
+                                            TextStyle(color: Color(0xfff7941d)),
                                       ),
                                       onPressed: () =>
                                           Navigator.pushReplacement(
@@ -156,7 +157,7 @@ class _SignupScreenState extends State<StatefulWidget> {
                                     child: Text(
                                       'Terms of Service',
                                       style:
-                                          TextStyle(color: Color(0xffe85c3f)),
+                                          TextStyle(color: Color(0xfff7941d)),
                                     ),
                                     onPressed: () => Navigator.push(
                                         context,

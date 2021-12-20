@@ -77,7 +77,7 @@ class _MyConsoleState extends State<MyConsole> {
                   ? Container(
                       color: Colors.grey[50],
                       child: Center(
-                        child: Image.asset('assets/logo_badge.png'),
+                        child: Image.asset('assets/icon.png'),
                       ))
                   : userState.loggedIn
                       ? ConsoleHomeScreen()

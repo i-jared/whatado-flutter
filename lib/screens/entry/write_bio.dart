@@ -49,7 +49,7 @@ class WriteBioScreen extends StatelessWidget {
                         children: [
                           SizedBox(height: 50),
                           Center(
-                            child: Image.asset("assets/text_logo.png",
+                            child: Image.asset("assets/Whatado_FullColor.png",
                                 height: 100),
                           ),
                           SizedBox(height: sectionSpacing),
@@ -102,10 +102,12 @@ class WriteBioScreen extends StatelessWidget {
                                   EdgeInsets.symmetric(vertical: 12),
                             ),
                           ),
+                          SizedBox(height: sectionSpacing),
                           Spacer(),
                           Center(
                             child: RoundedArrowButton(
-                              disabled: setupState.bioController.text == '',
+                              disabled: setupState.bioController.text.isEmpty ||
+                                  setupState.dateController.text.isEmpty,
                               onPressed: () async {
                                 // frankenstein the time from user input
                                 final prefixSplit =

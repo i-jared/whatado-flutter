@@ -19,7 +19,7 @@ class RoundedArrowButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.resolveWith((states) =>
               onPressed == null || disabled
                   ? Colors.grey[300]
-                  : Color(0xffe85c3f))),
+                  : Color(0xfff7941d))),
       child: Stack(
         children: [
           Center(child: Text(text)),

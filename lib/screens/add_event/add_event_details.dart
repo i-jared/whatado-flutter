@@ -146,8 +146,8 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                   children: [
                     Text('SELECT TARGET AUDIENCE',
                         style:
-                            TextStyle(fontSize: 18, color: Color(0xffe85c3f))),
-                    Icon(Icons.arrow_forward_ios, color: Color(0xffe85c3f))
+                            TextStyle(fontSize: 18, color: Color(0xfff7941d))),
+                    Icon(Icons.arrow_forward_ios, color: Color(0xfff7941d))
                   ],
                 )),
             SizedBox(height: sectionSpacing),

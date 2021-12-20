@@ -55,7 +55,8 @@ class _LoginScreenState extends State<StatefulWidget> {
                     children: [
                       SizedBox(height: 50),
                       Center(
-                        child: Image.asset("assets/text_logo.png", height: 100),
+                        child: Image.asset('assets/Whatado_FullColor.png',
+                            height: 100),
                       ),
                       SizedBox(height: 40),
                       Text('Log In',
@@ -173,7 +174,7 @@ class _LoginScreenState extends State<StatefulWidget> {
                           TextButton(
                               child: Text(
                                 'Create an account.',
-                                style: TextStyle(color: Color(0xffe85c3f)),
+                                style: TextStyle(color: Color(0xfff7941d)),
                               ),
                               onPressed: () => Navigator.pushReplacement(
                                   context,

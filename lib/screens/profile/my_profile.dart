@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 
@@ -39,6 +40,7 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
+    final width = MediaQuery.of(context).size.width;
     if (userState.user == null) {
       SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
         userState.getUser();
@@ -51,7 +53,9 @@ class _MyProfileState extends State<MyProfile> {
       children: [
         CarouselSlider(
           items: userState.user!.photoUrls
-              .map((url) => Image.network(url))
+              .map((url) => Image.network(
+                    url,
+                  ))
               .toList(),
           options: CarouselOptions(
               onPageChanged: (i, _) => setState(() => selectedIndex = i),

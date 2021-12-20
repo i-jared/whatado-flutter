@@ -29,7 +29,7 @@ class MessagesTextField extends StatelessWidget {
             height: height,
             width: height,
             decoration: BoxDecoration(
-              color: Color(0xffe85c3f),
+              color: Color(0xfff7941d),
               borderRadius: BorderRadius.circular(height / 2.0),
             ),
             child: IconButton(

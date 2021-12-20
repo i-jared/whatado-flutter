@@ -65,7 +65,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                         children: [
                           SizedBox(height: 50),
                           Center(
-                            child: Image.asset("assets/text_logo.png",
+                            child: Image.asset("assets/Whatado_FullColor.png",
                                 height: 100),
                           ),
                           SizedBox(height: sectionSpacing),
@@ -131,7 +131,7 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                                 icon: Icon(Icons.add_circle_outline,
                                     color: textController.text.isEmpty
                                         ? Colors.grey[400]
-                                        : Color(0xffe85c3f),
+                                        : Color(0xfff7941d),
                                     size: 35),
                                 onPressed: textController.text.isEmpty
                                     ? null

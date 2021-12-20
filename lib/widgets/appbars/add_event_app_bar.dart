@@ -29,7 +29,7 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: TextButton(
               child: Text('NEXT',
                   style: TextStyle(
-                      color: !ready ? Colors.grey : Color(0xffe85c3f))),
+                      color: !ready ? Colors.grey : Color(0xfff7941d))),
               onPressed: !ready
                   ? null
                   : () {

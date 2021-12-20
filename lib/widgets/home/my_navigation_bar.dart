@@ -30,7 +30,7 @@ class MyNavigationBar extends StatelessWidget {
                 Icons.home_outlined,
                 size: 35,
                 color:
-                    selectedIndex == 0 ? Color(0xffe85c3f) : Colors.grey[850],
+                    selectedIndex == 0 ? Color(0xfff7941d) : Colors.grey[850],
               ),
             ),
             IconButton(
@@ -40,7 +40,7 @@ class MyNavigationBar extends StatelessWidget {
                 Icons.search_outlined,
                 size: 35,
                 color:
-                    selectedIndex == 1 ? Color(0xffe85c3f) : Colors.grey[850],
+                    selectedIndex == 1 ? Color(0xfff7941d) : Colors.grey[850],
               ),
             ),
             IconButton(
@@ -59,16 +59,16 @@ class MyNavigationBar extends StatelessWidget {
                 });
               },
               icon: Icon(Icons.add_circle_outline,
-                  size: 35, color: Colors.grey[850]), //Color(0xffe85c3f)),
+                  size: 35, color: Colors.grey[850]), //Color(0xfff7941d)),
             ),
             IconButton(
               padding: EdgeInsets.zero,
               onPressed: () => indexSetState(2),
               icon: Icon(
                 Icons.settings_outlined,
-                size: 35,
+                size: 32,
                 color:
-                    selectedIndex == 2 ? Color(0xffe85c3f) : Colors.grey[850],
+                    selectedIndex == 2 ? Color(0xfff7941d) : Colors.grey[850],
               ),
             ),
             IconButton(
@@ -78,7 +78,7 @@ class MyNavigationBar extends StatelessWidget {
                 Icons.person_outline,
                 size: 35,
                 color:
-                    selectedIndex == 3 ? Color(0xffe85c3f) : Colors.grey[850],
+                    selectedIndex == 3 ? Color(0xfff7941d) : Colors.grey[850],
               ),
             ),
           ],

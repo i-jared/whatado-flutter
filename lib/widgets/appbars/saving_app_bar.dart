@@ -28,7 +28,7 @@ class SavingAppBar extends StatelessWidget implements PreferredSizeWidget {
           child: TextButton(
               child: Text(buttonTitle,
                   style: TextStyle(
-                      color: disabled ? Colors.grey[400] : Color(0xffe85c3f))),
+                      color: disabled ? Colors.grey[400] : Color(0xfff7941d))),
               onPressed: disabled ? null : onSave),
         ),
       ],

@@ -49,7 +49,7 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
               onPressed: () => Navigator.pop(context),
               icon: Icon(Icons.save_outlined),
-              color: Color(0xffe85c3f)),
+              color: Color(0xfff7941d)),
         SizedBox(width: 15),
       ],
     );

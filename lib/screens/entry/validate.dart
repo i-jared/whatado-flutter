@@ -48,7 +48,7 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                         children: [
                           SizedBox(height: 50),
                           Center(
-                            child: Image.asset("assets/text_logo.png",
+                            child: Image.asset("assets/Whatado_FullColor.png",
                                 height: 100),
                           ),
                           SizedBox(height: sectionSpacing),
@@ -71,7 +71,7 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                                     MaterialStateProperty.all(EdgeInsets.zero)),
                             child: Text(
                               'Resend Code',
-                              style: TextStyle(color: Color(0xffe85c3f)),
+                              style: TextStyle(color: Color(0xfff7941d)),
                             ),
                             onPressed: () async {
                               final provider = UserGqlProvider();

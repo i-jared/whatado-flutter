@@ -29,7 +29,7 @@ class LeaveButton extends StatelessWidget {
         style: ButtonStyle(
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50))),
-            backgroundColor: MaterialStateProperty.all(Color(0xffe85c3f))),
+            backgroundColor: MaterialStateProperty.all(Color(0xfff7941d))),
         child: Icon(Icons.check_outlined, size: 15, color: Colors.white));
   }
 }

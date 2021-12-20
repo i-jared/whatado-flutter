@@ -49,15 +49,21 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   late bool loading;
+  late bool invalidAuth;
 
   @override
   void initState() {
     super.initState();
     loading = true;
-    SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
-      await loginService.attemptAutoLogin();
+    invalidAuth = localStorageService.refreshToken?.isEmpty ?? true;
+    if (!invalidAuth) {
+      SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
+        await loginService.attemptAutoLogin();
+        setState(() => loading = false);
+      });
+    } else {
       setState(() => loading = false);
-    });
+    }
   }
 
   @override
@@ -94,14 +100,10 @@ class _MyAppState extends State<MyApp> {
                     900: Color(0xFF000000),
                   },
                 )),
-                home: loading
-                    ? Container(
-                        color: Colors.grey[50],
-                        child: Center(
-                          child: Image.asset('assets/logo_badge.png'),
-                        ))
-                    : loginService.loggedIn
-                        ? userState.user == null
+                home: invalidAuth
+                    ? WelcomeScreen()
+                    : (loginService.loggedIn || loading)
+                        ? (userState.user == null || loading)
                             ? ShimmerScreen()
                             : !userState.user!.verified
                                 ? ValidatePhoneScreen()

@@ -55,7 +55,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
       elevation: 0.0,
       leading: Padding(
         padding: EdgeInsets.only(left: 10),
-        child: Image.asset("assets/text_logo.png"),
+        child: Image.asset("assets/Whatado_NoSubtitle.png"),
       ),
       actions: [
         Container(
@@ -87,7 +87,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       height: switcherHeight,
                       decoration: BoxDecoration(
                         boxShadow: kElevationToShadow[2],
-                        color: Color(0xffe85c3f),
+                        color: Color(0xfff7941d),
                         borderRadius: BorderRadius.circular(100),
                       ),
                     ),
@@ -151,7 +151,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                                 borderRadius: BorderRadius.circular(5),
                                 color: homeState.appBarPageNo == 1
                                     ? Colors.grey[350]
-                                    : Color(0xffe85c3f),
+                                    : Color(0xfff7941d),
                               ),
                             ),
                           )
@@ -190,7 +190,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                                 borderRadius: BorderRadius.circular(5),
                                 color: homeState.appBarPageNo == 2
                                     ? Colors.grey[350]
-                                    : Color(0xffe85c3f),
+                                    : Color(0xfff7941d),
                               ),
                             ),
                           )

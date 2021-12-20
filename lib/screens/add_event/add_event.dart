@@ -92,14 +92,14 @@ class _AddEventState extends State<AddEvent> {
                           children: [
                             IconButton(
                                 color: eventState.textMode
-                                    ? Color(0xffe85c3f)
+                                    ? Color(0xfff7941d)
                                     : null,
                                 icon: Icon(Icons.text_fields_outlined),
                                 iconSize: 30,
                                 onPressed: () => eventState.textMode = true),
                             IconButton(
                                 color: !eventState.textMode
-                                    ? Color(0xffe85c3f)
+                                    ? Color(0xfff7941d)
                                     : null,
                                 icon: Icon(Icons.camera_alt_outlined),
                                 iconSize: 30,

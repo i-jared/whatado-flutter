@@ -124,7 +124,7 @@ class _ForumCardState extends State<ForumCard> {
                       radius: 33,
                       backgroundColor: Colors.white,
                       child: !hasImage
-                          ? Image.asset('assets/icon_android.png')
+                          ? Image.asset('assets/Whatado_Transparent.png')
                           : null,
                       backgroundImage: hasImage
                           ? NetworkImage(widget.event.imageUrl ?? '')
