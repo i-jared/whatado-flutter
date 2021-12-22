@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
+import 'package:whatado/screens/home/edit_event_details.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:whatado/state/home_state.dart';
@@ -38,7 +39,13 @@ class EventTopBar extends StatelessWidget {
       if (event.creator.id == userState.user?.id)
         PopupMenuButton(
             onSelected: (value) async {
-              if (value == 'edit') {}
+              if (value == 'edit') {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditEventDetails(event: event),
+                    ));
+              }
               if (value == 'delete') {
                 final provider = EventsGqlProvider();
                 await provider.deleteEvent(event.id);
