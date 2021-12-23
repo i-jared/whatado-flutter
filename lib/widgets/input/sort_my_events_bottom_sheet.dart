@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/widgets/input/bottom_sheet_list.dart';
 
 class SortMyEventsBottomSheet extends StatelessWidget {
   @override
@@ -74,39 +75,6 @@ class SortMyEventsBottomSheet extends StatelessWidget {
         )
         .toList();
 
-    return Container(
-      height: 500,
-      decoration: BoxDecoration(
-          boxShadow: kElevationToShadow[16],
-          color: Colors.grey[50],
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(40), topRight: Radius.circular(40))),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 20),
-            Center(
-                child: Container(
-                    height: 7,
-                    width: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.grey[300],
-                        borderRadius: BorderRadius.circular(5)))),
-            SizedBox(height: 30),
-            Text('Sort Events By',
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
-            SizedBox(height: 20),
-            Expanded(
-                child: ListView.separated(
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, i) => items[i],
-                    separatorBuilder: (context, i) => Divider(),
-                    itemCount: items.length))
-          ],
-        ),
-      ),
-    );
+    return BottomSheetList(items: items);
   }
 }

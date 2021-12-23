@@ -37,7 +37,7 @@ class MyEventsSortBar extends StatelessWidget {
         child: InkWell(
             onTap: () => onPressed(),
             child: Row(children: [
-              SizedBox(width: 24),
+              const SizedBox(width: 24),
               Text(getText(),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
               Icon(Icons.keyboard_arrow_down_outlined, size: 28)

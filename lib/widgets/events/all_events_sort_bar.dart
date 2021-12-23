@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
@@ -11,34 +13,18 @@ class AllEventsSortBar extends StatelessWidget {
     void onPressed() {
       showModalBottomSheet<dynamic>(
           isScrollControlled: true,
+          barrierColor: Colors.transparent,
           context: context,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(50),
-            topRight: Radius.circular(50),
-          )),
-          builder: (BuildContext context) => SortEventsBottomSheet());
+          builder: (BuildContext context) => BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: SortEventsBottomSheet()));
     }
 
-    List<Widget> getRow() {
+    String getText() {
       if (homeState.sortType == SortType.newest) {
-        return [
-          Container(
-            width: 40,
-            child: Icon(Icons.new_releases_outlined, size: 20),
-          ),
-          Text("New Events"),
-          Icon(Icons.keyboard_arrow_down_outlined)
-        ];
+        return "New Events";
       } else {
-        return [
-          Container(
-            width: 40,
-            child: Icon(Icons.calendar_today_outlined, size: 20),
-          ),
-          Text("Upcoming Events"),
-          Icon(Icons.keyboard_arrow_down_outlined)
-        ];
+        return "Upcoming Events";
       }
     }
 
@@ -47,7 +33,14 @@ class AllEventsSortBar extends StatelessWidget {
         alignment: Alignment.centerLeft,
         child: InkWell(
           onTap: () => onPressed(),
-          child: Row(children: getRow()),
+          child: Row(
+            children: [
+              const SizedBox(width: 24),
+              Text(getText(),
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Icon(Icons.keyboard_arrow_down_outlined, size: 28)
+            ],
+          ),
         ));
   }
 }

@@ -41,10 +41,10 @@ class AllEvents extends StatelessWidget {
                   ),
                 if (homeState.allEvents != null &&
                     homeState.allEvents!.isNotEmpty)
-                  AllEventsSortBar(),
-                if (homeState.allEvents != null &&
-                    homeState.allEvents!.isNotEmpty)
-                  Divider(height: 1.0),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: AllEventsSortBar(),
+                  ),
                 if (homeState.allEvents != null &&
                     homeState.allEvents!.isNotEmpty)
                   ...homeState.allEvents!
