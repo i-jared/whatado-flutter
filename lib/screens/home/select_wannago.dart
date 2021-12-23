@@ -6,6 +6,7 @@ import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
+import 'package:whatado/widgets/events/my_event_display.dart';
 
 class SelectWannago extends StatefulWidget {
   final Event event;
@@ -58,6 +59,55 @@ class _SelectWannagoState extends State<SelectWannago> {
       setState(() => loading = false);
     }
 
+    final wannagoWidgets = List<Widget>.generate(wannago.length * 2 - 1, (i) {
+      if (i.isOdd) return Divider();
+      final w = wannago[i ~/ 2];
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            InkWell(
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => UserProfile(user: w.user))),
+              child: Expanded(
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      backgroundImage: NetworkImage(w.user.photoUrls.first),
+                      radius: 25,
+                    ),
+                    SizedBox(width: 15),
+                    Text(w.user.name, style: TextStyle(fontSize: 16)),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              child: Row(
+                children: [
+                  IconButton(
+                      padding: EdgeInsets.all(0),
+                      onPressed: () async => await decide(w, false),
+                      icon: Icon(Icons.cancel_outlined),
+                      iconSize: 30,
+                      color: Color(0xfff7941d)),
+                  IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () async => await decide(w, true),
+                      icon: Icon(Icons.check_circle_outline_outlined),
+                      iconSize: 30,
+                      color: Color(0xfff7941d)),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    });
+
     return Container(
       color: Colors.grey[50],
       child: SafeArea(
@@ -67,36 +117,24 @@ class _SelectWannagoState extends State<SelectWannago> {
               ? Center(child: CircularProgressIndicator())
               : wannago.isEmpty
                   ? Center(child: Text('no one left'))
-                  : ListView(
-                      children: wannago
-                          .map((wannago) => ListTile(
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            UserProfile(user: wannago.user))),
-                                leading: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      wannago.user.photoUrls.first),
-                                ),
-                                title: Text(wannago.user.name),
-                                trailing: Container(
-                                  width: 200,
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                          onPressed: () async =>
-                                              await decide(wannago, false),
-                                          icon: Icon(Icons.clear)),
-                                      IconButton(
-                                          onPressed: () async =>
-                                              await decide(wannago, true),
-                                          icon: Icon(Icons.check))
-                                    ],
-                                  ),
-                                ),
-                              ))
-                          .toList(),
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        IgnorePointer(child: MyEventDisplay(event: event)),
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: Text("Invite People",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 22)),
+                        ),
+                        SizedBox(height: 10),
+                        Expanded(
+                            child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24),
+                          child: ListView(children: wannagoWidgets),
+                        )),
+                      ],
                     ),
         ),
       ),

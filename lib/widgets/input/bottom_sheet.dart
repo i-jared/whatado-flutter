@@ -54,7 +54,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             controller: newPasswordController,
             errorText: passwordError,
             validator: (val) {
-              if ((val?.length ?? 0) > 6)
+              if ((val?.length ?? 0) < 6)
                 return 'password must be 6+ characters';
             }),
         SizedBox(height: 40),
