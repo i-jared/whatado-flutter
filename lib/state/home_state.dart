@@ -11,9 +11,9 @@ import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
 
 enum MySortType {
-  current,
   mine,
   invited,
+  current,
   past,
 }
 

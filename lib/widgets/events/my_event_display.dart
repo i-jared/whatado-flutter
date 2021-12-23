@@ -23,6 +23,7 @@ class MyEventDisplay extends StatelessWidget {
                 builder: (context) => EventDetails(event: event))),
         child: Container(
             height: 150,
+            margin: EdgeInsets.symmetric(vertical: 5),
             padding: EdgeInsets.only(top: 8, bottom: 8, right: 16),
             child: Row(
               children: [
@@ -36,62 +37,108 @@ class MyEventDisplay extends StatelessWidget {
                             color: Color(0xfff7941d)),
                       )
                     : const SizedBox(width: 24),
-                Flexible(
-                    child: Row(
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                      child:
-                          event.imageUrl != null && event.imageUrl!.isNotEmpty
-                              ? CachedNetworkImage(imageUrl: event.imageUrl!)
-                              : Image.asset("assets/Whatado_Transparent.png"),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(blurRadius: 10, color: Colors.grey[200]!)
+                      ],
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.grey[50],
                     ),
-                    const SizedBox(width: 10),
-                    Flexible(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            event.title,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 20),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 150,
+                          width: 150,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20)),
+                          child: event.imageUrl != null &&
+                                  event.imageUrl!.isNotEmpty
+                              ? CachedNetworkImage(
+                                  imageUrl: event.imageUrl!, fit: BoxFit.cover)
+                              : Image.asset("assets/Whatado_Transparent.png"),
+                        ),
+                        const SizedBox(width: 5),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  event.title,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                ),
+                                Row(children: [
+                                  Icon(
+                                    Icons.calendar_today_outlined,
+                                    color: Color(0xfff7941d),
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(dateFormat.format(event.time))
+                                ]),
+                                Row(children: [
+                                  Icon(
+                                    Icons.location_on_outlined,
+                                    color: Color(0xfff7941d),
+                                    size: 16,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(event.location)
+                                ]),
+                                if (userState.user?.id == event.creator.id)
+                                  Row(children: [
+                                    Icon(
+                                      Icons.person_outline,
+                                      color: Color(0xfff7941d),
+                                      size: 16,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "Gonnago ",
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                      TextSpan(
+                                          text: "${event.invited.length}  ",
+                                          style: TextStyle(
+                                              color: Color(0xfff7941d))),
+                                    ])),
+                                    Container(
+                                      height: 20,
+                                      decoration: BoxDecoration(
+                                          border: Border(
+                                              right: BorderSide(
+                                                  color: Color(0xfff7941d)))),
+                                    ),
+                                    RichText(
+                                        text: TextSpan(children: [
+                                      TextSpan(
+                                          text: "  Wannago ",
+                                          style:
+                                              TextStyle(color: Colors.black)),
+                                      TextSpan(
+                                          text: "${event.wannago.length}",
+                                          style: TextStyle(
+                                              color: Color(0xfff7941d))),
+                                    ]))
+                                  ])
+                              ],
+                            ),
                           ),
-                          Row(children: [
-                            Icon(
-                              Icons.calendar_today_outlined,
-                              color: Color(0xfff7941d),
-                              size: 16,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(dateFormat.format(event.time))
-                          ]),
-                          Row(children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              color: Color(0xfff7941d),
-                              size: 16,
-                            ),
-                            const SizedBox(width: 5),
-                            Text(event.location)
-                          ]),
-                          if (userState.user?.id == event.creator.id)
-                            Row(children: [
-                              Icon(
-                                Icons.person_outline,
-                                color: Color(0xfff7941d),
-                                size: 16,
-                              ),
-                              const SizedBox(width: 5),
-                              Text(
-                                  "${event.invited.length} gonnago, ${event.wannago.length} wannago")
-                            ])
-                        ],
-                      ),
-                    )
-                  ],
-                ))
+                        )
+                      ],
+                    ),
+                  ),
+                )
               ],
             )));
   }

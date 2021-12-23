@@ -51,6 +51,7 @@ class MyEvents extends StatelessWidget {
                 child: ListView(
                   key: PageStorageKey(0),
                   children: [
+                    Divider(),
                     MyEventsSortBar(),
                     if (tempEvents.isEmpty)
                       Container(

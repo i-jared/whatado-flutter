@@ -2,7 +2,7 @@
     package="io.whatado">
    <application
         android:label="whatado"
-        android:icon="@mipmap/launcher_icon">
+        android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -81,10 +81,12 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
 flutter_icons: 
-  android: "launcher_icon"
+  android: true
   ios: true
   image_path: "assets/icon.png"
   image_path_android: "assets/icon_android.png"
+  adaptive_icon_background: "#f7941d"
+  adaptive_icon_foreground: "assets/icon_android.png"
 
 flutter_native_splash:
   # Customize the parameters below, and run the following command in the terminal:
