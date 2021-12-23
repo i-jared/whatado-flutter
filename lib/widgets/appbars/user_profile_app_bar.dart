@@ -17,9 +17,7 @@ class UserProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
     final userState = Provider.of<UserState>(context);
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
-      backgroundColor: Colors.grey[50],
-      title:
-          Text(title, style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+      backgroundColor: Colors.transparent,
       centerTitle: true,
       elevation: 0.0,
       actions: [

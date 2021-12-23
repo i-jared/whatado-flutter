@@ -13,7 +13,8 @@ Chats$Query$Chats$Nodes$Author _$Chats$Query$Chats$Nodes$AuthorFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$Chats$Query$Chats$Nodes$AuthorToJson(
@@ -23,6 +24,7 @@ Map<String, dynamic> _$Chats$Query$Chats$Nodes$AuthorToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 Chats$Query$Chats$Nodes _$Chats$Query$Chats$NodesFromJson(
@@ -227,7 +229,8 @@ EventFieldsMixin$Creator _$EventFieldsMixin$CreatorFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
@@ -237,6 +240,7 @@ Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
@@ -245,7 +249,8 @@ EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
@@ -255,6 +260,7 @@ Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
@@ -263,7 +269,8 @@ EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
@@ -273,6 +280,7 @@ Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 EventFieldsMixin$Wannago _$EventFieldsMixin$WannagoFromJson(
@@ -440,7 +448,8 @@ EventUserPreview$Query$UsersById$Nodes
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$EventUserPreview$Query$UsersById$NodesToJson(
@@ -450,6 +459,7 @@ Map<String, dynamic> _$EventUserPreview$Query$UsersById$NodesToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 EventUserPreview$Query$UsersById _$EventUserPreview$Query$UsersByIdFromJson(
@@ -494,7 +504,8 @@ FlaggedChats$Query$FlaggedChats$Nodes$Author
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$FlaggedChats$Query$FlaggedChats$Nodes$AuthorToJson(
@@ -504,6 +515,7 @@ Map<String, dynamic> _$FlaggedChats$Query$FlaggedChats$Nodes$AuthorToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 FlaggedChats$Query$FlaggedChats$Nodes
@@ -793,7 +805,8 @@ UserFieldsMixin$BlockedUsers _$UserFieldsMixin$BlockedUsersFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$BlockedUsersToJson(
@@ -803,6 +816,7 @@ Map<String, dynamic> _$UserFieldsMixin$BlockedUsersToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$Friends _$UserFieldsMixin$FriendsFromJson(
@@ -811,7 +825,8 @@ UserFieldsMixin$Friends _$UserFieldsMixin$FriendsFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$FriendsToJson(
@@ -821,6 +836,7 @@ Map<String, dynamic> _$UserFieldsMixin$FriendsToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$RequestedFriends _$UserFieldsMixin$RequestedFriendsFromJson(
@@ -829,7 +845,8 @@ UserFieldsMixin$RequestedFriends _$UserFieldsMixin$RequestedFriendsFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
@@ -839,6 +856,7 @@ Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$FriendRequests _$UserFieldsMixin$FriendRequestsFromJson(
@@ -847,7 +865,8 @@ UserFieldsMixin$FriendRequests _$UserFieldsMixin$FriendRequestsFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$FriendRequestsToJson(
@@ -857,6 +876,7 @@ Map<String, dynamic> _$UserFieldsMixin$FriendRequestsToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$Interests _$UserFieldsMixin$InterestsFromJson(
@@ -1121,7 +1141,8 @@ LastChat$Query$LastChat$Nodes$Author
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$LastChat$Query$LastChat$Nodes$AuthorToJson(
@@ -1131,6 +1152,7 @@ Map<String, dynamic> _$LastChat$Query$LastChat$Nodes$AuthorToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 LastChat$Query$LastChat$Nodes _$LastChat$Query$LastChat$NodesFromJson(
@@ -1522,7 +1544,8 @@ User$Query$User$Nodes _$User$Query$User$NodesFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$User$Query$User$NodesToJson(
@@ -1532,6 +1555,7 @@ Map<String, dynamic> _$User$Query$User$NodesToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 User$Query$User$Errors _$User$Query$User$ErrorsFromJson(
@@ -1596,7 +1620,8 @@ FriendsById$Query$FriendsById$Nodes
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$FriendsById$Query$FriendsById$NodesToJson(
@@ -1606,6 +1631,7 @@ Map<String, dynamic> _$FriendsById$Query$FriendsById$NodesToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 FriendsById$Query$FriendsById _$FriendsById$Query$FriendsByIdFromJson(
@@ -1647,7 +1673,8 @@ SearchUsers$Query$SearchUsers$Nodes
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$SearchUsers$Query$SearchUsers$NodesToJson(
@@ -1657,6 +1684,7 @@ Map<String, dynamic> _$SearchUsers$Query$SearchUsers$NodesToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 SearchUsers$Query$SearchUsers$Errors

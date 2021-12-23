@@ -19,9 +19,14 @@ class Chat {
         createdAt: DateTime.parse(data['createdAt']),
         text: data['text'],
         author: data['author'] == null
-            ? EventUser(id: 0, name: 'n/a', bio: 'n/a', photoUrls: [
-                'https://styles.redditmedia.com/t5_2ldvug/styles/communityIcon_aq22b2qb50u41.png'
-              ])
+            ? EventUser(
+                id: 0,
+                name: 'n/a',
+                bio: 'n/a',
+                photoUrls: [
+                  'https://styles.redditmedia.com/t5_2ldvug/styles/communityIcon_aq22b2qb50u41.png'
+                ],
+                birthday: DateTime.now())
             : EventUser.fromGqlData(data['author']));
   }
 }

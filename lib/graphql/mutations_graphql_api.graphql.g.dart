@@ -240,7 +240,8 @@ EventFieldsMixin$Creator _$EventFieldsMixin$CreatorFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
@@ -250,6 +251,7 @@ Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
@@ -258,7 +260,8 @@ EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
@@ -268,6 +271,7 @@ Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
@@ -276,7 +280,8 @@ EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
@@ -286,6 +291,7 @@ Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 EventFieldsMixin$Wannago _$EventFieldsMixin$WannagoFromJson(
@@ -591,7 +597,8 @@ CreateChat$Mutation$CreateChat$Nodes$Author
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$CreateChat$Mutation$CreateChat$Nodes$AuthorToJson(
@@ -601,6 +608,7 @@ Map<String, dynamic> _$CreateChat$Mutation$CreateChat$Nodes$AuthorToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 CreateChat$Mutation$CreateChat$Nodes
@@ -2075,7 +2083,8 @@ UserFieldsMixin$BlockedUsers _$UserFieldsMixin$BlockedUsersFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$BlockedUsersToJson(
@@ -2085,6 +2094,7 @@ Map<String, dynamic> _$UserFieldsMixin$BlockedUsersToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$Friends _$UserFieldsMixin$FriendsFromJson(
@@ -2093,7 +2103,8 @@ UserFieldsMixin$Friends _$UserFieldsMixin$FriendsFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$FriendsToJson(
@@ -2103,6 +2114,7 @@ Map<String, dynamic> _$UserFieldsMixin$FriendsToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$RequestedFriends _$UserFieldsMixin$RequestedFriendsFromJson(
@@ -2111,7 +2123,8 @@ UserFieldsMixin$RequestedFriends _$UserFieldsMixin$RequestedFriendsFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
@@ -2121,6 +2134,7 @@ Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$FriendRequests _$UserFieldsMixin$FriendRequestsFromJson(
@@ -2129,7 +2143,8 @@ UserFieldsMixin$FriendRequests _$UserFieldsMixin$FriendRequestsFromJson(
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$UserFieldsMixin$FriendRequestsToJson(
@@ -2139,6 +2154,7 @@ Map<String, dynamic> _$UserFieldsMixin$FriendRequestsToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 UserFieldsMixin$Interests _$UserFieldsMixin$InterestsFromJson(
@@ -2258,6 +2274,192 @@ Map<String, dynamic> _$UpdateWannago$MutationToJson(
         UpdateWannago$Mutation instance) =>
     <String, dynamic>{
       'updateWannago': instance.updateWannago.toJson(),
+    };
+
+AcceptFriend$Mutation$AcceptFriend$Errors
+    _$AcceptFriend$Mutation$AcceptFriend$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return AcceptFriend$Mutation$AcceptFriend$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$AcceptFriend$Mutation$AcceptFriend$ErrorsToJson(
+        AcceptFriend$Mutation$AcceptFriend$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+AcceptFriend$Mutation$AcceptFriend _$AcceptFriend$Mutation$AcceptFriendFromJson(
+    Map<String, dynamic> json) {
+  return AcceptFriend$Mutation$AcceptFriend()
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => AcceptFriend$Mutation$AcceptFriend$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..ok = json['ok'] as bool?;
+}
+
+Map<String, dynamic> _$AcceptFriend$Mutation$AcceptFriendToJson(
+        AcceptFriend$Mutation$AcceptFriend instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'ok': instance.ok,
+    };
+
+AcceptFriend$Mutation _$AcceptFriend$MutationFromJson(
+    Map<String, dynamic> json) {
+  return AcceptFriend$Mutation()
+    ..acceptFriend = AcceptFriend$Mutation$AcceptFriend.fromJson(
+        json['acceptFriend'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$AcceptFriend$MutationToJson(
+        AcceptFriend$Mutation instance) =>
+    <String, dynamic>{
+      'acceptFriend': instance.acceptFriend.toJson(),
+    };
+
+RequestFriend$Mutation$RequestFriend$Errors
+    _$RequestFriend$Mutation$RequestFriend$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return RequestFriend$Mutation$RequestFriend$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$RequestFriend$Mutation$RequestFriend$ErrorsToJson(
+        RequestFriend$Mutation$RequestFriend$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+RequestFriend$Mutation$RequestFriend
+    _$RequestFriend$Mutation$RequestFriendFromJson(Map<String, dynamic> json) {
+  return RequestFriend$Mutation$RequestFriend()
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => RequestFriend$Mutation$RequestFriend$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..ok = json['ok'] as bool?;
+}
+
+Map<String, dynamic> _$RequestFriend$Mutation$RequestFriendToJson(
+        RequestFriend$Mutation$RequestFriend instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'ok': instance.ok,
+    };
+
+RequestFriend$Mutation _$RequestFriend$MutationFromJson(
+    Map<String, dynamic> json) {
+  return RequestFriend$Mutation()
+    ..requestFriend = RequestFriend$Mutation$RequestFriend.fromJson(
+        json['requestFriend'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$RequestFriend$MutationToJson(
+        RequestFriend$Mutation instance) =>
+    <String, dynamic>{
+      'requestFriend': instance.requestFriend.toJson(),
+    };
+
+Unfriend$Mutation$Unfriend$Errors _$Unfriend$Mutation$Unfriend$ErrorsFromJson(
+    Map<String, dynamic> json) {
+  return Unfriend$Mutation$Unfriend$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$Unfriend$Mutation$Unfriend$ErrorsToJson(
+        Unfriend$Mutation$Unfriend$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+Unfriend$Mutation$Unfriend _$Unfriend$Mutation$UnfriendFromJson(
+    Map<String, dynamic> json) {
+  return Unfriend$Mutation$Unfriend()
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => Unfriend$Mutation$Unfriend$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..ok = json['ok'] as bool?;
+}
+
+Map<String, dynamic> _$Unfriend$Mutation$UnfriendToJson(
+        Unfriend$Mutation$Unfriend instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'ok': instance.ok,
+    };
+
+Unfriend$Mutation _$Unfriend$MutationFromJson(Map<String, dynamic> json) {
+  return Unfriend$Mutation()
+    ..unfriend = Unfriend$Mutation$Unfriend.fromJson(
+        json['unfriend'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$Unfriend$MutationToJson(Unfriend$Mutation instance) =>
+    <String, dynamic>{
+      'unfriend': instance.unfriend.toJson(),
+    };
+
+UnrequestFriend$Mutation$UnrequestFriend$Errors
+    _$UnrequestFriend$Mutation$UnrequestFriend$ErrorsFromJson(
+        Map<String, dynamic> json) {
+  return UnrequestFriend$Mutation$UnrequestFriend$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$UnrequestFriend$Mutation$UnrequestFriend$ErrorsToJson(
+        UnrequestFriend$Mutation$UnrequestFriend$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+UnrequestFriend$Mutation$UnrequestFriend
+    _$UnrequestFriend$Mutation$UnrequestFriendFromJson(
+        Map<String, dynamic> json) {
+  return UnrequestFriend$Mutation$UnrequestFriend()
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => UnrequestFriend$Mutation$UnrequestFriend$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..ok = json['ok'] as bool?;
+}
+
+Map<String, dynamic> _$UnrequestFriend$Mutation$UnrequestFriendToJson(
+        UnrequestFriend$Mutation$UnrequestFriend instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'ok': instance.ok,
+    };
+
+UnrequestFriend$Mutation _$UnrequestFriend$MutationFromJson(
+    Map<String, dynamic> json) {
+  return UnrequestFriend$Mutation()
+    ..unrequestFriend = UnrequestFriend$Mutation$UnrequestFriend.fromJson(
+        json['unrequestFriend'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$UnrequestFriend$MutationToJson(
+        UnrequestFriend$Mutation instance) =>
+    <String, dynamic>{
+      'unrequestFriend': instance.unrequestFriend.toJson(),
     };
 
 AccessArguments _$AccessArgumentsFromJson(Map<String, dynamic> json) {
@@ -2597,4 +2799,54 @@ Map<String, dynamic> _$UpdateWannagoArgumentsToJson(
     <String, dynamic>{
       'id': instance.id,
       'declined': instance.declined,
+    };
+
+AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return AcceptFriendArguments(
+    id: json['id'] as int,
+  );
+}
+
+Map<String, dynamic> _$AcceptFriendArgumentsToJson(
+        AcceptFriendArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+RequestFriendArguments _$RequestFriendArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return RequestFriendArguments(
+    id: json['id'] as int,
+  );
+}
+
+Map<String, dynamic> _$RequestFriendArgumentsToJson(
+        RequestFriendArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+UnfriendArguments _$UnfriendArgumentsFromJson(Map<String, dynamic> json) {
+  return UnfriendArguments(
+    id: json['id'] as int,
+  );
+}
+
+Map<String, dynamic> _$UnfriendArgumentsToJson(UnfriendArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+UnrequestFriendArguments _$UnrequestFriendArgumentsFromJson(
+    Map<String, dynamic> json) {
+  return UnrequestFriendArguments(
+    id: json['id'] as int,
+  );
+}
+
+Map<String, dynamic> _$UnrequestFriendArgumentsToJson(
+        UnrequestFriendArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
     };

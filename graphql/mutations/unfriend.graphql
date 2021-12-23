@@ -1,0 +1,10 @@
+mutation unfriend($id: Int!) {
+    unfriend(id: $id) {
+        nodes
+        errors {
+            field
+            message
+        }
+        ok
+    }
+}

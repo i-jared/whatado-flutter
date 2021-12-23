@@ -3,4 +3,5 @@ fragment EventUser on User {
     name
     photoUrls
     bio
+    birthday
 }

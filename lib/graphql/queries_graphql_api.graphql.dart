@@ -13,6 +13,10 @@ mixin EventUserMixin {
   late String name;
   late String photoUrls;
   late String bio;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime birthday;
 }
 mixin EventFieldsMixin {
   late int id;
@@ -82,7 +86,7 @@ class Chats$Query$Chats$Nodes$Author extends JsonSerializable
       _$Chats$Query$Chats$Nodes$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$Chats$Query$Chats$Nodes$AuthorToJson(this);
 }
@@ -254,7 +258,7 @@ class EventFieldsMixin$Creator extends JsonSerializable
       _$EventFieldsMixin$CreatorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
 }
@@ -268,7 +272,7 @@ class EventFieldsMixin$Invited extends JsonSerializable
       _$EventFieldsMixin$InvitedFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
 }
@@ -282,7 +286,7 @@ class EventFieldsMixin$Wannago$User extends JsonSerializable
       _$EventFieldsMixin$Wannago$UserFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
 }
@@ -460,7 +464,7 @@ class EventUserPreview$Query$UsersById$Nodes extends JsonSerializable
       _$EventUserPreview$Query$UsersById$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$EventUserPreview$Query$UsersById$NodesToJson(this);
@@ -513,7 +517,7 @@ class FlaggedChats$Query$FlaggedChats$Nodes$Author extends JsonSerializable
       _$FlaggedChats$Query$FlaggedChats$Nodes$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$FlaggedChats$Query$FlaggedChats$Nodes$AuthorToJson(this);
@@ -789,7 +793,7 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
       _$UserFieldsMixin$BlockedUsersFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$BlockedUsersToJson(this);
 }
@@ -803,7 +807,7 @@ class UserFieldsMixin$Friends extends JsonSerializable
       _$UserFieldsMixin$FriendsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendsToJson(this);
 }
@@ -818,7 +822,7 @@ class UserFieldsMixin$RequestedFriends extends JsonSerializable
       _$UserFieldsMixin$RequestedFriendsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$UserFieldsMixin$RequestedFriendsToJson(this);
@@ -833,7 +837,7 @@ class UserFieldsMixin$FriendRequests extends JsonSerializable
       _$UserFieldsMixin$FriendRequestsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendRequestsToJson(this);
 }
@@ -1136,7 +1140,7 @@ class LastChat$Query$LastChat$Nodes$Author extends JsonSerializable
       _$LastChat$Query$LastChat$Nodes$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$LastChat$Query$LastChat$Nodes$AuthorToJson(this);
@@ -1528,7 +1532,7 @@ class User$Query$User$Nodes extends JsonSerializable
       _$User$Query$User$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$User$Query$User$NodesToJson(this);
 }
@@ -1614,7 +1618,7 @@ class FriendsById$Query$FriendsById$Nodes extends JsonSerializable
       _$FriendsById$Query$FriendsById$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$FriendsById$Query$FriendsById$NodesToJson(this);
@@ -1665,7 +1669,7 @@ class SearchUsers$Query$SearchUsers$Nodes extends JsonSerializable
       _$SearchUsers$Query$SearchUsers$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$SearchUsers$Query$SearchUsers$NodesToJson(this);
@@ -1893,6 +1897,12 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2163,6 +2173,12 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2473,6 +2489,12 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -2602,6 +2624,12 @@ final EVENT_USER_PREVIEW_QUERY_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -2727,6 +2755,12 @@ final FLAGGED_CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -2973,6 +3007,12 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -3205,6 +3245,12 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3750,6 +3796,12 @@ final LAST_CHAT_QUERY_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -3984,6 +4036,12 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4225,6 +4283,12 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4538,6 +4602,12 @@ final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -4661,6 +4731,12 @@ final FRIENDS_BY_ID_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4790,6 +4866,12 @@ final SEARCH_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],

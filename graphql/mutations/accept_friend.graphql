@@ -1,0 +1,10 @@
+mutation acceptFriend($id: Int!) {
+    acceptFriend(id: $id) {
+        nodes
+        errors {
+            field
+            message
+        }
+        ok
+    }
+}

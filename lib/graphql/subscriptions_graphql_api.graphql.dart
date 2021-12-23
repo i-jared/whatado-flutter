@@ -13,6 +13,10 @@ mixin EventUserMixin {
   late String name;
   late String photoUrls;
   late String bio;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime birthday;
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -25,7 +29,7 @@ class Chat$Subscription$ChatSubscription$Author extends JsonSerializable
       _$Chat$Subscription$ChatSubscription$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$Chat$Subscription$ChatSubscription$AuthorToJson(this);
@@ -182,6 +186,12 @@ final CHAT_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],

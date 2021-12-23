@@ -261,6 +261,7 @@ type Mutation {
   requestFriend(id: Int!): BoolApiResponse!
   sendCode: BoolApiResponse!
   unblockUser(userId: Int!): BoolApiResponse!
+  unfriend(id: Int!): BoolApiResponse!
   unmute(id: Int!): BoolApiResponse!
   unrequestFriend(id: Int!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
@@ -319,6 +320,7 @@ type User {
   gender: Gender!
   id: Int!
   interests: [Interest!]!
+  inverseFriends: [User!]!
   myEvents: [Event!]!
   name: String!
   phone: String!

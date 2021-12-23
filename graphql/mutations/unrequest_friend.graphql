@@ -1,0 +1,10 @@
+mutation unrequestFriend($id: Int!) {
+    unrequestFriend(id: $id) {
+        nodes
+        errors {
+            field
+            message
+        }
+        ok
+    }
+}

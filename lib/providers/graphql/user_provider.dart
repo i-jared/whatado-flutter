@@ -393,4 +393,95 @@ class UserGqlProvider {
       errors: errors,
     );
   }
+
+  Future<MyQueryResponse<bool>> acceptFriend(int id) async {
+    final query =
+        AcceptFriendMutation(variables: AcceptFriendArguments(id: id));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['acceptFriend'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> unrequestFriend(int id) async {
+    final query =
+        UnrequestFriendMutation(variables: UnrequestFriendArguments(id: id));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['unrequestFriend'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> requestFriend(int id) async {
+    final query =
+        RequestFriendMutation(variables: RequestFriendArguments(id: id));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['requestFriend'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> unfriend(int id) async {
+    final query = UnfriendMutation(variables: UnfriendArguments(id: id));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['unfriend'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
 }

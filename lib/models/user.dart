@@ -10,19 +10,27 @@ class User {
   String bio;
   String deviceId;
   bool verified;
+  DateTime birthday;
   List<Interest> interests;
   List<String> photoUrls;
   List<EventUser> blockedUsers;
+  List<EventUser> friends;
+  List<EventUser> requestedFriends;
+  List<EventUser> friendRequests;
   User({
     required this.id,
     required this.name,
     required this.deviceId,
     required this.verified,
-    this.phone = '',
-    this.bio = '',
-    this.photoUrls = const [],
-    this.interests = const [],
-    this.blockedUsers = const [],
+    required this.birthday,
+    required this.phone,
+    required this.bio,
+    required this.photoUrls,
+    required this.interests,
+    required this.blockedUsers,
+    required this.friends,
+    required this.friendRequests,
+    required this.requestedFriends,
   });
 
   factory User.fromGqlData(Map data) {
@@ -41,6 +49,26 @@ class User {
         blockedUsers: List<EventUser>.from(data['blockedUsers']
                 ?.map((user) => EventUser.fromGqlData(user))
                 .toList() ??
-            []));
+            []),
+        friends: List<EventUser>.from([
+          ...(data['inverseFriends']
+                  ?.map((user) => EventUser.fromGqlData(user)) ??
+              []),
+          ...(data['friends']
+                  ?.map((user) => EventUser.fromGqlData(user))
+                  .toList() ??
+              [])
+        ]),
+        friendRequests: List<EventUser>.from(data['friendRequests']
+                ?.map((user) => EventUser.fromGqlData(user))
+                .toList() ??
+            []),
+        requestedFriends: List<EventUser>.from(data['requestedFriends']
+                ?.map((user) => EventUser.fromGqlData(user))
+                .toList() ??
+            []),
+        birthday: data['birthday'] == null
+            ? DateTime.now()
+            : DateTime.parse(data['birthday']));
   }
 }

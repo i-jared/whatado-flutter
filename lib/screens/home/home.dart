@@ -35,7 +35,8 @@ class HomeScreen extends StatefulWidget {
     else if (pageNo == 2)
       return DefaultAppBar(title: "Settings");
     else
-      return MyProfileAppBar();
+      return null;
+    // return MyProfileAppBar();
   }
 
   @override
@@ -160,8 +161,11 @@ class _HomeScreenState extends State<HomeScreen> {
       onFinish: () => localStorageService.initialized = true,
       builder: Builder(builder: (context) {
         return Container(
-          color: Colors.grey[50],
+          color: homeState.bottomBarPageNo != 3
+              ? Colors.grey[50]
+              : Colors.transparent,
           child: SafeArea(
+            top: homeState.bottomBarPageNo != 3,
             child: Scaffold(
               appBar: widget.getAppBar(homeState.bottomBarPageNo),
               body: homeState.bottomBarPageNo == 0

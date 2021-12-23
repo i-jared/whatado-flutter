@@ -14,7 +14,8 @@ Chat$Subscription$ChatSubscription$Author
     ..id = json['id'] as int
     ..name = json['name'] as String
     ..photoUrls = json['photoUrls'] as String
-    ..bio = json['bio'] as String;
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 }
 
 Map<String, dynamic> _$Chat$Subscription$ChatSubscription$AuthorToJson(
@@ -24,6 +25,7 @@ Map<String, dynamic> _$Chat$Subscription$ChatSubscription$AuthorToJson(
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 Chat$Subscription$ChatSubscription _$Chat$Subscription$ChatSubscriptionFromJson(

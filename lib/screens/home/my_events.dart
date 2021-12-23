@@ -15,7 +15,10 @@ class MyEvents extends StatelessWidget {
     List<Event> tempEvents = [];
     switch (homeState.mySortType) {
       case MySortType.current:
-        tempEvents = homeState.myEvents ?? [];
+        tempEvents = homeState.myEvents
+                ?.where((event) => event.time.isAfter(DateTime.now()))
+                .toList() ??
+            [];
         break;
       case MySortType.mine:
         tempEvents = homeState.myEvents

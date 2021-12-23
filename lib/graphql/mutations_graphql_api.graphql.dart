@@ -42,6 +42,10 @@ mixin EventUserMixin {
   late String name;
   late String photoUrls;
   late String bio;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime birthday;
 }
 mixin ForumFieldsMixin {
   late int id;
@@ -280,7 +284,7 @@ class EventFieldsMixin$Creator extends JsonSerializable
       _$EventFieldsMixin$CreatorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
 }
@@ -294,7 +298,7 @@ class EventFieldsMixin$Invited extends JsonSerializable
       _$EventFieldsMixin$InvitedFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
 }
@@ -308,7 +312,7 @@ class EventFieldsMixin$Wannago$User extends JsonSerializable
       _$EventFieldsMixin$Wannago$UserFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
 }
@@ -641,7 +645,7 @@ class CreateChat$Mutation$CreateChat$Nodes$Author extends JsonSerializable
       _$CreateChat$Mutation$CreateChat$Nodes$AuthorFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateChat$Mutation$CreateChat$Nodes$AuthorToJson(this);
@@ -2312,7 +2316,7 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
       _$UserFieldsMixin$BlockedUsersFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$BlockedUsersToJson(this);
 }
@@ -2326,7 +2330,7 @@ class UserFieldsMixin$Friends extends JsonSerializable
       _$UserFieldsMixin$FriendsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendsToJson(this);
 }
@@ -2341,7 +2345,7 @@ class UserFieldsMixin$RequestedFriends extends JsonSerializable
       _$UserFieldsMixin$RequestedFriendsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
       _$UserFieldsMixin$RequestedFriendsToJson(this);
@@ -2356,7 +2360,7 @@ class UserFieldsMixin$FriendRequests extends JsonSerializable
       _$UserFieldsMixin$FriendRequestsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, photoUrls, bio];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendRequestsToJson(this);
 }
@@ -2529,6 +2533,231 @@ class UpdateWannago$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [updateWannago];
   @override
   Map<String, dynamic> toJson() => _$UpdateWannago$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AcceptFriend$Mutation$AcceptFriend$Errors extends JsonSerializable
+    with EquatableMixin {
+  AcceptFriend$Mutation$AcceptFriend$Errors();
+
+  factory AcceptFriend$Mutation$AcceptFriend$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$AcceptFriend$Mutation$AcceptFriend$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AcceptFriend$Mutation$AcceptFriend$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AcceptFriend$Mutation$AcceptFriend extends JsonSerializable
+    with EquatableMixin {
+  AcceptFriend$Mutation$AcceptFriend();
+
+  factory AcceptFriend$Mutation$AcceptFriend.fromJson(
+          Map<String, dynamic> json) =>
+      _$AcceptFriend$Mutation$AcceptFriendFromJson(json);
+
+  bool? nodes;
+
+  List<AcceptFriend$Mutation$AcceptFriend$Errors>? errors;
+
+  bool? ok;
+
+  @override
+  List<Object?> get props => [nodes, errors, ok];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$AcceptFriend$Mutation$AcceptFriendToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AcceptFriend$Mutation extends JsonSerializable with EquatableMixin {
+  AcceptFriend$Mutation();
+
+  factory AcceptFriend$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$AcceptFriend$MutationFromJson(json);
+
+  late AcceptFriend$Mutation$AcceptFriend acceptFriend;
+
+  @override
+  List<Object?> get props => [acceptFriend];
+  @override
+  Map<String, dynamic> toJson() => _$AcceptFriend$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RequestFriend$Mutation$RequestFriend$Errors extends JsonSerializable
+    with EquatableMixin {
+  RequestFriend$Mutation$RequestFriend$Errors();
+
+  factory RequestFriend$Mutation$RequestFriend$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$RequestFriend$Mutation$RequestFriend$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RequestFriend$Mutation$RequestFriend$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RequestFriend$Mutation$RequestFriend extends JsonSerializable
+    with EquatableMixin {
+  RequestFriend$Mutation$RequestFriend();
+
+  factory RequestFriend$Mutation$RequestFriend.fromJson(
+          Map<String, dynamic> json) =>
+      _$RequestFriend$Mutation$RequestFriendFromJson(json);
+
+  bool? nodes;
+
+  List<RequestFriend$Mutation$RequestFriend$Errors>? errors;
+
+  bool? ok;
+
+  @override
+  List<Object?> get props => [nodes, errors, ok];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RequestFriend$Mutation$RequestFriendToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RequestFriend$Mutation extends JsonSerializable with EquatableMixin {
+  RequestFriend$Mutation();
+
+  factory RequestFriend$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$RequestFriend$MutationFromJson(json);
+
+  late RequestFriend$Mutation$RequestFriend requestFriend;
+
+  @override
+  List<Object?> get props => [requestFriend];
+  @override
+  Map<String, dynamic> toJson() => _$RequestFriend$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Unfriend$Mutation$Unfriend$Errors extends JsonSerializable
+    with EquatableMixin {
+  Unfriend$Mutation$Unfriend$Errors();
+
+  factory Unfriend$Mutation$Unfriend$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$Unfriend$Mutation$Unfriend$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Unfriend$Mutation$Unfriend$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Unfriend$Mutation$Unfriend extends JsonSerializable with EquatableMixin {
+  Unfriend$Mutation$Unfriend();
+
+  factory Unfriend$Mutation$Unfriend.fromJson(Map<String, dynamic> json) =>
+      _$Unfriend$Mutation$UnfriendFromJson(json);
+
+  bool? nodes;
+
+  List<Unfriend$Mutation$Unfriend$Errors>? errors;
+
+  bool? ok;
+
+  @override
+  List<Object?> get props => [nodes, errors, ok];
+  @override
+  Map<String, dynamic> toJson() => _$Unfriend$Mutation$UnfriendToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Unfriend$Mutation extends JsonSerializable with EquatableMixin {
+  Unfriend$Mutation();
+
+  factory Unfriend$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$Unfriend$MutationFromJson(json);
+
+  late Unfriend$Mutation$Unfriend unfriend;
+
+  @override
+  List<Object?> get props => [unfriend];
+  @override
+  Map<String, dynamic> toJson() => _$Unfriend$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UnrequestFriend$Mutation$UnrequestFriend$Errors extends JsonSerializable
+    with EquatableMixin {
+  UnrequestFriend$Mutation$UnrequestFriend$Errors();
+
+  factory UnrequestFriend$Mutation$UnrequestFriend$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$UnrequestFriend$Mutation$UnrequestFriend$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UnrequestFriend$Mutation$UnrequestFriend$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UnrequestFriend$Mutation$UnrequestFriend extends JsonSerializable
+    with EquatableMixin {
+  UnrequestFriend$Mutation$UnrequestFriend();
+
+  factory UnrequestFriend$Mutation$UnrequestFriend.fromJson(
+          Map<String, dynamic> json) =>
+      _$UnrequestFriend$Mutation$UnrequestFriendFromJson(json);
+
+  bool? nodes;
+
+  List<UnrequestFriend$Mutation$UnrequestFriend$Errors>? errors;
+
+  bool? ok;
+
+  @override
+  List<Object?> get props => [nodes, errors, ok];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UnrequestFriend$Mutation$UnrequestFriendToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UnrequestFriend$Mutation extends JsonSerializable with EquatableMixin {
+  UnrequestFriend$Mutation();
+
+  factory UnrequestFriend$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$UnrequestFriend$MutationFromJson(json);
+
+  late UnrequestFriend$Mutation$UnrequestFriend unrequestFriend;
+
+  @override
+  List<Object?> get props => [unrequestFriend];
+  @override
+  Map<String, dynamic> toJson() => _$UnrequestFriend$MutationToJson(this);
 }
 
 enum Gender {
@@ -2990,6 +3219,12 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -3269,6 +3504,12 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3742,6 +3983,12 @@ final CREATE_CHAT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -4012,6 +4259,12 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
             alias: null,
             arguments: [],
             directives: [],
@@ -5499,6 +5752,12 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -6024,6 +6283,12 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -6386,6 +6651,12 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ]))
 ]);
@@ -6513,4 +6784,380 @@ class UpdateWannagoMutation
   @override
   UpdateWannago$Mutation parse(Map<String, dynamic> json) =>
       UpdateWannago$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class AcceptFriendArguments extends JsonSerializable with EquatableMixin {
+  AcceptFriendArguments({required this.id});
+
+  @override
+  factory AcceptFriendArguments.fromJson(Map<String, dynamic> json) =>
+      _$AcceptFriendArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$AcceptFriendArgumentsToJson(this);
+}
+
+final ACCEPT_FRIEND_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'acceptFriend'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'acceptFriend'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class AcceptFriendMutation
+    extends GraphQLQuery<AcceptFriend$Mutation, AcceptFriendArguments> {
+  AcceptFriendMutation({required this.variables});
+
+  @override
+  final DocumentNode document = ACCEPT_FRIEND_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'acceptFriend';
+
+  @override
+  final AcceptFriendArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  AcceptFriend$Mutation parse(Map<String, dynamic> json) =>
+      AcceptFriend$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RequestFriendArguments extends JsonSerializable with EquatableMixin {
+  RequestFriendArguments({required this.id});
+
+  @override
+  factory RequestFriendArguments.fromJson(Map<String, dynamic> json) =>
+      _$RequestFriendArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$RequestFriendArgumentsToJson(this);
+}
+
+final REQUEST_FRIEND_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'requestFriend'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'requestFriend'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class RequestFriendMutation
+    extends GraphQLQuery<RequestFriend$Mutation, RequestFriendArguments> {
+  RequestFriendMutation({required this.variables});
+
+  @override
+  final DocumentNode document = REQUEST_FRIEND_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'requestFriend';
+
+  @override
+  final RequestFriendArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  RequestFriend$Mutation parse(Map<String, dynamic> json) =>
+      RequestFriend$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UnfriendArguments extends JsonSerializable with EquatableMixin {
+  UnfriendArguments({required this.id});
+
+  @override
+  factory UnfriendArguments.fromJson(Map<String, dynamic> json) =>
+      _$UnfriendArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$UnfriendArgumentsToJson(this);
+}
+
+final UNFRIEND_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'unfriend'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'unfriend'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class UnfriendMutation
+    extends GraphQLQuery<Unfriend$Mutation, UnfriendArguments> {
+  UnfriendMutation({required this.variables});
+
+  @override
+  final DocumentNode document = UNFRIEND_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'unfriend';
+
+  @override
+  final UnfriendArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Unfriend$Mutation parse(Map<String, dynamic> json) =>
+      Unfriend$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UnrequestFriendArguments extends JsonSerializable with EquatableMixin {
+  UnrequestFriendArguments({required this.id});
+
+  @override
+  factory UnrequestFriendArguments.fromJson(Map<String, dynamic> json) =>
+      _$UnrequestFriendArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$UnrequestFriendArgumentsToJson(this);
+}
+
+final UNREQUEST_FRIEND_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'unrequestFriend'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'unrequestFriend'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class UnrequestFriendMutation
+    extends GraphQLQuery<UnrequestFriend$Mutation, UnrequestFriendArguments> {
+  UnrequestFriendMutation({required this.variables});
+
+  @override
+  final DocumentNode document = UNREQUEST_FRIEND_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'unrequestFriend';
+
+  @override
+  final UnrequestFriendArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  UnrequestFriend$Mutation parse(Map<String, dynamic> json) =>
+      UnrequestFriend$Mutation.fromJson(json);
 }
