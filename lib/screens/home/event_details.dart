@@ -1,6 +1,10 @@
+import 'dart:ui';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -10,6 +14,7 @@ import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
+import 'package:whatado/widgets/buttons/shaded_icon.dart';
 
 class EventDetails extends StatefulWidget {
   final Event event;
@@ -31,12 +36,12 @@ class _EventDetailsState extends State<EventDetails> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final userState = Provider.of<UserState>(context);
-    final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+    final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
     final headingSpacing = 10.0;
     final padding = 30.0;
     final sectionSpacing = 35.0;
     final circleSpacing = 10.0;
-    final dateFormat = DateFormat('dd MMMM, yyyy HH:mm');
+    final dateFormat = DateFormat('dd MMMM, yyyy h:mm a');
     final circleRadius = (MediaQuery.of(context).size.width -
             padding * 2.0 -
             circleSpacing * 2.0) /
@@ -88,43 +93,108 @@ class _EventDetailsState extends State<EventDetails> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(height: sectionSpacing),
-                    Text('DESCRIPTION', style: headingStyle),
+                    if (event.imageUrl != null)
+                      Padding(
+                        padding: EdgeInsets.only(top: sectionSpacing),
+                        child: Hero(
+                          tag: 'event_${event.id}',
+                          child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15)),
+                              child: CachedNetworkImage(
+                                imageUrl: event.imageUrl!,
+                                placeholder: (context, _) => Shimmer.fromColors(
+                                  baseColor: Colors.grey[200]!,
+                                  highlightColor: Colors.white,
+                                  child: Container(
+                                      color: Colors.grey,
+                                      width: MediaQuery.of(context).size.width,
+                                      height:
+                                          MediaQuery.of(context).size.width),
+                                ),
+                              )),
+                        ),
+                      ),
+                    SizedBox(height: headingSpacing),
+                    Text(event.title,
+                        style: TextStyle(
+                            fontSize: 26, fontWeight: FontWeight.bold)),
                     SizedBox(height: headingSpacing),
                     Text(event.description),
-                    SizedBox(height: sectionSpacing),
-                    Text('LOCATION', style: headingStyle),
                     SizedBox(height: headingSpacing),
-                    Text(event.location),
-                    SizedBox(height: sectionSpacing),
-                    Text('TIME', style: headingStyle),
-                    SizedBox(height: headingSpacing),
-                    Text(dateFormat.format(event.time.toLocal())),
-                    SizedBox(height: sectionSpacing),
-                    Text('ORGANIZER', style: headingStyle),
+                    Divider(),
                     SizedBox(height: headingSpacing),
                     Row(
                       children: [
-                        InkWell(
-                          onTap: () {
-                            if (event.creator.id != userState.user?.id) {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          UserProfile(user: event.creator)));
-                            }
-                          },
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundImage:
-                                NetworkImage(event.creator.photoUrls.first),
+                        Expanded(
+                          child: Row(
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  if (event.creator.id != userState.user?.id) {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => UserProfile(
+                                                user: event.creator)));
+                                  }
+                                },
+                                child: CircleAvatar(
+                                  radius: 25,
+                                  backgroundImage: NetworkImage(
+                                      event.creator.photoUrls.first),
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Flexible(
+                                child: Text(event.creator.name,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold)),
+                              )
+                            ],
                           ),
                         ),
-                        SizedBox(width: 20),
-                        Text(event.creator.name)
+                        Text("Organizer", style: headingStyle)
                       ],
                     ),
+                    SizedBox(height: headingSpacing),
+                    Divider(),
+                    SizedBox(height: headingSpacing),
+                    Row(
+                      children: [
+                        ShadedIcon(
+                            icon: Icons.calendar_today_outlined,
+                            width: 50,
+                            iconSize: 25),
+                        SizedBox(width: 10),
+                        Text(dateFormat.format(event.time),
+                            style: TextStyle(fontSize: 18)),
+                      ],
+                    ),
+                    SizedBox(height: headingSpacing),
+                    Divider(),
+                    SizedBox(height: headingSpacing),
+                    Row(
+                      children: [
+                        ShadedIcon(
+                            icon: Icons.location_on_outlined,
+                            width: 50,
+                            iconSize: 25),
+                        SizedBox(width: 10),
+                        Flexible(
+                            child: Text(event.location,
+                                style: TextStyle(fontSize: 18))),
+                      ],
+                    ),
+                    SizedBox(height: headingSpacing),
+                    Divider(),
+                    SizedBox(height: headingSpacing),
+                    SizedBox(height: headingSpacing),
+                    SizedBox(height: sectionSpacing),
+                    SizedBox(height: headingSpacing),
                     SizedBox(height: sectionSpacing),
                     Text('ATTENDEES', style: headingStyle),
                     SizedBox(height: headingSpacing),

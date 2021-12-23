@@ -38,7 +38,7 @@ class Event {
       creator: EventUser.fromGqlData(data['creator']),
       title: data['title'] ?? '',
       imageUrl: data['pictureUrl'] ?? '',
-      time: DateTime.parse(data['time']),
+      time: DateTime.parse(data['time']).toLocal(),
       relatedInterestIds: List<int>.from(
           data['relatedInterests']?.map((obj) => obj['id']).toList() ?? []),
       location: data['location'] ?? [],

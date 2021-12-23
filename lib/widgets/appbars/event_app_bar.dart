@@ -21,10 +21,10 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.grey[50],
-      title: Text(inEdit ? 'Edit Event' : event.title,
+      elevation: 0,
+      title: Text(inEdit ? 'Edit Event' : 'Event Details',
           style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       centerTitle: true,
-      elevation: 1.0,
       actions: [
         if (!inEdit)
           IconButton(

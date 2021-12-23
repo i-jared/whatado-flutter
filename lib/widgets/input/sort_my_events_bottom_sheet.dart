@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/widgets/buttons/shaded_icon.dart';
 import 'package:whatado/widgets/input/bottom_sheet_list.dart';
 
 class SortMyEventsBottomSheet extends StatelessWidget {
@@ -54,14 +55,7 @@ class SortMyEventsBottomSheet extends StatelessWidget {
               onTap: () => onPressed(type),
               child: Row(
                 children: [
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Color(0xfffff2e2),
-                          borderRadius: BorderRadius.circular(15)),
-                      width: 60,
-                      height: 60,
-                      child: Icon(getIcon(type),
-                          size: 30, color: Color(0xfff7941d))),
+                  ShadedIcon(icon: getIcon(type), width: 60, iconSize: 30),
                   SizedBox(width: 20),
                   Text(getText(type), style: TextStyle(fontSize: 20)),
                   Spacer(),

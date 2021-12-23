@@ -48,17 +48,21 @@ class MyEventDisplay extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        Container(
-                          height: 150,
-                          width: 150,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20)),
-                          child: event.imageUrl != null &&
-                                  event.imageUrl!.isNotEmpty
-                              ? CachedNetworkImage(
-                                  imageUrl: event.imageUrl!, fit: BoxFit.cover)
-                              : Image.asset("assets/Whatado_Transparent.png"),
+                        Hero(
+                          tag: 'event_${event.id}',
+                          child: Container(
+                            height: 150,
+                            width: 150,
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
+                            child: event.imageUrl != null &&
+                                    event.imageUrl!.isNotEmpty
+                                ? CachedNetworkImage(
+                                    imageUrl: event.imageUrl!,
+                                    fit: BoxFit.cover)
+                                : Image.asset("assets/Whatado_Transparent.png"),
+                          ),
                         ),
                         const SizedBox(width: 5),
                         Expanded(
@@ -91,7 +95,12 @@ class MyEventDisplay extends StatelessWidget {
                                     size: 16,
                                   ),
                                   const SizedBox(width: 5),
-                                  Text(event.location)
+                                  Flexible(
+                                    child: Text(
+                                      event.location,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
                                 ]),
                                 if (userState.user?.id == event.creator.id)
                                   Row(children: [
