@@ -7,6 +7,7 @@ import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/events/my_event_display.dart';
+import 'package:whatado/widgets/users/user_list_item.dart';
 
 class SelectWannago extends StatefulWidget {
   final Event event;
@@ -67,24 +68,7 @@ class _SelectWannagoState extends State<SelectWannago> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            InkWell(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserProfile(user: w.user))),
-              child: Expanded(
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      backgroundImage: NetworkImage(w.user.photoUrls.first),
-                      radius: 25,
-                    ),
-                    SizedBox(width: 15),
-                    Text(w.user.name, style: TextStyle(fontSize: 16)),
-                  ],
-                ),
-              ),
-            ),
+            UserListItem(w.user),
             Container(
               child: Row(
                 children: [

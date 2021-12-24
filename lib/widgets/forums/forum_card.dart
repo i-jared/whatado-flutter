@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/chat.dart';
@@ -12,6 +13,7 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/chats.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/events/picture_waterfall.dart';
 
 class ForumCard extends StatefulWidget {
   final Event event;
@@ -116,19 +118,20 @@ class _ForumCardState extends State<ForumCard> {
                     ]),
           ),
           Container(
-              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 35),
+              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
               child: Column(children: [
                 Row(
                   children: [
-                    CircleAvatar(
-                      radius: 33,
-                      backgroundColor: Colors.white,
+                    Container(
+                      height: 66,
+                      width: 66,
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(33)),
                       child: !hasImage
                           ? Image.asset('assets/Whatado_Transparent.png')
-                          : null,
-                      backgroundImage: hasImage
-                          ? NetworkImage(widget.event.imageUrl ?? '')
-                          : null,
+                          : CachedNetworkImage(
+                              imageUrl: widget.event.imageUrl!),
                     ),
                     SizedBox(width: 15),
                     Expanded(
@@ -145,36 +148,10 @@ class _ForumCardState extends State<ForumCard> {
                                       : FontWeight.normal)),
                           SizedBox(height: 4),
                           Container(
-                            height: 26,
-                            width: 100,
-                            child: Stack(
-                                children: loading
-                                    ? List<Widget>.generate(
-                                        5,
-                                        (i) => Positioned(
-                                              left: i * 15,
-                                              bottom: 0,
-                                              child: Shimmer.fromColors(
-                                                  child:
-                                                      CircleAvatar(radius: 13),
-                                                  baseColor: Colors.grey[200] ??
-                                                      Colors.grey,
-                                                  highlightColor: Colors.white),
-                                            ))
-                                    : List<Widget>.generate(
-                                        firstInvited?.length ?? 0,
-                                        (i) => Positioned(
-                                              left: i * 15,
-                                              bottom: 0,
-                                              child: CircleAvatar(
-                                                radius: 13,
-                                                backgroundImage: NetworkImage(
-                                                    firstInvited![i]
-                                                        .photoUrls
-                                                        .first),
-                                              ),
-                                            )).toList()),
-                          ),
+                              height: 26,
+                              width: 100,
+                              child: PictureWaterfall(
+                                  loading: loading, users: firstInvited ?? [])),
                           SizedBox(height: 4),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -244,9 +221,10 @@ class _ForumCardState extends State<ForumCard> {
       ...widget.event.invited.map((eu) => eu.id).toList(),
       widget.event.creator.id
     ]);
-    setState(() {
-      firstInvited = result.data;
-      loading = false;
-    });
+    if (mounted)
+      setState(() {
+        firstInvited = result.data;
+        loading = false;
+      });
   }
 }

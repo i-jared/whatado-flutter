@@ -15,6 +15,7 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/buttons/shaded_icon.dart';
+import 'package:whatado/widgets/events/picture_waterfall.dart';
 
 class EventDetails extends StatefulWidget {
   final Event event;
@@ -53,6 +54,7 @@ class _EventDetailsState extends State<EventDetails> {
         .where((w) =>
             !w.declined && !event.invited.map((i) => i.id).contains(w.user.id))
         .toList();
+    final wannagoUsers = event.wannago.map((w) => w.user).toList();
 
     final removeUser = (EventUser user) => userState.user?.id ==
                 event.creator.id &&
@@ -178,6 +180,50 @@ class _EventDetailsState extends State<EventDetails> {
                     Divider(),
                     SizedBox(height: headingSpacing),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Flexible(
+                          child: Container(
+                              height: 40,
+                              child: event.invited.isEmpty
+                                  ? Container(
+                                      width: 40,
+                                      alignment: Alignment.center,
+                                      child: Text("--",
+                                          style: TextStyle(fontSize: 30)),
+                                    )
+                                  : PictureWaterfall(
+                                      radius: 20,
+                                      loading: false,
+                                      users: event.invited)),
+                        ),
+                        Text('Going', style: headingStyle)
+                      ],
+                    ),
+                    SizedBox(height: headingSpacing),
+                    if (event.creator.id == userState.user?.id)
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          wannagoUsers.isEmpty
+                              ? Container(
+                                  width: 40,
+                                  alignment: Alignment.center,
+                                  child: Text("--",
+                                      style: TextStyle(fontSize: 30)),
+                                )
+                              : PictureWaterfall(
+                                  radius: 20,
+                                  loading: false,
+                                  users: wannagoUsers),
+                          Text('Wannago', style: headingStyle)
+                        ],
+                      ),
+                    if (event.creator.id == userState.user?.id)
+                      SizedBox(height: headingSpacing),
+                    Divider(),
+                    SizedBox(height: headingSpacing),
+                    Row(
                       children: [
                         ShadedIcon(
                             icon: Icons.location_on_outlined,
@@ -192,58 +238,6 @@ class _EventDetailsState extends State<EventDetails> {
                     SizedBox(height: headingSpacing),
                     Divider(),
                     SizedBox(height: headingSpacing),
-                    SizedBox(height: headingSpacing),
-                    SizedBox(height: sectionSpacing),
-                    SizedBox(height: headingSpacing),
-                    SizedBox(height: sectionSpacing),
-                    Text('ATTENDEES', style: headingStyle),
-                    SizedBox(height: headingSpacing),
-                    Wrap(
-                      spacing: circleSpacing,
-                      runSpacing: circleSpacing,
-                      children: !expanded && event.invited.length > 5
-                          ? [
-                              ...event.invited
-                                  .map((eventUser) => InkWell(
-                                        onTap: () => Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    UserProfile(
-                                                        user: eventUser))),
-                                        child: CircleAvatar(
-                                            radius: circleRadius,
-                                            backgroundImage: NetworkImage(
-                                                eventUser.photoUrls.first)),
-                                      ))
-                                  .toList()
-                                  .take(5),
-                              InkWell(
-                                  onTap: () =>
-                                      setState(() => expanded = !expanded),
-                                  child: CircleAvatar(
-                                    radius: circleRadius,
-                                    child: Text('+${event.invited.length - 5}',
-                                        style: TextStyle(fontSize: 28)),
-                                    backgroundColor: Colors.grey[200],
-                                  ))
-                            ]
-                          : event.invited
-                              .map((eventUser) => InkWell(
-                                    onLongPress: removeUser(eventUser),
-                                    onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                UserProfile(user: eventUser))),
-                                    child: CircleAvatar(
-                                        radius: circleRadius,
-                                        backgroundImage: NetworkImage(
-                                            eventUser.photoUrls.first)),
-                                  ))
-                              .toList(),
-                    ),
-                    SizedBox(height: sectionSpacing),
                     if (event.creator.id == userState.user?.id)
                       RoundedArrowButton(
                           disabled: wannago.isEmpty,

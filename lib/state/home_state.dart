@@ -78,6 +78,8 @@ class HomeState extends ChangeNotifier {
     appBarResetController = StreamController<int>();
     appBarResetSub = appBarResetController?.stream.listen((val) {
       _appBarPageNo = 0;
+      homePageController.animateTo(0,
+          duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
       notifyListeners();
     });
   }

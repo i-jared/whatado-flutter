@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
+import 'package:whatado/widgets/users/user_list_item.dart';
 
 class SearchUsers extends StatefulWidget {
   @override
@@ -21,10 +22,11 @@ class _StateSearchUsers extends State<SearchUsers> {
     setState(() => loading = true);
     debounce = Timer(Duration(milliseconds: 500), () async {
       final result = await provider.searchUsers(partial);
-      setState(() {
-        users = result.data;
-        loading = false;
-      });
+      if (mounted)
+        setState(() {
+          users = result.data;
+          loading = false;
+        });
     });
   }
 
@@ -37,14 +39,14 @@ class _StateSearchUsers extends State<SearchUsers> {
       return Center(child: Text('Something went wrong... Try again later!'));
     } else {
       return ListView.builder(
-        itemCount: users?.length ?? 0,
+        itemCount: 2 * (users!.length) - 1,
         itemBuilder: (BuildContext context, int i) {
-          return InkWell(
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => UserProfile(user: users![i]))),
-              child: Container(height: 100, child: Text(users![i].name)));
+          if (i.isOdd) {
+            return Divider();
+          } else {
+            i = i ~/ 2;
+            return UserListItem(users![i]);
+          }
         },
       );
     }
@@ -53,12 +55,19 @@ class _StateSearchUsers extends State<SearchUsers> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Column(
-      children: [
-        Container(
-            height: 100, child: TextFormField(onChanged: onSearchChanged)),
-        Expanded(child: getWidget(context))
-      ],
+        child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 30),
+      child: Column(
+        children: [
+          Container(
+              height: 100,
+              child: TextFormField(
+                decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
+                onChanged: onSearchChanged,
+              )),
+          Expanded(child: getWidget(context))
+        ],
+      ),
     ));
   }
 }
