@@ -9,6 +9,7 @@ import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
+import 'package:whatado/screens/home/user_list_page.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
@@ -179,45 +180,63 @@ class _EventDetailsState extends State<EventDetails> {
                     SizedBox(height: headingSpacing),
                     Divider(),
                     SizedBox(height: headingSpacing),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Container(
-                              height: 40,
-                              child: event.invited.isEmpty
-                                  ? Container(
-                                      width: 40,
-                                      alignment: Alignment.center,
-                                      child: Text("--",
-                                          style: TextStyle(fontSize: 30)),
-                                    )
-                                  : PictureWaterfall(
-                                      radius: 20,
-                                      loading: false,
-                                      users: event.invited)),
-                        ),
-                        Text('Going', style: headingStyle)
-                      ],
+                    InkWell(
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => UserListPage(
+                                  title: "Gonnago", users: event.invited))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Container(
+                                height: 40,
+                                child: event.invited.isEmpty
+                                    ? Container(
+                                        width: 40,
+                                        alignment: Alignment.center,
+                                        child: Text("--",
+                                            style: TextStyle(fontSize: 30)),
+                                      )
+                                    : PictureWaterfall(
+                                        radius: 20,
+                                        loading: false,
+                                        users: event.invited)),
+                          ),
+                          Text('Going', style: headingStyle)
+                        ],
+                      ),
                     ),
                     SizedBox(height: headingSpacing),
                     if (event.creator.id == userState.user?.id)
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          wannagoUsers.isEmpty
-                              ? Container(
-                                  width: 40,
-                                  alignment: Alignment.center,
-                                  child: Text("--",
-                                      style: TextStyle(fontSize: 30)),
-                                )
-                              : PictureWaterfall(
-                                  radius: 20,
-                                  loading: false,
-                                  users: wannagoUsers),
-                          Text('Wannago', style: headingStyle)
-                        ],
+                      InkWell(
+                        onTap: wannago.isEmpty
+                            ? null
+                            : () async {
+                                await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            SelectWannago(event: event)));
+                              },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            wannagoUsers.isEmpty
+                                ? Container(
+                                    width: 40,
+                                    alignment: Alignment.center,
+                                    child: Text("--",
+                                        style: TextStyle(fontSize: 30)),
+                                  )
+                                : PictureWaterfall(
+                                    radius: 20,
+                                    loading: false,
+                                    users: wannagoUsers),
+                            Text('Wannago', style: headingStyle)
+                          ],
+                        ),
                       ),
                     if (event.creator.id == userState.user?.id)
                       SizedBox(height: headingSpacing),
