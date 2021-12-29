@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -22,9 +23,17 @@ class EventTopBar extends StatelessWidget {
         onTap: () => event.creator.id == userState.user?.id
             ? homeState.bottomBarPageNo = 3
             : Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => UserProfile(user: event.creator))),
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => UserProfile(user: event.creator)))
+                .then((_) async {
+                await Future.delayed(Duration(milliseconds: 500));
+                SystemChrome.setSystemUIOverlayStyle(
+                    SystemUiOverlayStyle.dark.copyWith(
+                  systemNavigationBarColor: Colors.grey[50],
+                  statusBarColor: Colors.transparent,
+                ));
+              }),
         child: CircleAvatar(
           radius: 17,
           backgroundImage: NetworkImage(event.creator.photoUrls.first),

@@ -13,8 +13,11 @@ class MyEventDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
-    final haveWannago = event.creator.id == userState.user?.id &&
-        event.wannago.any((wannago) => !wannago.declined);
+    final filteredWannago = event.wannago.where((wannago) =>
+        !wannago.declined &&
+        !event.invited.map((eu) => eu.id).contains(wannago.user.id));
+    final haveWannago =
+        event.creator.id == userState.user?.id && filteredWannago.isNotEmpty;
     final dateFormat = DateFormat('MMM dd, yyyy h:mm a');
     return InkWell(
         onTap: () => Navigator.push(
@@ -56,8 +59,7 @@ class MyEventDisplay extends StatelessWidget {
                             clipBehavior: Clip.antiAlias,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20)),
-                            child: event.imageUrl != null &&
-                                    event.imageUrl!.isNotEmpty
+                            child: event.imageUrl != null
                                 ? CachedNetworkImage(
                                     imageUrl: event.imageUrl!,
                                     fit: BoxFit.cover)
@@ -135,7 +137,7 @@ class MyEventDisplay extends StatelessWidget {
                                           style:
                                               TextStyle(color: Colors.black)),
                                       TextSpan(
-                                          text: "${event.wannago.length}",
+                                          text: "${filteredWannago.length}",
                                           style: TextStyle(
                                               color: Color(0xfff7941d))),
                                     ]))

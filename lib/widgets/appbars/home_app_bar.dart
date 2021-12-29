@@ -42,9 +42,13 @@ class _HomeAppBarState extends State<HomeAppBar> {
                 .isBefore(forum.chats.first.createdAt)) ??
         false;
 
-    final haveWannago = homeState.myEvents?.any((event) =>
-            event.creator.id == userState.user?.id &&
-            event.wannago.any((wannago) => !wannago.declined)) ??
+    final haveWannago = homeState.myEvents?.any((event) {
+          final invitedIds = event.invited.map((e) => e.id);
+          return event.creator.id == userState.user?.id &&
+              event.time.isAfter(DateTime.now()) &&
+              event.wannago.any((wannago) =>
+                  !wannago.declined && !invitedIds.contains(wannago.user.id));
+        }) ??
         false;
 
     final switcherHeight = 42.0;
@@ -55,7 +59,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
       elevation: 0.0,
       leading: Padding(
         padding: EdgeInsets.only(left: 10),
-        child: Image.asset("assets/Whatado_NoSubtitle.png"),
+        child: InkWell(
+            onTap: () => homeState.bottomBarPageNo = 0,
+            child: Image.asset("assets/Whatado_NoSubtitle.png")),
       ),
       actions: [
         Container(

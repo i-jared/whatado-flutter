@@ -43,7 +43,8 @@ class _ChatsState extends State<Chats> {
                     right: 0,
                     child: Container(
                         width: MediaQuery.of(context).size.width,
-                        child: MessagesTextField())),
+                        child: Column(
+                            children: [Divider(), MessagesTextField()]))),
               ],
             ),
           ),

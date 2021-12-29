@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
@@ -34,10 +35,18 @@ class _BlockedUsersState extends State<BlockedUsers> {
                   children: userState.user!.blockedUsers
                       .map((blockedUser) => ListTile(
                             onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        UserProfile(user: blockedUser))),
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            UserProfile(user: blockedUser)))
+                                .then((_) async {
+                              await Future.delayed(Duration(milliseconds: 500));
+                              SystemChrome.setSystemUIOverlayStyle(
+                                  SystemUiOverlayStyle.dark.copyWith(
+                                systemNavigationBarColor: Colors.grey[50],
+                                statusBarColor: Colors.transparent,
+                              ));
+                            }),
                             leading: CircleAvatar(
                               backgroundImage:
                                   NetworkImage(blockedUser.photoUrls.first),

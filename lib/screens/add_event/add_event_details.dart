@@ -37,6 +37,10 @@ class _AddEventDetailsState extends State<AddEventDetails> {
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
+    final ready = eventState.timeController.text.isNotEmpty &&
+        eventState.dateController.text.isNotEmpty &&
+        eventState.locationController.text.isNotEmpty &&
+        (eventState.textMode || eventState.titleController.text.isNotEmpty);
 
     Widget chooseWidget(BuildContext context) {
       final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
@@ -88,7 +92,14 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             // .toList(),
             // ),
             SizedBox(height: sectionSpacing),
-            Text('LOCATION', style: headingStyle),
+            Row(
+              children: [
+                Text('LOCATION', style: headingStyle),
+                SizedBox(width: 10),
+                Text('(ONLY VISIBLE TO YOU)',
+                    style: TextStyle(fontSize: 15, color: Colors.grey)),
+              ],
+            ),
             SizedBox(height: headingSpacing),
             MyTextField(
               hintText: 'Add location',
@@ -139,15 +150,22 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             ),
             SizedBox(height: sectionSpacing),
             TextButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => TargetAudience())),
+                onPressed: !ready
+                    ? null
+                    : () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TargetAudience())),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('SELECT TARGET AUDIENCE',
-                        style:
-                            TextStyle(fontSize: 18, color: Color(0xfff7941d))),
-                    Icon(Icons.arrow_forward_ios, color: Color(0xfff7941d))
+                        style: TextStyle(
+                            fontSize: 18,
+                            color:
+                                !ready ? Colors.grey[400] : Color(0xfff7941d))),
+                    Icon(Icons.arrow_forward_ios,
+                        color: !ready ? Colors.grey[400] : Color(0xfff7941d))
                   ],
                 )),
             SizedBox(height: sectionSpacing),
@@ -156,10 +174,6 @@ class _AddEventDetailsState extends State<AddEventDetails> {
       ));
     }
 
-    final ready = eventState.timeController.text.isNotEmpty &&
-        eventState.dateController.text.isNotEmpty &&
-        eventState.locationController.text.isNotEmpty &&
-        (eventState.textMode || eventState.titleController.text.isNotEmpty);
     return Container(
       color: Colors.grey[50],
       child: SafeArea(

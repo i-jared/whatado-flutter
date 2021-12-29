@@ -15,8 +15,10 @@ import 'package:whatado/screens/home/chats.dart';
 import 'package:whatado/screens/home/search_users.dart';
 import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/screens/home/settings.dart';
+import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/appbars/home_app_bar.dart';
 import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';
@@ -75,6 +77,9 @@ class _HomeScreenState extends State<HomeScreen> {
       } else if (message.data['type'] == 'chat') {
         final homeState = Provider.of<HomeState>(context, listen: false);
         await homeState.getMyForums();
+      } else if (message.data['type'] == 'friend') {
+        final userState = Provider.of<UserState>(context, listen: false);
+        await userState.getUser();
       }
     });
 
@@ -99,8 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       forum: forumResult.data!,
                     )));
       }
-    }
-    if (message.data['type'] == 'event') {
+    } else if (message.data['type'] == 'event') {
       final homeState = Provider.of<HomeState>(context, listen: false);
       final eventProvider = EventsGqlProvider();
       final eventResult =
@@ -112,6 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
             MaterialPageRoute(
                 builder: (context) => EventDetails(event: eventResult.data!)));
       }
+    } else if (message.data['type'] == 'friend') {
+      final userProvider = UserGqlProvider();
+      final result = await userProvider.user(int.parse(message.data['userId']));
+      if (result.ok)
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => UserProfile(user: result.data!)));
     }
   }
 

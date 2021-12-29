@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event.dart';
@@ -76,16 +77,33 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                               children: [
                                 InkWell(
                                     onTap: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                UserProfile(user: user))),
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserProfile(
+                                                            user: user)))
+                                            .then((_) async {
+                                          await Future.delayed(
+                                              Duration(milliseconds: 500));
+                                          SystemChrome.setSystemUIOverlayStyle(
+                                              SystemUiOverlayStyle.dark
+                                                  .copyWith(
+                                            systemNavigationBarColor:
+                                                Colors.grey[50],
+                                            statusBarColor: Colors.transparent,
+                                          ));
+                                        }),
                                     child: CircleAvatar(
                                         radius: 28,
                                         backgroundImage:
                                             NetworkImage(user.photoUrls.first)),
                                     onLongPress: removeUser(user)),
-                                Text(user.name),
+                                //TODO add event 'only friends' option
+                                //TODO friend selection in activities that automatically add them to the event and they immediately
+                                //receive an invitation
+                                //TODO surveys in chat that don't send notifications to the group. Add them in a plus butotn next to chat
+                                //like in android google messages
+                                //TODO LATER stack profiles in messages and expand on click to what we have now
                               ],
                             ),
                           ))

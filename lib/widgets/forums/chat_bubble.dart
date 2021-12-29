@@ -1,5 +1,6 @@
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
@@ -43,10 +44,18 @@ class ChatBubble extends StatelessWidget {
                             NetworkImage(chat.author.photoUrls.first),
                       ),
                       onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  UserProfile(user: chat.author)))),
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          UserProfile(user: chat.author)))
+                              .then((_) async {
+                            await Future.delayed(Duration(milliseconds: 500));
+                            SystemChrome.setSystemUIOverlayStyle(
+                                SystemUiOverlayStyle.dark.copyWith(
+                              systemNavigationBarColor: Colors.grey[50],
+                              statusBarColor: Colors.transparent,
+                            ));
+                          })),
                   SizedBox(width: 5),
                   Flexible(child: bubble)
                 ],

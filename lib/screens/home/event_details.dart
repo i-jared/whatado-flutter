@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -55,7 +56,7 @@ class _EventDetailsState extends State<EventDetails> {
         .where((w) =>
             !w.declined && !event.invited.map((i) => i.id).contains(w.user.id))
         .toList();
-    final wannagoUsers = event.wannago.map((w) => w.user).toList();
+    final wannagoUsers = wannago.map((w) => w.user).toList();
 
     final removeUser = (EventUser user) => userState.user?.id ==
                 event.creator.id &&
@@ -84,7 +85,6 @@ class _EventDetailsState extends State<EventDetails> {
                       ),
                     ]))
         : null;
-
     return Container(
       color: Colors.grey[50],
       child: SafeArea(
@@ -140,7 +140,17 @@ class _EventDetailsState extends State<EventDetails> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) => UserProfile(
-                                                user: event.creator)));
+                                                user: event.creator))).then(
+                                        (_) async {
+                                      await Future.delayed(
+                                          Duration(milliseconds: 500));
+                                      SystemChrome.setSystemUIOverlayStyle(
+                                          SystemUiOverlayStyle.dark.copyWith(
+                                        systemNavigationBarColor:
+                                            Colors.grey[50],
+                                        statusBarColor: Colors.transparent,
+                                      ));
+                                    });
                                   }
                                 },
                                 child: CircleAvatar(

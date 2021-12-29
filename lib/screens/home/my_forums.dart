@@ -10,8 +10,7 @@ class MyForums extends StatelessWidget {
     return homeState.myForums == null || homeState.lastMessages == null
         ? Center(child: CircularProgressIndicator())
         : homeState.myForums!.isNotEmpty
-            ? ListView.separated(
-                separatorBuilder: (context, i) => SizedBox(height: 30),
+            ? ListView.builder(
                 itemCount: homeState.myForums!.length,
                 itemBuilder: (context, i) {
                   final forum = homeState.myForums![i];

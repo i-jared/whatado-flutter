@@ -40,8 +40,7 @@ class _ForumCardState extends State<ForumCard> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final userState = Provider.of<UserState>(context);
-    final hasImage =
-        widget.event.imageUrl != null && widget.event.imageUrl!.isNotEmpty;
+    final hasImage = widget.event.imageUrl != null;
     final unread = widget.forum.chats.isEmpty
         ? false
         : widget.forum.userNotification.lastAccessed
@@ -59,9 +58,147 @@ class _ForumCardState extends State<ForumCard> {
       },
       child: Stack(
         children: [
+          Container(
+              padding: EdgeInsets.only(top: 10, bottom: 10, right: 16),
+              child: Column(children: [
+                Row(
+                  children: [
+                    unread
+                        ? Container(
+                            margin: EdgeInsets.symmetric(horizontal: 6),
+                            height: 12,
+                            width: 12,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Color(0xfff7941d)),
+                          )
+                        : const SizedBox(width: 24),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(blurRadius: 10, color: Colors.grey[200]!)
+                          ],
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(40),
+                              bottomLeft: Radius.circular(40),
+                              topRight: Radius.circular(20),
+                              bottomRight: Radius.circular(20)),
+                          color: Colors.grey[50],
+                        ),
+                        child: Row(
+                          children: [
+                            Container(
+                              height: 80,
+                              width: 80,
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(100)),
+                              child: !hasImage
+                                  ? Image.asset(
+                                      'assets/Whatado_Transparent.png')
+                                  : CachedNetworkImage(
+                                      imageUrl: widget.event.imageUrl!),
+                            ),
+                            SizedBox(width: 5),
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 8.0),
+                                    child: Text(widget.event.title,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: unread
+                                                ? FontWeight.bold
+                                                : FontWeight.normal)),
+                                  ),
+                                  SizedBox(height: 4),
+                                  Container(
+                                      height: 26,
+                                      width: 100,
+                                      child: PictureWaterfall(
+                                          loading: loading,
+                                          users: firstInvited ?? [])),
+                                  SizedBox(height: 4),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      loading
+                                          ? Flexible(
+                                              flex: 3,
+                                              child: Shimmer.fromColors(
+                                                  baseColor: Colors.grey[200] ??
+                                                      Colors.grey,
+                                                  highlightColor: Colors.white,
+                                                  child: Container(
+                                                      color: Colors.grey[100],
+                                                      height: 15)),
+                                            )
+                                          : Flexible(
+                                              flex: 5,
+                                              child: Text(
+                                                  widget.lastChat?.text ?? '',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: TextStyle(
+                                                      fontWeight: unread
+                                                          ? FontWeight.bold
+                                                          : FontWeight.normal)),
+                                            ),
+                                      const SizedBox(width: 20),
+                                      loading
+                                          ? Flexible(
+                                              flex: 1,
+                                              child: Shimmer.fromColors(
+                                                  baseColor: Colors.grey[200] ??
+                                                      Colors.grey,
+                                                  highlightColor: Colors.white,
+                                                  child: Container(
+                                                      color: Colors.grey[100],
+                                                      height: 15)),
+                                            )
+                                          : Flexible(
+                                              flex: 1,
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 10.0),
+                                                child: Text(
+                                                    widget.lastChat != null
+                                                        ? timeago.format(
+                                                            widget.lastChat!
+                                                                .createdAt,
+                                                            locale: 'en_short')
+                                                        : '',
+                                                    style: TextStyle(
+                                                        fontWeight: unread
+                                                            ? FontWeight.bold
+                                                            : FontWeight
+                                                                .normal)),
+                                              ),
+                                            ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 10),
+              ])),
           Positioned(
-            top: 0,
-            right: 0,
+            top: 5,
+            right: 5,
             child: PopupMenuButton(
                 onSelected: (value) async {
                   if (value == 'unmute') {
@@ -117,99 +254,6 @@ class _ForumCardState extends State<ForumCard> {
                       )
                     ]),
           ),
-          Container(
-              padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
-              child: Column(children: [
-                Row(
-                  children: [
-                    Container(
-                      height: 66,
-                      width: 66,
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(33)),
-                      child: !hasImage
-                          ? Image.asset('assets/Whatado_Transparent.png')
-                          : CachedNetworkImage(
-                              imageUrl: widget.event.imageUrl!),
-                    ),
-                    SizedBox(width: 15),
-                    Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.event.title,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: unread
-                                      ? FontWeight.bold
-                                      : FontWeight.normal)),
-                          SizedBox(height: 4),
-                          Container(
-                              height: 26,
-                              width: 100,
-                              child: PictureWaterfall(
-                                  loading: loading, users: firstInvited ?? [])),
-                          SizedBox(height: 4),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              loading
-                                  ? Flexible(
-                                      flex: 3,
-                                      child: Shimmer.fromColors(
-                                          baseColor:
-                                              Colors.grey[200] ?? Colors.grey,
-                                          highlightColor: Colors.white,
-                                          child: Container(
-                                              color: Colors.grey[100],
-                                              height: 15)),
-                                    )
-                                  : Flexible(
-                                      flex: 5,
-                                      child: Text(widget.lastChat?.text ?? '',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontWeight: unread
-                                                  ? FontWeight.bold
-                                                  : FontWeight.normal)),
-                                    ),
-                              const SizedBox(width: 20),
-                              loading
-                                  ? Flexible(
-                                      flex: 1,
-                                      child: Shimmer.fromColors(
-                                          baseColor:
-                                              Colors.grey[200] ?? Colors.grey,
-                                          highlightColor: Colors.white,
-                                          child: Container(
-                                              color: Colors.grey[100],
-                                              height: 15)),
-                                    )
-                                  : Flexible(
-                                      flex: 1,
-                                      child: Text(
-                                          widget.lastChat != null
-                                              ? timeago.format(
-                                                  widget.lastChat!.createdAt,
-                                                  locale: 'en_short')
-                                              : '',
-                                          style: TextStyle(
-                                              fontWeight: unread
-                                                  ? FontWeight.bold
-                                                  : FontWeight.normal)),
-                                    ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-              ])),
         ],
       ),
     );

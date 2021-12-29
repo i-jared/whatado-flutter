@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/welcome.dart';
+import 'package:whatado/screens/home/user_list_page.dart';
 import 'package:whatado/screens/profile/blocked_users.dart';
 import 'package:whatado/screens/profile/change_password.dart';
 import 'package:whatado/screens/profile/change_personal_info.dart';
@@ -18,6 +19,19 @@ class Settings extends StatelessWidget {
       children: [
         SizedBox(height: 30),
         SettingsItem(
+            title: 'FRIEND REQUESTS',
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => UserListPage(
+                          title: 'Friend Requests',
+                          users: userState.user!.friendRequests,
+                        )))),
+        SettingsItem(
+            title: 'BLOCKED USERS',
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => BlockedUsers()))),
+        SettingsItem(
             title: 'PERSONAL INFORMATION',
             onPressed: () => Navigator.push(
                 context,
@@ -28,10 +42,6 @@ class Settings extends StatelessWidget {
             title: 'CHANGE PASSWORD',
             onPressed: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ChangePassword()))),
-        SettingsItem(
-            title: 'BLOCKED USERS',
-            onPressed: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => BlockedUsers()))),
         SettingsItem(
             title: 'LEGAL',
             onPressed: () => Navigator.push(

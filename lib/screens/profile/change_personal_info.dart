@@ -62,11 +62,11 @@ class _ChangePersonalInfoState extends State<ChangePersonalInfo> {
                   child: MyTextField(
                       hintText: 'Full Name', controller: nameController),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: MyTextField(
-                      hintText: 'Phone Number', controller: phoneController),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(vertical: 20.0),
+                //   child: MyTextField(
+                //       hintText: 'Phone Number', controller: phoneController),
+                // ),
               ],
             ),
           )),

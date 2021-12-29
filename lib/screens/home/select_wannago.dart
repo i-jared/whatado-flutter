@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
@@ -60,7 +62,8 @@ class _SelectWannagoState extends State<SelectWannago> {
       setState(() => loading = false);
     }
 
-    final wannagoWidgets = List<Widget>.generate(wannago.length * 2 - 1, (i) {
+    final wannagoWidgets =
+        List<Widget>.generate(max(0, wannago.length * 2 - 1), (i) {
       if (i.isOdd) return Divider();
       final w = wannago[i ~/ 2];
       return Padding(
@@ -76,13 +79,13 @@ class _SelectWannagoState extends State<SelectWannago> {
                       padding: EdgeInsets.all(0),
                       onPressed: () async => await decide(w, false),
                       icon: Icon(Icons.cancel_outlined),
-                      iconSize: 30,
+                      iconSize: 40,
                       color: Color(0xfff7941d)),
                   IconButton(
                       padding: EdgeInsets.zero,
                       onPressed: () async => await decide(w, true),
                       icon: Icon(Icons.check_circle_outline_outlined),
-                      iconSize: 30,
+                      iconSize: 40,
                       color: Color(0xfff7941d)),
                 ],
               ),
@@ -97,29 +100,30 @@ class _SelectWannagoState extends State<SelectWannago> {
       child: SafeArea(
         child: Scaffold(
           appBar: DefaultAppBar(title: 'Invite'),
-          body: loading
-              ? Center(child: CircularProgressIndicator())
-              : wannago.isEmpty
-                  ? Center(child: Text('no one left'))
-                  : Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        IgnorePointer(child: MyEventDisplay(event: event)),
-                        SizedBox(height: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: Text("Invite People",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 22)),
-                        ),
-                        SizedBox(height: 10),
-                        Expanded(
-                            child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 24),
-                          child: ListView(children: wannagoWidgets),
-                        )),
-                      ],
-                    ),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              IgnorePointer(child: MyEventDisplay(event: event)),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text("Invite People",
+                    style:
+                        TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+              ),
+              SizedBox(height: 10),
+              Expanded(
+                  child: wannago.isEmpty
+                      ? Center(child: Text('No one left'))
+                      : loading
+                          ? Center(child: CircularProgressIndicator())
+                          : Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 24),
+                              child: ListView(children: wannagoWidgets),
+                            )),
+            ],
+          ),
         ),
       ),
     );

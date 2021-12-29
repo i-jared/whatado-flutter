@@ -99,7 +99,21 @@ class _TargetAudienceState extends State<TargetAudience> {
                         eventState.filterAgeStart = values.start;
                       }),
                   SizedBox(height: sectionSpacing),
-                  Text('INTERESTS', style: headingStyle),
+                  Row(
+                    children: [
+                      Text('INTERESTS', style: headingStyle),
+                      SizedBox(width: 10),
+                      Tooltip(
+                        preferBelow: false,
+                        triggerMode: TooltipTriggerMode.tap,
+                        margin: EdgeInsets.symmetric(horizontal: 50),
+                        padding: EdgeInsets.all(8),
+                        message:
+                            "Only show your event to people who have one of these interests",
+                        child: Icon(Icons.help_outline, size: 20),
+                      ),
+                    ],
+                  ),
                   SizedBox(height: headingSpacing),
                   InterestWrap(
                       interests: userState.user?.interests ?? [],
@@ -112,9 +126,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                         }
                       }),
                   SizedBox(height: 35),
-                  Text('Add interests',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
+                  Text('ADD INTERESTS', style: headingStyle),
                   SizedBox(height: 10),
                   Row(
                     children: [

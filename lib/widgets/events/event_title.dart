@@ -20,7 +20,7 @@ class EventTitle extends StatelessWidget {
     final userState = Provider.of<UserState>(context);
     final textFormat = TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: event.imageUrl!.isNotEmpty ? 22 : 30);
+        fontSize: event.imageUrl != null ? 22 : 30);
     if (userState.user == null) return SizedBox.shrink();
     final wannago =
         event.wannago.map((w) => w.user.id).contains(userState.user!.id);
