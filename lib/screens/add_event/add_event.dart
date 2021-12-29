@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
@@ -27,6 +29,7 @@ class _AddEventState extends State<AddEvent> {
     return Container(
       color: Colors.grey[50],
       child: SafeArea(
+        top: Platform.isIOS ? false : true,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AddEventAppBar(),
