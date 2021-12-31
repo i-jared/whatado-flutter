@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/models/query_response.dart';
-import 'package:whatado/models/user.dart';
 import 'package:whatado/services/service_provider.dart';
 
 class LoginGqlQuery {
-  Future<MyQueryResponse<User?>> login(
+  Future<MyQueryResponse<bool>> login(
       {required String phone, required String password}) async {
     final mutation = LoginMutation(
       variables: LoginArguments(
@@ -22,14 +21,13 @@ class LoginGqlQuery {
     }
 
     final root = result.data?['login'];
-    final data =
-        root?['nodes'] != null ? User.fromGqlData(root?['nodes']) : null;
+    final data = root?['nodes'];
     final accessToken = root?['jwt']?['accessToken'];
     final refreshToken = root?['jwt']?['refreshToken'];
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<User?>(
+    return MyQueryResponse<bool>(
       ok: ok,
       accessToken: accessToken,
       refreshToken: refreshToken,

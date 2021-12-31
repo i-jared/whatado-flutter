@@ -253,7 +253,7 @@ type Mutation {
   flagUser(userId: Int!): BoolApiResponse!
   forgotPassword(phone: String!): BoolApiResponse!
   helloMutation(message: String!): Boolean!
-  login(options: UserInput!): UserApiResponse!
+  login(options: UserInput!): BoolApiResponse!
   mute(id: Int!): BoolApiResponse!
   register(options: UserInput!): UserApiResponse!
   removeAccount: BoolApiResponse!

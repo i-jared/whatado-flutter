@@ -1,9 +1,7 @@
 mutation login($userInput: UserInput!) {
   login(options: $userInput) {
     ok
-    nodes {
-      id
-    }
+    nodes
     errors {
       field
       message
