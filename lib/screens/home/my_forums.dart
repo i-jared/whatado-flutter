@@ -10,18 +10,20 @@ class MyForums extends StatelessWidget {
     return homeState.myForums == null || homeState.lastMessages == null
         ? Center(child: CircularProgressIndicator())
         : homeState.myForums!.isNotEmpty
-            ? ListView.builder(
-                itemCount: homeState.myForums!.length,
-                itemBuilder: (context, i) {
-                  final forum = homeState.myForums![i];
-                  final event = homeState.myEvents!
-                      .firstWhere((event) => event.id == forum.eventId);
-                  final lastChat = homeState.lastMessages!.firstWhere((obj) {
-                    return obj['forumId'] == forum.id;
-                  });
-                  return ForumCard(
-                      event: event, forum: forum, lastChat: lastChat['chat']);
-                })
-            : Container(child: Center(child: Text('no forums')));
+            ? ListView(
+                children: homeState.myForums!.map((forum) {
+                if (!homeState.myEvents!.any((e) => e.id == forum.eventId)) {
+                  return SizedBox.shrink();
+                }
+                final event = homeState.myEvents!
+                    .firstWhere((event) => event.id == forum.eventId);
+                final lastChat = homeState.lastMessages!.firstWhere((obj) {
+                  return obj['forumId'] == forum.id;
+                }, orElse: () => {'chat': null});
+                return ForumCard(
+                    event: event, forum: forum, lastChat: lastChat['chat']);
+              }).toList())
+            : Container(
+                child: Center(child: Text('No forums to display... :(')));
   }
 }

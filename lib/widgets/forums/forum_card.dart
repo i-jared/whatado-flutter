@@ -215,8 +215,13 @@ class _ForumCardState extends State<ForumCard> {
                   }
                   if (value == 'leave') {
                     final provider = EventsGqlProvider();
-                    await provider.removeInvite(
+                    final result = await provider.removeInvite(
                         eventId: widget.event.id, userId: userState.user!.id);
+                    await homeState.myEventsRefresh();
+                  }
+                  if (value == 'delete') {
+                    final provider = EventsGqlProvider();
+                    await provider.deleteEvent(widget.event.id);
                     await homeState.myEventsRefresh();
                   }
                 },
@@ -241,17 +246,31 @@ class _ForumCardState extends State<ForumCard> {
                           ]),
                           value: 'mute',
                         ),
-                      PopupMenuItem(
-                        child: Row(
-                          children: [
-                            Icon(Icons.logout_outlined,
-                                color: Colors.red, size: 30),
-                            SizedBox(width: 10),
-                            Text('leave', style: TextStyle(color: Colors.red))
-                          ],
+                      if (userState.user?.id == widget.event.creator.id)
+                        PopupMenuItem(
+                          child: Row(
+                            children: [
+                              Icon(Icons.logout_outlined,
+                                  color: Colors.red, size: 30),
+                              SizedBox(width: 10),
+                              Text('delete',
+                                  style: TextStyle(color: Colors.red))
+                            ],
+                          ),
+                          value: 'delete',
                         ),
-                        value: 'leave',
-                      )
+                      if (userState.user?.id != widget.event.creator.id)
+                        PopupMenuItem(
+                          child: Row(
+                            children: [
+                              Icon(Icons.logout_outlined,
+                                  color: Colors.red, size: 30),
+                              SizedBox(width: 10),
+                              Text('leave', style: TextStyle(color: Colors.red))
+                            ],
+                          ),
+                          value: 'leave',
+                        )
                     ]),
           ),
         ],

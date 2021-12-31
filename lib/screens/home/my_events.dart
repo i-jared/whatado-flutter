@@ -8,6 +8,7 @@ import 'package:whatado/widgets/events/my_event_display.dart';
 import 'package:whatado/widgets/events/my_events_sort_bar.dart';
 
 class MyEvents extends StatelessWidget {
+  final String emptyText = "No events to display... :(";
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
@@ -40,18 +41,18 @@ class MyEvents extends StatelessWidget {
         break;
     }
 
-    return (homeState.myEvents != null && homeState.myEvents!.isEmpty)
-        ? Container(
-            child: Center(
-              child: Text('no events to display :('),
-            ),
-          )
-        : (homeState.myEvents == null)
-            ? Center(child: CircularProgressIndicator(value: null))
-            : SmartRefresher(
-                controller: homeState.myEventsRefreshController,
-                onRefresh: homeState.myEventsRefresh,
-                child: ListView(
+    return SmartRefresher(
+      controller: homeState.myEventsRefreshController,
+      onRefresh: homeState.myEventsRefresh,
+      child: (homeState.myEvents != null && homeState.myEvents!.isEmpty)
+          ? Container(
+              child: Center(
+                child: Text(emptyText),
+              ),
+            )
+          : (homeState.myEvents == null)
+              ? Center(child: CircularProgressIndicator(value: null))
+              : ListView(
                   key: PageStorageKey(0),
                   children: [
                     Divider(),
@@ -59,14 +60,13 @@ class MyEvents extends StatelessWidget {
                     if (tempEvents.isEmpty)
                       Container(
                           height: MediaQuery.of(context).size.height - 205,
-                          child:
-                              Center(child: Text('No events to display :('))),
+                          child: Center(child: Text(emptyText))),
                     if (tempEvents.isNotEmpty)
                       ...tempEvents
                           .map((e) => MyEventDisplay(event: e))
                           .toList()
                   ],
                 ),
-              );
+    );
   }
 }

@@ -79,18 +79,16 @@ class _UserHeadingState extends State<UserHeading> {
                 MaterialPageRoute(
                     builder: (BuildContext context) =>
                         UserListPage(title: "Friends", users: friends))),
-        child: Flexible(
-          child: Container(
-              height: 40,
-              child: !loading && friends.isEmpty
-                  ? Container(
-                      width: 40,
-                      alignment: Alignment.center,
-                      child: Text("--", style: TextStyle(fontSize: 30)),
-                    )
-                  : PictureWaterfall(
-                      radius: 20, loading: loading, users: friends)),
-        ),
+        child: Container(
+            height: 40,
+            child: !loading && friends.isEmpty
+                ? Container(
+                    width: 40,
+                    alignment: Alignment.center,
+                    child: Text("--", style: TextStyle(fontSize: 30)),
+                  )
+                : PictureWaterfall(
+                    radius: 20, loading: loading, users: friends)),
       ),
     ]);
   }

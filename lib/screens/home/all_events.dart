@@ -36,7 +36,7 @@ class AllEvents extends StatelessWidget {
                   Container(
                     height: MediaQuery.of(context).size.height - 200,
                     child: Center(
-                      child: Text('no events in your area.. :('),
+                      child: Text('No events to display.. :('),
                     ),
                   ),
                 if (homeState.allEvents != null &&
