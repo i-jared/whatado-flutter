@@ -1,16 +1,19 @@
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/models/survey.dart';
 
 class Chat {
   int id;
   DateTime createdAt;
   String text;
   EventUser author;
+  Survey? survey;
 
   Chat({
     required this.id,
     required this.createdAt,
     required this.text,
     required this.author,
+    this.survey,
   });
 
   factory Chat.fromGqlData(Map data) {
@@ -27,6 +30,8 @@ class Chat {
                   'https://styles.redditmedia.com/t5_2ldvug/styles/communityIcon_aq22b2qb50u41.png'
                 ],
                 birthday: DateTime.now())
-            : EventUser.fromGqlData(data['author']));
+            : EventUser.fromGqlData(data['author']),
+        survey:
+            data['survey'] == null ? null : Survey.fromGqlData(data['survey']));
   }
 }
