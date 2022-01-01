@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:whatado/models/event_user.dart';
@@ -19,17 +20,20 @@ class UserListItem extends StatelessWidget {
           statusBarColor: Colors.transparent,
         ));
       }),
-      child: Expanded(
-        child: Row(
-          children: [
-            CircleAvatar(
-              backgroundImage: NetworkImage(user.photoUrls.first),
-              radius: 25,
-            ),
-            SizedBox(width: 15),
-            Text(user.name, style: TextStyle(fontSize: 16)),
-          ],
-        ),
+      child: Row(
+        children: [
+          Container(
+            height: 50,
+            width: 50,
+            clipBehavior: Clip.antiAlias,
+            child: user.photoUrls.isEmpty
+                ? Image.asset("assets/Whatado_Transparent.png")
+                : CachedNetworkImage(imageUrl: user.photoUrls.first),
+            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
+          ),
+          SizedBox(width: 15),
+          Text(user.name, style: TextStyle(fontSize: 16)),
+        ],
       ),
     );
   }

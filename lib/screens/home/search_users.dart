@@ -38,14 +38,16 @@ class _StateSearchUsers extends State<SearchUsers> {
     } else if (users == null) {
       return Center(child: Text('Something went wrong... Try again later!'));
     } else {
+      print('length: ${users!.length} itemCount: ${2 * (users!.length) - 1}');
       return ListView.builder(
         itemCount: 2 * (users!.length) - 1,
         itemBuilder: (BuildContext context, int i) {
           if (i.isOdd) {
             return Divider();
           } else {
-            i = i ~/ 2;
-            return UserListItem(users![i]);
+            int j = i ~/ 2;
+            print(j);
+            return UserListItem(users![j]);
           }
         },
       );
