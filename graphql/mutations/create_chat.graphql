@@ -1,5 +1,5 @@
-mutation createChat($chatInput: ChatInput!) {
-  createChat(options: $chatInput) {
+mutation createChat($chatInput: ChatInput!, $surveyInput: SurveyInput) {
+  createChat(options: $chatInput, surveyOptions: $surveyInput) {
     ok
     nodes {
       id

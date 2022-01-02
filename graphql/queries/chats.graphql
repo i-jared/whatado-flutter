@@ -8,6 +8,16 @@ query chats($forumId: Int!, $take: Int!, $skip: Int!) {
       author {
         ...EventUser
       }
+      survey {
+        id
+        question
+        answers {
+          text
+          votes {
+            ...EventUser
+          }
+        }
+      }
     }
     errors {
       field

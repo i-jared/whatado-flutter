@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/widgets/forums/chat_bubble.dart';
+import 'package:whatado/widgets/forums/survey_bubble.dart';
 
 class MessagesBody extends StatelessWidget {
   @override
@@ -17,8 +18,9 @@ class MessagesBody extends StatelessWidget {
                   controller: chatState.scrollController,
                   reverse: true,
                   itemCount: chatState.chats!.length,
-                  itemBuilder: (context, i) =>
-                      ChatBubble(chat: chatState.chats![i])),
+                  itemBuilder: (context, i) => chatState.chats![i].survey == null
+                      ? ChatBubble(chat: chatState.chats![i])
+                      : SurveyBubble(chat: chatState.chats![i])),
             ),
           )
         : Center(

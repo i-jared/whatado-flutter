@@ -3,6 +3,15 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+type Answer {
+  createdAt: DateTime!
+  id: Int!
+  survey: Survey!
+  text: String!
+  updatedAt: DateTime!
+  votes: [User!]!
+}
+
 type BoolApiResponse {
   errors: [FieldError!]
   jwt: JwtResponse
@@ -16,6 +25,7 @@ type Chat {
   flags: Int!
   forum: Forum!
   id: Int!
+  survey: Survey
   text: String!
   updatedAt: DateTime!
 }
@@ -241,7 +251,7 @@ type Mutation {
   blockUser(userId: Int!): BoolApiResponse!
   checkValidation(code: String!): BoolApiResponse!
   checkValidationLogin(code: String!, phone: String!): BoolApiResponse!
-  createChat(options: ChatInput!): ChatApiResponse!
+  createChat(options: ChatInput!, surveyOptions: SurveyInput): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
   createForum(eventId: Int!): ForumApiResponse!
   createInterest(interestsText: [String!]!): IntsApiResponse!
@@ -305,6 +315,20 @@ enum SortType {
 type Subscription {
   chatSubscription(forumId: Int!): Chat!
   helloSubscription: String!
+}
+
+type Survey {
+  answers: [Answer!]!
+  chat: Chat!
+  createdAt: DateTime!
+  id: Int!
+  question: String!
+  updatedAt: DateTime!
+}
+
+input SurveyInput {
+  answers: [String!]!
+  question: String!
 }
 
 type User {

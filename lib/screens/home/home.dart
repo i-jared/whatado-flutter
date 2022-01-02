@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 android: AndroidNotificationDetails(
                   localNotificationService.channel.id,
                   localNotificationService.channel.name,
-                  localNotificationService.channel.description,
+                  channelDescription: localNotificationService.channel.description ,
                   // other properties...
                 ),
               ));

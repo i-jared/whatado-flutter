@@ -34,14 +34,16 @@ class ChatGqlProvider {
       {required int userId,
       required String text,
       required int forumId,
-      required int eventId}) async {
+      required int eventId,
+      String? question,
+      List<String>? answers}) async {
     final mutation = CreateChatMutation(
       variables: CreateChatArguments(
           chatInput: ChatInput(
-              authorId: userId,
-              forumId: forumId,
-              eventId: eventId,
-              text: text)),
+              authorId: userId, forumId: forumId, eventId: eventId, text: text),
+          surveyInput: question == null || answers == null
+              ? null
+              : SurveyInput(question: question, answers: answers)),
     );
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {

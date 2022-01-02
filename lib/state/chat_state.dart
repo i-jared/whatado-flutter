@@ -14,12 +14,14 @@ class ChatState extends ChangeNotifier {
   int _skip;
 
   final TextEditingController textController;
+  final TextEditingController surveyController;
   final ScrollController scrollController;
   StreamSubscription? streamSubscription;
   List<Chat>? chats;
 
   ChatState({required this.event, required this.forum})
       : textController = TextEditingController(),
+        surveyController = TextEditingController(),
         scrollController = ScrollController(),
         _skip = 0 {
     scrollController
@@ -29,6 +31,8 @@ class ChatState extends ChangeNotifier {
           await getChats();
         }
       });
+    textController.addListener(() => notifyListeners());
+    surveyController.addListener(() => notifyListeners());
     init();
   }
 
@@ -70,11 +74,17 @@ class ChatState extends ChangeNotifier {
     streamSubscription?.onError((e) => print('sub error $e'));
   }
 
-  void sendMessage(int authorId) async {
+  Future<void> sendMessage(int authorId,
+      [List<String>? answers, String? question]) async {
     final tempText = textController.text;
     textController.clear();
     final provider = ChatGqlProvider();
     await provider.create(
-        text: tempText, userId: authorId, forumId: forum.id, eventId: event.id);
+        text: tempText,
+        userId: authorId,
+        forumId: forum.id,
+        eventId: event.id,
+        answers: answers,
+        question: question);
   }
 }

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/interests/interest_bubble.dart';
 
 class SurveyBubble extends StatelessWidget {
   final Chat chat;
@@ -17,15 +18,20 @@ class SurveyBubble extends StatelessWidget {
     final isOwner = chat.author.id == userState.user?.id;
 
     final Widget bubble = Bubble(
-      margin: BubbleEdges.only(left: isOwner ? 50 : 0, right: isOwner ? 0 : 50),
-      color: !isOwner ? Colors.purple[100] : Colors.white,
+      margin: BubbleEdges.only(left: 50, right: 50),
+      color: Colors.orange[50],
       radius: Radius.circular(20),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(survey.question,
-            style: TextStyle(
-                fontSize: 18,
-                color: isOwner ? Colors.white : Colors.grey[850])),
+        child: Column(
+          children: [
+            Text(survey.question,
+                style: TextStyle(fontSize: 18, color: Colors.grey[850])),
+            Wrap(
+              children: survey.answers.map((a) => InterestBubble(text: a.text, selected: false)).toList(),
+            )
+          ],
+        ),
       ),
       alignment: Alignment.topCenter,
       nip: BubbleNip.no,
