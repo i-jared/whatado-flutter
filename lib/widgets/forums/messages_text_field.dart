@@ -114,7 +114,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                               SizedBox(width: 10),
                               Expanded(
                                   child: MyTextField(
-                                    controller: chatState.surveyController,
+                                      controller: chatState.surveyController,
                                       hintText: 'Ask question here...'))
                             ],
                           ),
@@ -181,14 +181,35 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                       bottom: 0,
                       right: 0,
                       child: IconButton(
-                        onPressed: () async => await chatState.sendMessage(
-                            userState.user!.id,
-                            selectedSurvey == 0
-                                ? ["Yes", "No", "Maybe"]
-                                : customTextControllers
-                                    .map((v) => v.text)
-                                    .toList(),
-                            chatState.surveyController.text),
+                        onPressed: () async {
+                          await chatState.sendMessage(
+                              userState.user!.id,
+                              selectedSurvey == 0
+                                  ? ["Yes", "No", "Maybe"]
+                                  : customTextControllers
+                                      .map((v) => v.text)
+                                      .toList(),
+                              chatState.surveyController.text);
+                          chatState.surveyController.clear();
+                          setState(() {
+                            selectedSurvey = 0;
+                            createSurvey = false;
+                            customTextControllers = [
+                              TextEditingController(),
+                              TextEditingController()
+                            ];
+                            customTextFields = [
+                              MyTextField(
+                                hintText: 'New Answer...',
+                                controller: customTextControllers[0],
+                              ),
+                              MyTextField(
+                                hintText: 'New Answer...',
+                                controller: customTextControllers[1],
+                              )
+                            ];
+                          });
+                        },
                         color: Color(0xfff7941d),
                         icon: Icon(Icons.check_circle),
                         iconSize: 45,

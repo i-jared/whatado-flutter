@@ -27,7 +27,7 @@ class _SurveyBubbleState extends State<SurveyBubble> {
     final chatState = Provider.of<ChatState>(context);
 
     final Widget bubble = Bubble(
-      margin: BubbleEdges.only(left: 50, right: 50),
+      margin: BubbleEdges.only(left: isOwner ? 50 : 5, right: 50),
       color: Colors.orange[50],
       radius: Radius.circular(20),
       child: Padding(
@@ -45,19 +45,38 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                 return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      InterestBubble(
-                        text: a.text,
-                        selected: _selected,
-                        onSelected: loading || _selected
-                            ? (_) => null
-                            : (_isSelected) async {
-                                setState(() => loading = true);
-                                final provider = ChatGqlProvider();
-                                final result = await provider.vote(
-                                    widget.chat.id, a.id, chatState.forum.id);
-                                setState(() => loading = false);
-                              },
+                      Flexible(
+                        child: InkWell(
+                          onTap: loading || _selected
+                              ? () => null
+                              : () async {
+                                  setState(() => loading = true);
+                                  final provider = ChatGqlProvider();
+                                  await provider.vote(
+                                      widget.chat.id, a.id, chatState.forum.id);
+                                  setState(() => loading = false);
+                                },
+                          child: Container(
+                            constraints: BoxConstraints(minWidth: 75),
+                            margin: EdgeInsets.symmetric(vertical: 4),
+                            padding: EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 12),
+                            child: Text(a.text,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: _selected
+                                      ? Colors.grey[50]
+                                      : Colors.grey[850],
+                                )),
+                            decoration: BoxDecoration(
+                                color: _selected
+                                    ? Colors.grey[850]
+                                    : Colors.grey[50],
+                                borderRadius: BorderRadius.circular(100)),
+                          ),
+                        ),
                       ),
+                      SizedBox(width: 5),
                       a.votes.length > 0
                           ? PictureWaterfall(loading: false, users: a.votes)
                           : Text('--')
