@@ -3,6 +3,17 @@ subscription chat($forumId: Int!) {
     id
     createdAt
     text
+    survey {
+      id
+      question
+      answers {
+        id
+        text
+        votes {
+          ...EventUser
+        }
+      }
+    }
     author {
       ...EventUser
     }

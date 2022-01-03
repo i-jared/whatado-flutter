@@ -120,4 +120,29 @@ class ChatGqlProvider {
       errors: errors,
     );
   }
+
+  Future<MyQueryResponse<bool>> vote(
+      int chatId, int answerId, int forumId) async {
+    final query = VoteMutation(
+        variables: VoteArguments(
+            chatId: chatId, answerId: answerId, forumId: forumId));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['vote'];
+    final data = root?['nodes'];
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
 }

@@ -280,6 +280,7 @@ type Mutation {
   updatePhotos(urls: [String!]!): BoolApiResponse!
   updateUser(options: UserFilterInput!): UserApiResponse!
   updateWannago(declined: Boolean!, id: Int!): BoolApiResponse!
+  vote(answerId: Int!, chatId: Int!, forumId: Int!): BoolApiResponse!
 }
 
 type Query {

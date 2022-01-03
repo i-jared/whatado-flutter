@@ -2462,6 +2462,47 @@ Map<String, dynamic> _$UpdateWannago$MutationToJson(
       'updateWannago': instance.updateWannago.toJson(),
     };
 
+Vote$Mutation$Vote$Errors _$Vote$Mutation$Vote$ErrorsFromJson(
+    Map<String, dynamic> json) {
+  return Vote$Mutation$Vote$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$Vote$Mutation$Vote$ErrorsToJson(
+        Vote$Mutation$Vote$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+Vote$Mutation$Vote _$Vote$Mutation$VoteFromJson(Map<String, dynamic> json) {
+  return Vote$Mutation$Vote()
+    ..ok = json['ok'] as bool?
+    ..nodes = json['nodes'] as bool?
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) =>
+            Vote$Mutation$Vote$Errors.fromJson(e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$Vote$Mutation$VoteToJson(Vote$Mutation$Vote instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+Vote$Mutation _$Vote$MutationFromJson(Map<String, dynamic> json) {
+  return Vote$Mutation()
+    ..vote = Vote$Mutation$Vote.fromJson(json['vote'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$Vote$MutationToJson(Vote$Mutation instance) =>
+    <String, dynamic>{
+      'vote': instance.vote.toJson(),
+    };
+
 AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
     Map<String, dynamic> json) {
   return AcceptFriendArguments(
@@ -2853,4 +2894,19 @@ Map<String, dynamic> _$UpdateWannagoArgumentsToJson(
     <String, dynamic>{
       'id': instance.id,
       'declined': instance.declined,
+    };
+
+VoteArguments _$VoteArgumentsFromJson(Map<String, dynamic> json) {
+  return VoteArguments(
+    chatId: json['chatId'] as int,
+    answerId: json['answerId'] as int,
+    forumId: json['forumId'] as int,
+  );
+}
+
+Map<String, dynamic> _$VoteArgumentsToJson(VoteArguments instance) =>
+    <String, dynamic>{
+      'chatId': instance.chatId,
+      'answerId': instance.answerId,
+      'forumId': instance.forumId,
     };

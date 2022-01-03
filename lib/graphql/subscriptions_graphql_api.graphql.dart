@@ -20,6 +20,66 @@ mixin EventUserMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class Chat$Subscription$ChatSubscription$Survey$Answers$Votes
+    extends JsonSerializable with EquatableMixin, EventUserMixin {
+  Chat$Subscription$ChatSubscription$Survey$Answers$Votes();
+
+  factory Chat$Subscription$ChatSubscription$Survey$Answers$Votes.fromJson(
+          Map<String, dynamic> json) =>
+      _$Chat$Subscription$ChatSubscription$Survey$Answers$VotesFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Chat$Subscription$ChatSubscription$Survey$Answers$VotesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chat$Subscription$ChatSubscription$Survey$Answers extends JsonSerializable
+    with EquatableMixin {
+  Chat$Subscription$ChatSubscription$Survey$Answers();
+
+  factory Chat$Subscription$ChatSubscription$Survey$Answers.fromJson(
+          Map<String, dynamic> json) =>
+      _$Chat$Subscription$ChatSubscription$Survey$AnswersFromJson(json);
+
+  late int id;
+
+  late String text;
+
+  late List<Chat$Subscription$ChatSubscription$Survey$Answers$Votes> votes;
+
+  @override
+  List<Object?> get props => [id, text, votes];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Chat$Subscription$ChatSubscription$Survey$AnswersToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Chat$Subscription$ChatSubscription$Survey extends JsonSerializable
+    with EquatableMixin {
+  Chat$Subscription$ChatSubscription$Survey();
+
+  factory Chat$Subscription$ChatSubscription$Survey.fromJson(
+          Map<String, dynamic> json) =>
+      _$Chat$Subscription$ChatSubscription$SurveyFromJson(json);
+
+  late int id;
+
+  late String question;
+
+  late List<Chat$Subscription$ChatSubscription$Survey$Answers> answers;
+
+  @override
+  List<Object?> get props => [id, question, answers];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$Chat$Subscription$ChatSubscription$SurveyToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class Chat$Subscription$ChatSubscription$Author extends JsonSerializable
     with EquatableMixin, EventUserMixin {
   Chat$Subscription$ChatSubscription$Author();
@@ -53,10 +113,12 @@ class Chat$Subscription$ChatSubscription extends JsonSerializable
 
   late String text;
 
+  Chat$Subscription$ChatSubscription$Survey? survey;
+
   late Chat$Subscription$ChatSubscription$Author author;
 
   @override
-  List<Object?> get props => [id, createdAt, text, author];
+  List<Object?> get props => [id, createdAt, text, survey, author];
   @override
   Map<String, dynamic> toJson() =>
       _$Chat$Subscription$ChatSubscriptionToJson(this);
@@ -149,6 +211,54 @@ final CHAT_SUBSCRIPTION_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'survey'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'question'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'answers'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: SelectionSetNode(selections: [
+                          FieldNode(
+                              name: NameNode(value: 'id'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'text'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: null),
+                          FieldNode(
+                              name: NameNode(value: 'votes'),
+                              alias: null,
+                              arguments: [],
+                              directives: [],
+                              selectionSet: SelectionSetNode(selections: [
+                                FragmentSpreadNode(
+                                    name: NameNode(value: 'EventUser'),
+                                    directives: [])
+                              ]))
+                        ]))
+                  ])),
               FieldNode(
                   name: NameNode(value: 'author'),
                   alias: null,

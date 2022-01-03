@@ -2762,6 +2762,57 @@ class UpdateWannago$Mutation extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$UpdateWannago$MutationToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class Vote$Mutation$Vote$Errors extends JsonSerializable with EquatableMixin {
+  Vote$Mutation$Vote$Errors();
+
+  factory Vote$Mutation$Vote$Errors.fromJson(Map<String, dynamic> json) =>
+      _$Vote$Mutation$Vote$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() => _$Vote$Mutation$Vote$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Vote$Mutation$Vote extends JsonSerializable with EquatableMixin {
+  Vote$Mutation$Vote();
+
+  factory Vote$Mutation$Vote.fromJson(Map<String, dynamic> json) =>
+      _$Vote$Mutation$VoteFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<Vote$Mutation$Vote$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$Vote$Mutation$VoteToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class Vote$Mutation extends JsonSerializable with EquatableMixin {
+  Vote$Mutation();
+
+  factory Vote$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$Vote$MutationFromJson(json);
+
+  late Vote$Mutation$Vote vote;
+
+  @override
+  List<Object?> get props => [vote];
+  @override
+  Map<String, dynamic> toJson() => _$Vote$MutationToJson(this);
+}
+
 enum Gender {
   @JsonValue('BOTH')
   both,
@@ -7166,4 +7217,118 @@ class UpdateWannagoMutation
   @override
   UpdateWannago$Mutation parse(Map<String, dynamic> json) =>
       UpdateWannago$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class VoteArguments extends JsonSerializable with EquatableMixin {
+  VoteArguments(
+      {required this.chatId, required this.answerId, required this.forumId});
+
+  @override
+  factory VoteArguments.fromJson(Map<String, dynamic> json) =>
+      _$VoteArgumentsFromJson(json);
+
+  late int chatId;
+
+  late int answerId;
+
+  late int forumId;
+
+  @override
+  List<Object?> get props => [chatId, answerId, forumId];
+  @override
+  Map<String, dynamic> toJson() => _$VoteArgumentsToJson(this);
+}
+
+final VOTE_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'vote'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'chatId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'answerId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'forumId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'vote'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'chatId'),
+                  value: VariableNode(name: NameNode(value: 'chatId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'answerId'),
+                  value: VariableNode(name: NameNode(value: 'answerId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'forumId'),
+                  value: VariableNode(name: NameNode(value: 'forumId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class VoteMutation extends GraphQLQuery<Vote$Mutation, VoteArguments> {
+  VoteMutation({required this.variables});
+
+  @override
+  final DocumentNode document = VOTE_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = 'vote';
+
+  @override
+  final VoteArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  Vote$Mutation parse(Map<String, dynamic> json) =>
+      Vote$Mutation.fromJson(json);
 }

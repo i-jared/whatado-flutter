@@ -64,11 +64,17 @@ class ChatState extends ChangeNotifier {
     final subscription =
         ChatSubscription(variables: ChatArguments(forumId: forumId));
     final stream = graphqlClientService.subscribe(subscription).map((event) {
+      print('hello $event hello');
       return Chat.fromGqlData(event.data?['chatSubscription']);
     });
     stream.handleError((e) => print('stream error $e'));
-    streamSubscription = stream.listen((event) {
-      chats?.insert(0, event);
+    streamSubscription = stream.listen((newChat) {
+      final existingId = chats?.indexWhere((c) => c.id == newChat.id) ?? -1;
+      if (existingId >= 0) {
+        chats?[existingId] = newChat;
+      } else {
+        chats?.insert(0, newChat);
+      }
       notifyListeners();
     });
     streamSubscription?.onError((e) => print('sub error $e'));

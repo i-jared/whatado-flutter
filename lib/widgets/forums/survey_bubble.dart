@@ -3,19 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/chat.dart';
+import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
+import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 
-class SurveyBubble extends StatelessWidget {
+class SurveyBubble extends StatefulWidget {
   final Chat chat;
   SurveyBubble({required this.chat});
+  @override
+  State<StatefulWidget> createState() => _SurveyBubbleState();
+}
 
+class _SurveyBubbleState extends State<SurveyBubble> {
+  late bool loading = false;
   @override
   Widget build(BuildContext context) {
-    final survey = chat.survey!;
+    final survey = widget.chat.survey!;
     final userState = Provider.of<UserState>(context);
-    final isOwner = chat.author.id == userState.user?.id;
+    final isOwner = widget.chat.author.id == userState.user?.id;
+    final chatState = Provider.of<ChatState>(context);
 
     final Widget bubble = Bubble(
       margin: BubbleEdges.only(left: 50, right: 50),
@@ -27,8 +36,33 @@ class SurveyBubble extends StatelessWidget {
           children: [
             Text(survey.question,
                 style: TextStyle(fontSize: 18, color: Colors.grey[850])),
-            Wrap(
-              children: survey.answers.map((a) => InterestBubble(text: a.text, selected: false)).toList(),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: survey.answers.map((a) {
+                final _selected =
+                    a.votes.map((e) => e.id).contains(userState.user?.id);
+
+                return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InterestBubble(
+                        text: a.text,
+                        selected: _selected,
+                        onSelected: loading || _selected
+                            ? (_) => null
+                            : (_isSelected) async {
+                                setState(() => loading = true);
+                                final provider = ChatGqlProvider();
+                                final result = await provider.vote(
+                                    widget.chat.id, a.id, chatState.forum.id);
+                                setState(() => loading = false);
+                              },
+                      ),
+                      a.votes.length > 0
+                          ? PictureWaterfall(loading: false, users: a.votes)
+                          : Text('--')
+                    ]);
+              }).toList(),
             )
           ],
         ),
@@ -46,13 +80,13 @@ class SurveyBubble extends StatelessWidget {
                   InkWell(
                       child: CircleAvatar(
                         backgroundImage:
-                            NetworkImage(chat.author.photoUrls.first),
+                            NetworkImage(widget.chat.author.photoUrls.first),
                       ),
                       onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          UserProfile(user: chat.author)))
+                                      builder: (context) => UserProfile(
+                                          user: widget.chat.author)))
                               .then((_) async {
                             await Future.delayed(Duration(milliseconds: 500));
                             SystemChrome.setSystemUIOverlayStyle(

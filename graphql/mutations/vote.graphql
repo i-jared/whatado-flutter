@@ -1,0 +1,10 @@
+mutation vote($chatId: Int!, $answerId: Int!, $forumId: Int!) {
+  vote(chatId: $chatId, answerId: $answerId, forumId: $forumId) {
+    ok
+    nodes
+    errors {
+      field
+      message
+    }
+  }
+}

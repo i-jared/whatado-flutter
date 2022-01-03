@@ -116,12 +116,14 @@ class Chats$Query$Chats$Nodes$Survey$Answers extends JsonSerializable
           Map<String, dynamic> json) =>
       _$Chats$Query$Chats$Nodes$Survey$AnswersFromJson(json);
 
+  late int id;
+
   late String text;
 
   late List<Chats$Query$Chats$Nodes$Survey$Answers$Votes> votes;
 
   @override
-  List<Object?> get props => [text, votes];
+  List<Object?> get props => [id, text, votes];
   @override
   Map<String, dynamic> toJson() =>
       _$Chats$Query$Chats$Nodes$Survey$AnswersToJson(this);
@@ -1931,6 +1933,12 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
                               arguments: [],
                               directives: [],
                               selectionSet: SelectionSetNode(selections: [
+                                FieldNode(
+                                    name: NameNode(value: 'id'),
+                                    alias: null,
+                                    arguments: [],
+                                    directives: [],
+                                    selectionSet: null),
                                 FieldNode(
                                     name: NameNode(value: 'text'),
                                     alias: null,

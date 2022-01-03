@@ -1,15 +1,17 @@
-import 'package:whatado/models/user.dart';
+import 'package:whatado/models/event_user.dart';
 
 class Answer {
-  List<User> votes;
+  int id;
+  List<EventUser> votes;
   String text;
 
-  Answer({required this.votes, required this.text});
+  Answer({required this.id, required this.votes, required this.text});
 
   factory Answer.fromGqlData(Map data) {
     return Answer(
+        id: data['id'],
         text: data['text'] ?? '',
-        votes: List<User>.from(
-            data['votes']?.map((v) => User.fromGqlData(v)) ?? []));
+        votes: List<EventUser>.from(
+            data['votes']?.map((v) => EventUser.fromGqlData(v)) ?? []));
   }
 }

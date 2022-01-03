@@ -12,6 +12,7 @@ query chats($forumId: Int!, $take: Int!, $skip: Int!) {
         id
         question
         answers {
+          id
           text
           votes {
             ...EventUser

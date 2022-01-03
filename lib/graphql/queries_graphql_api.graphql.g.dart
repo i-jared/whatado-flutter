@@ -52,6 +52,7 @@ Chats$Query$Chats$Nodes$Survey$Answers
     _$Chats$Query$Chats$Nodes$Survey$AnswersFromJson(
         Map<String, dynamic> json) {
   return Chats$Query$Chats$Nodes$Survey$Answers()
+    ..id = json['id'] as int
     ..text = json['text'] as String
     ..votes = (json['votes'] as List<dynamic>)
         .map((e) => Chats$Query$Chats$Nodes$Survey$Answers$Votes.fromJson(
@@ -62,6 +63,7 @@ Chats$Query$Chats$Nodes$Survey$Answers
 Map<String, dynamic> _$Chats$Query$Chats$Nodes$Survey$AnswersToJson(
         Chats$Query$Chats$Nodes$Survey$Answers instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'text': instance.text,
       'votes': instance.votes.map((e) => e.toJson()).toList(),
     };
