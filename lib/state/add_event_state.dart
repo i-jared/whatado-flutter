@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
 import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -221,7 +222,19 @@ class AddEventState extends ChangeNotifier {
     // crop image and encode it as png
     final decodedImage = decodeImage(List.from(selectedImageBytes ?? []));
     if (decodedImage == null) return Uint8List.fromList([]);
-    final rotatedImage = copyRotate(decodedImage, selectedImage!.orientation);
+    final exifData =
+        await readExifFromBytes(List<int>.from(selectedImageBytes!));
+    final iosAdjust = Platform.isIOS &&
+            exifData.containsKey("Image Orientation") &&
+            exifData["Image Orientation"].toString().contains("180")
+        ? -180
+        : 180;
+    final isPortrait = height > width;
+    final rotatedImage = copyRotate(
+        decodedImage,
+        Platform.isIOS && isPortrait
+            ? 90
+            : iosAdjust + selectedImage!.orientation);
     final face = copyCrop(
       rotatedImage,
       left,
@@ -229,8 +242,12 @@ class AddEventState extends ChangeNotifier {
       width - right - left,
       height - top - bottom,
     );
-    final rerotatedImage = copyRotate(face, -selectedImage!.orientation);
-    final resizedFace = copyResize(rerotatedImage, height: 700, width: 700);
+    final rerotatedImage = copyRotate(
+        face,
+        Platform.isIOS && isPortrait
+            ? -90
+            : iosAdjust + -selectedImage!.orientation);
+    final resizedFace = copyResize(rerotatedImage, height: 1080, width: 1080);
     return Uint8List.fromList(encodePng(resizedFace));
   }
 }

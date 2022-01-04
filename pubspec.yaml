@@ -55,6 +55,7 @@ dependencies:
   keyboard_dismisser: ^2.0.0
   heic_to_jpg: ^0.2.0
   cached_network_image: ^3.2.0
+  exif: ^3.0.0
 
 dev_dependencies:
   flutter_test:
