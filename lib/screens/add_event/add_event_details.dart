@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
@@ -56,18 +54,6 @@ class _AddEventDetailsState extends State<AddEventDetails> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            FutureBuilder(
-                future: eventState
-                    .cropResizeImage(MediaQuery.of(context).size.width),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return Text(snapshot.error.toString());
-                  } else if (snapshot.hasData) {
-                    return Image.memory(snapshot.data as Uint8List);
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                }),
             if (!eventState.textMode) SizedBox(height: sectionSpacing),
             if (!eventState.textMode) Text('TITLE', style: headingStyle),
             if (!eventState.textMode) SizedBox(height: headingSpacing),

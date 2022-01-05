@@ -8,7 +8,6 @@ import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
-import 'package:whatado/widgets/interests/interest_bubble.dart';
 
 class SurveyBubble extends StatefulWidget {
   final Chat chat;
