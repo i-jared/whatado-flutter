@@ -21,7 +21,6 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/appbars/home_app_bar.dart';
-import 'package:whatado/widgets/appbars/my_profile_app_bar.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
 
 import 'event_details.dart';
@@ -69,7 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 android: AndroidNotificationDetails(
                   localNotificationService.channel.id,
                   localNotificationService.channel.name,
-                  channelDescription: localNotificationService.channel.description ,
+                  channelDescription:
+                      localNotificationService.channel.description,
                   // other properties...
                 ),
               ));

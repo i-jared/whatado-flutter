@@ -19,7 +19,7 @@ class LoginGqlQuery {
         print(element.message);
       });
     }
-    print(result);
+
     final root = result.data?['login'];
     final data = root?['nodes'];
     final accessToken = root?['jwt']?['accessToken'];

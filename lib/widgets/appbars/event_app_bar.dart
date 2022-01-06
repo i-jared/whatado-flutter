@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
-import 'package:whatado/screens/home/chats.dart';
 import 'package:whatado/screens/home/edit_event_details.dart';
-import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 
 class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -17,7 +15,6 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
-    final homeState = Provider.of<HomeState>(context);
     return AppBar(
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.grey[50],

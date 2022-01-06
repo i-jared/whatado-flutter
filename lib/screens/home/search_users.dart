@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
-import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
 class SearchUsers extends StatefulWidget {
@@ -38,7 +37,6 @@ class _StateSearchUsers extends State<SearchUsers> {
     } else if (users == null) {
       return Center(child: Text('Something went wrong... Try again later!'));
     } else {
-      print('length: ${users!.length} itemCount: ${2 * (users!.length) - 1}');
       return ListView.builder(
         itemCount: 2 * (users!.length) - 1,
         itemBuilder: (BuildContext context, int i) {
@@ -46,7 +44,6 @@ class _StateSearchUsers extends State<SearchUsers> {
             return Divider();
           } else {
             int j = i ~/ 2;
-            print(j);
             return UserListItem(users![j]);
           }
         },

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
@@ -40,7 +38,9 @@ class AddEventDetailsAppBar extends StatelessWidget
             onPressed: !ready || eventState.postLoading
                 ? null
                 : () async {
+                    if (eventState.postLoading) return;
                     eventState.postLoading = true;
+                    print(eventState.postLoading);
                     if (userState.user == null) {
                       await userState.getUser();
                     }

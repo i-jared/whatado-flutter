@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -43,12 +41,7 @@ class _EventDetailsState extends State<EventDetails> {
     final headingSpacing = 10.0;
     final padding = 30.0;
     final sectionSpacing = 35.0;
-    final circleSpacing = 10.0;
     final dateFormat = DateFormat('dd MMMM, yyyy h:mm a');
-    final circleRadius = (MediaQuery.of(context).size.width -
-            padding * 2.0 -
-            circleSpacing * 2.0) /
-        6.0;
     final event = homeState.myEvents?.firstWhere((e) => e.id == widget.event.id,
             orElse: () => widget.event) ??
         widget.event;

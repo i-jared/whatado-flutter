@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/wannago.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
-import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/events/my_event_display.dart';

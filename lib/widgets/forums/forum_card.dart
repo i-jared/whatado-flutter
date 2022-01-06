@@ -215,7 +215,7 @@ class _ForumCardState extends State<ForumCard> {
                   }
                   if (value == 'leave') {
                     final provider = EventsGqlProvider();
-                    final result = await provider.removeInvite(
+                    await provider.removeInvite(
                         eventId: widget.event.id, userId: userState.user!.id);
                     await homeState.myEventsRefresh();
                   }

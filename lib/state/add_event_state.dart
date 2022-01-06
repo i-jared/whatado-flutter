@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:photo_manager/photo_manager.dart';
@@ -129,6 +131,11 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setLoading() {
+    _postLoading = true;
+    notifyListeners();
+  }
+
   Gender get selectedGender => _selectedGender;
 
   set selectedGender(Gender selectedGender) {
@@ -228,7 +235,7 @@ class AddEventState extends ChangeNotifier {
             exifData.containsKey("Image Orientation") &&
             exifData["Image Orientation"].toString().contains("180")
         ? -180
-        : 180;
+        : 0;
     final isPortrait = height > width;
     final rotatedImage = copyRotate(
         decodedImage,

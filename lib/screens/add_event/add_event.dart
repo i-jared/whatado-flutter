@@ -30,6 +30,7 @@ class _AddEventState extends State<AddEvent> {
       color: Colors.grey[50],
       child: SafeArea(
         top: Platform.isIOS ? false : true,
+        bottom: Platform.isIOS ? false : true,
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: AddEventAppBar(),

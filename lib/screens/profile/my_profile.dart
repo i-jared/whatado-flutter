@@ -2,7 +2,6 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/profile/edit_my_profile.dart';
 import 'package:whatado/state/user_state.dart';
@@ -44,7 +43,6 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     final user = userState.user!;
-    final width = MediaQuery.of(context).size.width;
     if (userState.user == null) {
       SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
         userState.getUser();
