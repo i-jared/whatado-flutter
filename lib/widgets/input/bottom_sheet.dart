@@ -158,8 +158,10 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
       phoneController.clear();
       setState(() => loading = false);
       if (response.ok) {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()));
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
+            (_) => false);
       } else {
         phoneError = response.errors?.firstWhere(
             (element) => element['field'] == 'phone',

@@ -130,8 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> saveDeviceToken(String? token) async {
     if (token == null || loginService.userId == null) return;
     final provider = UserGqlProvider();
-    await provider
-        .updateUser(UserFilterInput(id: loginService.userId, deviceId: token));
+    await provider.updateUser(UserFilterInput(deviceId: token));
   }
 
   Future<void> setupTokenSaving() async {
