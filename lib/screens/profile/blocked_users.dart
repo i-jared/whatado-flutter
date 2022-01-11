@@ -31,45 +31,48 @@ class _BlockedUsersState extends State<BlockedUsers> {
           appBar: DefaultAppBar(title: 'Blocked'),
           body: loading
               ? Center(child: CircularProgressIndicator())
-              : ListView(
-                  children: userState.user!.blockedUsers
-                      .map((blockedUser) => ListTile(
-                            onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            UserProfile(user: blockedUser)))
-                                .then((_) async {
-                              await Future.delayed(Duration(milliseconds: 500));
-                              SystemChrome.setSystemUIOverlayStyle(
-                                  SystemUiOverlayStyle.dark.copyWith(
-                                systemNavigationBarColor: Colors.grey[50],
-                                statusBarColor: Colors.transparent,
-                              ));
-                            }),
-                            leading: CircleAvatar(
-                              backgroundImage:
-                                  NetworkImage(blockedUser.photoUrls.first),
-                            ),
-                            title: Text(blockedUser.name),
-                            trailing: Container(
-                              width: 200,
-                              child: TextButton(
-                                  child: Text('unblock'),
-                                  onPressed: () async {
-                                    setState(() => loading = true);
-                                    final provider = UserGqlProvider();
-                                    final result = await provider
-                                        .unblockUser(blockedUser.id);
-                                    if (result.ok) {
-                                      await userState.getUser();
-                                    }
-                                    setState(() => loading = false);
-                                  }),
-                            ),
-                          ))
-                      .toList(),
-                ),
+              : userState.user!.blockedUsers.isEmpty
+                  ? Center(child: Text('No blocked users'))
+                  : ListView(
+                      children: userState.user!.blockedUsers
+                          .map((blockedUser) => ListTile(
+                                onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                UserProfile(user: blockedUser)))
+                                    .then((_) async {
+                                  await Future.delayed(
+                                      Duration(milliseconds: 500));
+                                  SystemChrome.setSystemUIOverlayStyle(
+                                      SystemUiOverlayStyle.dark.copyWith(
+                                    systemNavigationBarColor: Colors.grey[50],
+                                    statusBarColor: Colors.transparent,
+                                  ));
+                                }),
+                                leading: CircleAvatar(
+                                  backgroundImage:
+                                      NetworkImage(blockedUser.photoUrls.first),
+                                ),
+                                title: Text(blockedUser.name),
+                                trailing: Container(
+                                  width: 200,
+                                  child: TextButton(
+                                      child: Text('unblock'),
+                                      onPressed: () async {
+                                        setState(() => loading = true);
+                                        final provider = UserGqlProvider();
+                                        final result = await provider
+                                            .unblockUser(blockedUser.id);
+                                        if (result.ok) {
+                                          await userState.getUser();
+                                        }
+                                        setState(() => loading = false);
+                                      }),
+                                ),
+                              ))
+                          .toList(),
+                    ),
         ),
       ),
     );

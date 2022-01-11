@@ -23,6 +23,7 @@ fragment EventFields on Event {
   relatedInterests {
     id
   }
+  privacy
   filterLocation
   filterRadius
   filterGender

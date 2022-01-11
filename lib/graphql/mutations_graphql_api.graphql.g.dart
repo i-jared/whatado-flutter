@@ -135,6 +135,8 @@ AddWannago$Mutation$AddWannago$Nodes
         .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
             e as Map<String, dynamic>))
         .toList()
+    ..privacy = _$enumDecode(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown)
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -159,6 +161,7 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -191,6 +194,13 @@ K _$enumDecode<K, V>(
     },
   ).key;
 }
+
+const _$PrivacyEnumMap = {
+  Privacy.friends: 'FRIENDS',
+  Privacy.private: 'PRIVATE',
+  Privacy.public: 'PUBLIC',
+  Privacy.artemisUnknown: 'ARTEMIS_UNKNOWN',
+};
 
 const _$GenderEnumMap = {
   Gender.both: 'BOTH',
@@ -361,6 +371,8 @@ UpdateEvent$Mutation$UpdateEvent$Nodes
         .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
             e as Map<String, dynamic>))
         .toList()
+    ..privacy = _$enumDecode(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown)
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -385,6 +397,7 @@ Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -458,6 +471,8 @@ EventFilterInput _$EventFilterInputFromJson(Map<String, dynamic> json) {
         (json['invitedIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
     location: json['location'] as String?,
     pictureUrl: json['pictureUrl'] as String?,
+    privacy: _$enumDecodeNullable(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown),
     relatedInterestsIds: (json['relatedInterestsIds'] as List<dynamic>?)
         ?.map((e) => e as int)
         .toList(),
@@ -485,6 +500,7 @@ Map<String, dynamic> _$EventFilterInputToJson(EventFilterInput instance) =>
       'invitedIds': instance.invitedIds,
       'location': instance.location,
       'pictureUrl': instance.pictureUrl,
+      'privacy': _$PrivacyEnumMap[instance.privacy],
       'relatedInterestsIds': instance.relatedInterestsIds,
       'time': fromDartDateTimeNullableToGraphQLDateTimeNullable(instance.time),
       'title': instance.title,
@@ -516,6 +532,10 @@ UpdateUser$Mutation$UpdateUser$Nodes
     ..blockedUsers = (json['blockedUsers'] as List<dynamic>)
         .map((e) =>
             UserFieldsMixin$BlockedUsers.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..inverseFriends = (json['inverseFriends'] as List<dynamic>)
+        .map((e) =>
+            UserFieldsMixin$InverseFriends.fromJson(e as Map<String, dynamic>))
         .toList()
     ..friends = (json['friends'] as List<dynamic>)
         .map((e) => UserFieldsMixin$Friends.fromJson(e as Map<String, dynamic>))
@@ -553,6 +573,7 @@ Map<String, dynamic> _$UpdateUser$Mutation$UpdateUser$NodesToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
       'bio': instance.bio,
       'blockedUsers': instance.blockedUsers.map((e) => e.toJson()).toList(),
+      'inverseFriends': instance.inverseFriends.map((e) => e.toJson()).toList(),
       'friends': instance.friends.map((e) => e.toJson()).toList(),
       'requestedFriends':
           instance.requestedFriends.map((e) => e.toJson()).toList(),
@@ -623,6 +644,26 @@ UserFieldsMixin$BlockedUsers _$UserFieldsMixin$BlockedUsersFromJson(
 
 Map<String, dynamic> _$UserFieldsMixin$BlockedUsersToJson(
         UserFieldsMixin$BlockedUsers instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+UserFieldsMixin$InverseFriends _$UserFieldsMixin$InverseFriendsFromJson(
+    Map<String, dynamic> json) {
+  return UserFieldsMixin$InverseFriends()
+    ..id = json['id'] as int
+    ..name = json['name'] as String
+    ..photoUrls = json['photoUrls'] as String
+    ..bio = json['bio'] as String
+    ..birthday = fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+}
+
+Map<String, dynamic> _$UserFieldsMixin$InverseFriendsToJson(
+        UserFieldsMixin$InverseFriends instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -1802,6 +1843,8 @@ RemoveInvite$Mutation$RemoveInvite$Nodes
         .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
             e as Map<String, dynamic>))
         .toList()
+    ..privacy = _$enumDecode(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown)
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -1826,6 +1869,7 @@ Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -2184,6 +2228,8 @@ AddInvite$Mutation$AddInvite$Nodes _$AddInvite$Mutation$AddInvite$NodesFromJson(
         .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
             e as Map<String, dynamic>))
         .toList()
+    ..privacy = _$enumDecode(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown)
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2208,6 +2254,7 @@ Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -2332,6 +2379,8 @@ CreateEvent$Mutation$CreateEvent$Nodes
         .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
             e as Map<String, dynamic>))
         .toList()
+    ..privacy = _$enumDecode(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown)
     ..filterLocation = json['filterLocation'] as String
     ..filterRadius = (json['filterRadius'] as num).toDouble()
     ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2356,6 +2405,7 @@ Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -2427,6 +2477,8 @@ EventInput _$EventInputFromJson(Map<String, dynamic> json) {
         (json['invitedIds'] as List<dynamic>).map((e) => e as int).toList(),
     location: json['location'] as String,
     pictureUrl: json['pictureUrl'] as String?,
+    privacy: _$enumDecode(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown),
     relatedInterestsIds: (json['relatedInterestsIds'] as List<dynamic>)
         .map((e) => e as int)
         .toList(),
@@ -2450,6 +2502,7 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
       'invitedIds': instance.invitedIds,
       'location': instance.location,
       'pictureUrl': instance.pictureUrl,
+      'privacy': _$PrivacyEnumMap[instance.privacy],
       'relatedInterestsIds': instance.relatedInterestsIds,
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'title': instance.title,

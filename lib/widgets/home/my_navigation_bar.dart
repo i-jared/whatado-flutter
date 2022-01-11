@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/add_event/add_event.dart';
 import 'package:whatado/state/add_event_state.dart';
+import 'package:whatado/state/user_state.dart';
 
 class MyNavigationBar extends StatelessWidget {
   final Function indexSetState;
@@ -12,6 +13,8 @@ class MyNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
+    final userState = Provider.of<UserState>(context);
+    final friendRequests = userState.user!.friendRequests.isNotEmpty;
     return SafeArea(
       child: Container(
         padding: EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 5),
@@ -71,16 +74,31 @@ class MyNavigationBar extends StatelessWidget {
                     selectedIndex == 2 ? Color(0xfff7941d) : Colors.grey[850],
               ),
             ),
-            IconButton(
-              padding: EdgeInsets.zero,
-              onPressed: () => indexSetState(3),
-              icon: Icon(
-                Icons.person_outline,
-                size: 35,
-                color:
-                    selectedIndex == 3 ? Color(0xfff7941d) : Colors.grey[850],
+            Stack(children: [
+              IconButton(
+                padding: EdgeInsets.zero,
+                onPressed: () => indexSetState(3),
+                icon: Icon(
+                  Icons.person_outline,
+                  size: 35,
+                  color:
+                      selectedIndex == 3 ? Color(0xfff7941d) : Colors.grey[850],
+                ),
               ),
-            ),
+              if (friendRequests)
+                Positioned(
+                  top: 5,
+                  right: 10,
+                  child: Container(
+                    height: 10,
+                    width: 10,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Color(0xfff7941d),
+                    ),
+                  ),
+                )
+            ]),
           ],
         ),
       ),

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
@@ -10,9 +12,11 @@ import 'package:whatado/screens/add_event/post_succeeded.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/add_event_details_app_bar.dart';
+import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
+import 'package:whatado/widgets/users/user_list_item.dart';
 
 class TargetAudience extends StatefulWidget {
   @override
@@ -44,6 +48,12 @@ class _TargetAudienceState extends State<TargetAudience> {
     {'gender': Gender.male, 'text': 'MALE'},
   ];
 
+  final privacies = [
+    {'privacy': Privacy.public, 'text': 'PUBLIC'},
+    {'privacy': Privacy.friends, 'text': 'FRIENDS'},
+    {'privacy': Privacy.private, 'text': 'PRIVATE'},
+  ];
+
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
@@ -66,6 +76,104 @@ class _TargetAudienceState extends State<TargetAudience> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: sectionSpacing),
+                  Text('PRIVACY', style: headingStyle),
+                  SizedBox(height: headingSpacing),
+                  Wrap(
+                    runSpacing: 0.0,
+                    spacing: 10.0,
+                    children: privacies
+                        .map((privacy) => InterestBubble(
+                            text: privacy['text'] as String,
+                            selected: eventState.privacy == privacy['privacy'],
+                            onSelected: (notSelected) {
+                              eventState.privacy =
+                                  privacy['privacy'] as Privacy;
+                            }))
+                        .toList(),
+                  ),
+                  if (eventState.privacy == Privacy.private)
+                    SizedBox(height: sectionSpacing),
+                  if (eventState.privacy == Privacy.private)
+                    Row(
+                      children: [
+                        Text('PRIVATE INVITATIONS', style: headingStyle),
+                        SizedBox(width: 10),
+                        Tooltip(
+                          preferBelow: false,
+                          triggerMode: TooltipTriggerMode.tap,
+                          margin: EdgeInsets.symmetric(horizontal: 50),
+                          padding: EdgeInsets.all(8),
+                          message:
+                              "Send a direct message inviting these people to join your event.",
+                          child: Icon(Icons.help_outline, size: 20),
+                        ),
+                      ],
+                    ),
+                  if (eventState.privacy == Privacy.private)
+                    Container(
+                        padding: EdgeInsets.only(top: 10),
+                        height: min(200,
+                            (userState.user?.friends.length ?? 1) * 50 + 50),
+                        child: ListView.builder(
+                          itemCount: userState.user?.friends.length ?? 0,
+                          itemBuilder: (context, i) {
+                            return InkWell(
+                              onTap: () {
+                                if (eventState.selectedUsers
+                                    .contains(userState.user!.friends[i])) {
+                                  var tempList = eventState.selectedUsers;
+                                  tempList.remove(userState.user!.friends[i]);
+                                  eventState.selectedUsers = tempList;
+                                } else {
+                                  var tempList = eventState.selectedUsers;
+                                  tempList.add(userState.user!.friends[i]);
+                                  eventState.selectedUsers = tempList;
+                                }
+                              },
+                              child: Stack(
+                                children: [
+                                  IgnorePointer(
+                                      child: UserListItem(
+                                          userState.user!.friends[i])),
+                                  if (eventState.selectedUsers
+                                      .contains(userState.user!.friends[i]))
+                                    Positioned(
+                                      left: 0,
+                                      top: 0,
+                                      child: Opacity(
+                                        opacity: 0.5,
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.blue,
+                                            borderRadius:
+                                                BorderRadius.circular(100),
+                                          ),
+                                          height: 50,
+                                          width: 50,
+                                        ),
+                                      ),
+                                    ),
+                                  if (eventState.selectedUsers
+                                      .contains(userState.user!.friends[i]))
+                                    Positioned(
+                                      left: 0,
+                                      top: 0,
+                                      child: Container(
+                                        height: 50,
+                                        width: 50,
+                                        child: Icon(Icons.check_outlined,
+                                            color: Colors.white),
+                                      ),
+                                    )
+                                ],
+                              ),
+                            );
+                          },
+                        )),
+                  if (eventState.privacy == Privacy.private)
+                    PictureWaterfall(
+                        loading: false, users: eventState.selectedUsers),
                   SizedBox(height: sectionSpacing),
                   Text('GENDER', style: headingStyle),
                   SizedBox(height: headingSpacing),
@@ -109,7 +217,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                         margin: EdgeInsets.symmetric(horizontal: 50),
                         padding: EdgeInsets.all(8),
                         message:
-                            "Only show your event to people who have one of these interests",
+                            "Only show your event to people who have one of these interests. Will appear for everyone if no interests are selected.",
                         child: Icon(Icons.help_outline, size: 20),
                       ),
                     ],

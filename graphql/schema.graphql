@@ -102,6 +102,7 @@ type Event {
   invited: [User!]!
   location: String!
   pictureUrl: String
+  privacy: Privacy!
   relatedInterests: [Interest!]!
   time: DateTime!
   title: String!
@@ -130,6 +131,7 @@ input EventFilterInput {
   invitedIds: [Int!]
   location: String
   pictureUrl: String
+  privacy: Privacy
   relatedInterestsIds: [Int!]
   time: DateTime
   title: String
@@ -149,6 +151,7 @@ input EventInput {
   invitedIds: [Int!]!
   location: String!
   pictureUrl: String
+  privacy: Privacy!
   relatedInterestsIds: [Int!]!
   time: DateTime!
   title: String!
@@ -281,6 +284,12 @@ type Mutation {
   updateUser(options: UserFilterInput!): UserApiResponse!
   updateWannago(declined: Boolean!, id: Int!): BoolApiResponse!
   vote(answerId: Int!, chatId: Int!, forumId: Int!): BoolApiResponse!
+}
+
+enum Privacy {
+  FRIENDS
+  PRIVATE
+  PUBLIC
 }
 
 type Query {

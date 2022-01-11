@@ -9,6 +9,9 @@ fragment UserFields on User {
   blockedUsers {
     ...EventUser
   }
+  inverseFriends {
+    ...EventUser
+  }
   friends {
     ...EventUser
   }

@@ -40,7 +40,9 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
 
   Future<void> loadMorePhotos() async {
     final albums = await PhotoManager.getAssetPathList(
-        onlyAll: true, type: RequestType.image);
+      onlyAll: true,
+      type: RequestType.image,
+    );
     final album = albums.first;
     final nextAssets = await album.getAssetListPaged(page, 40);
     if (nextAssets.isEmpty) {

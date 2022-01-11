@@ -40,6 +40,8 @@ mixin EventFieldsMixin {
   late String location;
   String? pictureUrl;
   late List<EventFieldsMixin$RelatedInterests> relatedInterests;
+  @JsonKey(unknownEnumValue: Privacy.artemisUnknown)
+  late Privacy privacy;
   late String filterLocation;
   late double filterRadius;
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
@@ -59,6 +61,7 @@ mixin UserFieldsMixin {
   late DateTime birthday;
   late String bio;
   late List<UserFieldsMixin$BlockedUsers> blockedUsers;
+  late List<UserFieldsMixin$InverseFriends> inverseFriends;
   late List<UserFieldsMixin$Friends> friends;
   late List<UserFieldsMixin$RequestedFriends> requestedFriends;
   late List<UserFieldsMixin$FriendRequests> friendRequests;
@@ -263,6 +266,7 @@ class Events$Query$Events$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -521,6 +525,7 @@ class Event$Query$Event$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -615,6 +620,7 @@ class Me$Query$Me$Nodes extends JsonSerializable
         birthday,
         bio,
         blockedUsers,
+        inverseFriends,
         friends,
         requestedFriends,
         friendRequests,
@@ -689,6 +695,20 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$BlockedUsersToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$InverseFriends extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$InverseFriends();
+
+  factory UserFieldsMixin$InverseFriends.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$InverseFriendsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$InverseFriendsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1019,6 +1039,7 @@ class FlaggedEvents$Query$FlaggedEvents$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -1109,6 +1130,7 @@ class MyEvents$Query$MyEvents$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -1722,6 +1744,7 @@ class FlaggedUsers$Query$FlaggedUsers$Nodes extends JsonSerializable
         birthday,
         bio,
         blockedUsers,
+        inverseFriends,
         friends,
         requestedFriends,
         friendRequests,
@@ -1790,6 +1813,16 @@ class FlaggedUsers$Query extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$FlaggedUsers$QueryToJson(this);
 }
 
+enum Privacy {
+  @JsonValue('FRIENDS')
+  friends,
+  @JsonValue('PRIVATE')
+  private,
+  @JsonValue('PUBLIC')
+  public,
+  @JsonValue('ARTEMIS_UNKNOWN')
+  artemisUnknown,
+}
 enum Gender {
   @JsonValue('BOTH')
   both,
@@ -2297,6 +2330,12 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: null)
             ])),
         FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
             arguments: [],
@@ -2710,6 +2749,12 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: null)
             ])),
         FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
             arguments: [],
@@ -2928,6 +2973,15 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'blockedUsers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'inverseFriends'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3548,6 +3602,12 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: null)
             ])),
         FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
             arguments: [],
@@ -3796,6 +3856,12 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: null)
             ])),
+        FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
         FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
@@ -4864,6 +4930,15 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'blockedUsers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'inverseFriends'),
             alias: null,
             arguments: [],
             directives: [],

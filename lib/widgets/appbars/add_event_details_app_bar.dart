@@ -21,7 +21,9 @@ class AddEventDetailsAppBar extends StatelessWidget
     final ready = eventState.timeController.text.isNotEmpty &&
         eventState.dateController.text.isNotEmpty &&
         eventState.locationController.text.isNotEmpty &&
-        (eventState.textMode || eventState.titleController.text.isNotEmpty);
+        (eventState.textMode || eventState.titleController.text.isNotEmpty) &&
+        (eventState.privacy != Privacy.private ||
+            eventState.selectedUsers.isNotEmpty);
 
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
@@ -98,6 +100,7 @@ class AddEventDetailsAppBar extends StatelessWidget
                         filterGender: eventState.selectedGender,
                         filterLocation: '', // not yet used
                         filterRadius: 5, // not yet used
+                        privacy: eventState.privacy,
                         location: eventState.locationController.text,
                         relatedInterestsIds: List<int>.from(interests.data ??
                             eventState.selectedInterests
@@ -109,7 +112,8 @@ class AddEventDetailsAppBar extends StatelessWidget
                             ? eventState.textModeController.text
                             : eventState.titleController.text,
                         wannagoIds: [],
-                        invitedIds: [],
+                        invitedIds:
+                            eventState.selectedUsers.map((u) => u.id).toList(),
                         // TODO: add group size / tags
                       ));
                     } catch (e) {

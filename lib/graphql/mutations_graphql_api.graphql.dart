@@ -30,6 +30,8 @@ mixin EventFieldsMixin {
   late String location;
   String? pictureUrl;
   late List<EventFieldsMixin$RelatedInterests> relatedInterests;
+  @JsonKey(unknownEnumValue: Privacy.artemisUnknown)
+  late Privacy privacy;
   late String filterLocation;
   late double filterRadius;
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
@@ -59,6 +61,7 @@ mixin UserFieldsMixin {
   late DateTime birthday;
   late String bio;
   late List<UserFieldsMixin$BlockedUsers> blockedUsers;
+  late List<UserFieldsMixin$InverseFriends> inverseFriends;
   late List<UserFieldsMixin$Friends> friends;
   late List<UserFieldsMixin$RequestedFriends> requestedFriends;
   late List<UserFieldsMixin$FriendRequests> friendRequests;
@@ -229,6 +232,7 @@ class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -397,6 +401,7 @@ class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -481,6 +486,7 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
       this.invitedIds,
       this.location,
       this.pictureUrl,
+      this.privacy,
       this.relatedInterestsIds,
       this.time,
       this.title,
@@ -517,6 +523,9 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
 
   String? pictureUrl;
 
+  @JsonKey(unknownEnumValue: Privacy.artemisUnknown)
+  Privacy? privacy;
+
   List<int>? relatedInterestsIds;
 
   @JsonKey(
@@ -545,6 +554,7 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
         invitedIds,
         location,
         pictureUrl,
+        privacy,
         relatedInterestsIds,
         time,
         title,
@@ -574,6 +584,7 @@ class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
         birthday,
         bio,
         blockedUsers,
+        inverseFriends,
         friends,
         requestedFriends,
         friendRequests,
@@ -653,6 +664,20 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$BlockedUsersToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$InverseFriends extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  UserFieldsMixin$InverseFriends();
+
+  factory UserFieldsMixin$InverseFriends.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$InverseFriendsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$InverseFriendsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -2045,6 +2070,7 @@ class RemoveInvite$Mutation$RemoveInvite$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -2467,6 +2493,7 @@ class AddInvite$Mutation$AddInvite$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -2610,6 +2637,7 @@ class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
         location,
         pictureUrl,
         relatedInterests,
+        privacy,
         filterLocation,
         filterRadius,
         filterGender,
@@ -2692,6 +2720,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
       required this.invitedIds,
       required this.location,
       this.pictureUrl,
+      required this.privacy,
       required this.relatedInterestsIds,
       required this.time,
       required this.title,
@@ -2723,6 +2752,9 @@ class EventInput extends JsonSerializable with EquatableMixin {
 
   String? pictureUrl;
 
+  @JsonKey(unknownEnumValue: Privacy.artemisUnknown)
+  late Privacy privacy;
+
   late List<int> relatedInterestsIds;
 
   @JsonKey(
@@ -2747,6 +2779,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
         invitedIds,
         location,
         pictureUrl,
+        privacy,
         relatedInterestsIds,
         time,
         title,
@@ -2813,6 +2846,16 @@ class DeleteWannago$Mutation extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$DeleteWannago$MutationToJson(this);
 }
 
+enum Privacy {
+  @JsonValue('FRIENDS')
+  friends,
+  @JsonValue('PRIVATE')
+  private,
+  @JsonValue('PUBLIC')
+  public,
+  @JsonValue('ARTEMIS_UNKNOWN')
+  artemisUnknown,
+}
 enum Gender {
   @JsonValue('BOTH')
   both,
@@ -3244,6 +3287,12 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: null)
             ])),
         FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
             arguments: [],
@@ -3523,6 +3572,12 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: null)
             ])),
         FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
             arguments: [],
@@ -3738,6 +3793,15 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'blockedUsers'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'inverseFriends'),
             alias: null,
             arguments: [],
             directives: [],
@@ -5903,6 +5967,12 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: null)
             ])),
         FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
             arguments: [],
@@ -6777,6 +6847,12 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   selectionSet: null)
             ])),
         FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,
             arguments: [],
@@ -7149,6 +7225,12 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: null)
             ])),
+        FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
         FieldNode(
             name: NameNode(value: 'filterLocation'),
             alias: null,

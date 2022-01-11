@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/user_list_page.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 
 class UserHeading extends StatefulWidget {
@@ -36,6 +38,8 @@ class _UserHeadingState extends State<UserHeading> {
 
   @override
   Widget build(BuildContext context) {
+    final userState = Provider.of<UserState>(context);
+    final friendRequests = userState.user!.friendRequests;
     final headingStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
     final headingSpacing = 10.0;
     final sectionSpacing = 17.0;
@@ -69,7 +73,28 @@ class _UserHeadingState extends State<UserHeading> {
       SizedBox(height: headingSpacing),
       Text(widget.user.bio, style: TextStyle(fontSize: 18)),
       SizedBox(height: sectionSpacing),
-      Text("Friends", style: headingStyle),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text("Friends", style: headingStyle),
+          if (userState.user?.id == widget.user.id)
+            TextButton(
+                onPressed: friendRequests.length == 0
+                    ? null
+                    : () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => UserListPage(
+                                  title: 'Friend Requests',
+                                  users: friendRequests,
+                                ))),
+                child: Text("${friendRequests.length} friend requests",
+                    style: TextStyle(
+                        color: friendRequests.length == 0
+                            ? Colors.grey[400]
+                            : Color(0xfff7941d))))
+        ],
+      ),
       SizedBox(height: headingSpacing),
       InkWell(
         onTap: friends.isEmpty

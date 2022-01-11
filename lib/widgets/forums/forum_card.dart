@@ -45,6 +45,7 @@ class _ForumCardState extends State<ForumCard> {
         ? false
         : widget.forum.userNotification.lastAccessed
             .isBefore(widget.forum.chats.first.createdAt);
+    final muted = widget.forum.userNotification.muted;
     return InkWell(
       onTap: () async {
         final provider = ForumsGqlProvider();
@@ -119,12 +120,21 @@ class _ForumCardState extends State<ForumCard> {
                                                 : FontWeight.normal)),
                                   ),
                                   SizedBox(height: 4),
-                                  Container(
-                                      height: 26,
-                                      width: 100,
-                                      child: PictureWaterfall(
-                                          loading: loading,
-                                          users: firstInvited ?? [])),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                          height: 26,
+                                          width: 100,
+                                          child: PictureWaterfall(
+                                              loading: loading,
+                                              users: firstInvited ?? [])),
+                                      if (muted)
+                                        Icon(Icons.volume_off_outlined,
+                                            color: Color(0xfff7941d))
+                                    ],
+                                  ),
                                   SizedBox(height: 4),
                                   Row(
                                     mainAxisAlignment:
@@ -203,15 +213,23 @@ class _ForumCardState extends State<ForumCard> {
                 onSelected: (value) async {
                   if (value == 'unmute') {
                     final provider = ForumsGqlProvider();
-                    await provider.unmute(widget.forum.userNotification.id);
-                    Forum copy = widget.forum..userNotification.muted = false;
-                    homeState.updateForum(copy);
+                    final result =
+                        await provider.unmute(widget.forum.userNotification.id);
+                    if (result.ok) {
+                      Forum copy = widget.forum..userNotification.muted = false;
+                      widget.forum.userNotification.muted = false;
+                      homeState.updateForum(copy);
+                    }
                   }
                   if (value == 'mute') {
                     final provider = ForumsGqlProvider();
-                    await provider.mute(widget.forum.userNotification.id);
-                    Forum copy = widget.forum..userNotification.muted = false;
-                    homeState.updateForum(copy);
+                    final result =
+                        await provider.mute(widget.forum.userNotification.id);
+                    if (result.ok) {
+                      Forum copy = widget.forum..userNotification.muted = false;
+                      widget.forum.userNotification.muted = true;
+                      homeState.updateForum(copy);
+                    }
                   }
                   if (value == 'leave') {
                     final provider = EventsGqlProvider();

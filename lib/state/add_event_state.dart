@@ -4,13 +4,13 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:image/image.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
+import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 
@@ -24,6 +24,8 @@ class AddEventState extends ChangeNotifier {
   TextEditingController textModeController;
   TextEditingController addInterestController;
   Gender _selectedGender;
+  List<EventUser> _selectedUsers;
+  Privacy _privacy;
   AssetEntity? selectedImage;
   File? selectedImageFile;
   Uint8List? selectedImageBytes;
@@ -71,10 +73,12 @@ class AddEventState extends ChangeNotifier {
         timeController = TextEditingController(),
         textModeController = TextEditingController(),
         addInterestController = TextEditingController(),
+        _selectedUsers = [],
         _filterAgeEnd = 40,
         _filterAgeStart = 18,
         _textMode = false,
         _selectedGender = Gender.both,
+        _privacy = Privacy.public,
         _postLoading = false,
         _succeeded = false,
         _failed = false,
@@ -107,6 +111,20 @@ class AddEventState extends ChangeNotifier {
     final provider = InterestGqlProvider();
     final result = await provider.popular();
     popularInterests.addAll(result.data ?? []);
+    notifyListeners();
+  }
+
+  List<EventUser> get selectedUsers => _selectedUsers;
+
+  set selectedUsers(List<EventUser> selectedUsers) {
+    _selectedUsers = selectedUsers;
+    notifyListeners();
+  }
+
+  Privacy get privacy => _privacy;
+
+  set privacy(Privacy privacy) {
+    _privacy = privacy;
     notifyListeners();
   }
 
@@ -167,7 +185,7 @@ class AddEventState extends ChangeNotifier {
   Future<void> setImage(AssetEntity? _selectedImage) async {
     clearPhoto();
     selectedImage = _selectedImage;
-    selectedImageFile = await _selectedImage?.loadFile();
+    selectedImageFile = await _selectedImage?.file;
     selectedImageBytes = await selectedImageFile?.readAsBytes();
     notifyListeners();
   }
@@ -199,10 +217,12 @@ class AddEventState extends ChangeNotifier {
     textModeController.clear();
     addInterestController.clear();
     selectedInterests = [];
+    selectedUsers = [];
     customInterests = [];
     filterAgeEnd = 40;
     filterAgeStart = 18;
     selectedGender = Gender.both;
+    privacy = Privacy.public;
   }
 
   Future<Uint8List> cropResizeImage(double deviceWidth) async {
@@ -231,17 +251,18 @@ class AddEventState extends ChangeNotifier {
     if (decodedImage == null) return Uint8List.fromList([]);
     final exifData =
         await readExifFromBytes(List<int>.from(selectedImageBytes!));
-    final iosAdjust = Platform.isIOS &&
-            exifData.containsKey("Image Orientation") &&
-            exifData["Image Orientation"].toString().contains("180")
+    final iosLandscape = Platform.isIOS &&
+            (exifData.containsKey("Image Orientation") &&
+                exifData["Image Orientation"].toString().contains("180"))
         ? -180
         : 0;
-    final isPortrait = height > width;
+    final iosPortrait = Platform.isIOS &&
+            (exifData.containsKey("Image Orientation") &&
+                exifData["Image Orientation"].toString().contains("90"))
+        ? 90
+        : 0;
     final rotatedImage = copyRotate(
-        decodedImage,
-        Platform.isIOS && isPortrait
-            ? 90
-            : iosAdjust + selectedImage!.orientation);
+        decodedImage, iosPortrait + iosLandscape + selectedImage!.orientation);
     final face = copyCrop(
       rotatedImage,
       left,
@@ -250,10 +271,7 @@ class AddEventState extends ChangeNotifier {
       height - top - bottom,
     );
     final rerotatedImage = copyRotate(
-        face,
-        Platform.isIOS && isPortrait
-            ? -90
-            : iosAdjust + -selectedImage!.orientation);
+        face, -iosPortrait + iosLandscape + -selectedImage!.orientation);
     final resizedFace = copyResize(rerotatedImage, height: 1080, width: 1080);
     return Uint8List.fromList(encodePng(resizedFace));
   }
