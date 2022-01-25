@@ -59,6 +59,8 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                   controller: chatState.textController,
                   textCapitalization: TextCapitalization.sentences,
                   maxLines: null,
+                  toolbarOptions:
+                      ToolbarOptions(copy: true, paste: true, selectAll: true),
                   onTap: () {
                     setState(() => createSurvey = false);
                   },

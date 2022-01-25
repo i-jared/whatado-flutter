@@ -20,7 +20,7 @@ class ChatBubble extends StatelessWidget {
       radius: Radius.circular(20),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(chat.text,
+        child: SelectableText(chat.text,
             style: TextStyle(
                 fontSize: 18,
                 color: isOwner ? Colors.white : Colors.grey[850])),
@@ -51,7 +51,9 @@ class ChatBubble extends StatelessWidget {
                               .then((_) async {
                             await Future.delayed(Duration(milliseconds: 500));
                             SystemChrome.setSystemUIOverlayStyle(
-                                SystemUiOverlayStyle.dark.copyWith(
+                                SystemUiOverlayStyle(
+                              statusBarBrightness: Brightness.dark,
+                              statusBarIconBrightness: Brightness.dark,
                               systemNavigationBarColor: Colors.grey[50],
                               statusBarColor: Colors.transparent,
                             ));

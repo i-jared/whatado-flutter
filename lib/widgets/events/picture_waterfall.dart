@@ -46,7 +46,7 @@ class PictureWaterfall extends StatelessWidget {
         SizedBox(width: 10),
         if (!loading && length < users.length)
           Expanded(
-            child: Text('${users.length - 4} More',
+            child: Text('+${users.length - 4}',
                 style: TextStyle(fontSize: radius - 2)),
           ),
       ],

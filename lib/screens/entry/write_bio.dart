@@ -7,6 +7,7 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/time_tools.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
@@ -110,11 +111,8 @@ class WriteBioScreen extends StatelessWidget {
                                   setupState.dateController.text.isEmpty,
                               onPressed: () async {
                                 // frankenstein the time from user input
-                                final prefixSplit =
-                                    setupState.dateController.text.split(" ");
-                                final dateSplit = prefixSplit[1].split("-");
-                                final finalTime = DateTime.parse(
-                                    '${dateSplit[2]}-${dateSplit[0].padLeft(2, '0')}-${dateSplit[1].padLeft(2, '0')}');
+                                final finalTime = formatMyDate(
+                                    setupState.dateController.text);
                                 // send the update
                                 final provider = UserGqlProvider();
                                 await provider.updateUser(UserFilterInput(

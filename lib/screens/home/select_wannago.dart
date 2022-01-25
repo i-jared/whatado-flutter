@@ -70,7 +70,7 @@ class _SelectWannagoState extends State<SelectWannago> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            UserListItem(w.user),
+            Flexible(child: UserListItem(w.user)),
             Container(
               child: Row(
                 children: [

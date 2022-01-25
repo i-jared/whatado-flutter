@@ -52,10 +52,13 @@ class _ForumCardState extends State<ForumCard> {
         final result = await provider.access(widget.forum.userNotification.id);
         if (result.ok) homeState.accessForum(widget.forum);
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    Chats(event: widget.event, forum: widget.forum)));
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Chats(event: widget.event, forum: widget.forum)))
+            .then((_) async {
+          await homeState.myEventsRefresh();
+        });
       },
       child: Stack(
         children: [

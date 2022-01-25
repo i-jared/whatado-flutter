@@ -7,6 +7,7 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/edit_event_details.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:whatado/state/edit_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 
@@ -28,8 +29,9 @@ class EventTopBar extends StatelessWidget {
                         builder: (context) => UserProfile(user: event.creator)))
                 .then((_) async {
                 await Future.delayed(Duration(milliseconds: 500));
-                SystemChrome.setSystemUIOverlayStyle(
-                    SystemUiOverlayStyle.dark.copyWith(
+                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                  statusBarBrightness: Brightness.dark,
+                  statusBarIconBrightness: Brightness.dark,
                   systemNavigationBarColor: Colors.grey[50],
                   statusBarColor: Colors.transparent,
                 ));
@@ -52,7 +54,9 @@ class EventTopBar extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => EditEventDetails(event: event),
+                      builder: (context) => ChangeNotifierProvider(
+                          create: (context) => EditEventState(event),
+                          child: EditEventDetails(event: event)),
                     ));
               }
               if (value == 'delete') {

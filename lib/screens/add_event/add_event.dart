@@ -19,6 +19,8 @@ class _AddEventState extends State<AddEvent> {
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.dark,
+        systemNavigationBarIconBrightness: Brightness.dark,
         systemNavigationBarColor: Colors.grey[50],
         statusBarColor: Colors.grey[50]));
   }

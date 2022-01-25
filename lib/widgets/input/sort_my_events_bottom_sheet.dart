@@ -11,7 +11,6 @@ class SortMyEventsBottomSheet extends StatelessWidget {
 
     void onPressed(MySortType type) {
       homeState.mySortType = type;
-      homeState.myEventsRefresh();
       Navigator.pop(context);
     }
 

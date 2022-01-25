@@ -54,8 +54,9 @@ class MyNavigationBar extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => AddEvent()))
                     .then((_) async {
                   await Future.delayed(Duration(milliseconds: 500));
-                  SystemChrome.setSystemUIOverlayStyle(
-                      SystemUiOverlayStyle.dark.copyWith(
+                  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                    statusBarBrightness: Brightness.dark,
+                    statusBarIconBrightness: Brightness.dark,
                     systemNavigationBarColor: Colors.grey[50],
                     statusBarColor: Colors.transparent,
                   ));

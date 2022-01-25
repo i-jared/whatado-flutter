@@ -6,6 +6,7 @@ import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
+import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 
 class ChatState extends ChangeNotifier {
@@ -19,11 +20,14 @@ class ChatState extends ChangeNotifier {
   StreamSubscription? streamSubscription;
   List<Chat>? chats;
 
+  final provider;
+
   ChatState({required this.event, required this.forum})
       : textController = TextEditingController(),
         surveyController = TextEditingController(),
         scrollController = ScrollController(),
-        _skip = 0 {
+        _skip = 0,
+        provider = ForumsGqlProvider() {
     scrollController
       ..addListener(() async {
         if (scrollController.position.atEdge &&
@@ -64,7 +68,8 @@ class ChatState extends ChangeNotifier {
     final subscription =
         ChatSubscription(variables: ChatArguments(forumId: forumId));
     final stream = graphqlClientService.subscribe(subscription).map((event) {
-      print('hello $event hello');
+      // update last accessed
+      provider.access(forum.userNotification.id);
       return Chat.fromGqlData(event.data?['chatSubscription']);
     });
     stream.handleError((e) => print('stream error $e'));

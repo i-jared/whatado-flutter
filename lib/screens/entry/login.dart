@@ -33,6 +33,8 @@ class _LoginScreenState extends State<StatefulWidget> {
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.dark,
       systemNavigationBarColor: Colors.grey[50],
       statusBarColor: Colors.grey[50],
     ));

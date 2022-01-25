@@ -8,7 +8,8 @@ class LocalNotificationService {
       : channel = AndroidNotificationChannel(
           'high_importance_channel', // id
           'High Importance Notifications', // title
-          description: 'This channel is used for important notifications.', // description
+          description:
+              'This channel is used for important notifications.', // description
           importance: Importance.max,
         ),
         flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin() {
@@ -18,7 +19,7 @@ class LocalNotificationService {
   Future<void> init() async {
     // initialize flutter local notifications
     const AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('launcher_icon');
+        AndroidInitializationSettings('ic_notification');
     final IOSInitializationSettings initializationSettingsIOS =
         IOSInitializationSettings(
             onDidReceiveLocalNotification: (_, __, ___, ____) async {

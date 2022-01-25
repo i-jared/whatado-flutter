@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/welcome.dart';
-import 'package:whatado/screens/home/user_list_page.dart';
 import 'package:whatado/screens/profile/blocked_users.dart';
 import 'package:whatado/screens/profile/change_password.dart';
 import 'package:whatado/screens/profile/change_personal_info.dart';

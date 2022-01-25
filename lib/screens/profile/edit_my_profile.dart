@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/interest.dart';
@@ -61,7 +62,6 @@ class _EditMyProfileState extends State<EditMyProfile> {
         (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) /
             3.0;
     final userState = Provider.of<UserState>(context);
-
     final theList = userState.photos == null
         ? [Center(child: CircularProgressIndicator())]
         : [

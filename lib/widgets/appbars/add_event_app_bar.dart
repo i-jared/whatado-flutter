@@ -40,6 +40,8 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
                               builder: (context) => AddEventDetails())).then(
                           (_) => SystemChrome.setSystemUIOverlayStyle(
                               SystemUiOverlayStyle(
+                                  statusBarBrightness: Brightness.dark,
+                                  statusBarIconBrightness: Brightness.dark,
                                   systemNavigationBarColor: Colors.grey[50],
                                   statusBarColor: Colors.grey[50])));
                     }),

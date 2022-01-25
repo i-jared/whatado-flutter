@@ -86,8 +86,11 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                           await Future.delayed(
                                               Duration(milliseconds: 500));
                                           SystemChrome.setSystemUIOverlayStyle(
-                                              SystemUiOverlayStyle.dark
-                                                  .copyWith(
+                                              SystemUiOverlayStyle(
+                                            statusBarBrightness:
+                                                Brightness.dark,
+                                            statusBarIconBrightness:
+                                                Brightness.dark,
                                             systemNavigationBarColor:
                                                 Colors.grey[50],
                                             statusBarColor: Colors.transparent,

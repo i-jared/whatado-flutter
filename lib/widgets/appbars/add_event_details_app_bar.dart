@@ -7,6 +7,7 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/time_tools.dart';
 
 class AddEventDetailsAppBar extends StatelessWidget
     implements PreferredSizeWidget {
@@ -42,7 +43,6 @@ class AddEventDetailsAppBar extends StatelessWidget
                 : () async {
                     if (eventState.postLoading) return;
                     eventState.postLoading = true;
-                    print(eventState.postLoading);
                     if (userState.user == null) {
                       await userState.getUser();
                     }
@@ -65,17 +65,9 @@ class AddEventDetailsAppBar extends StatelessWidget
                       }
 
                       // frankenstein the time from user input
-                      final prefixSplit =
-                          eventState.dateController.text.split(" ");
-                      final dateSplit = prefixSplit[1].split("-");
-                      final timeSplit =
-                          eventState.timeController.text.split(" ");
-                      final isPm = timeSplit[1] == "PM";
-                      final hourSplit = timeSplit[0].split(":");
-                      final hour = int.parse(hourSplit[0]) + (isPm ? 12 : 0);
-                      final finalTime = DateTime.parse(
-                          '${dateSplit[2]}-${dateSplit[0].padLeft(2, '0')}-${dateSplit[1].padLeft(2, '0')} ${hour.toString().padLeft(2, '0')}:${hourSplit[1]}:00');
-
+                      final finalTime = formatMyTime(
+                          eventState.dateController.text,
+                          eventState.timeController.text);
                       // create interests
                       final interestsProvider = InterestGqlProvider();
                       final interests =

@@ -350,17 +350,24 @@ type User {
   deviceId: String!
   flags: Int!
   friendRequests: [User!]!
+  friendRequestsIds: [Int!]!
   friends: [User!]!
+  friendsIds: [Int!]!
   gender: Gender!
   id: Int!
   interests: [Interest!]!
   inverseFriends: [User!]!
+  inverseFriendsIds: [Int!]!
+  invitedEvents: [Event!]!
+  invitedEventsIds: [Int!]!
   myEvents: [Event!]!
+  myEventsIds: [Int!]!
   name: String!
   phone: String!
   photoUrls: String!
   refreshCount: Int!
   requestedFriends: [User!]!
+  requestedFriendsIds: [Int!]!
   updatedAt: DateTime!
   verified: Boolean!
 }

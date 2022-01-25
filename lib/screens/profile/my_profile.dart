@@ -45,7 +45,7 @@ class _MyProfileState extends State<MyProfile> {
     final user = userState.user!;
     if (userState.user == null) {
       SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
-        userState.getUser();
+        await userState.getUser();
       });
       return Center(child: CircularProgressIndicator());
     }

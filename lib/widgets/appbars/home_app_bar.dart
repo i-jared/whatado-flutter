@@ -36,10 +36,12 @@ class _HomeAppBarState extends State<HomeAppBar> {
       homeState.turnPage(newPageNo);
     }
 
-    final haveUnread = homeState.myForums?.any((forum) => forum.chats.isEmpty
-            ? false
-            : forum.userNotification.lastAccessed
-                .isBefore(forum.chats.first.createdAt)) ??
+    final haveUnread = homeState.myForums?.any((forum) {
+          return forum.chats.isEmpty
+              ? false
+              : forum.userNotification.lastAccessed
+                  .isBefore(forum.chats.first.createdAt);
+        }) ??
         false;
 
     final haveWannago = homeState.myEvents?.any((event) {
