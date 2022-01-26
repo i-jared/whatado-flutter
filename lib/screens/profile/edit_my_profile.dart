@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/interest.dart';
@@ -13,6 +12,7 @@ import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
 import 'package:whatado/widgets/interests/input_interest_bubble.dart';
+import 'package:whatado/widgets/interests/interest_wrap.dart';
 
 class EditMyProfile extends StatefulWidget {
   final User? user;
@@ -25,6 +25,8 @@ class _EditMyProfileState extends State<EditMyProfile> {
   late TextEditingController bioController;
   late TextEditingController textController;
   late List<Interest> interests;
+  late List<Interest> allInterests;
+  late bool loading = true;
 
   bool listsEqual<T>(List<T>? one, List<T>? two) {
     bool val = true;
@@ -43,6 +45,16 @@ class _EditMyProfileState extends State<EditMyProfile> {
     textController = TextEditingController();
     textController.addListener(() => setState(() {}));
     interests = List<Interest>.from(widget.user!.interests);
+    init();
+  }
+
+  void init() async {
+    final provider = InterestGqlProvider();
+    final result = await provider.popular();
+    allInterests = [...interests, ...(result.data ?? [])];
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
@@ -146,19 +158,38 @@ class _EditMyProfileState extends State<EditMyProfile> {
                             ],
                           ),
                           SizedBox(height: headingSpacing),
-                          Wrap(
-                            spacing: 10.0,
-                            runSpacing: 0.0,
-                            children: interests
-                                .map((interest) => InputInterestBubble(
-                                      interest: interest,
-                                      onDeleted: () => setState(() {
-                                        interests.remove(interest);
-                                        setState(() => interests = interests);
-                                      }),
-                                    ))
-                                .toList(),
-                          ),
+                          loading
+                              ? Center(child: CircularProgressIndicator())
+                              : InterestWrap(
+                                  interests: allInterests,
+                                  selectedInterests: interests,
+                                  onSelected:
+                                      (bool notSelected, Interest interest) {
+                                    if (notSelected) {
+                                      interests.add(interest);
+                                      setState(() {
+                                        interests = interests;
+                                      });
+                                    } else {
+                                      interests.remove(interest);
+                                      setState(() {
+                                        interests = interests;
+                                      });
+                                    }
+                                  }),
+                          // Wrap(
+                          //   spacing: 10.0,
+                          //   runSpacing: 0.0,
+                          //   children: interests
+                          //       .map((interest) => InputInterestBubble(
+                          //             interest: interest,
+                          //             onDeleted: () => setState(() {
+                          //               interests.remove(interest);
+                          //               setState(() => interests = interests);
+                          //             }),
+                          //           ))
+                          //       .toList(),
+                          // ),
                           Row(
                             children: [
                               Expanded(
@@ -171,7 +202,9 @@ class _EditMyProfileState extends State<EditMyProfile> {
                                         .map((val) => val.title)
                                         .contains(interest.title)) return;
                                     interests.add(interest);
-                                    setState(() => interests = interests);
+                                    setState(() {
+                                      interests = interests;
+                                    });
                                     textController.clear();
                                   },
                                   suggestionsCallback: (String pattern) {
@@ -212,10 +245,15 @@ class _EditMyProfileState extends State<EditMyProfile> {
                                             .contains(
                                                 textController.text.trim()))
                                           return;
-                                        interests.add(Interest(
+                                        final Interest newInterest = Interest(
                                             id: 1,
-                                            title: textController.text.trim()));
-                                        setState(() => interests = interests);
+                                            title: textController.text.trim());
+                                        interests.add(newInterest);
+                                        allInterests.add(newInterest);
+                                        setState(() {
+                                          interests = interests;
+                                          allInterests = allInterests;
+                                        });
                                         textController.clear();
                                       },
                               ),

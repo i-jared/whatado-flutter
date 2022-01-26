@@ -1,0 +1,12 @@
+query otherEvents($dateRange: DateRangeInput!, $take: Int!, $skip: Int!, $sortType: SortType!) {
+  otherEvents(dateRange: $dateRange, take: $take, skip: $skip, sortType: $sortType) {
+    ok
+    nodes {
+      ...EventFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

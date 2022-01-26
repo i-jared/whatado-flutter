@@ -103,11 +103,11 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     if (loading) {
       return Center(child: CircularProgressIndicator());
     }
-    return noImages
+    return noImages || loadedAssets.isEmpty
         ? Center(
             child: Wrap(alignment: WrapAlignment.center, children: [
             Text(
-              'No images? Make sure you allow Whatado to access your photos. ',
+              'Make sure you allow Whatado to access your photos. ',
               textAlign: TextAlign.center,
             ),
             TextButton(

@@ -21,6 +21,8 @@ class HomeState extends ChangeNotifier {
   int _appBarPageNo;
   int _bottomBarPageNo;
   int _skip;
+  bool _favoritesEmpty;
+  bool _othersEmpty;
   DateTime? _selectedDate;
   SortType _sortType;
   MySortType _mySortType;
@@ -39,6 +41,7 @@ class HomeState extends ChangeNotifier {
   StreamSubscription? appBarResetSub;
   StreamController? appBarResetController;
   List<Event>? allEvents;
+  List<Event>? otherEvents;
   List<Event>? myEvents;
   List<Forum>? myForums;
   List<Map<String, dynamic>>? lastMessages;
@@ -47,6 +50,8 @@ class HomeState extends ChangeNotifier {
       : _appBarPageNo = 0,
         _bottomBarPageNo = 0,
         _skip = 0,
+        _favoritesEmpty = false,
+        _othersEmpty = false,
         showcase_1 = GlobalKey(),
         showcase_2 = GlobalKey(),
         showcase_3 = GlobalKey(),
@@ -126,6 +131,7 @@ class HomeState extends ChangeNotifier {
   set selectedDate(DateTime? beginDateIndex) {
     if (_selectedDate != beginDateIndex) {
       allEvents = null;
+      otherEvents = null;
       _skip = 0;
     }
     _selectedDate = beginDateIndex;
@@ -145,17 +151,45 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> otherEventsRequest() async {
+    final query = EventsGqlProvider();
+    final start = _selectedDate ?? DateTime.now();
+    final end = _selectedDate?.add(Duration(days: 1)) ??
+        DateTime.now().add(Duration(days: 1000));
+    // events related to interests are empty, get others
+    final response = await query.otherEvents(start, end, 20, _skip, _sortType);
+    _skip += response.data?.length ?? 0;
+    if ((response.data?.length ?? 0) < 20) {
+      _othersEmpty = true;
+      _skip = 0;
+    }
+    if (otherEvents == null)
+      otherEvents = response.data ?? [];
+    else
+      otherEvents!.addAll(response.data ?? []);
+  }
+
   Future<void> getNewEvents() async {
     final query = EventsGqlProvider();
     final start = _selectedDate ?? DateTime.now();
     final end = _selectedDate?.add(Duration(days: 1)) ??
         DateTime.now().add(Duration(days: 1000));
-    final response = await query.events(start, end, 20, _skip, _sortType);
-    _skip += 20;
-    if (allEvents == null)
-      allEvents = response.data ?? [];
-    else
-      allEvents!.addAll(response.data ?? []);
+    if (_favoritesEmpty && !_othersEmpty) {
+      await otherEventsRequest();
+    } else if (!_favoritesEmpty) {
+      // get events related to interests
+      final response = await query.events(start, end, 20, _skip, _sortType);
+      _skip += response.data?.length ?? 0;
+      if (allEvents == null)
+        allEvents = response.data ?? [];
+      else
+        allEvents!.addAll(response.data ?? []);
+      if ((response.data?.length ?? 0) < 20) {
+        _favoritesEmpty = true;
+        _skip = 0;
+        await otherEventsRequest();
+      }
+    }
     notifyListeners();
   }
 
@@ -207,8 +241,8 @@ class HomeState extends ChangeNotifier {
 
   Future<void> myEventsRefresh() async {
     try {
-      await getMyEvents();
-      await getMyForums();
+      final result = await getMyEvents();
+      if ((result?.length ?? 0) > 0) await getMyForums();
       myEventsRefreshController.refreshCompleted();
     } catch (e) {
       myEventsRefreshController.refreshFailed();
@@ -218,7 +252,10 @@ class HomeState extends ChangeNotifier {
   Future<void> allEventsRefresh() async {
     try {
       allEvents = null;
+      otherEvents = null;
       _skip = 0;
+      _favoritesEmpty = false;
+      _othersEmpty = false;
       await getNewEvents();
       refreshController.refreshCompleted();
     } catch (e) {
@@ -235,6 +272,12 @@ class HomeState extends ChangeNotifier {
   void updateEvent(Event event) {
     int index = allEvents!.indexWhere((val) => val.id == event.id);
     if (index == -1) {
+      index = otherEvents!.indexWhere((val) => val.id == event.id);
+      if (index == -1) {
+        return;
+      }
+      otherEvents![index] = event;
+      notifyListeners();
       return;
     }
     allEvents![index] = event;
@@ -243,6 +286,7 @@ class HomeState extends ChangeNotifier {
 
   void removeEvent(Event event) {
     if (allEvents?.contains(event) ?? false) allEvents?.remove(event);
+    if (otherEvents?.contains(event) ?? false) otherEvents?.remove(event);
     if (myEvents?.contains(event) ?? false) {
       myEvents?.remove(event);
       myForums?.removeWhere((forum) => forum.eventId == event.id);

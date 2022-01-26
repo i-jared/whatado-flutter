@@ -1848,6 +1848,112 @@ Map<String, dynamic> _$User$QueryToJson(User$Query instance) =>
       'user': instance.user.toJson(),
     };
 
+OtherEvents$Query$OtherEvents$Nodes
+    _$OtherEvents$Query$OtherEvents$NodesFromJson(Map<String, dynamic> json) {
+  return OtherEvents$Query$OtherEvents$Nodes()
+    ..id = json['id'] as int
+    ..createdAt = fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+    ..updatedAt = fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+    ..title = json['title'] as String
+    ..description = json['description'] as String
+    ..creator = EventFieldsMixin$Creator.fromJson(
+        json['creator'] as Map<String, dynamic>)
+    ..invited = (json['invited'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..wannago = (json['wannago'] as List<dynamic>)
+        .map(
+            (e) => EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
+        .toList()
+    ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
+    ..location = json['location'] as String
+    ..pictureUrl = json['pictureUrl'] as String?
+    ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+        .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..privacy = _$enumDecode(_$PrivacyEnumMap, json['privacy'],
+        unknownValue: Privacy.artemisUnknown)
+    ..filterLocation = json['filterLocation'] as String
+    ..filterRadius = (json['filterRadius'] as num).toDouble()
+    ..filterGender = _$enumDecode(_$GenderEnumMap, json['filterGender'],
+        unknownValue: Gender.artemisUnknown)
+    ..filterMinAge = json['filterMinAge'] as int
+    ..filterMaxAge = json['filterMaxAge'] as int;
+}
+
+Map<String, dynamic> _$OtherEvents$Query$OtherEvents$NodesToJson(
+        OtherEvents$Query$OtherEvents$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'title': instance.title,
+      'description': instance.description,
+      'creator': instance.creator.toJson(),
+      'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
+      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
+      'location': instance.location,
+      'pictureUrl': instance.pictureUrl,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'filterLocation': instance.filterLocation,
+      'filterRadius': instance.filterRadius,
+      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
+    };
+
+OtherEvents$Query$OtherEvents$Errors
+    _$OtherEvents$Query$OtherEvents$ErrorsFromJson(Map<String, dynamic> json) {
+  return OtherEvents$Query$OtherEvents$Errors()
+    ..field = json['field'] as String?
+    ..message = json['message'] as String;
+}
+
+Map<String, dynamic> _$OtherEvents$Query$OtherEvents$ErrorsToJson(
+        OtherEvents$Query$OtherEvents$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+OtherEvents$Query$OtherEvents _$OtherEvents$Query$OtherEventsFromJson(
+    Map<String, dynamic> json) {
+  return OtherEvents$Query$OtherEvents()
+    ..ok = json['ok'] as bool?
+    ..nodes = (json['nodes'] as List<dynamic>?)
+        ?.map((e) => OtherEvents$Query$OtherEvents$Nodes.fromJson(
+            e as Map<String, dynamic>))
+        .toList()
+    ..errors = (json['errors'] as List<dynamic>?)
+        ?.map((e) => OtherEvents$Query$OtherEvents$Errors.fromJson(
+            e as Map<String, dynamic>))
+        .toList();
+}
+
+Map<String, dynamic> _$OtherEvents$Query$OtherEventsToJson(
+        OtherEvents$Query$OtherEvents instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+OtherEvents$Query _$OtherEvents$QueryFromJson(Map<String, dynamic> json) {
+  return OtherEvents$Query()
+    ..otherEvents = OtherEvents$Query$OtherEvents.fromJson(
+        json['otherEvents'] as Map<String, dynamic>);
+}
+
+Map<String, dynamic> _$OtherEvents$QueryToJson(OtherEvents$Query instance) =>
+    <String, dynamic>{
+      'otherEvents': instance.otherEvents.toJson(),
+    };
+
 ChatsArguments _$ChatsArgumentsFromJson(Map<String, dynamic> json) {
   return ChatsArguments(
     forumId: json['forumId'] as int,
@@ -1993,4 +2099,24 @@ UserArguments _$UserArgumentsFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$UserArgumentsToJson(UserArguments instance) =>
     <String, dynamic>{
       'id': instance.id,
+    };
+
+OtherEventsArguments _$OtherEventsArgumentsFromJson(Map<String, dynamic> json) {
+  return OtherEventsArguments(
+    dateRange:
+        DateRangeInput.fromJson(json['dateRange'] as Map<String, dynamic>),
+    take: json['take'] as int,
+    skip: json['skip'] as int,
+    sortType: _$enumDecode(_$SortTypeEnumMap, json['sortType'],
+        unknownValue: SortType.artemisUnknown),
+  );
+}
+
+Map<String, dynamic> _$OtherEventsArgumentsToJson(
+        OtherEventsArguments instance) =>
+    <String, dynamic>{
+      'dateRange': instance.dateRange.toJson(),
+      'take': instance.take,
+      'skip': instance.skip,
+      'sortType': _$SortTypeEnumMap[instance.sortType],
     };

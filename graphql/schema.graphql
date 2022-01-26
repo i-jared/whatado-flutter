@@ -309,6 +309,7 @@ type Query {
   me: UserApiResponse!
   myChatNotifications: ChatNotificationsApiResponse!
   myEvents: EventsApiResponse!
+  otherEvents(dateRange: DateRangeInput!, skip: Int!, sortType: SortType!, take: Int!): EventsApiResponse!
   popularInterests: InterestsApiResponse!
   searchInterests(partial: String!): InterestsApiResponse!
   searchUsers(partial: String!): UsersApiResponse!

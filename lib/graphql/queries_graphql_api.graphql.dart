@@ -1813,6 +1813,96 @@ class User$Query extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$User$QueryToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class OtherEvents$Query$OtherEvents$Nodes extends JsonSerializable
+    with EquatableMixin, EventFieldsMixin {
+  OtherEvents$Query$OtherEvents$Nodes();
+
+  factory OtherEvents$Query$OtherEvents$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$OtherEvents$Query$OtherEvents$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [
+        id,
+        createdAt,
+        updatedAt,
+        title,
+        description,
+        creator,
+        invited,
+        wannago,
+        time,
+        location,
+        pictureUrl,
+        relatedInterests,
+        privacy,
+        filterLocation,
+        filterRadius,
+        filterGender,
+        filterMinAge,
+        filterMaxAge
+      ];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$OtherEvents$Query$OtherEvents$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class OtherEvents$Query$OtherEvents$Errors extends JsonSerializable
+    with EquatableMixin {
+  OtherEvents$Query$OtherEvents$Errors();
+
+  factory OtherEvents$Query$OtherEvents$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$OtherEvents$Query$OtherEvents$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$OtherEvents$Query$OtherEvents$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class OtherEvents$Query$OtherEvents extends JsonSerializable
+    with EquatableMixin {
+  OtherEvents$Query$OtherEvents();
+
+  factory OtherEvents$Query$OtherEvents.fromJson(Map<String, dynamic> json) =>
+      _$OtherEvents$Query$OtherEventsFromJson(json);
+
+  bool? ok;
+
+  List<OtherEvents$Query$OtherEvents$Nodes>? nodes;
+
+  List<OtherEvents$Query$OtherEvents$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$OtherEvents$Query$OtherEventsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class OtherEvents$Query extends JsonSerializable with EquatableMixin {
+  OtherEvents$Query();
+
+  factory OtherEvents$Query.fromJson(Map<String, dynamic> json) =>
+      _$OtherEvents$QueryFromJson(json);
+
+  late OtherEvents$Query$OtherEvents otherEvents;
+
+  @override
+  List<Object?> get props => [otherEvents];
+  @override
+  Map<String, dynamic> toJson() => _$OtherEvents$QueryToJson(this);
+}
+
 enum Privacy {
   @JsonValue('FRIENDS')
   friends,
@@ -5080,4 +5170,325 @@ class UserQuery extends GraphQLQuery<User$Query, UserArguments> {
   List<Object?> get props => [document, operationName, variables];
   @override
   User$Query parse(Map<String, dynamic> json) => User$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class OtherEventsArguments extends JsonSerializable with EquatableMixin {
+  OtherEventsArguments(
+      {required this.dateRange,
+      required this.take,
+      required this.skip,
+      required this.sortType});
+
+  @override
+  factory OtherEventsArguments.fromJson(Map<String, dynamic> json) =>
+      _$OtherEventsArgumentsFromJson(json);
+
+  late DateRangeInput dateRange;
+
+  late int take;
+
+  late int skip;
+
+  @JsonKey(unknownEnumValue: SortType.artemisUnknown)
+  late SortType sortType;
+
+  @override
+  List<Object?> get props => [dateRange, take, skip, sortType];
+  @override
+  Map<String, dynamic> toJson() => _$OtherEventsArgumentsToJson(this);
+}
+
+final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'otherEvents'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'dateRange')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'DateRangeInput'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'take')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'skip')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'sortType')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'SortType'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'otherEvents'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'dateRange'),
+                  value: VariableNode(name: NameNode(value: 'dateRange'))),
+              ArgumentNode(
+                  name: NameNode(value: 'take'),
+                  value: VariableNode(name: NameNode(value: 'take'))),
+              ArgumentNode(
+                  name: NameNode(value: 'skip'),
+                  value: VariableNode(name: NameNode(value: 'skip'))),
+              ArgumentNode(
+                  name: NameNode(value: 'sortType'),
+                  value: VariableNode(name: NameNode(value: 'sortType')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventFields'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'createdAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'title'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'creator'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'invited'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'wannago'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'declined'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'user'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'EventUser'), directives: [])
+                  ]))
+            ])),
+        FieldNode(
+            name: NameNode(value: 'time'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'pictureUrl'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'privacy'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterRadius'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterGender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMinAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'filterMaxAge'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class OtherEventsQuery
+    extends GraphQLQuery<OtherEvents$Query, OtherEventsArguments> {
+  OtherEventsQuery({required this.variables});
+
+  @override
+  final DocumentNode document = OTHER_EVENTS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = 'otherEvents';
+
+  @override
+  final OtherEventsArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  OtherEvents$Query parse(Map<String, dynamic> json) =>
+      OtherEvents$Query.fromJson(json);
 }

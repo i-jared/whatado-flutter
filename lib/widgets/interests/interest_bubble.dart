@@ -16,7 +16,7 @@ class InterestBubble extends StatelessWidget {
         backgroundColor: Colors.grey[50],
         selectedColor: selectedColor ?? Colors.grey[850],
         showCheckmark: false,
-        labelPadding: EdgeInsets.symmetric(vertical: 3, horizontal: 20),
+        labelPadding: EdgeInsets.symmetric(vertical: 3, horizontal: 12),
         labelStyle: TextStyle(color: selected ? Colors.white : Colors.black),
         label: Text(text),
         selected: selected,

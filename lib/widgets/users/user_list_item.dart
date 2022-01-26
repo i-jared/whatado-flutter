@@ -17,7 +17,11 @@ class UserListItem extends StatelessWidget {
     final homeState = Provider.of<HomeState>(context);
     return InkWell(
       onTap: userState.user?.id == user.id
-          ? () => homeState.bottomBarPageNo = 3
+          ? () {
+              homeState.bottomBarPageNo = 3;
+              if (Navigator.canPop(context))
+                Navigator.popUntil(context, (route) => route.isFirst);
+            }
           : () => Navigator.push(
                       context,
                       MaterialPageRoute(

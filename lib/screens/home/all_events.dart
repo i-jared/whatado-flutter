@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/state/home_state.dart';
@@ -48,6 +49,22 @@ class AllEvents extends StatelessWidget {
                 if (homeState.allEvents != null &&
                     homeState.allEvents!.isNotEmpty)
                   ...homeState.allEvents!
+                      .where((event) => !(userState.user?.blockedUsers
+                              .map((u) => u.id)
+                              .contains(event.creator.id) ??
+                          false))
+                      .map((e) => EventDisplay(event: e))
+                      .toList(),
+                // if (homeState.otherEvents != null &&
+                //     homeState.otherEvents!.isNotEmpty)
+                //   FadeIn(
+                //       duration: Duration(seconds: 2),
+                //       child: Center(
+                //           child: Text('Look at these events',
+                //               style: TextStyle(fontSize: 30)))),
+                if (homeState.otherEvents != null &&
+                    homeState.otherEvents!.isNotEmpty)
+                  ...homeState.otherEvents!
                       .where((event) => !(userState.user?.blockedUsers
                               .map((u) => u.id)
                               .contains(event.creator.id) ??

@@ -40,6 +40,39 @@ class EventsGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<List<Event>>> otherEvents(DateTime start, DateTime end,
+      int take, int skip, SortType sortType) async {
+    final query = OtherEventsQuery(
+        variables: OtherEventsArguments(
+      dateRange: DateRangeInput(startDate: start, endDate: end),
+      take: take,
+      skip: skip,
+      sortType: sortType,
+    ));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['otherEvents'];
+    final data = root != null && root['nodes'] != null
+        ? List<Event>.from((root?['nodes']).map((event) {
+            return Event.fromGqlData(event);
+          }).toList())
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<Event>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<Event>> createEvent(EventInput eventInput) async {
     final mutation = CreateEventMutation(
         variables: CreateEventArguments(eventInput: eventInput));

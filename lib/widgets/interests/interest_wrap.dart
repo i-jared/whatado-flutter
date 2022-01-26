@@ -13,8 +13,9 @@ class InterestWrap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Wrap(
+      alignment: WrapAlignment.spaceEvenly,
       runSpacing: 0.0,
-      spacing: 10.0,
+      spacing: 5.0,
       children: interests
           .map((interest) => InterestBubble(
               text: interest.title,

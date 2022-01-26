@@ -27,7 +27,7 @@ class WriteBioScreen extends StatelessWidget {
     final genders = [
       {'gender': Gender.female, 'text': 'Female'},
       {'gender': Gender.male, 'text': 'Male'},
-      {'gender': Gender.both, 'text': "Fuhgetaboutit"},
+      {'gender': Gender.both, 'text': "Other"},
     ];
 
     return Container(
@@ -66,7 +66,7 @@ class WriteBioScreen extends StatelessWidget {
                             controller: setupState.bioController,
                           ),
                           SizedBox(height: sectionSpacing),
-                          Text('Gender & Birthday', style: headingStyle),
+                          Text('Gender', style: headingStyle),
                           SizedBox(height: headingSpacing),
                           Text('These help you choose who sees your events.',
                               style: paragraphStyle),
@@ -85,6 +85,8 @@ class WriteBioScreen extends StatelessWidget {
                                     }))
                                 .toList(),
                           ),
+                          SizedBox(height: sectionSpacing),
+                          Text('Birthday', style: headingStyle),
                           SizedBox(height: headingSpacing),
                           TextFormField(
                             readOnly: true,

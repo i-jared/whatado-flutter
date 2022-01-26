@@ -7,6 +7,7 @@ import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
+import 'package:whatado/screens/add_event/add_friends.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/home/user_list_page.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
@@ -187,11 +188,15 @@ class _EventDetailsState extends State<EventDetails> {
                     Divider(),
                     SizedBox(height: headingSpacing),
                     InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) => UserListPage(
-                                  title: "Gonnago", users: event.invited))),
+                      onTap: event.invited.isEmpty
+                          ? null
+                          : () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      UserListPage(
+                                          title: "Gonnago",
+                                          users: event.invited))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -210,7 +215,7 @@ class _EventDetailsState extends State<EventDetails> {
                                         loading: false,
                                         users: event.invited)),
                           ),
-                          Text('Going', style: headingStyle)
+                          Text('Gonnago', style: headingStyle)
                         ],
                       ),
                     ),
@@ -245,7 +250,15 @@ class _EventDetailsState extends State<EventDetails> {
                         ),
                       ),
                     if (event.creator.id == userState.user?.id)
-                      SizedBox(height: headingSpacing),
+                      TextButton(
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AddFriends(
+                                      eventId: event.id,
+                                      invitedUsers: event.invited))),
+                          child: Text('add friends',
+                              style: TextStyle(color: Color(0xff0073ab)))),
                     Divider(),
                     SizedBox(height: headingSpacing),
                     Row(
