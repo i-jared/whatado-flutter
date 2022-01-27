@@ -151,6 +151,7 @@ class _EventDetailsState extends State<EventDetails> {
                                   }
                                 },
                                 child: CircleAvatar(
+                                  backgroundColor: Colors.grey,
                                   radius: 25,
                                   backgroundImage: NetworkImage(
                                       event.creator.photoUrls.first),

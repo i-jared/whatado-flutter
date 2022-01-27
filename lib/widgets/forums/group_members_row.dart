@@ -97,6 +97,7 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                           ));
                                         }),
                                     child: CircleAvatar(
+                                        backgroundColor: Colors.grey,
                                         radius: 28,
                                         backgroundImage:
                                             NetworkImage(user.photoUrls.first)),

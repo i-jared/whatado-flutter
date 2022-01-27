@@ -53,6 +53,7 @@ class _BlockedUsersState extends State<BlockedUsers> {
                                   ));
                                 }),
                                 leading: CircleAvatar(
+                                  backgroundColor: Colors.grey,
                                   backgroundImage:
                                       NetworkImage(blockedUser.photoUrls.first),
                                 ),

@@ -37,6 +37,7 @@ class PictureWaterfall extends StatelessWidget {
                             left: i * radius,
                             bottom: 0,
                             child: CircleAvatar(
+                              backgroundColor: Colors.grey,
                               radius: radius,
                               backgroundImage:
                                   NetworkImage(users[i].photoUrls.first),

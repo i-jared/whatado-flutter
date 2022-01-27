@@ -21,6 +21,7 @@ class _SurveyBubbleState extends State<SurveyBubble> {
   @override
   Widget build(BuildContext context) {
     final survey = widget.chat.survey!;
+    final answers = survey.answers..sort((a, b) => a.id.compareTo(b.id));
     final userState = Provider.of<UserState>(context);
     final isOwner = widget.chat.author.id == userState.user?.id;
     final chatState = Provider.of<ChatState>(context);
@@ -37,7 +38,7 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                 style: TextStyle(fontSize: 18, color: Colors.grey[850])),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: survey.answers.map((a) {
+              children: answers.map((a) {
                 final _selected =
                     a.votes.map((e) => e.id).contains(userState.user?.id);
 
@@ -77,7 +78,9 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                       ),
                       SizedBox(width: 5),
                       a.votes.length > 0
-                          ? PictureWaterfall(loading: false, users: a.votes)
+                          ? IntrinsicWidth(
+                              child: PictureWaterfall(
+                                  loading: false, users: a.votes))
                           : Text('--')
                     ]);
               }).toList(),
@@ -97,6 +100,7 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                 children: [
                   InkWell(
                       child: CircleAvatar(
+                        backgroundColor: Colors.grey,
                         backgroundImage:
                             NetworkImage(widget.chat.author.photoUrls.first),
                       ),

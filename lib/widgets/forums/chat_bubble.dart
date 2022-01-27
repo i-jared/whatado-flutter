@@ -40,6 +40,7 @@ class ChatBubble extends StatelessWidget {
                 children: [
                   InkWell(
                       child: CircleAvatar(
+                        backgroundColor: Colors.grey,
                         backgroundImage:
                             NetworkImage(chat.author.photoUrls.first),
                       ),

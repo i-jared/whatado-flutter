@@ -37,6 +37,7 @@ class EventTopBar extends StatelessWidget {
                 ));
               }),
         child: CircleAvatar(
+          backgroundColor: Colors.grey,
           radius: 17,
           backgroundImage: NetworkImage(event.creator.photoUrls.first),
         ),
