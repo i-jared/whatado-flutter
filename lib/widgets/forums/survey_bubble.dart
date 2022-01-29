@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
+import 'package:whatado/screens/home/user_list_page.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
@@ -79,8 +80,16 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                       SizedBox(width: 5),
                       a.votes.length > 0
                           ? IntrinsicWidth(
+                              child: InkWell(
+                              onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (BuildContext context) =>
+                                          UserListPage(
+                                              title: a.text, users: a.votes))),
                               child: PictureWaterfall(
-                                  loading: false, users: a.votes))
+                                  loading: false, users: a.votes),
+                            ))
                           : Text('--')
                     ]);
               }).toList(),
