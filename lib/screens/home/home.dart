@@ -174,9 +174,7 @@ class _HomeScreenState extends State<HomeScreen> {
       onFinish: () => localStorageService.initialized = true,
       builder: Builder(builder: (context) {
         return Container(
-          color: homeState.bottomBarPageNo != 3
-              ? Colors.grey[50]
-              : Colors.transparent,
+          color: Colors.grey[50],
           child: SafeArea(
             top: homeState.bottomBarPageNo != 3,
             child: Scaffold(
