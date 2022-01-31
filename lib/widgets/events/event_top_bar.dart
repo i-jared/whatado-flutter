@@ -10,6 +10,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:whatado/state/edit_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class EventTopBar extends StatelessWidget {
   final Event event;
@@ -36,11 +37,11 @@ class EventTopBar extends StatelessWidget {
                   statusBarColor: Colors.transparent,
                 ));
               }),
-        child: CircleAvatar(
-          backgroundColor: Colors.grey,
-          radius: 17,
-          backgroundImage: NetworkImage(event.creator.photoUrls.first),
-        ),
+        child: UserAvatar(
+            url: event.creator.photoUrls.isEmpty
+                ? null
+                : event.creator.photoUrls.first,
+            radius: 17),
       ),
       SizedBox(width: 10),
       Text(event.creator.name,

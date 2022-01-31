@@ -5,6 +5,7 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class BlockedUsers extends StatefulWidget {
   @override
@@ -52,11 +53,11 @@ class _BlockedUsersState extends State<BlockedUsers> {
                                     statusBarColor: Colors.transparent,
                                   ));
                                 }),
-                                leading: CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  backgroundImage:
-                                      NetworkImage(blockedUser.photoUrls.first),
-                                ),
+                                leading: UserAvatar(
+                                    radius: 25,
+                                    url: blockedUser.photoUrls.isEmpty
+                                        ? null
+                                        : blockedUser.photoUrls.first),
                                 title: Text(blockedUser.name),
                                 trailing: Container(
                                   width: 200,

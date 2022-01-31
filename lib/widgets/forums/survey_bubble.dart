@@ -9,6 +9,7 @@ import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class SurveyBubble extends StatefulWidget {
   final Chat chat;
@@ -108,11 +109,11 @@ class _SurveyBubbleState extends State<SurveyBubble> {
             : Row(
                 children: [
                   InkWell(
-                      child: CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        backgroundImage:
-                            NetworkImage(widget.chat.author.photoUrls.first),
-                      ),
+                      child: UserAvatar(
+                          url: widget.chat.author.photoUrls.isEmpty
+                              ? null
+                              : widget.chat.author.photoUrls.first,
+                          radius: 16),
                       onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(

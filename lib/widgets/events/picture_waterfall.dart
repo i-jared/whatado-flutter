@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class PictureWaterfall extends StatelessWidget {
   final bool loading;
@@ -18,7 +19,8 @@ class PictureWaterfall extends StatelessWidget {
       children: [
         Container(
           height: radius * 2,
-          width: radius * (min(length, users.length) + 1),
+          width: radius *
+              (loading ? (length + 1) : (min(length, users.length) + 1)),
           child: Stack(
               children: loading
                   ? List<Widget>.generate(
@@ -36,12 +38,11 @@ class PictureWaterfall extends StatelessWidget {
                       (i) => Positioned(
                             left: i * radius,
                             bottom: 0,
-                            child: CircleAvatar(
-                              backgroundColor: Colors.grey,
-                              radius: radius,
-                              backgroundImage:
-                                  NetworkImage(users[i].photoUrls.first),
-                            ),
+                            child: UserAvatar(
+                                url: users[i].photoUrls.isEmpty
+                                    ? null
+                                    : users[i].photoUrls.first,
+                                radius: radius),
                           )).toList()),
         ),
         SizedBox(width: 10),

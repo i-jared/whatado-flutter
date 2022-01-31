@@ -9,6 +9,7 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class GroupMembersRow extends StatefulWidget {
   final Event event;
@@ -96,11 +97,11 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                             statusBarColor: Colors.transparent,
                                           ));
                                         }),
-                                    child: CircleAvatar(
-                                        backgroundColor: Colors.grey,
-                                        radius: 28,
-                                        backgroundImage:
-                                            NetworkImage(user.photoUrls.first)),
+                                    child: UserAvatar(
+                                        url: user.photoUrls.isEmpty
+                                            ? null
+                                            : user.photoUrls.first,
+                                        radius: 28),
                                     onLongPress: removeUser(user)),
                                 //TODO add event 'only friends' option
                                 //TODO friend selection in activities that automatically add them to the event and they immediately

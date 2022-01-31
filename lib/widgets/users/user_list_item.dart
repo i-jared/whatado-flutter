@@ -6,6 +6,7 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class UserListItem extends StatelessWidget {
   final EventUser user;
@@ -37,15 +38,9 @@ class UserListItem extends StatelessWidget {
               }),
       child: Row(
         children: [
-          Container(
-            height: 50,
-            width: 50,
-            clipBehavior: Clip.antiAlias,
-            child: user.photoUrls.isEmpty
-                ? Image.asset("assets/Whatado_Transparent.png")
-                : CachedNetworkImage(imageUrl: user.photoUrls.first),
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25)),
-          ),
+          UserAvatar(
+              url: user.photoUrls.isEmpty ? null : user.photoUrls.first,
+              radius: 25),
           SizedBox(width: 15),
           Flexible(
             child: Text(

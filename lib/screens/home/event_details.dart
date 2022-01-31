@@ -17,6 +17,7 @@ import 'package:whatado/widgets/appbars/event_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/buttons/shaded_icon.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class EventDetails extends StatefulWidget {
   final Event event;
@@ -150,12 +151,11 @@ class _EventDetailsState extends State<EventDetails> {
                                     });
                                   }
                                 },
-                                child: CircleAvatar(
-                                  backgroundColor: Colors.grey,
-                                  radius: 25,
-                                  backgroundImage: NetworkImage(
-                                      event.creator.photoUrls.first),
-                                ),
+                                child: UserAvatar(
+                                    url: event.creator.photoUrls.isEmpty
+                                        ? null
+                                        : event.creator.photoUrls.first,
+                                    radius: 25),
                               ),
                               SizedBox(width: 10),
                               Flexible(
