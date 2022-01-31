@@ -15,6 +15,7 @@ import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/event_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
+import 'package:whatado/widgets/buttons/rounded_delete_button.dart';
 import 'package:whatado/widgets/buttons/shaded_icon.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/users/user_avatar.dart';
@@ -291,6 +292,38 @@ class _EventDetailsState extends State<EventDetails> {
                             // setState(() {});
                           },
                           text: '${wannago.length} people wannago'),
+                    if (event.creator.id == userState.user?.id)
+                      SizedBox(height: sectionSpacing),
+                    if (event.creator.id == userState.user?.id)
+                      RoundedDeleteButton(
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                      title: Text('Remove from event?'),
+                                      content: Text(
+                                          'Are you sure you want to delete the event?'),
+                                      actions: [
+                                        TextButton(
+                                            child: Text("Cancel"),
+                                            onPressed: () =>
+                                                Navigator.pop(context)),
+                                        TextButton(
+                                          child: Text("Delete"),
+                                          onPressed: () async {
+                                            final provider =
+                                                EventsGqlProvider();
+                                            await provider
+                                                .deleteEvent(event.id);
+                                            await homeState.myEventsRefresh();
+                                            Navigator.popUntil(context,
+                                                (route) => route.isFirst);
+                                          },
+                                        ),
+                                      ]));
+                        },
+                        text: 'Delete',
+                      ),
                     SizedBox(height: 50),
                   ]),
             ))),

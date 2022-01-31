@@ -18,7 +18,6 @@ import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
-import 'package:whatado/widgets/users/user_list_item.dart';
 
 class TargetAudience extends StatefulWidget {
   @override
@@ -60,7 +59,6 @@ class _TargetAudienceState extends State<TargetAudience> {
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
     final userState = Provider.of<UserState>(context);
-    print(eventState.privacy);
     if (eventState.postLoading)
       return PostLoading();
     else if (eventState.failed)
@@ -115,9 +113,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                   if (eventState.privacy == Privacy.private)
                     Container(
                       height: min(
-                          300,
-                          max((userState.user?.friends.length ?? 1) * 50 + 50,
-                              500)),
+                          400, (userState.user?.friends.length ?? 1) * 50 + 50),
                       child: InviteFriends(
                         setUsers: (List<EventUser> tempList) =>
                             eventState.selectedUsers = tempList,
@@ -125,6 +121,8 @@ class _TargetAudienceState extends State<TargetAudience> {
                         users: userState.user?.friends,
                       ),
                     ),
+                  if (eventState.privacy == Privacy.private)
+                    SizedBox(height: headingSpacing),
                   if (eventState.privacy == Privacy.private)
                     PictureWaterfall(
                         loading: false, users: eventState.selectedUsers),

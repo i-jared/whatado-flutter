@@ -10,7 +10,6 @@ import 'package:whatado/widgets/input/my_text_field.dart';
 class EditEventDetails extends StatelessWidget {
   final Event event;
   EditEventDetails({required this.event});
-
   final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   final headingSpacing = 10.0;
   final padding = 30.0;

@@ -18,13 +18,16 @@ class MessagesBody extends StatelessWidget {
                   controller: chatState.scrollController,
                   reverse: true,
                   itemCount: chatState.chats!.length,
-                  itemBuilder: (context, i) => chatState.chats![i].survey == null
-                      ? ChatBubble(chat: chatState.chats![i])
-                      : SurveyBubble(chat: chatState.chats![i])),
+                  itemBuilder: (context, i) =>
+                      chatState.chats![i].survey == null
+                          ? ChatBubble(chat: chatState.chats![i])
+                          : SurveyBubble(chat: chatState.chats![i])),
             ),
           )
-        : Center(
-            child: CircularProgressIndicator(),
+        : Expanded(
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
   }
 }
