@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
       final forumProvider = ForumsGqlProvider();
       final eventResult = await eventProvider.event(eventId);
       final forumResult = await forumProvider.forum(forumId);
+      await forumProvider.access(forumId);
       if (eventResult.ok && forumResult.ok) {
         Navigator.push(
             context,

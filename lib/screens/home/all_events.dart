@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/state/home_state.dart';
@@ -28,20 +27,26 @@ class AllEvents extends StatelessWidget {
               key: PageStorageKey(0),
               controller: homeState.allEventsScrollController,
               children: [
-                if (homeState.allEvents == null)
+                if (homeState.allEvents == null ||
+                    homeState.otherEvents == null)
                   Container(
                       height: MediaQuery.of(context).size.height - 200,
                       child: Center(
                           child: CircularProgressIndicator(value: null))),
-                if (homeState.allEvents != null && homeState.allEvents!.isEmpty)
+                if (homeState.allEvents != null &&
+                    homeState.allEvents!.isEmpty &&
+                    homeState.otherEvents != null &&
+                    homeState.otherEvents!.isEmpty)
                   Container(
                     height: MediaQuery.of(context).size.height - 200,
                     child: Center(
                       child: Text('No events to display.. :('),
                     ),
                   ),
-                if (homeState.allEvents != null &&
-                    homeState.allEvents!.isNotEmpty)
+                if ((homeState.allEvents != null &&
+                        homeState.allEvents!.isNotEmpty) ||
+                    (homeState.otherEvents != null &&
+                        homeState.otherEvents!.isNotEmpty))
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: AllEventsSortBar(),
