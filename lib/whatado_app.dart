@@ -36,8 +36,8 @@ Future<void> run(String flavor) async {
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true, badge: true, sound: true);
 
-  await Hive.initFlutter('whatado');
-  await Hive.openBox('whatado');
+  await Hive.initFlutter();
+  await Hive.openBox<Map<dynamic, dynamic>>('whatado');
   Startup.initDependencies();
 
   EnvironmentConfig.initFlavor(flavor);
@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
     loading = true;
     invalidAuth = localStorageService.refreshToken?.isEmpty ?? true;
     if (!invalidAuth) {
-      SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
+      SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
         await loginService.attemptAutoLogin();
         setState(() => loading = false);
       });

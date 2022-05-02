@@ -36,7 +36,7 @@ class CloudStorageService {
     final ImagePicker picker = ImagePicker();
     final xFile = await picker.pickImage(source: ImageSource.gallery);
     if (xFile == null) return null;
-    return await ImageCropper.cropImage(
+    return await ImageCropper().cropImage(
         sourcePath: xFile.path,
         aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0));
   }

@@ -9,15 +9,15 @@
     "tasks": [
       {
         "label": "build_runner_prod",
-        "command": "dart",
+        "command": "fvm",
         "type": "shell",
-        "args": ["scripts/build_graphql.dart", "https://api.whatado.io/get_schema"]
+        "args": ["dart", "scripts/build_graphql.dart", "https://api.whatado.io/get_schema"]
       },
       {
         "label": "build_runner_local_dev",
-        "command": "dart",
+        "command": "fvm",
         "type": "shell",
-        "args": ["scripts/build_graphql.dart", "http://192.168.86.148:4000/get_schema"]
+        "args": ["dart", "scripts/build_graphql.dart", "http://192.168.0.96:4000/get_schema"]
       }
     ]
   },
@@ -77,5 +77,8 @@
       }
     ],
     "compounds": []
+  },
+  "settings": {
+    "dart.flutterSdkPath": "/Users/jared/fvm/versions/beta"
   }
 }
