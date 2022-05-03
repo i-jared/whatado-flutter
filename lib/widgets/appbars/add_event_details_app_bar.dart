@@ -106,7 +106,6 @@ class AddEventDetailsAppBar extends StatelessWidget
                         wannagoIds: [],
                         invitedIds:
                             eventState.selectedUsers.map((u) => u.id).toList(),
-                        // TODO: add group size / tags
                       ));
                     } catch (e) {
                       eventState.clear();

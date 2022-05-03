@@ -44,7 +44,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
       type: RequestType.image,
     );
     final album = albums.first;
-    final nextAssets = await album.getAssetListPaged(page, 40);
+    final nextAssets = await album.getAssetListPaged(page: page, size: 40);
     if (nextAssets.isEmpty) {
       setState(() => paginationDone = true);
     }
@@ -53,7 +53,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     List<Map<String, dynamic>> tempLoadedAssets = await Future.wait(nextAssets
         .map((asset) async => {
               "asset": asset,
-              "thumb": await asset.thumbData,
+              "thumb": await asset.thumbnailData,
               "valid": await asset.exists && asset.type == AssetType.image
             })
         .toList());
@@ -72,14 +72,14 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
         final albums = await PhotoManager.getAssetPathList(
             onlyAll: true, type: RequestType.image);
         final album = albums.first;
-        final recentAssets = await album.getAssetListPaged(page, 40);
+        final recentAssets =
+            await album.getAssetListPaged(page: page, size: 40);
         List<Map<String, dynamic>> tempLoadedAssets =
             await Future.wait(recentAssets
                 .map((asset) async => {
                       "asset": asset,
-                      "thumb": await asset.thumbData,
-                      "valid":
-                          await asset.exists && asset.type == AssetType.image
+                      "thumb": await asset.thumbnailData,
+                      "valid": asset.type == AssetType.image
                     })
                 .toList());
         await eventState.setImage(tempLoadedAssets
@@ -89,6 +89,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
           page = 1;
         });
       } catch (e) {
+        print(e.toString());
         setState(() => noImages = true);
       }
     } else {

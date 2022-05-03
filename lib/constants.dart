@@ -14,13 +14,3 @@ String get whatadoRefreshUrl => EnvironmentConfig.flavor == PROD
 String get PROD => "PROD";
 // ignore: non_constant_identifier_names
 String get LOCAL_DEV => "LOCAL_DEV";
-
-//TODO: populate customized feed
-
-//TODO: create management console
-
-//TODO: problems: users need post history
-
-
-
-

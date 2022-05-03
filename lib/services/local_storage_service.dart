@@ -10,7 +10,7 @@ class LocalStorageService {
   String? get flavor => _fetch<String?>('flavor');
 
   set initialized(bool? initialized) =>
-      _set('initialized', {'initialized', initialized});
+      _set('initialized', {'initialized': initialized});
   bool? get initialized => _fetch<bool?>('initialized');
 
   set refreshToken(String? token) =>

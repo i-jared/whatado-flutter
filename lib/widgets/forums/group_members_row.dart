@@ -103,12 +103,6 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                             : user.photoUrls.first,
                                         radius: 28),
                                     onLongPress: removeUser(user)),
-                                //TODO add event 'only friends' option
-                                //TODO friend selection in activities that automatically add them to the event and they immediately
-                                //receive an invitation
-                                //TODO surveys in chat that don't send notifications to the group. Add them in a plus butotn next to chat
-                                //like in android google messages
-                                //TODO LATER stack profiles in messages and expand on click to what we have now
                               ],
                             ),
                           ))
