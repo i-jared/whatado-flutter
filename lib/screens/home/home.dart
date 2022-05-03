@@ -40,6 +40,7 @@ class HomeScreen extends StatefulWidget {
     // return MyProfileAppBar();
   }
 
+//TODO: show contacts prompt in setup
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
 }

@@ -51,7 +51,7 @@ class _TargetAudienceState extends State<TargetAudience> {
 
   final privacies = [
     {'privacy': Privacy.public, 'text': 'PUBLIC'},
-    {'privacy': Privacy.friends, 'text': 'FRIENDS'},
+    {'privacy': Privacy.friends, 'text': 'GROUPS'}, // TODO: implement groups
     {'privacy': Privacy.private, 'text': 'PRIVATE'},
   ];
 

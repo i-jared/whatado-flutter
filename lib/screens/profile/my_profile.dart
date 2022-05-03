@@ -111,6 +111,10 @@ class _MyProfileState extends State<MyProfile> {
                       MaterialPageRoute(
                           builder: (context) => EditMyProfile(user: user)))),
               SizedBox(height: sectionSpacing * 2),
+              Text('Groups', style: headingStyle),
+              SizedBox(height: headingSpacing),
+              // TODO: implement groups
+              SizedBox(height: sectionSpacing * 2),
               Row(
                 children: [
                   Text('Interests', style: headingStyle),

@@ -1,3 +1,4 @@
+import 'package:add_2_calendar/add_2_calendar.dart' as cal;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,6 +11,7 @@ import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/add_event/add_friends.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/home/user_list_page.dart';
+import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
@@ -53,6 +55,12 @@ class _EventDetailsState extends State<EventDetails> {
             !w.declined && !event.invited.map((i) => i.id).contains(w.user.id))
         .toList();
     final wannagoUsers = wannago.map((w) => w.user).toList();
+
+    void myProfileNav() {
+      homeState.bottomBarPageNo = 4;
+      print('navigate');
+      Navigator.pop(context);
+    }
 
     final removeUser = (EventUser user) => userState.user?.id ==
                 event.creator.id &&
@@ -131,26 +139,27 @@ class _EventDetailsState extends State<EventDetails> {
                             children: [
                               InkWell(
                                 onTap: () {
-                                  if (event.creator.id != userState.user?.id) {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => UserProfile(
-                                                user: event.creator))).then(
-                                        (_) async {
-                                      await Future.delayed(
-                                          Duration(milliseconds: 500));
-                                      SystemChrome.setSystemUIOverlayStyle(
-                                          SystemUiOverlayStyle(
-                                        statusBarBrightness: Brightness.dark,
-                                        statusBarIconBrightness:
-                                            Brightness.dark,
-                                        systemNavigationBarColor:
-                                            Colors.grey[50],
-                                        statusBarColor: Colors.transparent,
-                                      ));
-                                    });
-                                  }
+                                  event.creator.id == userState.user?.id
+                                      ? myProfileNav()
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => UserProfile(
+                                                  user: event.creator))).then(
+                                          (_) async {
+                                          await Future.delayed(
+                                              Duration(milliseconds: 500));
+                                          SystemChrome.setSystemUIOverlayStyle(
+                                              SystemUiOverlayStyle(
+                                            statusBarBrightness:
+                                                Brightness.dark,
+                                            statusBarIconBrightness:
+                                                Brightness.dark,
+                                            systemNavigationBarColor:
+                                                Colors.grey[50],
+                                            statusBarColor: Colors.transparent,
+                                          ));
+                                        });
                                 },
                                 child: UserAvatar(
                                     url: event.creator.photoUrls.isEmpty
@@ -175,16 +184,22 @@ class _EventDetailsState extends State<EventDetails> {
                     SizedBox(height: headingSpacing),
                     Divider(),
                     SizedBox(height: headingSpacing),
-                    Row(
-                      children: [
-                        ShadedIcon(
-                            icon: Icons.calendar_today_outlined,
-                            width: 50,
-                            iconSize: 25),
-                        SizedBox(width: 10),
-                        Text(dateFormat.format(event.time),
-                            style: TextStyle(fontSize: 18)),
-                      ],
+                    InkWell(
+                      onTap: () => cal.Add2Calendar.addEvent2Cal(cal.Event(
+                          title: event.title,
+                          startDate: event.time,
+                          endDate: event.time.add(Duration(hours: 1)))),
+                      child: Row(
+                        children: [
+                          ShadedIcon(
+                              icon: Icons.calendar_today_outlined,
+                              width: 50,
+                              iconSize: 25),
+                          SizedBox(width: 10),
+                          Text(dateFormat.format(event.time),
+                              style: TextStyle(fontSize: 18)),
+                        ],
+                      ),
                     ),
                     SizedBox(height: headingSpacing),
                     Divider(),
