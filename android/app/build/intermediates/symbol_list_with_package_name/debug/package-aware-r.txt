@@ -1080,6 +1080,7 @@ menu ucrop_menu_activity
 mipmap ic_launcher
 mipmap ic_notification
 mipmap launcher_icon
+raw keep
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description

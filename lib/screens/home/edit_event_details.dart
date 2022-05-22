@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/services/places_service.dart';
+import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/edit_event_state.dart';
 import 'package:whatado/widgets/appbars/edit_event_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -49,9 +52,27 @@ class EditEventDetails extends StatelessWidget {
                     SizedBox(height: sectionSpacing),
                     Text('LOCATION', style: headingStyle),
                     SizedBox(height: headingSpacing),
-                    MyTextField(
-                      controller: editEventState.locationController,
-                      hintText: 'Enter location',
+                    TypeAheadFormField(
+                      direction: AxisDirection.up,
+                      noItemsFoundBuilder: (context) => SizedBox.shrink(),
+                      onSuggestionSelected: (String place) {
+                        editEventState.locationController.text = place;
+                      },
+                      suggestionsCallback: (String pattern) async {
+                        final result = await placesService.findPlace(pattern);
+                        return result;
+                      },
+                      itemBuilder: (context, String place) =>
+                          ListTile(title: Text(place)),
+                      textFieldConfiguration: TextFieldConfiguration(
+                        decoration: InputDecoration(
+                          isDense: true,
+                          hintText: 'Enter location',
+                          hintStyle: TextStyle(fontSize: 13),
+                          contentPadding: EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        controller: editEventState.locationController,
+                      ),
                     ),
                     SizedBox(height: sectionSpacing),
                     Text('TIME', style: headingStyle),

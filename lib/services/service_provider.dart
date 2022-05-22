@@ -6,6 +6,7 @@ import 'package:whatado/services/http_client_service.dart';
 import 'package:whatado/services/local_notification_service.dart';
 import 'package:whatado/services/local_storage_service.dart';
 import 'package:whatado/services/login_service.dart';
+import 'package:whatado/services/places_service.dart';
 
 final _injector = Injector.appInstance;
 
@@ -31,6 +32,10 @@ LoginService get loginService {
 
 CloudStorageService get cloudStorageService {
   return _injector.get<CloudStorageService>();
+}
+
+PlacesService get placesService {
+  return _injector.get<PlacesService>();
 }
 
 LocalNotificationService get localNotificationService {

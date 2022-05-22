@@ -10,4 +10,8 @@ class HttpClientService {
     return await client
         .post(Uri.parse(url), headers: {'authorization': 'Bearer $token'});
   }
+
+  Future<http.Response> get(String url) async {
+    return client.get(Uri.parse(url));
+  }
 }

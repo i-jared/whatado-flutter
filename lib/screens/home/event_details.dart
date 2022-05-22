@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:whatado/models/event.dart';
@@ -278,17 +279,21 @@ class _EventDetailsState extends State<EventDetails> {
                               style: TextStyle(color: Color(0xff0073ab)))),
                     Divider(),
                     SizedBox(height: headingSpacing),
-                    Row(
-                      children: [
-                        ShadedIcon(
-                            icon: Icons.location_on_outlined,
-                            width: 50,
-                            iconSize: 25),
-                        SizedBox(width: 10),
-                        Flexible(
-                            child: Text(event.location,
-                                style: TextStyle(fontSize: 18))),
-                      ],
+                    InkWell(
+                      onTap: () async =>
+                          await MapsLauncher.launchQuery(event.location),
+                      child: Row(
+                        children: [
+                          ShadedIcon(
+                              icon: Icons.location_on_outlined,
+                              width: 50,
+                              iconSize: 25),
+                          SizedBox(width: 10),
+                          Flexible(
+                              child: Text(event.location,
+                                  style: TextStyle(fontSize: 18))),
+                        ],
+                      ),
                     ),
                     SizedBox(height: headingSpacing),
                     Divider(),

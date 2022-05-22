@@ -54,7 +54,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
         .map((asset) async => {
               "asset": asset,
               "thumb": await asset.thumbnailData,
-              "valid": await asset.exists && asset.type == AssetType.image
+              "valid": asset.type == AssetType.image
             })
         .toList());
     loadedAssets.addAll(tempLoadedAssets);

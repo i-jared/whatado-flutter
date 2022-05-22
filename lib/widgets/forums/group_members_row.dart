@@ -77,26 +77,35 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                             child: Column(
                               children: [
                                 InkWell(
-                                    onTap: () => Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        UserProfile(
-                                                            user: user)))
-                                            .then((_) async {
-                                          await Future.delayed(
-                                              Duration(milliseconds: 500));
-                                          SystemChrome.setSystemUIOverlayStyle(
-                                              SystemUiOverlayStyle(
-                                            statusBarBrightness:
-                                                Brightness.dark,
-                                            statusBarIconBrightness:
-                                                Brightness.dark,
-                                            systemNavigationBarColor:
-                                                Colors.grey[50],
-                                            statusBarColor: Colors.transparent,
-                                          ));
-                                        }),
+                                    onTap: user.id == userState.user?.id
+                                        ? () {
+                                            homeState.bottomBarPageNo = 3;
+                                            if (Navigator.canPop(context))
+                                              Navigator.popUntil(context,
+                                                  (route) => route.isFirst);
+                                          }
+                                        : () => Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            UserProfile(
+                                                                user: user)))
+                                                .then((_) async {
+                                              await Future.delayed(
+                                                  Duration(milliseconds: 500));
+                                              SystemChrome
+                                                  .setSystemUIOverlayStyle(
+                                                      SystemUiOverlayStyle(
+                                                statusBarBrightness:
+                                                    Brightness.dark,
+                                                statusBarIconBrightness:
+                                                    Brightness.dark,
+                                                systemNavigationBarColor:
+                                                    Colors.grey[50],
+                                                statusBarColor:
+                                                    Colors.transparent,
+                                              ));
+                                            }),
                                     child: UserAvatar(
                                         url: user.photoUrls.isEmpty
                                             ? null

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/add_event/target_audience.dart';
+import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -103,9 +105,27 @@ class _AddEventDetailsState extends State<AddEventDetails> {
               ],
             ),
             SizedBox(height: headingSpacing),
-            MyTextField(
-              hintText: 'Add location',
-              controller: eventState.locationController,
+            TypeAheadFormField(
+              direction: AxisDirection.up,
+              noItemsFoundBuilder: (context) => SizedBox.shrink(),
+              onSuggestionSelected: (String place) {
+                eventState.locationController.text = place;
+              },
+              suggestionsCallback: (String pattern) async {
+                final result = await placesService.findPlace(pattern);
+                return result;
+              },
+              itemBuilder: (context, String place) =>
+                  ListTile(title: Text(place)),
+              textFieldConfiguration: TextFieldConfiguration(
+                decoration: InputDecoration(
+                  isDense: true,
+                  hintText: 'Enter location',
+                  hintStyle: TextStyle(fontSize: 13),
+                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                ),
+                controller: eventState.locationController,
+              ),
             ),
             SizedBox(height: sectionSpacing),
             Text('DATE & TIME', style: headingStyle),
