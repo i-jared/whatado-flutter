@@ -206,6 +206,25 @@ class _EventDetailsState extends State<EventDetails> {
                     Divider(),
                     SizedBox(height: headingSpacing),
                     InkWell(
+                      onTap: () async =>
+                          await MapsLauncher.launchQuery(event.location),
+                      child: Row(
+                        children: [
+                          ShadedIcon(
+                              icon: Icons.location_on_outlined,
+                              width: 50,
+                              iconSize: 25),
+                          SizedBox(width: 10),
+                          Flexible(
+                              child: Text(event.location,
+                                  style: TextStyle(fontSize: 18))),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: headingSpacing),
+                    Divider(),
+                    SizedBox(height: headingSpacing),
+                    InkWell(
                       onTap: event.invited.isEmpty
                           ? null
                           : () => Navigator.push(
@@ -277,25 +296,6 @@ class _EventDetailsState extends State<EventDetails> {
                                       invitedUsers: event.invited))),
                           child: Text('add friends',
                               style: TextStyle(color: Color(0xff0073ab)))),
-                    Divider(),
-                    SizedBox(height: headingSpacing),
-                    InkWell(
-                      onTap: () async =>
-                          await MapsLauncher.launchQuery(event.location),
-                      child: Row(
-                        children: [
-                          ShadedIcon(
-                              icon: Icons.location_on_outlined,
-                              width: 50,
-                              iconSize: 25),
-                          SizedBox(width: 10),
-                          Flexible(
-                              child: Text(event.location,
-                                  style: TextStyle(fontSize: 18))),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: headingSpacing),
                     Divider(),
                     SizedBox(height: headingSpacing),
                     if (event.creator.id == userState.user?.id)

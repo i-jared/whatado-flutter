@@ -10,12 +10,13 @@ class UserGqlProvider {
     final query = MeQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
+      print(result);
       print('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
         print(element.message);
       });
     }
-
+    print(result);
     final root = result.data?['me'];
     final data = root != null && root['nodes'] != null
         ? User.fromGqlData(root['nodes'])

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
 
 class User {
@@ -17,6 +18,7 @@ class User {
   List<EventUser> friends;
   List<EventUser> requestedFriends;
   List<EventUser> friendRequests;
+  List<Group> groups;
   User({
     required this.id,
     required this.name,
@@ -31,44 +33,53 @@ class User {
     required this.friends,
     required this.friendRequests,
     required this.requestedFriends,
+    required this.groups,
   });
 
   factory User.fromGqlData(Map data) {
     return User(
-        id: data['id'],
-        phone: data['phone'] ?? '',
-        deviceId: data['deviceId'] ?? '',
-        name: data['name'] ?? '',
-        bio: data['bio'] ?? '',
-        verified: data['verified'] ?? false,
-        photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
-        interests: List<Interest>.from(data['interests']
-                ?.map((val) => Interest.fromGqlData(val))
-                .toList() ??
-            []),
-        blockedUsers: List<EventUser>.from(data['blockedUsers']
-                ?.map((user) => EventUser.fromGqlData(user))
-                .toList() ??
-            []),
-        friends: List<EventUser>.from([
-          ...(data['inverseFriends']
-                  ?.map((user) => EventUser.fromGqlData(user)) ??
+      id: data['id'],
+      phone: data['phone'] ?? '',
+      deviceId: data['deviceId'] ?? '',
+      name: data['name'] ?? '',
+      bio: data['bio'] ?? '',
+      verified: data['verified'] ?? false,
+      photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
+      interests: List<Interest>.from(
+          data['interests']?.map((val) => Interest.fromGqlData(val)).toList() ??
               []),
-          ...(data['friends']
-                  ?.map((user) => EventUser.fromGqlData(user))
-                  .toList() ??
-              [])
-        ]),
-        friendRequests: List<EventUser>.from(data['friendRequests']
+      blockedUsers: List<EventUser>.from(data['blockedUsers']
+              ?.map((user) => EventUser.fromGqlData(user))
+              .toList() ??
+          []),
+      friends: List<EventUser>.from([
+        ...(data['inverseFriends']
+                ?.map((user) => EventUser.fromGqlData(user)) ??
+            []),
+        ...(data['friends']
                 ?.map((user) => EventUser.fromGqlData(user))
                 .toList() ??
-            []),
-        requestedFriends: List<EventUser>.from(data['requestedFriends']
-                ?.map((user) => EventUser.fromGqlData(user))
-                .toList() ??
-            []),
-        birthday: data['birthday'] == null
-            ? DateTime.now()
-            : DateTime.parse(data['birthday']));
+            [])
+      ]),
+      friendRequests: List<EventUser>.from(data['friendRequests']
+              ?.map((user) => EventUser.fromGqlData(user))
+              .toList() ??
+          []),
+      requestedFriends: List<EventUser>.from(data['requestedFriends']
+              ?.map((user) => EventUser.fromGqlData(user))
+              .toList() ??
+          []),
+      birthday: data['birthday'] == null
+          ? DateTime.now()
+          : DateTime.parse(data['birthday']),
+      groups: List<Group>.from(
+          data['groups']?.map((group) => Group.fromGqlData(group)).toList() ??
+              []),
+    );
+  }
+
+  @override
+  String toString() {
+    return '{id: $id, phone: $phone, name: $name}';
   }
 }

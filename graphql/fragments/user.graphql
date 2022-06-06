@@ -21,6 +21,9 @@ fragment UserFields on User {
   friendRequests {
     ...EventUser
   }
+  groups {
+    ...GroupFields
+  }
   interests {
     id
     title

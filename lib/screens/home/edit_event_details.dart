@@ -4,7 +4,6 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
-import 'package:whatado/services/places_service.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/edit_event_state.dart';
 import 'package:whatado/widgets/appbars/edit_event_app_bar.dart';

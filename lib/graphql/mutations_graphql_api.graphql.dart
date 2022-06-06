@@ -38,6 +38,7 @@ mixin EventFieldsMixin {
   late Gender filterGender;
   late int filterMinAge;
   late int filterMaxAge;
+  int? groupId;
 }
 mixin EventUserMixin {
   late int id;
@@ -65,9 +66,15 @@ mixin UserFieldsMixin {
   late List<UserFieldsMixin$Friends> friends;
   late List<UserFieldsMixin$RequestedFriends> requestedFriends;
   late List<UserFieldsMixin$FriendRequests> friendRequests;
+  late List<UserFieldsMixin$Groups> groups;
   late List<UserFieldsMixin$Interests> interests;
   late List<UserFieldsMixin$MyEvents> myEvents;
   late List<UserFieldsMixin$ChatNotifications> chatNotifications;
+}
+mixin GroupFieldsMixin {
+  late int id;
+  late String name;
+  late List<GroupFieldsMixin$Users> users;
 }
 mixin ForumFieldsMixin {
   late int id;
@@ -237,7 +244,8 @@ class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
         filterRadius,
         filterGender,
         filterMinAge,
-        filterMaxAge
+        filterMaxAge,
+        groupId
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -406,7 +414,8 @@ class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
         filterRadius,
         filterGender,
         filterMinAge,
-        filterMaxAge
+        filterMaxAge,
+        groupId
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -588,6 +597,7 @@ class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
         friends,
         requestedFriends,
         friendRequests,
+        groups,
         interests,
         myEvents,
         chatNotifications
@@ -725,6 +735,20 @@ class UserFieldsMixin$FriendRequests extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$Groups extends JsonSerializable
+    with EquatableMixin, GroupFieldsMixin {
+  UserFieldsMixin$Groups();
+
+  factory UserFieldsMixin$Groups.fromJson(Map<String, dynamic> json) =>
+      _$UserFieldsMixin$GroupsFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, users];
+  @override
+  Map<String, dynamic> toJson() => _$UserFieldsMixin$GroupsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$Interests extends JsonSerializable with EquatableMixin {
   UserFieldsMixin$Interests();
 
@@ -777,6 +801,20 @@ class UserFieldsMixin$ChatNotifications extends JsonSerializable
   @override
   Map<String, dynamic> toJson() =>
       _$UserFieldsMixin$ChatNotificationsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupFieldsMixin$Users extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  GroupFieldsMixin$Users();
+
+  factory GroupFieldsMixin$Users.fromJson(Map<String, dynamic> json) =>
+      _$GroupFieldsMixin$UsersFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$GroupFieldsMixin$UsersToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -2075,7 +2113,8 @@ class RemoveInvite$Mutation$RemoveInvite$Nodes extends JsonSerializable
         filterRadius,
         filterGender,
         filterMinAge,
-        filterMaxAge
+        filterMaxAge,
+        groupId
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -2498,7 +2537,8 @@ class AddInvite$Mutation$AddInvite$Nodes extends JsonSerializable
         filterRadius,
         filterGender,
         filterMinAge,
-        filterMaxAge
+        filterMaxAge,
+        groupId
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -2642,7 +2682,8 @@ class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
         filterRadius,
         filterGender,
         filterMinAge,
-        filterMaxAge
+        filterMaxAge,
+        groupId
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -2846,9 +2887,101 @@ class DeleteWannago$Mutation extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$DeleteWannago$MutationToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class CreateGroup$Mutation$CreateGroup$Nodes extends JsonSerializable
+    with EquatableMixin, GroupFieldsMixin {
+  CreateGroup$Mutation$CreateGroup$Nodes();
+
+  factory CreateGroup$Mutation$CreateGroup$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateGroup$Mutation$CreateGroup$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, users];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateGroup$Mutation$CreateGroup$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateGroup$Mutation$CreateGroup$Errors extends JsonSerializable
+    with EquatableMixin {
+  CreateGroup$Mutation$CreateGroup$Errors();
+
+  factory CreateGroup$Mutation$CreateGroup$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateGroup$Mutation$CreateGroup$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateGroup$Mutation$CreateGroup$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateGroup$Mutation$CreateGroup extends JsonSerializable
+    with EquatableMixin {
+  CreateGroup$Mutation$CreateGroup();
+
+  factory CreateGroup$Mutation$CreateGroup.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateGroup$Mutation$CreateGroupFromJson(json);
+
+  bool? ok;
+
+  CreateGroup$Mutation$CreateGroup$Nodes? nodes;
+
+  List<CreateGroup$Mutation$CreateGroup$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateGroup$Mutation$CreateGroupToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateGroup$Mutation extends JsonSerializable with EquatableMixin {
+  CreateGroup$Mutation();
+
+  factory CreateGroup$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CreateGroup$MutationFromJson(json);
+
+  late CreateGroup$Mutation$CreateGroup createGroup;
+
+  @override
+  List<Object?> get props => [createGroup];
+  @override
+  Map<String, dynamic> toJson() => _$CreateGroup$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupInput extends JsonSerializable with EquatableMixin {
+  GroupInput({this.id, required this.name, required this.userIds});
+
+  factory GroupInput.fromJson(Map<String, dynamic> json) =>
+      _$GroupInputFromJson(json);
+
+  int? id;
+
+  late String name;
+
+  late List<int> userIds;
+
+  @override
+  List<Object?> get props => [id, name, userIds];
+  @override
+  Map<String, dynamic> toJson() => _$GroupInputToJson(this);
+}
+
 enum Privacy {
-  @JsonValue('FRIENDS')
-  friends,
+  @JsonValue('GROUP')
+  group,
   @JsonValue('PRIVATE')
   private,
   @JsonValue('PUBLIC')
@@ -3326,6 +3459,12 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'groupId'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
@@ -3612,6 +3751,12 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'groupId'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
@@ -3844,6 +3989,15 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   name: NameNode(value: 'EventUser'), directives: [])
             ])),
         FieldNode(
+            name: NameNode(value: 'groups'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'GroupFields'), directives: [])
+            ])),
+        FieldNode(
             name: NameNode(value: 'interests'),
             alias: null,
             arguments: [],
@@ -3931,6 +4085,34 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             arguments: [],
             directives: [],
             selectionSet: null)
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'GroupFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Group'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'users'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ]))
       ]))
 ]);
 
@@ -6029,6 +6211,12 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'groupId'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
@@ -6917,6 +7105,12 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'groupId'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
@@ -7298,6 +7492,12 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             alias: null,
             arguments: [],
             directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'groupId'),
+            alias: null,
+            arguments: [],
+            directives: [],
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
@@ -7452,4 +7652,168 @@ class DeleteWannagoMutation
   @override
   DeleteWannago$Mutation parse(Map<String, dynamic> json) =>
       DeleteWannago$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateGroupArguments extends JsonSerializable with EquatableMixin {
+  CreateGroupArguments({required this.groupInput});
+
+  @override
+  factory CreateGroupArguments.fromJson(Map<String, dynamic> json) =>
+      _$CreateGroupArgumentsFromJson(json);
+
+  late GroupInput groupInput;
+
+  @override
+  List<Object?> get props => [groupInput];
+  @override
+  Map<String, dynamic> toJson() => _$CreateGroupArgumentsToJson(this);
+}
+
+final CREATE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME = 'createGroup';
+final CREATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'createGroup'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'groupInput')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'GroupInput'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'createGroup'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'options'),
+                  value: VariableNode(name: NameNode(value: 'groupInput')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'GroupFields'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'GroupFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Group'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'users'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class CreateGroupMutation
+    extends GraphQLQuery<CreateGroup$Mutation, CreateGroupArguments> {
+  CreateGroupMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CREATE_GROUP_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = CREATE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final CreateGroupArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CreateGroup$Mutation parse(Map<String, dynamic> json) =>
+      CreateGroup$Mutation.fromJson(json);
 }

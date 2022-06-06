@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/screens/home/group_list_page.dart';
+import 'package:whatado/screens/profile/create_group.dart';
 import 'package:whatado/screens/profile/edit_my_profile.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:whatado/widgets/users/user_heading.dart';
 
@@ -44,7 +47,7 @@ class _MyProfileState extends State<MyProfile> {
     final userState = Provider.of<UserState>(context);
     final user = userState.user!;
     if (userState.user == null) {
-      SchedulerBinding.instance?.scheduleFrameCallback((timeStamp) async {
+      SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
         await userState.getUser();
       });
       return Center(child: CircularProgressIndicator());
@@ -111,9 +114,47 @@ class _MyProfileState extends State<MyProfile> {
                       MaterialPageRoute(
                           builder: (context) => EditMyProfile(user: user)))),
               SizedBox(height: sectionSpacing * 2),
-              Text('Groups', style: headingStyle),
+              Row(children: [
+                Text('Groups', style: headingStyle),
+                Spacer(),
+                IconButton(
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreateGroup(),
+                        )),
+                    icon: Icon(Icons.group_add_outlined))
+              ]),
               SizedBox(height: headingSpacing),
-              // TODO: implement groups
+              InkWell(
+                onTap: user.groups.isEmpty
+                    ? null
+                    : () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (BuildContext context) => GroupListPage(
+                                title: "Groups", groups: user.groups))),
+                child: Container(
+                    height: 40,
+                    child: user.groups.isEmpty
+                        ? Container(
+                            width: 40,
+                            alignment: Alignment.center,
+                            child: Text("--", style: TextStyle(fontSize: 30)),
+                          )
+                        : Row(
+                            children: [
+                              PictureWaterfall(
+                                  radius: 20,
+                                  loading: false,
+                                  users: user.groups.first.users),
+                              SizedBox(width: 24),
+                              user.groups.length > 1
+                                  ? Text('+ ${user.groups.length - 1} more')
+                                  : SizedBox.shrink(),
+                            ],
+                          )),
+              ),
               SizedBox(height: sectionSpacing * 2),
               Row(
                 children: [

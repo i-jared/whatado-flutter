@@ -1,0 +1,12 @@
+mutation createGroup($groupInput: GroupInput!) {
+  createGroup(options: $groupInput) {
+    ok
+    nodes {
+      ...GroupFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

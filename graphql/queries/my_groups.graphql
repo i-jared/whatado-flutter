@@ -1,0 +1,12 @@
+query myGroups {
+  myGroups {
+    ok
+    nodes {
+      ...GroupFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

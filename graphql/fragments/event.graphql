@@ -29,4 +29,5 @@ fragment EventFields on Event {
   filterGender
   filterMinAge
   filterMaxAge
+  groupId
 }

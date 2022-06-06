@@ -10,7 +10,8 @@ import 'package:whatado/widgets/users/user_avatar.dart';
 
 class UserListItem extends StatelessWidget {
   final EventUser user;
-  UserListItem(this.user);
+  final bool selected;
+  UserListItem(this.user, {this.selected = false});
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +39,21 @@ class UserListItem extends StatelessWidget {
               }),
       child: Row(
         children: [
-          UserAvatar(
-              url: user.photoUrls.isEmpty ? null : user.photoUrls.first,
-              radius: 25),
+          selected
+              ? Container(
+                  height: 50,
+                  width: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.grey[850],
+                  ),
+                  child: Icon(
+                    Icons.check,
+                    color: Colors.white,
+                  ))
+              : UserAvatar(
+                  url: user.photoUrls.isEmpty ? null : user.photoUrls.first,
+                  radius: 25),
           SizedBox(width: 15),
           Flexible(
             child: Text(

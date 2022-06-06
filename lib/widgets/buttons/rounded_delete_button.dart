@@ -14,7 +14,7 @@ class RoundedDeleteButton extends StatelessWidget {
           shape: MaterialStateProperty.all(
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(25))),
           elevation: MaterialStateProperty.resolveWith(
-              (states) => onPressed == null || disabled ? 0 : 30),
+              (states) => onPressed == null || disabled ? 0 : 10),
           fixedSize: MaterialStateProperty.all(Size(double.infinity, 50)),
           backgroundColor: MaterialStateProperty.resolveWith((states) =>
               onPressed == null || disabled ? Colors.grey[300] : Colors.red)),

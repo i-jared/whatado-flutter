@@ -1,0 +1,7 @@
+fragment GroupFields on Group {
+    id
+    name
+    users {
+        ...EventUser
+    }
+}
