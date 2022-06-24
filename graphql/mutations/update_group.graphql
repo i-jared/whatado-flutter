@@ -1,0 +1,12 @@
+mutation updateGroup($groupInput: GroupFilterInput!) {
+  updateGroup(options: $groupInput) {
+    ok
+    nodes {
+      ...GroupFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

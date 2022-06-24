@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';

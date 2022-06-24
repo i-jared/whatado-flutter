@@ -4,6 +4,8 @@ import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/providers/graphql/group_provider.dart';
+import 'package:whatado/screens/users/select_users_page.dart';
+import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/list_tools.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
@@ -31,10 +33,17 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
     groupNameController.addListener(() => setState(() {}));
   }
 
+// TODO: add owner to group.
+// TODO: only display editing to owner.
+// TODO: stop non owners in server.
+// TODO: non owners have leave button with dialog instead of edit.
+// TODO: owner has delete button.
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
+    final homeState = Provider.of<HomeState>(context);
     final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+    List<EventUser> groupList = [...defaultFriends, ...homeState.selectedUsers];
     return Container(
         color: Colors.grey[50],
         child: SafeArea(
@@ -43,20 +52,21 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
                 title: 'Edit Group',
                 disabled: loading ||
                     (groupNameController.text == widget.group.name &&
-                        listEquals(defaultFriends, widget.group.users)),
+                        listEquals(groupList, widget.group.users)),
                 buttonTitle: 'SAVE',
                 onSave: () async {
                   setState(() => loading = true);
-                  final response = await GroupGqlProvider().createGroup(
-                      GroupInput(name: groupNameController.text, userIds: [
-                    userState.user!.id,
-                    ...selectedFriends.map((u) => u.id)
-                  ]));
+                  final response = await GroupGqlProvider().updateGroup(
+                      GroupFilterInput(
+                          id: widget.group.id,
+                          name: groupNameController.text,
+                          userIds: [...groupList.map((u) => u.id)]));
+                  homeState.setSelectedGroup([]);
                   if (response.ok) {
                     await userState.getUser();
                   }
                   setState(() => loading = false);
-                  Navigator.pop(context);
+                  Navigator.popUntil(context, (route) => route.isFirst);
                 }),
             body: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24),
@@ -75,10 +85,10 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
                     SizedBox(height: 20),
                     Text('Members', style: headingStyle),
                     SizedBox(height: 20),
-                    if (defaultFriends.isEmpty)
+                    if (groupList.isEmpty)
                       Expanded(child: Center(child: Text('no friends'))),
-                    if (defaultFriends.isNotEmpty)
-                      ...defaultFriends.map((friend) => InkWell(
+                    if (groupList.isNotEmpty)
+                      ...groupList.map((friend) => InkWell(
                             onTap: () {
                               if (selectedFriends.contains(friend)) {
                                 selectedFriends.remove(friend);
@@ -107,6 +117,10 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
                                       onPressed: () {
                                         selectedFriends.remove(friend);
                                         defaultFriends.remove(friend);
+                                        homeState.setSelectedGroup(homeState
+                                            .selectedUsers
+                                            .where((u) => u != friend)
+                                            .toList());
                                         setState(() {
                                           selectedFriends = selectedFriends;
                                           defaultFriends = defaultFriends;
@@ -118,7 +132,11 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
                             ),
                           )),
                     InkWell(
-                      onTap: () => null,
+                      onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  SelectUsersPage(groupMembers: groupList))),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8.0),
                         child: Row(

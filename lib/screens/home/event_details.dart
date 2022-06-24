@@ -59,7 +59,6 @@ class _EventDetailsState extends State<EventDetails> {
 
     void myProfileNav() {
       homeState.bottomBarPageNo = 4;
-      print('navigate');
       Navigator.pop(context);
     }
 

@@ -12,4 +12,9 @@ class MyQueryResponse<T> {
     this.data,
     this.errors,
   });
+
+  @override
+  String toString() {
+    return '{ok: $ok, data: $data, errors: $errors}';
+  }
 }

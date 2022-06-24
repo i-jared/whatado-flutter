@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -46,6 +47,9 @@ class HomeState extends ChangeNotifier {
   List<Forum>? myForums;
   List<Map<String, dynamic>>? lastMessages;
 
+  // for group selection
+  List<EventUser> selectedUsers;
+
   HomeState()
       : _appBarPageNo = 0,
         _bottomBarPageNo = 0,
@@ -56,6 +60,7 @@ class HomeState extends ChangeNotifier {
         showcase_2 = GlobalKey(),
         showcase_3 = GlobalKey(),
         showcase_4 = GlobalKey(),
+        selectedUsers = [],
         homePageController = PageController(keepPage: true),
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),
@@ -319,6 +324,16 @@ class HomeState extends ChangeNotifier {
       return;
     }
     myForums![i] = forum;
+    notifyListeners();
+  }
+
+  void resetGroupSelection() {
+    selectedUsers = [];
+    notifyListeners();
+  }
+
+  void setSelectedGroup(List<EventUser> newSelectedUsers) {
+    selectedUsers = newSelectedUsers;
     notifyListeners();
   }
 }

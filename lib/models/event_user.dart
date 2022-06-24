@@ -37,4 +37,10 @@ class EventUser {
       birthday: user.birthday,
     );
   }
+
+  @override
+  bool operator ==(o) => o is EventUser && o.id == id;
+
+  @override
+  int get hashCode => id.hashCode;
 }

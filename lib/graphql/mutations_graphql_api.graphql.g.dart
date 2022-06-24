@@ -2552,6 +2552,91 @@ Map<String, dynamic> _$GroupInputToJson(GroupInput instance) =>
       'userIds': instance.userIds,
     };
 
+UpdateGroup$Mutation$UpdateGroup$Nodes
+    _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(
+            Map<String, dynamic> json) =>
+        UpdateGroup$Mutation$UpdateGroup$Nodes()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..users = (json['users'] as List<dynamic>)
+              .map((e) =>
+                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(
+        UpdateGroup$Mutation$UpdateGroup$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'users': instance.users.map((e) => e.toJson()).toList(),
+    };
+
+UpdateGroup$Mutation$UpdateGroup$Errors
+    _$UpdateGroup$Mutation$UpdateGroup$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        UpdateGroup$Mutation$UpdateGroup$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$ErrorsToJson(
+        UpdateGroup$Mutation$UpdateGroup$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+UpdateGroup$Mutation$UpdateGroup _$UpdateGroup$Mutation$UpdateGroupFromJson(
+        Map<String, dynamic> json) =>
+    UpdateGroup$Mutation$UpdateGroup()
+      ..ok = json['ok'] as bool?
+      ..nodes = json['nodes'] == null
+          ? null
+          : UpdateGroup$Mutation$UpdateGroup$Nodes.fromJson(
+              json['nodes'] as Map<String, dynamic>)
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => UpdateGroup$Mutation$UpdateGroup$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroupToJson(
+        UpdateGroup$Mutation$UpdateGroup instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+UpdateGroup$Mutation _$UpdateGroup$MutationFromJson(
+        Map<String, dynamic> json) =>
+    UpdateGroup$Mutation()
+      ..updateGroup = UpdateGroup$Mutation$UpdateGroup.fromJson(
+          json['updateGroup'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UpdateGroup$MutationToJson(
+        UpdateGroup$Mutation instance) =>
+    <String, dynamic>{
+      'updateGroup': instance.updateGroup.toJson(),
+    };
+
+GroupFilterInput _$GroupFilterInputFromJson(Map<String, dynamic> json) =>
+    GroupFilterInput(
+      createdAt: json['createdAt'] as String?,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      updatedAt: json['updatedAt'] as String?,
+      userIds:
+          (json['userIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+    );
+
+Map<String, dynamic> _$GroupFilterInputToJson(GroupFilterInput instance) =>
+    <String, dynamic>{
+      'createdAt': instance.createdAt,
+      'id': instance.id,
+      'name': instance.name,
+      'updatedAt': instance.updatedAt,
+      'userIds': instance.userIds,
+    };
+
 AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
         Map<String, dynamic> json) =>
     AcceptFriendArguments(
@@ -2943,6 +3028,19 @@ CreateGroupArguments _$CreateGroupArgumentsFromJson(
 
 Map<String, dynamic> _$CreateGroupArgumentsToJson(
         CreateGroupArguments instance) =>
+    <String, dynamic>{
+      'groupInput': instance.groupInput.toJson(),
+    };
+
+UpdateGroupArguments _$UpdateGroupArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    UpdateGroupArguments(
+      groupInput:
+          GroupFilterInput.fromJson(json['groupInput'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UpdateGroupArgumentsToJson(
+        UpdateGroupArguments instance) =>
     <String, dynamic>{
       'groupInput': instance.groupInput.toJson(),
     };
