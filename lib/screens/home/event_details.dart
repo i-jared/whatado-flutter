@@ -186,6 +186,7 @@ class _EventDetailsState extends State<EventDetails> {
                     SizedBox(height: headingSpacing),
                     InkWell(
                       onTap: () => cal.Add2Calendar.addEvent2Cal(cal.Event(
+                          location: event.location,
                           title: event.title,
                           startDate: event.time,
                           endDate: event.time.add(Duration(hours: 1)))),

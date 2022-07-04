@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';

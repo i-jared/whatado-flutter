@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';

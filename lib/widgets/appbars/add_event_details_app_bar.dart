@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/create_event_query.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/services/service_provider.dart';

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:whatado/graphql/mutations_graphql_api.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/query_response.dart';

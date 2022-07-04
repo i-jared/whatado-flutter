@@ -1,4 +1,5 @@
 import 'package:whatado/graphql/mutations_graphql_api.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/graphql/subscriptions_graphql_api.dart';
 import 'package:whatado/services/service_provider.dart';
 

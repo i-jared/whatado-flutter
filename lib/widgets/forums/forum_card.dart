@@ -60,242 +60,148 @@ class _ForumCardState extends State<ForumCard> {
           await homeState.myEventsRefresh();
         });
       },
-      child: Stack(
-        children: [
-          Container(
-              padding: EdgeInsets.only(top: 10, bottom: 10, right: 16),
-              child: Column(children: [
-                Row(
-                  children: [
-                    unread
-                        ? Container(
-                            margin: EdgeInsets.symmetric(horizontal: 6),
-                            height: 12,
-                            width: 12,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Color(0xfff7941d)),
-                          )
-                        : const SizedBox(width: 24),
-                    Expanded(
-                      child: Container(
-                        padding: EdgeInsets.symmetric(vertical: 5),
+      child: Container(
+          padding: EdgeInsets.only(top: 10, bottom: 10, right: 16),
+          child: Column(children: [
+            Row(
+              children: [
+                unread
+                    ? Container(
+                        margin: EdgeInsets.symmetric(horizontal: 6),
+                        height: 12,
+                        width: 12,
                         decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(blurRadius: 10, color: Colors.grey[200]!)
-                          ],
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(40),
-                              bottomLeft: Radius.circular(40),
-                              topRight: Radius.circular(20),
-                              bottomRight: Radius.circular(20)),
-                          color: Colors.grey[50],
+                            borderRadius: BorderRadius.circular(10),
+                            color: Color(0xfff7941d)),
+                      )
+                    : const SizedBox(width: 24),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(vertical: 5),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(blurRadius: 10, color: Colors.grey[200]!)
+                      ],
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(40),
+                          bottomLeft: Radius.circular(40),
+                          topRight: Radius.circular(20),
+                          bottomRight: Radius.circular(20)),
+                      color: Colors.grey[50],
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 80,
+                          width: 80,
+                          clipBehavior: Clip.antiAlias,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(100)),
+                          child: !hasImage
+                              ? Image.asset('assets/Whatado_Transparent.png')
+                              : CachedNetworkImage(
+                                  imageUrl: widget.event.imageUrl!),
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 80,
-                              width: 80,
-                              clipBehavior: Clip.antiAlias,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(100)),
-                              child: !hasImage
-                                  ? Image.asset(
-                                      'assets/Whatado_Transparent.png')
-                                  : CachedNetworkImage(
-                                      imageUrl: widget.event.imageUrl!),
-                            ),
-                            SizedBox(width: 5),
-                            Expanded(
-                              child: Column(
+                        SizedBox(width: 5),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0),
+                                child: Text(widget.event.title,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        fontWeight: unread
+                                            ? FontWeight.bold
+                                            : FontWeight.normal)),
+                              ),
+                              SizedBox(height: 4),
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 8.0),
-                                    child: Text(widget.event.title,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 22,
-                                            fontWeight: unread
-                                                ? FontWeight.bold
-                                                : FontWeight.normal)),
-                                  ),
-                                  SizedBox(height: 4),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                          height: 26,
-                                          width: 100,
-                                          child: PictureWaterfall(
-                                              loading: loading,
-                                              users: firstInvited ?? [])),
-                                      if (muted)
-                                        Icon(Icons.volume_off_outlined,
-                                            color: Color(0xfff7941d))
-                                    ],
-                                  ),
-                                  SizedBox(height: 4),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      loading
-                                          ? Flexible(
-                                              flex: 3,
-                                              child: Shimmer.fromColors(
-                                                  baseColor: Colors.grey[200] ??
-                                                      Colors.grey,
-                                                  highlightColor: Colors.white,
-                                                  child: Container(
-                                                      color: Colors.grey[100],
-                                                      height: 15)),
-                                            )
-                                          : Flexible(
-                                              flex: 5,
-                                              child: Text(
-                                                  widget.lastChat?.text ?? '',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyle(
-                                                      fontWeight: unread
-                                                          ? FontWeight.bold
-                                                          : FontWeight.normal)),
-                                            ),
-                                      const SizedBox(width: 20),
-                                      loading
-                                          ? Flexible(
-                                              flex: 1,
-                                              child: Shimmer.fromColors(
-                                                  baseColor: Colors.grey[200] ??
-                                                      Colors.grey,
-                                                  highlightColor: Colors.white,
-                                                  child: Container(
-                                                      color: Colors.grey[100],
-                                                      height: 15)),
-                                            )
-                                          : Flexible(
-                                              flex: 1,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 10.0),
-                                                child: Text(
-                                                    widget.lastChat != null
-                                                        ? timeago.format(
-                                                            widget.lastChat!
-                                                                .createdAt,
-                                                            locale: 'en_short')
-                                                        : '',
-                                                    style: TextStyle(
-                                                        fontWeight: unread
-                                                            ? FontWeight.bold
-                                                            : FontWeight
-                                                                .normal)),
-                                              ),
-                                            ),
-                                    ],
-                                  )
+                                  Container(
+                                      height: 26,
+                                      width: 100,
+                                      child: PictureWaterfall(
+                                          loading: loading,
+                                          users: firstInvited ?? [])),
+                                  if (muted)
+                                    Icon(Icons.volume_off_outlined,
+                                        color: Color(0xfff7941d))
                                 ],
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  loading
+                                      ? Flexible(
+                                          flex: 3,
+                                          child: Shimmer.fromColors(
+                                              baseColor: Colors.grey[200] ??
+                                                  Colors.grey,
+                                              highlightColor: Colors.white,
+                                              child: Container(
+                                                  color: Colors.grey[100],
+                                                  height: 15)),
+                                        )
+                                      : Flexible(
+                                          flex: 5,
+                                          child: Text(
+                                              widget.lastChat?.text ?? '',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontWeight: unread
+                                                      ? FontWeight.bold
+                                                      : FontWeight.normal)),
+                                        ),
+                                  const SizedBox(width: 20),
+                                  loading
+                                      ? Flexible(
+                                          flex: 1,
+                                          child: Shimmer.fromColors(
+                                              baseColor: Colors.grey[200] ??
+                                                  Colors.grey,
+                                              highlightColor: Colors.white,
+                                              child: Container(
+                                                  color: Colors.grey[100],
+                                                  height: 15)),
+                                        )
+                                      : Flexible(
+                                          flex: 1,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 10.0),
+                                            child: Text(
+                                                widget.lastChat != null
+                                                    ? timeago.format(
+                                                        widget.lastChat!
+                                                            .createdAt,
+                                                        locale: 'en_short')
+                                                    : '',
+                                                style: TextStyle(
+                                                    fontWeight: unread
+                                                        ? FontWeight.bold
+                                                        : FontWeight.normal)),
+                                          ),
+                                        ),
+                                ],
+                              )
+                            ],
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
-                SizedBox(height: 10),
-              ])),
-          Positioned(
-            top: 5,
-            right: 5,
-            child: PopupMenuButton(
-                onSelected: (value) async {
-                  if (value == 'unmute') {
-                    final provider = ForumsGqlProvider();
-                    final result =
-                        await provider.unmute(widget.forum.userNotification.id);
-                    if (result.ok) {
-                      Forum copy = widget.forum..userNotification.muted = false;
-                      widget.forum.userNotification.muted = false;
-                      homeState.updateForum(copy);
-                    }
-                  }
-                  if (value == 'mute') {
-                    final provider = ForumsGqlProvider();
-                    final result =
-                        await provider.mute(widget.forum.userNotification.id);
-                    if (result.ok) {
-                      Forum copy = widget.forum..userNotification.muted = false;
-                      widget.forum.userNotification.muted = true;
-                      homeState.updateForum(copy);
-                    }
-                  }
-                  if (value == 'leave') {
-                    final provider = EventsGqlProvider();
-                    await provider.removeInvite(
-                        eventId: widget.event.id, userId: userState.user!.id);
-                    await homeState.myEventsRefresh();
-                  }
-                  if (value == 'delete') {
-                    final provider = EventsGqlProvider();
-                    await provider.deleteEvent(widget.event.id);
-                    await homeState.myEventsRefresh();
-                  }
-                },
-                itemBuilder: (context) => [
-                      if (widget.forum.userNotification.muted)
-                        PopupMenuItem(
-                          child: Row(children: [
-                            Icon(Icons.volume_up_outlined,
-                                color: Colors.blue, size: 30),
-                            SizedBox(width: 10),
-                            Text('unmute', style: TextStyle(color: Colors.blue))
-                          ]),
-                          value: 'unmute',
-                        ),
-                      if (!widget.forum.userNotification.muted)
-                        PopupMenuItem(
-                          child: Row(children: [
-                            Icon(Icons.volume_off_outlined,
-                                color: Colors.blue, size: 30),
-                            SizedBox(width: 10),
-                            Text('mute', style: TextStyle(color: Colors.blue))
-                          ]),
-                          value: 'mute',
-                        ),
-                      if (userState.user?.id == widget.event.creator.id)
-                        PopupMenuItem(
-                          child: Row(
-                            children: [
-                              Icon(Icons.logout_outlined,
-                                  color: Colors.red, size: 30),
-                              SizedBox(width: 10),
-                              Text('delete',
-                                  style: TextStyle(color: Colors.red))
-                            ],
-                          ),
-                          value: 'delete',
-                        ),
-                      if (userState.user?.id != widget.event.creator.id)
-                        PopupMenuItem(
-                          child: Row(
-                            children: [
-                              Icon(Icons.logout_outlined,
-                                  color: Colors.red, size: 30),
-                              SizedBox(width: 10),
-                              Text('leave', style: TextStyle(color: Colors.red))
-                            ],
-                          ),
-                          value: 'leave',
-                        )
-                    ]),
-          ),
-        ],
-      ),
+              ],
+            ),
+          ])),
     );
   }
 
