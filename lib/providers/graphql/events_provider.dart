@@ -8,8 +8,8 @@ import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
 
 class EventsGqlProvider {
-  Future<MyQueryResponse<List<Event>>> events(DateTime start, DateTime end,
-      int take, int skip, SortType sortType) async {
+  Future<MyQueryResponse<List<Event>>> events(
+      DateTime start, DateTime end, int take, int skip, SortType sortType) async {
     final query = EventsQuery(
         variables: EventsArguments(
       dateRange: DateRangeInput(startDate: start, endDate: end),
@@ -41,8 +41,39 @@ class EventsGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<List<Event>>> otherEvents(DateTime start, DateTime end,
-      int take, int skip, SortType sortType) async {
+  Future<MyQueryResponse<List<Event>>> groupEvents(int groupId) async {
+    final query = GroupEventsQuery(
+        variables: GroupEventsArguments(
+      groupId: groupId,
+    ));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    print('jcl ${result}');
+
+    final root = result.data?['groupEvents'];
+    final data = root != null && root['nodes'] != null
+        ? List<Event>.from((root?['nodes']).map((event) {
+            return Event.fromGqlData(event);
+          }))
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<Event>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<List<Event>>> otherEvents(
+      DateTime start, DateTime end, int take, int skip, SortType sortType) async {
     final query = OtherEventsQuery(
         variables: OtherEventsArguments(
       dateRange: DateRangeInput(startDate: start, endDate: end),
@@ -75,8 +106,8 @@ class EventsGqlProvider {
   }
 
   Future<MyQueryResponse<Event>> createEvent(EventInput eventInput) async {
-    final mutation = CreateEventMutation(
-        variables: CreateEventArguments(eventInput: eventInput));
+    final mutation =
+        CreateEventMutation(variables: CreateEventArguments(eventInput: eventInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -86,9 +117,8 @@ class EventsGqlProvider {
     }
 
     final root = result.data?['event'];
-    final data = root != null && root['nodes'] != null
-        ? Event.fromGqlData(root?['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -125,8 +155,7 @@ class EventsGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> flagEvent(int eventId) async {
-    final mutation =
-        FlagEventMutation(variables: FlagEventArguments(eventId: eventId));
+    final mutation = FlagEventMutation(variables: FlagEventArguments(eventId: eventId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -147,10 +176,9 @@ class EventsGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<Event>> updateEvent(
-      EventFilterInput eventInput) async {
-    final mutation = UpdateEventMutation(
-        variables: UpdateEventArguments(eventInput: eventInput));
+  Future<MyQueryResponse<Event>> updateEvent(EventFilterInput eventInput) async {
+    final mutation =
+        UpdateEventMutation(variables: UpdateEventArguments(eventInput: eventInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -159,9 +187,8 @@ class EventsGqlProvider {
       });
     }
     final root = result.data?['updateEvent'];
-    final data = root != null && root['nodes'] != null
-        ? Event.fromGqlData(root?['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -210,9 +237,8 @@ class EventsGqlProvider {
     }
     print('add wannago $result');
     final root = result.data?['addWannago'];
-    final data = root != null && root['nodes'] != null
-        ? Event.fromGqlData(root?['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -235,9 +261,8 @@ class EventsGqlProvider {
       });
     }
     final root = result.data?['addInvite'];
-    final data = root != null && root['nodes'] != null
-        ? Event.fromGqlData(root?['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -261,9 +286,8 @@ class EventsGqlProvider {
     }
 
     final root = result.data?['removeInvite'];
-    final data = root != null && root['nodes'] != null
-        ? Event.fromGqlData(root?['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -353,9 +377,8 @@ class EventsGqlProvider {
     }
 
     final root = result.data?['event'];
-    final data = root != null && root['nodes'] != null
-        ? Event.fromGqlData(root?['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 

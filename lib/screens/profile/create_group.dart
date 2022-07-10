@@ -40,11 +40,13 @@ class _CreateGroupState extends State<CreateGroup> {
                 buttonTitle: 'CREATE',
                 onSave: () async {
                   setState(() => loading = true);
-                  final response = await GroupGqlProvider().createGroup(
-                      GroupInput(name: groupNameController.text, userIds: [
-                    userState.user!.id,
-                    ...selectedFriends.map((u) => u.id)
-                  ]));
+                  final response = await GroupGqlProvider().createGroup(GroupInput(
+                      name: groupNameController.text,
+                      owner: userState.user!.id,
+                      userIds: [
+                        userState.user!.id,
+                        ...selectedFriends.map((u) => u.id)
+                      ]));
                   if (response.ok) {
                     await userState.getUser();
                   }
@@ -75,8 +77,7 @@ class _CreateGroupState extends State<CreateGroup> {
                               setState(() => selectedFriends = selectedFriends);
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 8.0),
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
                               child: IgnorePointer(
                                   child: UserListItem(
                                 friend,

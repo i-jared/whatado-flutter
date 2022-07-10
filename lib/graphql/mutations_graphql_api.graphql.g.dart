@@ -137,8 +137,7 @@ AddWannago$Mutation$AddWannago$Nodes
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
               unknownValue: Gender.artemisUnknown)
           ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int
-          ..groupId = json['groupId'] as int?;
+          ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
         AddWannago$Mutation$AddWannago$Nodes instance) =>
@@ -162,7 +161,6 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 const _$PrivacyEnumMap = {
@@ -346,8 +344,7 @@ UpdateEvent$Mutation$UpdateEvent$Nodes
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
               unknownValue: Gender.artemisUnknown)
           ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int
-          ..groupId = json['groupId'] as int?;
+          ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
         UpdateEvent$Mutation$UpdateEvent$Nodes instance) =>
@@ -371,7 +368,6 @@ Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 UpdateEvent$Mutation$UpdateEvent$Errors
@@ -433,6 +429,7 @@ EventFilterInput _$EventFilterInputFromJson(Map<String, dynamic> json) =>
       filterMinAge: (json['filterMinAge'] as num?)?.toDouble(),
       filterRadius: (json['filterRadius'] as num?)?.toDouble(),
       forumId: json['forumId'] as int?,
+      groupId: json['groupId'] as int?,
       id: json['id'] as int?,
       invitedIds:
           (json['invitedIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
@@ -462,6 +459,7 @@ Map<String, dynamic> _$EventFilterInputToJson(EventFilterInput instance) =>
       'filterMinAge': instance.filterMinAge,
       'filterRadius': instance.filterRadius,
       'forumId': instance.forumId,
+      'groupId': instance.groupId,
       'id': instance.id,
       'invitedIds': instance.invitedIds,
       'location': instance.location,
@@ -696,6 +694,7 @@ UserFieldsMixin$Groups _$UserFieldsMixin$GroupsFromJson(
     UserFieldsMixin$Groups()
       ..id = json['id'] as int
       ..name = json['name'] as String
+      ..owner = json['owner'] as int
       ..users = (json['users'] as List<dynamic>)
           .map(
               (e) => GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
@@ -706,6 +705,7 @@ Map<String, dynamic> _$UserFieldsMixin$GroupsToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
     };
 
@@ -1790,8 +1790,7 @@ RemoveInvite$Mutation$RemoveInvite$Nodes
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
               unknownValue: Gender.artemisUnknown)
           ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int
-          ..groupId = json['groupId'] as int?;
+          ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
         RemoveInvite$Mutation$RemoveInvite$Nodes instance) =>
@@ -1815,7 +1814,6 @@ Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 RemoveInvite$Mutation$RemoveInvite$Errors
@@ -2161,8 +2159,7 @@ AddInvite$Mutation$AddInvite$Nodes _$AddInvite$Mutation$AddInvite$NodesFromJson(
       ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
           unknownValue: Gender.artemisUnknown)
       ..filterMinAge = json['filterMinAge'] as int
-      ..filterMaxAge = json['filterMaxAge'] as int
-      ..groupId = json['groupId'] as int?;
+      ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
         AddInvite$Mutation$AddInvite$Nodes instance) =>
@@ -2186,7 +2183,6 @@ Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 AddInvite$Mutation$AddInvite$Errors
@@ -2309,8 +2305,7 @@ CreateEvent$Mutation$CreateEvent$Nodes
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
               unknownValue: Gender.artemisUnknown)
           ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int
-          ..groupId = json['groupId'] as int?;
+          ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
         CreateEvent$Mutation$CreateEvent$Nodes instance) =>
@@ -2334,7 +2329,6 @@ Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 CreateEvent$Mutation$CreateEvent$Errors
@@ -2393,6 +2387,7 @@ EventInput _$EventInputFromJson(Map<String, dynamic> json) => EventInput(
       filterMaxAge: json['filterMaxAge'] as int,
       filterMinAge: json['filterMinAge'] as int,
       filterRadius: (json['filterRadius'] as num).toDouble(),
+      groupId: json['groupId'] as int?,
       id: json['id'] as int?,
       invitedIds:
           (json['invitedIds'] as List<dynamic>).map((e) => e as int).toList(),
@@ -2418,6 +2413,7 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
       'filterMaxAge': instance.filterMaxAge,
       'filterMinAge': instance.filterMinAge,
       'filterRadius': instance.filterRadius,
+      'groupId': instance.groupId,
       'id': instance.id,
       'invitedIds': instance.invitedIds,
       'location': instance.location,
@@ -2473,91 +2469,13 @@ Map<String, dynamic> _$DeleteWannago$MutationToJson(
       'deleteWannago': instance.deleteWannago.toJson(),
     };
 
-CreateGroup$Mutation$CreateGroup$Nodes
-    _$CreateGroup$Mutation$CreateGroup$NodesFromJson(
-            Map<String, dynamic> json) =>
-        CreateGroup$Mutation$CreateGroup$Nodes()
-          ..id = json['id'] as int
-          ..name = json['name'] as String
-          ..users = (json['users'] as List<dynamic>)
-              .map((e) =>
-                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
-              .toList();
-
-Map<String, dynamic> _$CreateGroup$Mutation$CreateGroup$NodesToJson(
-        CreateGroup$Mutation$CreateGroup$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'users': instance.users.map((e) => e.toJson()).toList(),
-    };
-
-CreateGroup$Mutation$CreateGroup$Errors
-    _$CreateGroup$Mutation$CreateGroup$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        CreateGroup$Mutation$CreateGroup$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$CreateGroup$Mutation$CreateGroup$ErrorsToJson(
-        CreateGroup$Mutation$CreateGroup$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-CreateGroup$Mutation$CreateGroup _$CreateGroup$Mutation$CreateGroupFromJson(
-        Map<String, dynamic> json) =>
-    CreateGroup$Mutation$CreateGroup()
-      ..ok = json['ok'] as bool?
-      ..nodes = json['nodes'] == null
-          ? null
-          : CreateGroup$Mutation$CreateGroup$Nodes.fromJson(
-              json['nodes'] as Map<String, dynamic>)
-      ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => CreateGroup$Mutation$CreateGroup$Errors.fromJson(
-              e as Map<String, dynamic>))
-          .toList();
-
-Map<String, dynamic> _$CreateGroup$Mutation$CreateGroupToJson(
-        CreateGroup$Mutation$CreateGroup instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.toJson(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-CreateGroup$Mutation _$CreateGroup$MutationFromJson(
-        Map<String, dynamic> json) =>
-    CreateGroup$Mutation()
-      ..createGroup = CreateGroup$Mutation$CreateGroup.fromJson(
-          json['createGroup'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$CreateGroup$MutationToJson(
-        CreateGroup$Mutation instance) =>
-    <String, dynamic>{
-      'createGroup': instance.createGroup.toJson(),
-    };
-
-GroupInput _$GroupInputFromJson(Map<String, dynamic> json) => GroupInput(
-      id: json['id'] as int?,
-      name: json['name'] as String,
-      userIds: (json['userIds'] as List<dynamic>).map((e) => e as int).toList(),
-    );
-
-Map<String, dynamic> _$GroupInputToJson(GroupInput instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'userIds': instance.userIds,
-    };
-
 UpdateGroup$Mutation$UpdateGroup$Nodes
     _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(
             Map<String, dynamic> json) =>
         UpdateGroup$Mutation$UpdateGroup$Nodes()
           ..id = json['id'] as int
           ..name = json['name'] as String
+          ..owner = json['owner'] as int
           ..users = (json['users'] as List<dynamic>)
               .map((e) =>
                   GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
@@ -2568,6 +2486,7 @@ Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
     };
 
@@ -2623,6 +2542,7 @@ GroupFilterInput _$GroupFilterInputFromJson(Map<String, dynamic> json) =>
       createdAt: json['createdAt'] as String?,
       id: json['id'] as int?,
       name: json['name'] as String?,
+      owner: json['owner'] as int?,
       updatedAt: json['updatedAt'] as String?,
       userIds:
           (json['userIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
@@ -2633,7 +2553,91 @@ Map<String, dynamic> _$GroupFilterInputToJson(GroupFilterInput instance) =>
       'createdAt': instance.createdAt,
       'id': instance.id,
       'name': instance.name,
+      'owner': instance.owner,
       'updatedAt': instance.updatedAt,
+      'userIds': instance.userIds,
+    };
+
+CreateGroup$Mutation$CreateGroup$Nodes
+    _$CreateGroup$Mutation$CreateGroup$NodesFromJson(
+            Map<String, dynamic> json) =>
+        CreateGroup$Mutation$CreateGroup$Nodes()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..owner = json['owner'] as int
+          ..users = (json['users'] as List<dynamic>)
+              .map((e) =>
+                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$CreateGroup$Mutation$CreateGroup$NodesToJson(
+        CreateGroup$Mutation$CreateGroup$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'owner': instance.owner,
+      'users': instance.users.map((e) => e.toJson()).toList(),
+    };
+
+CreateGroup$Mutation$CreateGroup$Errors
+    _$CreateGroup$Mutation$CreateGroup$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        CreateGroup$Mutation$CreateGroup$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$CreateGroup$Mutation$CreateGroup$ErrorsToJson(
+        CreateGroup$Mutation$CreateGroup$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+CreateGroup$Mutation$CreateGroup _$CreateGroup$Mutation$CreateGroupFromJson(
+        Map<String, dynamic> json) =>
+    CreateGroup$Mutation$CreateGroup()
+      ..ok = json['ok'] as bool?
+      ..nodes = json['nodes'] == null
+          ? null
+          : CreateGroup$Mutation$CreateGroup$Nodes.fromJson(
+              json['nodes'] as Map<String, dynamic>)
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => CreateGroup$Mutation$CreateGroup$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$CreateGroup$Mutation$CreateGroupToJson(
+        CreateGroup$Mutation$CreateGroup instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+CreateGroup$Mutation _$CreateGroup$MutationFromJson(
+        Map<String, dynamic> json) =>
+    CreateGroup$Mutation()
+      ..createGroup = CreateGroup$Mutation$CreateGroup.fromJson(
+          json['createGroup'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$CreateGroup$MutationToJson(
+        CreateGroup$Mutation instance) =>
+    <String, dynamic>{
+      'createGroup': instance.createGroup.toJson(),
+    };
+
+GroupInput _$GroupInputFromJson(Map<String, dynamic> json) => GroupInput(
+      id: json['id'] as int?,
+      name: json['name'] as String,
+      owner: json['owner'] as int,
+      userIds: (json['userIds'] as List<dynamic>).map((e) => e as int).toList(),
+    );
+
+Map<String, dynamic> _$GroupInputToJson(GroupInput instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'owner': instance.owner,
       'userIds': instance.userIds,
     };
 
@@ -3019,19 +3023,6 @@ Map<String, dynamic> _$DeleteWannagoArgumentsToJson(
       'id': instance.id,
     };
 
-CreateGroupArguments _$CreateGroupArgumentsFromJson(
-        Map<String, dynamic> json) =>
-    CreateGroupArguments(
-      groupInput:
-          GroupInput.fromJson(json['groupInput'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$CreateGroupArgumentsToJson(
-        CreateGroupArguments instance) =>
-    <String, dynamic>{
-      'groupInput': instance.groupInput.toJson(),
-    };
-
 UpdateGroupArguments _$UpdateGroupArgumentsFromJson(
         Map<String, dynamic> json) =>
     UpdateGroupArguments(
@@ -3041,6 +3032,19 @@ UpdateGroupArguments _$UpdateGroupArgumentsFromJson(
 
 Map<String, dynamic> _$UpdateGroupArgumentsToJson(
         UpdateGroupArguments instance) =>
+    <String, dynamic>{
+      'groupInput': instance.groupInput.toJson(),
+    };
+
+CreateGroupArguments _$CreateGroupArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    CreateGroupArguments(
+      groupInput:
+          GroupInput.fromJson(json['groupInput'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$CreateGroupArgumentsToJson(
+        CreateGroupArguments instance) =>
     <String, dynamic>{
       'groupInput': instance.groupInput.toJson(),
     };

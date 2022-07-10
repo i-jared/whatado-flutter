@@ -1,6 +1,7 @@
 fragment GroupFields on Group {
     id
     name
+    owner
     users {
         ...EventUser
     }

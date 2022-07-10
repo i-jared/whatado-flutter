@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
+import 'package:whatado/graphql/queries_graphql_api.graphql.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/input/bottom_sheet_list.dart';
 
@@ -50,8 +51,8 @@ class SortEventsBottomSheet extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(15)),
                             width: 60,
                             height: 60,
-                            child: Icon(getIcon(type),
-                                size: 30, color: Color(0xfff7941d))),
+                            child:
+                                Icon(getIcon(type), size: 30, color: Color(0xfff7941d))),
                         SizedBox(width: 20),
                         Text(getText(type), style: TextStyle(fontSize: 20)),
                         Spacer(),

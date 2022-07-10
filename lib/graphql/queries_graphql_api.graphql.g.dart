@@ -187,8 +187,7 @@ Events$Query$Events$Nodes _$Events$Query$Events$NodesFromJson(
       ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
           unknownValue: Gender.artemisUnknown)
       ..filterMinAge = json['filterMinAge'] as int
-      ..filterMaxAge = json['filterMaxAge'] as int
-      ..groupId = json['groupId'] as int?;
+      ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$Events$Query$Events$NodesToJson(
         Events$Query$Events$Nodes instance) =>
@@ -212,7 +211,6 @@ Map<String, dynamic> _$Events$Query$Events$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 const _$PrivacyEnumMap = {
@@ -471,8 +469,7 @@ OtherEvents$Query$OtherEvents$Nodes
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
               unknownValue: Gender.artemisUnknown)
           ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int
-          ..groupId = json['groupId'] as int?;
+          ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$OtherEvents$Query$OtherEvents$NodesToJson(
         OtherEvents$Query$OtherEvents$Nodes instance) =>
@@ -496,7 +493,6 @@ Map<String, dynamic> _$OtherEvents$Query$OtherEvents$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 OtherEvents$Query$OtherEvents$Errors
@@ -577,8 +573,7 @@ Event$Query$Event$Nodes _$Event$Query$Event$NodesFromJson(
       ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
           unknownValue: Gender.artemisUnknown)
       ..filterMinAge = json['filterMinAge'] as int
-      ..filterMaxAge = json['filterMaxAge'] as int
-      ..groupId = json['groupId'] as int?;
+      ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$Event$Query$Event$NodesToJson(
         Event$Query$Event$Nodes instance) =>
@@ -602,7 +597,6 @@ Map<String, dynamic> _$Event$Query$Event$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 Event$Query$Event$Errors _$Event$Query$Event$ErrorsFromJson(
@@ -860,6 +854,7 @@ UserFieldsMixin$Groups _$UserFieldsMixin$GroupsFromJson(
     UserFieldsMixin$Groups()
       ..id = json['id'] as int
       ..name = json['name'] as String
+      ..owner = json['owner'] as int
       ..users = (json['users'] as List<dynamic>)
           .map(
               (e) => GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
@@ -870,6 +865,7 @@ Map<String, dynamic> _$UserFieldsMixin$GroupsToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
     };
 
@@ -1149,8 +1145,7 @@ FlaggedEvents$Query$FlaggedEvents$Nodes
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
               unknownValue: Gender.artemisUnknown)
           ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int
-          ..groupId = json['groupId'] as int?;
+          ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$FlaggedEvents$Query$FlaggedEvents$NodesToJson(
         FlaggedEvents$Query$FlaggedEvents$Nodes instance) =>
@@ -1174,7 +1169,6 @@ Map<String, dynamic> _$FlaggedEvents$Query$FlaggedEvents$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 FlaggedEvents$Query$FlaggedEvents$Errors
@@ -1257,8 +1251,7 @@ MyEvents$Query$MyEvents$Nodes _$MyEvents$Query$MyEvents$NodesFromJson(
       ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
           unknownValue: Gender.artemisUnknown)
       ..filterMinAge = json['filterMinAge'] as int
-      ..filterMaxAge = json['filterMaxAge'] as int
-      ..groupId = json['groupId'] as int?;
+      ..filterMaxAge = json['filterMaxAge'] as int;
 
 Map<String, dynamic> _$MyEvents$Query$MyEvents$NodesToJson(
         MyEvents$Query$MyEvents$Nodes instance) =>
@@ -1282,7 +1275,6 @@ Map<String, dynamic> _$MyEvents$Query$MyEvents$NodesToJson(
       'filterGender': _$GenderEnumMap[instance.filterGender],
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
-      'groupId': instance.groupId,
     };
 
 MyEvents$Query$MyEvents$Errors _$MyEvents$Query$MyEvents$ErrorsFromJson(
@@ -1935,6 +1927,7 @@ MyGroups$Query$MyGroups$Nodes _$MyGroups$Query$MyGroups$NodesFromJson(
     MyGroups$Query$MyGroups$Nodes()
       ..id = json['id'] as int
       ..name = json['name'] as String
+      ..owner = json['owner'] as int
       ..users = (json['users'] as List<dynamic>)
           .map(
               (e) => GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
@@ -1945,6 +1938,7 @@ Map<String, dynamic> _$MyGroups$Query$MyGroups$NodesToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
+      'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
     };
 
@@ -1990,6 +1984,110 @@ MyGroups$Query _$MyGroups$QueryFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MyGroups$QueryToJson(MyGroups$Query instance) =>
     <String, dynamic>{
       'myGroups': instance.myGroups.toJson(),
+    };
+
+GroupEvents$Query$GroupEvents$Nodes
+    _$GroupEvents$Query$GroupEvents$NodesFromJson(Map<String, dynamic> json) =>
+        GroupEvents$Query$GroupEvents$Nodes()
+          ..id = json['id'] as int
+          ..createdAt =
+              fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+          ..updatedAt =
+              fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+          ..title = json['title'] as String
+          ..description = json['description'] as String
+          ..creator = EventFieldsMixin$Creator.fromJson(
+              json['creator'] as Map<String, dynamic>)
+          ..invited = (json['invited'] as List<dynamic>)
+              .map((e) =>
+                  EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..wannago = (json['wannago'] as List<dynamic>)
+              .map((e) =>
+                  EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
+          ..location = json['location'] as String
+          ..pictureUrl = json['pictureUrl'] as String?
+          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+              .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
+              unknownValue: Privacy.artemisUnknown)
+          ..filterLocation = json['filterLocation'] as String
+          ..filterRadius = (json['filterRadius'] as num).toDouble()
+          ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
+              unknownValue: Gender.artemisUnknown)
+          ..filterMinAge = json['filterMinAge'] as int
+          ..filterMaxAge = json['filterMaxAge'] as int;
+
+Map<String, dynamic> _$GroupEvents$Query$GroupEvents$NodesToJson(
+        GroupEvents$Query$GroupEvents$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'title': instance.title,
+      'description': instance.description,
+      'creator': instance.creator.toJson(),
+      'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
+      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
+      'location': instance.location,
+      'pictureUrl': instance.pictureUrl,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'filterLocation': instance.filterLocation,
+      'filterRadius': instance.filterRadius,
+      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
+    };
+
+GroupEvents$Query$GroupEvents$Errors
+    _$GroupEvents$Query$GroupEvents$ErrorsFromJson(Map<String, dynamic> json) =>
+        GroupEvents$Query$GroupEvents$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$GroupEvents$Query$GroupEvents$ErrorsToJson(
+        GroupEvents$Query$GroupEvents$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+GroupEvents$Query$GroupEvents _$GroupEvents$Query$GroupEventsFromJson(
+        Map<String, dynamic> json) =>
+    GroupEvents$Query$GroupEvents()
+      ..ok = json['ok'] as bool?
+      ..nodes = (json['nodes'] as List<dynamic>?)
+          ?.map((e) => GroupEvents$Query$GroupEvents$Nodes.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => GroupEvents$Query$GroupEvents$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$GroupEvents$Query$GroupEventsToJson(
+        GroupEvents$Query$GroupEvents instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+GroupEvents$Query _$GroupEvents$QueryFromJson(Map<String, dynamic> json) =>
+    GroupEvents$Query()
+      ..groupEvents = GroupEvents$Query$GroupEvents.fromJson(
+          json['groupEvents'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$GroupEvents$QueryToJson(GroupEvents$Query instance) =>
+    <String, dynamic>{
+      'groupEvents': instance.groupEvents.toJson(),
     };
 
 UserArguments _$UserArgumentsFromJson(Map<String, dynamic> json) =>
@@ -2149,4 +2247,16 @@ ForumArguments _$ForumArgumentsFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ForumArgumentsToJson(ForumArguments instance) =>
     <String, dynamic>{
       'forumId': instance.forumId,
+    };
+
+GroupEventsArguments _$GroupEventsArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    GroupEventsArguments(
+      groupId: json['groupId'] as int,
+    );
+
+Map<String, dynamic> _$GroupEventsArgumentsToJson(
+        GroupEventsArguments instance) =>
+    <String, dynamic>{
+      'groupId': instance.groupId,
     };

@@ -1,0 +1,12 @@
+query groupEvents ($groupId: Int!) {
+  groupEvents (groupId: $groupId) {
+    ok
+    nodes {
+      ...EventFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

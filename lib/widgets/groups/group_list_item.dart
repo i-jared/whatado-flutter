@@ -10,11 +10,11 @@ class GroupListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.push(context,
-          MaterialPageRoute(builder: (context) => GroupDetails(group: group))),
+      onTap: () => Navigator.push(
+          context, MaterialPageRoute(builder: (context) => GroupDetails(group: group))),
       child: Row(
         children: [
-          PictureWaterfall(loading: false, users: group.users),
+          PictureWaterfall(loading: false, users: group.users, radius: 25),
           SizedBox(width: 15),
           Flexible(
             child: Text(

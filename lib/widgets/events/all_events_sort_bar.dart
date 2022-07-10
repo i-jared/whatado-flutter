@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/graphql/queries_graphql_api.dart';
+import 'package:whatado/graphql/queries_graphql_api.graphql.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/input/sort_events_bottom_sheet.dart';
 

@@ -7,9 +7,7 @@ class InviteFriends extends StatelessWidget {
   final List<EventUser> selectedUsers;
   final Function(List<EventUser>) setUsers;
   InviteFriends(
-      {required this.users,
-      required this.selectedUsers,
-      required this.setUsers});
+      {required this.users, required this.selectedUsers, required this.setUsers});
 
   @override
   Widget build(BuildContext context) {
@@ -59,8 +57,7 @@ class InviteFriends extends StatelessWidget {
                               child: Container(
                                 height: 50,
                                 width: 50,
-                                child: Icon(Icons.check_outlined,
-                                    color: Colors.white),
+                                child: Icon(Icons.check_outlined, color: Colors.white),
                               ),
                             )
                         ],

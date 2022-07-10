@@ -12,6 +12,7 @@ import 'package:image/image.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 
@@ -26,6 +27,7 @@ class AddEventState extends ChangeNotifier {
   TextEditingController addInterestController;
   Gender _selectedGender;
   List<EventUser> _selectedUsers;
+  Group? _selectedGroup;
   Privacy _privacy;
   AssetEntity? selectedImage;
   File? selectedImageFile;
@@ -119,6 +121,13 @@ class AddEventState extends ChangeNotifier {
 
   set selectedUsers(List<EventUser> selectedUsers) {
     _selectedUsers = selectedUsers;
+    notifyListeners();
+  }
+
+  Group? get selectedGroup => _selectedGroup;
+
+  set selectedGroup(Group? selectedGroup) {
+    _selectedGroup = selectedGroup;
     notifyListeners();
   }
 
@@ -219,6 +228,7 @@ class AddEventState extends ChangeNotifier {
     addInterestController.clear();
     selectedInterests = [];
     selectedUsers = [];
+    selectedGroup = null;
     customInterests = [];
     filterAgeEnd = 40;
     filterAgeStart = 18;
@@ -250,8 +260,7 @@ class AddEventState extends ChangeNotifier {
     // crop image and encode it as png
     final decodedImage = decodeImage(List.from(selectedImageBytes ?? []));
     if (decodedImage == null) return Uint8List.fromList([]);
-    final exifData =
-        await readExifFromBytes(List<int>.from(selectedImageBytes!));
+    final exifData = await readExifFromBytes(List<int>.from(selectedImageBytes!));
     final iosLandscape = Platform.isIOS &&
             (exifData.containsKey("Image Orientation") &&
                 exifData["Image Orientation"].toString().contains("180"))
@@ -262,8 +271,8 @@ class AddEventState extends ChangeNotifier {
                 exifData["Image Orientation"].toString().contains("90"))
         ? 90
         : 0;
-    final rotatedImage = copyRotate(
-        decodedImage, iosPortrait + iosLandscape + selectedImage!.orientation);
+    final rotatedImage =
+        copyRotate(decodedImage, iosPortrait + iosLandscape + selectedImage!.orientation);
     final face = copyCrop(
       rotatedImage,
       left,
@@ -271,8 +280,8 @@ class AddEventState extends ChangeNotifier {
       width - right - left,
       height - top - bottom,
     );
-    final rerotatedImage = copyRotate(
-        face, -iosPortrait + iosLandscape + -selectedImage!.orientation);
+    final rerotatedImage =
+        copyRotate(face, -iosPortrait + iosLandscape + -selectedImage!.orientation);
     final resizedFace = copyResize(rerotatedImage, height: 1080, width: 1080);
     return Uint8List.fromList(encodePng(resizedFace));
   }

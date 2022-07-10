@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
+import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/users/user_avatar.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Event event;
@@ -15,7 +19,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.forum,
   });
   @override
-  Size get preferredSize => Size.fromHeight(50.0);
+  Size get preferredSize => Size.fromHeight(55.0);
 
   @override
   Widget build(BuildContext context) {
@@ -24,9 +28,26 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.grey[50],
-      title: Text(event.title,
-          style: TextStyle(fontSize: 23, color: Colors.grey[850])),
-      centerTitle: true,
+      title: InkWell(
+        onTap: () => Navigator.push(
+            context, MaterialPageRoute(builder: (context) => EventDetails(event: event))),
+        child: Row(
+          children: [
+            UserAvatar(url: event.imageUrl, radius: 18),
+            SizedBox(width: 10),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(event.title,
+                    style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+                Text('${event.invited.length + 1} members',
+                    style: TextStyle(fontSize: 12, color: Colors.grey[400])),
+              ],
+            ),
+          ],
+        ),
+      ),
+      centerTitle: false,
       elevation: 1.0,
       actions: [
         Padding(
@@ -35,8 +56,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
               onSelected: (value) async {
                 if (value == 'unmute') {
                   final provider = ForumsGqlProvider();
-                  final result =
-                      await provider.unmute(forum.userNotification.id);
+                  final result = await provider.unmute(forum.userNotification.id);
                   if (result.ok) {
                     Forum copy = forum..userNotification.muted = false;
                     forum.userNotification.muted = false;
@@ -68,8 +88,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                     if (forum.userNotification.muted)
                       PopupMenuItem(
                         child: Row(children: [
-                          Icon(Icons.volume_up_outlined,
-                              color: Colors.blue, size: 30),
+                          Icon(Icons.volume_up_outlined, color: Colors.blue, size: 30),
                           SizedBox(width: 10),
                           Text('unmute', style: TextStyle(color: Colors.blue))
                         ]),
@@ -78,8 +97,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                     if (!forum.userNotification.muted)
                       PopupMenuItem(
                         child: Row(children: [
-                          Icon(Icons.volume_off_outlined,
-                              color: Colors.blue, size: 30),
+                          Icon(Icons.volume_off_outlined, color: Colors.blue, size: 30),
                           SizedBox(width: 10),
                           Text('mute', style: TextStyle(color: Colors.blue))
                         ]),
@@ -89,8 +107,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                       PopupMenuItem(
                         child: Row(
                           children: [
-                            Icon(Icons.logout_outlined,
-                                color: Colors.red, size: 30),
+                            Icon(Icons.logout_outlined, color: Colors.red, size: 30),
                             SizedBox(width: 10),
                             Text('delete', style: TextStyle(color: Colors.red))
                           ],
@@ -101,8 +118,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                       PopupMenuItem(
                         child: Row(
                           children: [
-                            Icon(Icons.logout_outlined,
-                                color: Colors.red, size: 30),
+                            Icon(Icons.logout_outlined, color: Colors.red, size: 30),
                             SizedBox(width: 10),
                             Text('leave', style: TextStyle(color: Colors.red))
                           ],

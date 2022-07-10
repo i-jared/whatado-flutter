@@ -10,8 +10,7 @@ import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/time_tools.dart';
 
-class AddEventDetailsAppBar extends StatelessWidget
-    implements PreferredSizeWidget {
+class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => Size.fromHeight(50.0);
 
@@ -24,21 +23,19 @@ class AddEventDetailsAppBar extends StatelessWidget
         eventState.dateController.text.isNotEmpty &&
         eventState.locationController.text.isNotEmpty &&
         (eventState.textMode || eventState.titleController.text.isNotEmpty) &&
-        (eventState.privacy != Privacy.private ||
-            eventState.selectedUsers.isNotEmpty);
+        (eventState.privacy != Privacy.private || eventState.selectedUsers.isNotEmpty) &&
+        (eventState.privacy != Privacy.group || eventState.selectedGroup != null);
 
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
       backgroundColor: Colors.grey[50],
-      title: Text('Add Event',
-          style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+      title: Text('Add Event', style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
           child: TextButton(
             child: Text('PUBLISH',
-                style:
-                    TextStyle(color: !ready ? Colors.grey : Color(0xfff7941d))),
+                style: TextStyle(color: !ready ? Colors.grey : Color(0xfff7941d))),
             onPressed: !ready || eventState.postLoading
                 ? null
                 : () async {
@@ -52,8 +49,8 @@ class AddEventDetailsAppBar extends StatelessWidget
                       String? downloadUrl;
                       if (!eventState.textMode) {
                         downloadUrl = await cloudStorageService.uploadImage(
-                          await eventState.cropResizeImage(
-                              MediaQuery.of(context).size.width),
+                          await eventState
+                              .cropResizeImage(MediaQuery.of(context).size.width),
                           userState.user!.id,
                         );
                       }
@@ -67,19 +64,13 @@ class AddEventDetailsAppBar extends StatelessWidget
 
                       // frankenstein the time from user input
                       final finalTime = formatMyTime(
-                          eventState.dateController.text,
-                          eventState.timeController.text);
+                          eventState.dateController.text, eventState.timeController.text);
                       // create interests
                       final interestsProvider = InterestGqlProvider();
-                      final interests =
-                          await interestsProvider.create(interestsText: [
-                        ...(eventState.customInterests
-                            .map((i) => i.title)
-                            .toList()),
+                      final interests = await interestsProvider.create(interestsText: [
+                        ...(eventState.customInterests.map((i) => i.title).toList()),
                         if (eventState.selectedInterests.isNotEmpty)
-                          ...(eventState.selectedInterests
-                              .map((i) => i.title)
-                              .toList())
+                          ...(eventState.selectedInterests.map((i) => i.title).toList())
                       ]);
 
                       // make query
@@ -96,17 +87,17 @@ class AddEventDetailsAppBar extends StatelessWidget
                         privacy: eventState.privacy,
                         location: eventState.locationController.text,
                         relatedInterestsIds: List<int>.from(interests.data ??
-                            eventState.selectedInterests
-                                .map((v) => v.id)
-                                .toList()),
+                            eventState.selectedInterests.map((v) => v.id).toList()),
                         time: finalTime,
                         pictureUrl: downloadUrl,
                         title: eventState.textMode
                             ? eventState.textModeController.text
                             : eventState.titleController.text,
                         wannagoIds: [],
-                        invitedIds:
-                            eventState.selectedUsers.map((u) => u.id).toList(),
+                        groupId: eventState.selectedGroup?.id,
+                        invitedIds: eventState.privacy == Privacy.group
+                            ? eventState.selectedGroup!.users.map((u) => u.id).toList()
+                            : eventState.selectedUsers.map((u) => u.id).toList(),
                       ));
                     } catch (e) {
                       eventState.clear();

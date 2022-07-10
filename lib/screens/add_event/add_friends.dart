@@ -43,8 +43,7 @@ class _StateAddFriends extends State<AddFriends> {
                       final provider = EventsGqlProvider();
                       setState(() => loading = true);
                       for (int id in selectedUsers.map((u) => u.id)) {
-                        await provider.addInvite(
-                            eventId: widget.eventId, userId: id);
+                        await provider.addInvite(eventId: widget.eventId, userId: id);
                       }
                       Navigator.pop(context);
                     }),

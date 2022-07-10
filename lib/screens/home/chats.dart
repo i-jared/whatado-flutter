@@ -31,21 +31,27 @@ class _ChatsState extends State<Chats> {
               forum: widget.forum,
               event: widget.event,
             ),
-            child: Stack(
-              children: [
-                Column(children: [
-                  GroupMembersRow(event: widget.event),
-                  MessagesBody(),
-                  SizedBox(height: 70),
-                ]),
-                Positioned(
-                    bottom: 10,
-                    right: 0,
-                    child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        child: Column(
-                            children: [Divider(), MessagesTextField()]))),
-              ],
+            child: Container(
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      repeat: ImageRepeat.repeat,
+                      image: AssetImage('assets/chat_background.png'))),
+              child: Stack(
+                children: [
+                  Column(children: [
+                    MessagesBody(),
+                    SizedBox(height: 70),
+                  ]),
+                  Positioned(
+                      bottom: 00,
+                      right: 0,
+                      child: Container(
+                          padding: EdgeInsets.only(bottom: 10),
+                          color: Colors.grey[50],
+                          width: MediaQuery.of(context).size.width,
+                          child: MessagesTextField())),
+                ],
+              ),
             ),
           ),
         ),

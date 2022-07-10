@@ -98,6 +98,7 @@ type Event {
   filterRadius: Float!
   flags: Int!
   forum: Forum!
+  group: Group!
   id: Int!
   invited: [User!]!
   location: String!
@@ -127,6 +128,7 @@ input EventFilterInput {
   filterMinAge: Float
   filterRadius: Float
   forumId: Int
+  groupId: Int
   id: Int
   invitedIds: [Int!]
   location: String
@@ -147,6 +149,7 @@ input EventInput {
   filterMaxAge: Int!
   filterMinAge: Int!
   filterRadius: Float!
+  groupId: Int
   id: Int
   invitedIds: [Int!]!
   location: String!
@@ -197,6 +200,47 @@ enum Gender {
   BOTH
   FEMALE
   MALE
+}
+
+type Group {
+  createdAt: DateTime!
+  events: [Event!]!
+  id: Int!
+  name: String!
+  owner: Int!
+  updatedAt: DateTime!
+  userIds: [Int!]!
+  users: [User!]!
+}
+
+type GroupApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: Group
+  ok: Boolean
+}
+
+input GroupFilterInput {
+  createdAt: String
+  id: Int
+  name: String
+  owner: Int
+  updatedAt: String
+  userIds: [Int!]
+}
+
+input GroupInput {
+  id: Int
+  name: String!
+  owner: Int!
+  userIds: [Int!]!
+}
+
+type GroupsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [Group!]
+  ok: Boolean
 }
 
 type Interest {
@@ -257,6 +301,7 @@ type Mutation {
   createChat(options: ChatInput!, surveyOptions: SurveyInput): ChatApiResponse!
   createEvent(options: EventInput!): EventApiResponse!
   createForum(eventId: Int!): ForumApiResponse!
+  createGroup(options: GroupInput!): GroupApiResponse!
   createInterest(interestsText: [String!]!): IntsApiResponse!
   deleteChat(id: Int!): BoolApiResponse!
   deleteEvent(eventId: Int!): BoolApiResponse!
@@ -279,6 +324,7 @@ type Mutation {
   unrequestFriend(id: Int!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventFilterInput!): EventApiResponse!
+  updateGroup(options: GroupFilterInput!): GroupApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
   updatePhotos(urls: [String!]!): BoolApiResponse!
   updateUser(options: UserFilterInput!): UserApiResponse!
@@ -287,7 +333,7 @@ type Mutation {
 }
 
 enum Privacy {
-  FRIENDS
+  GROUP
   PRIVATE
   PUBLIC
 }
@@ -303,12 +349,14 @@ type Query {
   forum(id: Int!): ForumApiResponse!
   forumsByEventId(ids: [Int!]!): ForumsApiResponse!
   friendsById(id: Int!): UsersApiResponse!
+  groupEvents(groupId: Int!): EventsApiResponse!
   hello: String!
   interest(id: Int!): InterestApiResponse!
   lastChat(forumId: Int!): ChatApiResponse!
   me: UserApiResponse!
   myChatNotifications: ChatNotificationsApiResponse!
   myEvents: EventsApiResponse!
+  myGroups: GroupsApiResponse!
   otherEvents(dateRange: DateRangeInput!, skip: Int!, sortType: SortType!, take: Int!): EventsApiResponse!
   popularInterests: InterestsApiResponse!
   searchInterests(partial: String!): InterestsApiResponse!
@@ -355,6 +403,8 @@ type User {
   friends: [User!]!
   friendsIds: [Int!]!
   gender: Gender!
+  groups: [Group!]!
+  groupsIds: [Int!]!
   id: Int!
   interests: [Interest!]!
   inverseFriends: [User!]!
