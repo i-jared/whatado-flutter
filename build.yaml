@@ -29,3 +29,15 @@ targets:
             - custom_parser_import: 'package:whatado/utils/coercers.dart'
               graphql_type: DateTime?
               dart_type: DateTime?
+            - custom_parser_import: 'package:whatado/utils/coercers.dart'
+              graphql_type: Point
+              dart_type: 
+                name: GeoJsonPoint
+                imports:
+                  - 'package:geojson/geojson.dart'
+            - custom_parser_import: 'package:whatado/utils/coercers.dart'
+              graphql_type: Point?
+              dart_type: 
+                name: GeoJsonPoint?
+                imports:
+                  - 'package:geojson/geojson.dart'

@@ -19,9 +19,8 @@ class UserGqlProvider {
     }
     print(result);
     final root = result.data?['me'];
-    final data = root != null && root['nodes'] != null
-        ? User.fromGqlData(root['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? User.fromGqlData(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -56,10 +55,9 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<List<EventUser>>> eventUserPreview(
-      List<int> ids) async {
-    final query = EventUserPreviewQuery(
-        variables: EventUserPreviewArguments(userIds: ids));
+  Future<MyQueryResponse<List<EventUser>>> eventUserPreview(List<int> ids) async {
+    final query =
+        EventUserPreviewQuery(variables: EventUserPreviewArguments(userIds: ids));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -70,9 +68,7 @@ class UserGqlProvider {
 
     final root = result.data?['usersById'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List)
-            .map((val) => EventUser.fromGqlData(val))
-            .toList()
+        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
@@ -85,8 +81,8 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<User>> updateUser(UserFilterInput userInput) async {
-    final mutation = UpdateUserMutation(
-        variables: UpdateUserArguments(userInput: userInput));
+    final mutation =
+        UpdateUserMutation(variables: UpdateUserArguments(userInput: userInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -96,8 +92,7 @@ class UserGqlProvider {
     }
 
     final root = result.data?['updateUser'];
-    final data =
-        root?['nodes'] == null ? null : User.fromGqlData(root?['nodes']);
+    final data = root?['nodes'] == null ? null : User.fromGqlData(root?['nodes']);
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -142,8 +137,7 @@ class UserGqlProvider {
 
     final root = result.data?['flaggedUsers'];
     final data = root != null && root['nodes'] != null
-        ? List<User>.from(
-            root['nodes'].map((val) => User.fromGqlData(val)).toList())
+        ? List<User>.from(root['nodes'].map((val) => User.fromGqlData(val)).toList())
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
@@ -156,8 +150,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> updatePhotos(List<String> urls) async {
-    final mutation =
-        UpdatePhotosMutation(variables: UpdatePhotosArguments(urls: urls));
+    final mutation = UpdatePhotosMutation(variables: UpdatePhotosArguments(urls: urls));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -178,8 +171,7 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<bool>> checkValidationLogin(
-      String code, String phone) async {
+  Future<MyQueryResponse<bool>> checkValidationLogin(String code, String phone) async {
     final mutation = CheckValidationLoginMutation(
         variables: CheckValidationLoginArguments(code: code, phone: phone));
     final result = await graphqlClientService.mutate(mutation);
@@ -207,8 +199,8 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> checkValidation(String code) async {
-    final mutation = CheckValidationMutation(
-        variables: CheckValidationArguments(code: code));
+    final mutation =
+        CheckValidationMutation(variables: CheckValidationArguments(code: code));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -252,8 +244,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> flagUser(int userId) async {
-    final mutation =
-        FlagUserMutation(variables: FlagUserArguments(userId: userId));
+    final mutation = FlagUserMutation(variables: FlagUserArguments(userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -275,8 +266,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> blockUser(int userId) async {
-    final mutation =
-        BlockUserMutation(variables: BlockUserArguments(userId: userId));
+    final mutation = BlockUserMutation(variables: BlockUserArguments(userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -298,8 +288,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> unblockUser(int userId) async {
-    final mutation =
-        UnblockUserMutation(variables: UnblockUserArguments(userId: userId));
+    final mutation = UnblockUserMutation(variables: UnblockUserArguments(userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -355,9 +344,7 @@ class UserGqlProvider {
 
     final root = result.data?['friendsById'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List)
-            .map((val) => EventUser.fromGqlData(val))
-            .toList()
+        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
@@ -370,8 +357,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<List<EventUser>>> searchUsers(String partial) async {
-    final query =
-        SearchUsersQuery(variables: SearchUsersArguments(partial: partial));
+    final query = SearchUsersQuery(variables: SearchUsersArguments(partial: partial));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -382,9 +368,7 @@ class UserGqlProvider {
 
     final root = result.data?['searchUsers'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List)
-            .map((val) => EventUser.fromGqlData(val))
-            .toList()
+        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
@@ -397,8 +381,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> acceptFriend(int id) async {
-    final query =
-        AcceptFriendMutation(variables: AcceptFriendArguments(id: id));
+    final query = AcceptFriendMutation(variables: AcceptFriendArguments(id: id));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -420,8 +403,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> unrequestFriend(int id) async {
-    final query =
-        UnrequestFriendMutation(variables: UnrequestFriendArguments(id: id));
+    final query = UnrequestFriendMutation(variables: UnrequestFriendArguments(id: id));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -443,8 +425,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> requestFriend(int id) async {
-    final query =
-        RequestFriendMutation(variables: RequestFriendArguments(id: id));
+    final query = RequestFriendMutation(variables: RequestFriendArguments(id: id));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');

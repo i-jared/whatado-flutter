@@ -125,6 +125,8 @@ AddWannago$Mutation$AddWannago$Nodes
               .toList()
           ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
           ..location = json['location'] as String
+          ..coordinates =
+              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
           ..pictureUrl = json['pictureUrl'] as String?
           ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
               .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
@@ -152,6 +154,7 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
@@ -332,6 +335,8 @@ UpdateEvent$Mutation$UpdateEvent$Nodes
               .toList()
           ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
           ..location = json['location'] as String
+          ..coordinates =
+              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
           ..pictureUrl = json['pictureUrl'] as String?
           ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
               .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
@@ -359,6 +364,7 @@ Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
@@ -419,6 +425,8 @@ Map<String, dynamic> _$UpdateEvent$MutationToJson(
 
 EventFilterInput _$EventFilterInputFromJson(Map<String, dynamic> json) =>
     EventFilterInput(
+      coordinates: fromGraphQLPointNullableToDartGeoJsonPointNullable(
+          json['coordinates'] as String?),
       createdAt: json['createdAt'] as String?,
       creatorId: json['creatorId'] as int?,
       description: json['description'] as String?,
@@ -450,6 +458,8 @@ EventFilterInput _$EventFilterInputFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$EventFilterInputToJson(EventFilterInput instance) =>
     <String, dynamic>{
+      'coordinates': fromDartGeoJsonPointNullableToGraphQLPointNullable(
+          instance.coordinates),
       'createdAt': instance.createdAt,
       'creatorId': instance.creatorId,
       'description': instance.description,
@@ -470,6 +480,115 @@ Map<String, dynamic> _$EventFilterInputToJson(EventFilterInput instance) =>
       'title': instance.title,
       'updatedAt': instance.updatedAt,
       'wannagoIds': instance.wannagoIds,
+    };
+
+UpdateGroup$Mutation$UpdateGroup$Nodes
+    _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(
+            Map<String, dynamic> json) =>
+        UpdateGroup$Mutation$UpdateGroup$Nodes()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..owner = json['owner'] as int
+          ..users = (json['users'] as List<dynamic>)
+              .map((e) =>
+                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(
+        UpdateGroup$Mutation$UpdateGroup$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'owner': instance.owner,
+      'users': instance.users.map((e) => e.toJson()).toList(),
+    };
+
+UpdateGroup$Mutation$UpdateGroup$Errors
+    _$UpdateGroup$Mutation$UpdateGroup$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        UpdateGroup$Mutation$UpdateGroup$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$ErrorsToJson(
+        UpdateGroup$Mutation$UpdateGroup$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+UpdateGroup$Mutation$UpdateGroup _$UpdateGroup$Mutation$UpdateGroupFromJson(
+        Map<String, dynamic> json) =>
+    UpdateGroup$Mutation$UpdateGroup()
+      ..ok = json['ok'] as bool?
+      ..nodes = json['nodes'] == null
+          ? null
+          : UpdateGroup$Mutation$UpdateGroup$Nodes.fromJson(
+              json['nodes'] as Map<String, dynamic>)
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => UpdateGroup$Mutation$UpdateGroup$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroupToJson(
+        UpdateGroup$Mutation$UpdateGroup instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+UpdateGroup$Mutation _$UpdateGroup$MutationFromJson(
+        Map<String, dynamic> json) =>
+    UpdateGroup$Mutation()
+      ..updateGroup = UpdateGroup$Mutation$UpdateGroup.fromJson(
+          json['updateGroup'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UpdateGroup$MutationToJson(
+        UpdateGroup$Mutation instance) =>
+    <String, dynamic>{
+      'updateGroup': instance.updateGroup.toJson(),
+    };
+
+GroupFieldsMixin$Users _$GroupFieldsMixin$UsersFromJson(
+        Map<String, dynamic> json) =>
+    GroupFieldsMixin$Users()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$GroupFieldsMixin$UsersToJson(
+        GroupFieldsMixin$Users instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+GroupFilterInput _$GroupFilterInputFromJson(Map<String, dynamic> json) =>
+    GroupFilterInput(
+      createdAt: json['createdAt'] as String?,
+      id: json['id'] as int?,
+      name: json['name'] as String?,
+      owner: json['owner'] as int?,
+      updatedAt: json['updatedAt'] as String?,
+      userIds:
+          (json['userIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
+    );
+
+Map<String, dynamic> _$GroupFilterInputToJson(GroupFilterInput instance) =>
+    <String, dynamic>{
+      'createdAt': instance.createdAt,
+      'id': instance.id,
+      'name': instance.name,
+      'owner': instance.owner,
+      'updatedAt': instance.updatedAt,
+      'userIds': instance.userIds,
     };
 
 UpdateUser$Mutation$UpdateUser$Nodes
@@ -518,7 +637,9 @@ UpdateUser$Mutation$UpdateUser$Nodes
           ..chatNotifications = (json['chatNotifications'] as List<dynamic>)
               .map((e) => UserFieldsMixin$ChatNotifications.fromJson(
                   e as Map<String, dynamic>))
-              .toList();
+              .toList()
+          ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
+              json['location'] as String?);
 
 Map<String, dynamic> _$UpdateUser$Mutation$UpdateUser$NodesToJson(
         UpdateUser$Mutation$UpdateUser$Nodes instance) =>
@@ -541,6 +662,8 @@ Map<String, dynamic> _$UpdateUser$Mutation$UpdateUser$NodesToJson(
       'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
       'chatNotifications':
           instance.chatNotifications.map((e) => e.toJson()).toList(),
+      'location':
+          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
     };
 
 UpdateUser$Mutation$UpdateUser$Errors
@@ -746,26 +869,6 @@ Map<String, dynamic> _$UserFieldsMixin$ChatNotificationsToJson(
       'muted': instance.muted,
     };
 
-GroupFieldsMixin$Users _$GroupFieldsMixin$UsersFromJson(
-        Map<String, dynamic> json) =>
-    GroupFieldsMixin$Users()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
-
-Map<String, dynamic> _$GroupFieldsMixin$UsersToJson(
-        GroupFieldsMixin$Users instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'photoUrls': instance.photoUrls,
-      'bio': instance.bio,
-      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
-    };
-
 UserFilterInput _$UserFilterInputFromJson(Map<String, dynamic> json) =>
     UserFilterInput(
       bio: json['bio'] as String?,
@@ -775,6 +878,8 @@ UserFilterInput _$UserFilterInputFromJson(Map<String, dynamic> json) =>
       gender: $enumDecodeNullable(_$GenderEnumMap, json['gender'],
           unknownValue: Gender.artemisUnknown),
       id: json['id'] as int?,
+      location: fromGraphQLPointNullableToDartGeoJsonPointNullable(
+          json['location'] as String?),
       name: json['name'] as String?,
       password: json['password'] as String?,
       phone: json['phone'] as String?,
@@ -790,6 +895,8 @@ Map<String, dynamic> _$UserFilterInputToJson(UserFilterInput instance) =>
       'deviceId': instance.deviceId,
       'gender': _$GenderEnumMap[instance.gender],
       'id': instance.id,
+      'location':
+          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
       'name': instance.name,
       'password': instance.password,
       'phone': instance.phone,
@@ -1186,6 +1293,8 @@ UserInput _$UserInputFromJson(Map<String, dynamic> json) => UserInput(
           json['birthday'] as String?),
       gender: $enumDecodeNullable(_$GenderEnumMap, json['gender'],
           unknownValue: Gender.artemisUnknown),
+      location: fromGraphQLPointNullableToDartGeoJsonPointNullable(
+          json['location'] as String?),
       name: json['name'] as String?,
       password: json['password'] as String,
       phone: json['phone'] as String?,
@@ -1195,6 +1304,8 @@ Map<String, dynamic> _$UserInputToJson(UserInput instance) => <String, dynamic>{
       'birthday':
           fromDartDateTimeNullableToGraphQLDateTimeNullable(instance.birthday),
       'gender': _$GenderEnumMap[instance.gender],
+      'location':
+          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
       'name': instance.name,
       'password': instance.password,
       'phone': instance.phone,
@@ -1778,6 +1889,8 @@ RemoveInvite$Mutation$RemoveInvite$Nodes
               .toList()
           ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
           ..location = json['location'] as String
+          ..coordinates =
+              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
           ..pictureUrl = json['pictureUrl'] as String?
           ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
               .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
@@ -1805,6 +1918,7 @@ Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
@@ -2147,6 +2261,8 @@ AddInvite$Mutation$AddInvite$Nodes _$AddInvite$Mutation$AddInvite$NodesFromJson(
           .toList()
       ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
       ..location = json['location'] as String
+      ..coordinates =
+          fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
       ..pictureUrl = json['pictureUrl'] as String?
       ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
           .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
@@ -2174,6 +2290,7 @@ Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
@@ -2293,6 +2410,8 @@ CreateEvent$Mutation$CreateEvent$Nodes
               .toList()
           ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
           ..location = json['location'] as String
+          ..coordinates =
+              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
           ..pictureUrl = json['pictureUrl'] as String?
           ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
               .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
@@ -2320,6 +2439,7 @@ Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
@@ -2379,6 +2499,8 @@ Map<String, dynamic> _$CreateEvent$MutationToJson(
     };
 
 EventInput _$EventInputFromJson(Map<String, dynamic> json) => EventInput(
+      coordinates:
+          fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String),
       creatorId: json['creatorId'] as int,
       description: json['description'] as String,
       filterGender: $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2406,6 +2528,7 @@ EventInput _$EventInputFromJson(Map<String, dynamic> json) => EventInput(
 
 Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
     <String, dynamic>{
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'creatorId': instance.creatorId,
       'description': instance.description,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -2467,95 +2590,6 @@ Map<String, dynamic> _$DeleteWannago$MutationToJson(
         DeleteWannago$Mutation instance) =>
     <String, dynamic>{
       'deleteWannago': instance.deleteWannago.toJson(),
-    };
-
-UpdateGroup$Mutation$UpdateGroup$Nodes
-    _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(
-            Map<String, dynamic> json) =>
-        UpdateGroup$Mutation$UpdateGroup$Nodes()
-          ..id = json['id'] as int
-          ..name = json['name'] as String
-          ..owner = json['owner'] as int
-          ..users = (json['users'] as List<dynamic>)
-              .map((e) =>
-                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
-              .toList();
-
-Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(
-        UpdateGroup$Mutation$UpdateGroup$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'owner': instance.owner,
-      'users': instance.users.map((e) => e.toJson()).toList(),
-    };
-
-UpdateGroup$Mutation$UpdateGroup$Errors
-    _$UpdateGroup$Mutation$UpdateGroup$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        UpdateGroup$Mutation$UpdateGroup$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$ErrorsToJson(
-        UpdateGroup$Mutation$UpdateGroup$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-UpdateGroup$Mutation$UpdateGroup _$UpdateGroup$Mutation$UpdateGroupFromJson(
-        Map<String, dynamic> json) =>
-    UpdateGroup$Mutation$UpdateGroup()
-      ..ok = json['ok'] as bool?
-      ..nodes = json['nodes'] == null
-          ? null
-          : UpdateGroup$Mutation$UpdateGroup$Nodes.fromJson(
-              json['nodes'] as Map<String, dynamic>)
-      ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => UpdateGroup$Mutation$UpdateGroup$Errors.fromJson(
-              e as Map<String, dynamic>))
-          .toList();
-
-Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroupToJson(
-        UpdateGroup$Mutation$UpdateGroup instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.toJson(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-UpdateGroup$Mutation _$UpdateGroup$MutationFromJson(
-        Map<String, dynamic> json) =>
-    UpdateGroup$Mutation()
-      ..updateGroup = UpdateGroup$Mutation$UpdateGroup.fromJson(
-          json['updateGroup'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$UpdateGroup$MutationToJson(
-        UpdateGroup$Mutation instance) =>
-    <String, dynamic>{
-      'updateGroup': instance.updateGroup.toJson(),
-    };
-
-GroupFilterInput _$GroupFilterInputFromJson(Map<String, dynamic> json) =>
-    GroupFilterInput(
-      createdAt: json['createdAt'] as String?,
-      id: json['id'] as int?,
-      name: json['name'] as String?,
-      owner: json['owner'] as int?,
-      updatedAt: json['updatedAt'] as String?,
-      userIds:
-          (json['userIds'] as List<dynamic>?)?.map((e) => e as int).toList(),
-    );
-
-Map<String, dynamic> _$GroupFilterInputToJson(GroupFilterInput instance) =>
-    <String, dynamic>{
-      'createdAt': instance.createdAt,
-      'id': instance.id,
-      'name': instance.name,
-      'owner': instance.owner,
-      'updatedAt': instance.updatedAt,
-      'userIds': instance.userIds,
     };
 
 CreateGroup$Mutation$CreateGroup$Nodes
@@ -2687,6 +2721,19 @@ Map<String, dynamic> _$UpdateEventArgumentsToJson(
         UpdateEventArguments instance) =>
     <String, dynamic>{
       'eventInput': instance.eventInput.toJson(),
+    };
+
+UpdateGroupArguments _$UpdateGroupArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    UpdateGroupArguments(
+      groupInput:
+          GroupFilterInput.fromJson(json['groupInput'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UpdateGroupArgumentsToJson(
+        UpdateGroupArguments instance) =>
+    <String, dynamic>{
+      'groupInput': instance.groupInput.toJson(),
     };
 
 UpdateUserArguments _$UpdateUserArgumentsFromJson(Map<String, dynamic> json) =>
@@ -3021,19 +3068,6 @@ Map<String, dynamic> _$DeleteWannagoArgumentsToJson(
         DeleteWannagoArguments instance) =>
     <String, dynamic>{
       'id': instance.id,
-    };
-
-UpdateGroupArguments _$UpdateGroupArgumentsFromJson(
-        Map<String, dynamic> json) =>
-    UpdateGroupArguments(
-      groupInput:
-          GroupFilterInput.fromJson(json['groupInput'] as Map<String, dynamic>),
-    );
-
-Map<String, dynamic> _$UpdateGroupArgumentsToJson(
-        UpdateGroupArguments instance) =>
-    <String, dynamic>{
-      'groupInput': instance.groupInput.toJson(),
     };
 
 CreateGroupArguments _$CreateGroupArgumentsFromJson(

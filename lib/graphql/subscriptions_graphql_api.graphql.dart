@@ -6,6 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gql/ast.dart';
 import 'package:whatado/utils/coercers.dart';
+import 'package:geojson/geojson.dart';
 part 'subscriptions_graphql_api.graphql.g.dart';
 
 mixin EventUserMixin {

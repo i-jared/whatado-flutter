@@ -6,6 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:equatable/equatable.dart';
 import 'package:gql/ast.dart';
 import 'package:whatado/utils/coercers.dart';
+import 'package:geojson/geojson.dart';
 part 'mutations_graphql_api.graphql.g.dart';
 
 mixin EventFieldsMixin {
@@ -28,6 +29,10 @@ mixin EventFieldsMixin {
       toJson: fromDartDateTimeToGraphQLDateTime)
   late DateTime time;
   late String location;
+  @JsonKey(
+      fromJson: fromGraphQLPointToDartGeoJsonPoint,
+      toJson: fromDartGeoJsonPointToGraphQLPoint)
+  late GeoJsonPoint coordinates;
   String? pictureUrl;
   late List<EventFieldsMixin$RelatedInterests> relatedInterests;
   @JsonKey(unknownEnumValue: Privacy.artemisUnknown)
@@ -49,6 +54,12 @@ mixin EventUserMixin {
       toJson: fromDartDateTimeToGraphQLDateTime)
   late DateTime birthday;
 }
+mixin GroupFieldsMixin {
+  late int id;
+  late String name;
+  late int owner;
+  late List<GroupFieldsMixin$Users> users;
+}
 mixin UserFieldsMixin {
   late int id;
   late String photoUrls;
@@ -69,12 +80,10 @@ mixin UserFieldsMixin {
   late List<UserFieldsMixin$Interests> interests;
   late List<UserFieldsMixin$MyEvents> myEvents;
   late List<UserFieldsMixin$ChatNotifications> chatNotifications;
-}
-mixin GroupFieldsMixin {
-  late int id;
-  late String name;
-  late int owner;
-  late List<GroupFieldsMixin$Users> users;
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? location;
 }
 mixin ForumFieldsMixin {
   late int id;
@@ -237,6 +246,7 @@ class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -406,6 +416,7 @@ class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -480,7 +491,8 @@ class UpdateEvent$Mutation extends JsonSerializable with EquatableMixin {
 @JsonSerializable(explicitToJson: true)
 class EventFilterInput extends JsonSerializable with EquatableMixin {
   EventFilterInput(
-      {this.createdAt,
+      {this.coordinates,
+      this.createdAt,
       this.creatorId,
       this.description,
       this.filterGender,
@@ -503,6 +515,11 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
 
   factory EventFilterInput.fromJson(Map<String, dynamic> json) =>
       _$EventFilterInputFromJson(json);
+
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? coordinates;
 
   String? createdAt;
 
@@ -551,6 +568,7 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
 
   @override
   List<Object?> get props => [
+        coordinates,
         createdAt,
         creatorId,
         description,
@@ -574,6 +592,124 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
       ];
   @override
   Map<String, dynamic> toJson() => _$EventFilterInputToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateGroup$Mutation$UpdateGroup$Nodes extends JsonSerializable
+    with EquatableMixin, GroupFieldsMixin {
+  UpdateGroup$Mutation$UpdateGroup$Nodes();
+
+  factory UpdateGroup$Mutation$UpdateGroup$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, owner, users];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateGroup$Mutation$UpdateGroup$Errors extends JsonSerializable
+    with EquatableMixin {
+  UpdateGroup$Mutation$UpdateGroup$Errors();
+
+  factory UpdateGroup$Mutation$UpdateGroup$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateGroup$Mutation$UpdateGroup$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateGroup$Mutation$UpdateGroup$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateGroup$Mutation$UpdateGroup extends JsonSerializable
+    with EquatableMixin {
+  UpdateGroup$Mutation$UpdateGroup();
+
+  factory UpdateGroup$Mutation$UpdateGroup.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateGroup$Mutation$UpdateGroupFromJson(json);
+
+  bool? ok;
+
+  UpdateGroup$Mutation$UpdateGroup$Nodes? nodes;
+
+  List<UpdateGroup$Mutation$UpdateGroup$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateGroup$Mutation$UpdateGroupToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateGroup$Mutation extends JsonSerializable with EquatableMixin {
+  UpdateGroup$Mutation();
+
+  factory UpdateGroup$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$UpdateGroup$MutationFromJson(json);
+
+  late UpdateGroup$Mutation$UpdateGroup updateGroup;
+
+  @override
+  List<Object?> get props => [updateGroup];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateGroup$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupFieldsMixin$Users extends JsonSerializable
+    with EquatableMixin, EventUserMixin {
+  GroupFieldsMixin$Users();
+
+  factory GroupFieldsMixin$Users.fromJson(Map<String, dynamic> json) =>
+      _$GroupFieldsMixin$UsersFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$GroupFieldsMixin$UsersToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupFilterInput extends JsonSerializable with EquatableMixin {
+  GroupFilterInput(
+      {this.createdAt,
+      this.id,
+      this.name,
+      this.owner,
+      this.updatedAt,
+      this.userIds});
+
+  factory GroupFilterInput.fromJson(Map<String, dynamic> json) =>
+      _$GroupFilterInputFromJson(json);
+
+  String? createdAt;
+
+  int? id;
+
+  String? name;
+
+  int? owner;
+
+  String? updatedAt;
+
+  List<int>? userIds;
+
+  @override
+  List<Object?> get props => [createdAt, id, name, owner, updatedAt, userIds];
+  @override
+  Map<String, dynamic> toJson() => _$GroupFilterInputToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -602,7 +738,8 @@ class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
         groups,
         interests,
         myEvents,
-        chatNotifications
+        chatNotifications,
+        location
       ];
   @override
   Map<String, dynamic> toJson() =>
@@ -806,20 +943,6 @@ class UserFieldsMixin$ChatNotifications extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
-class GroupFieldsMixin$Users extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  GroupFieldsMixin$Users();
-
-  factory GroupFieldsMixin$Users.fromJson(Map<String, dynamic> json) =>
-      _$GroupFieldsMixin$UsersFromJson(json);
-
-  @override
-  List<Object?> get props => [id, name, photoUrls, bio, birthday];
-  @override
-  Map<String, dynamic> toJson() => _$GroupFieldsMixin$UsersToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class UserFilterInput extends JsonSerializable with EquatableMixin {
   UserFilterInput(
       {this.bio,
@@ -827,6 +950,7 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
       this.deviceId,
       this.gender,
       this.id,
+      this.location,
       this.name,
       this.password,
       this.phone,
@@ -850,6 +974,11 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
 
   int? id;
 
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? location;
+
   String? name;
 
   String? password;
@@ -867,6 +996,7 @@ class UserFilterInput extends JsonSerializable with EquatableMixin {
         deviceId,
         gender,
         id,
+        location,
         name,
         password,
         phone,
@@ -1361,6 +1491,7 @@ class UserInput extends JsonSerializable with EquatableMixin {
   UserInput(
       {this.birthday,
       this.gender,
+      this.location,
       this.name,
       required this.password,
       this.phone});
@@ -1376,6 +1507,11 @@ class UserInput extends JsonSerializable with EquatableMixin {
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
   Gender? gender;
 
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? location;
+
   String? name;
 
   late String password;
@@ -1383,7 +1519,8 @@ class UserInput extends JsonSerializable with EquatableMixin {
   String? phone;
 
   @override
-  List<Object?> get props => [birthday, gender, name, password, phone];
+  List<Object?> get props =>
+      [birthday, gender, location, name, password, phone];
   @override
   Map<String, dynamic> toJson() => _$UserInputToJson(this);
 }
@@ -2108,6 +2245,7 @@ class RemoveInvite$Mutation$RemoveInvite$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -2531,6 +2669,7 @@ class AddInvite$Mutation$AddInvite$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -2675,6 +2814,7 @@ class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -2749,7 +2889,8 @@ class CreateEvent$Mutation extends JsonSerializable with EquatableMixin {
 @JsonSerializable(explicitToJson: true)
 class EventInput extends JsonSerializable with EquatableMixin {
   EventInput(
-      {required this.creatorId,
+      {required this.coordinates,
+      required this.creatorId,
       required this.description,
       required this.filterGender,
       required this.filterLocation,
@@ -2769,6 +2910,11 @@ class EventInput extends JsonSerializable with EquatableMixin {
 
   factory EventInput.fromJson(Map<String, dynamic> json) =>
       _$EventInputFromJson(json);
+
+  @JsonKey(
+      fromJson: fromGraphQLPointToDartGeoJsonPoint,
+      toJson: fromDartGeoJsonPointToGraphQLPoint)
+  late GeoJsonPoint coordinates;
 
   late int creatorId;
 
@@ -2811,6 +2957,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
 
   @override
   List<Object?> get props => [
+        coordinates,
         creatorId,
         description,
         filterGender,
@@ -2888,110 +3035,6 @@ class DeleteWannago$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [deleteWannago];
   @override
   Map<String, dynamic> toJson() => _$DeleteWannago$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateGroup$Mutation$UpdateGroup$Nodes extends JsonSerializable
-    with EquatableMixin, GroupFieldsMixin {
-  UpdateGroup$Mutation$UpdateGroup$Nodes();
-
-  factory UpdateGroup$Mutation$UpdateGroup$Nodes.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(json);
-
-  @override
-  List<Object?> get props => [id, name, owner, users];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateGroup$Mutation$UpdateGroup$Errors extends JsonSerializable
-    with EquatableMixin {
-  UpdateGroup$Mutation$UpdateGroup$Errors();
-
-  factory UpdateGroup$Mutation$UpdateGroup$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateGroup$Mutation$UpdateGroup$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateGroup$Mutation$UpdateGroup$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateGroup$Mutation$UpdateGroup extends JsonSerializable
-    with EquatableMixin {
-  UpdateGroup$Mutation$UpdateGroup();
-
-  factory UpdateGroup$Mutation$UpdateGroup.fromJson(
-          Map<String, dynamic> json) =>
-      _$UpdateGroup$Mutation$UpdateGroupFromJson(json);
-
-  bool? ok;
-
-  UpdateGroup$Mutation$UpdateGroup$Nodes? nodes;
-
-  List<UpdateGroup$Mutation$UpdateGroup$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$UpdateGroup$Mutation$UpdateGroupToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateGroup$Mutation extends JsonSerializable with EquatableMixin {
-  UpdateGroup$Mutation();
-
-  factory UpdateGroup$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$UpdateGroup$MutationFromJson(json);
-
-  late UpdateGroup$Mutation$UpdateGroup updateGroup;
-
-  @override
-  List<Object?> get props => [updateGroup];
-  @override
-  Map<String, dynamic> toJson() => _$UpdateGroup$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class GroupFilterInput extends JsonSerializable with EquatableMixin {
-  GroupFilterInput(
-      {this.createdAt,
-      this.id,
-      this.name,
-      this.owner,
-      this.updatedAt,
-      this.userIds});
-
-  factory GroupFilterInput.fromJson(Map<String, dynamic> json) =>
-      _$GroupFilterInputFromJson(json);
-
-  String? createdAt;
-
-  int? id;
-
-  String? name;
-
-  int? owner;
-
-  String? updatedAt;
-
-  List<int>? userIds;
-
-  @override
-  List<Object?> get props => [createdAt, id, name, owner, updatedAt, userIds];
-  @override
-  Map<String, dynamic> toJson() => _$GroupFilterInputToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -3519,6 +3562,12 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'coordinates'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'pictureUrl'),
             alias: null,
             arguments: [],
@@ -3805,6 +3854,12 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'coordinates'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'pictureUrl'),
             alias: null,
             arguments: [],
@@ -3917,6 +3972,176 @@ class UpdateEventMutation
   @override
   UpdateEvent$Mutation parse(Map<String, dynamic> json) =>
       UpdateEvent$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateGroupArguments extends JsonSerializable with EquatableMixin {
+  UpdateGroupArguments({required this.groupInput});
+
+  @override
+  factory UpdateGroupArguments.fromJson(Map<String, dynamic> json) =>
+      _$UpdateGroupArgumentsFromJson(json);
+
+  late GroupFilterInput groupInput;
+
+  @override
+  List<Object?> get props => [groupInput];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateGroupArgumentsToJson(this);
+}
+
+final UPDATE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME = 'updateGroup';
+final UPDATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'updateGroup'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'groupInput')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'GroupFilterInput'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'updateGroup'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'options'),
+                  value: VariableNode(name: NameNode(value: 'groupInput')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'GroupFields'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'GroupFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Group'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'owner'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'users'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class UpdateGroupMutation
+    extends GraphQLQuery<UpdateGroup$Mutation, UpdateGroupArguments> {
+  UpdateGroupMutation({required this.variables});
+
+  @override
+  final DocumentNode document = UPDATE_GROUP_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = UPDATE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final UpdateGroupArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  UpdateGroup$Mutation parse(Map<String, dynamic> json) =>
+      UpdateGroup$Mutation.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -4148,7 +4373,13 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   arguments: [],
                   directives: [],
                   selectionSet: null)
-            ]))
+            ])),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
       ])),
   FragmentDefinitionNode(
       name: NameNode(value: 'EventUser'),
@@ -6265,6 +6496,12 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'coordinates'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'pictureUrl'),
             alias: null,
             arguments: [],
@@ -7153,6 +7390,12 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'coordinates'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'pictureUrl'),
             alias: null,
             arguments: [],
@@ -7534,6 +7777,12 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'coordinates'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'pictureUrl'),
             alias: null,
             arguments: [],
@@ -7741,176 +7990,6 @@ class DeleteWannagoMutation
   @override
   DeleteWannago$Mutation parse(Map<String, dynamic> json) =>
       DeleteWannago$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class UpdateGroupArguments extends JsonSerializable with EquatableMixin {
-  UpdateGroupArguments({required this.groupInput});
-
-  @override
-  factory UpdateGroupArguments.fromJson(Map<String, dynamic> json) =>
-      _$UpdateGroupArgumentsFromJson(json);
-
-  late GroupFilterInput groupInput;
-
-  @override
-  List<Object?> get props => [groupInput];
-  @override
-  Map<String, dynamic> toJson() => _$UpdateGroupArgumentsToJson(this);
-}
-
-final UPDATE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME = 'updateGroup';
-final UPDATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'updateGroup'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'groupInput')),
-            type: NamedTypeNode(
-                name: NameNode(value: 'GroupFilterInput'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'updateGroup'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'options'),
-                  value: VariableNode(name: NameNode(value: 'groupInput')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FragmentSpreadNode(
-                        name: NameNode(value: 'GroupFields'), directives: [])
-                  ])),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ])),
-  FragmentDefinitionNode(
-      name: NameNode(value: 'GroupFields'),
-      typeCondition: TypeConditionNode(
-          on: NamedTypeNode(name: NameNode(value: 'Group'), isNonNull: false)),
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'name'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'owner'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'users'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
-            ]))
-      ])),
-  FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
-      typeCondition: TypeConditionNode(
-          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'name'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'photoUrls'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'bio'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'birthday'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
-
-class UpdateGroupMutation
-    extends GraphQLQuery<UpdateGroup$Mutation, UpdateGroupArguments> {
-  UpdateGroupMutation({required this.variables});
-
-  @override
-  final DocumentNode document = UPDATE_GROUP_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = UPDATE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME;
-
-  @override
-  final UpdateGroupArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  UpdateGroup$Mutation parse(Map<String, dynamic> json) =>
-      UpdateGroup$Mutation.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)

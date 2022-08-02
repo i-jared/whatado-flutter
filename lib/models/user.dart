@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:geojson/geojson.dart';
+import 'package:geopoint/geopoint.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
@@ -19,6 +21,7 @@ class User {
   List<EventUser> requestedFriends;
   List<EventUser> friendRequests;
   List<Group> groups;
+  GeoJsonPoint? location;
   User({
     required this.id,
     required this.name,
@@ -34,9 +37,11 @@ class User {
     required this.friendRequests,
     required this.requestedFriends,
     required this.groups,
+    this.location,
   });
 
   factory User.fromGqlData(Map data) {
+    print('jcl user data $data');
     return User(
       id: data['id'],
       phone: data['phone'] ?? '',
@@ -46,35 +51,25 @@ class User {
       verified: data['verified'] ?? false,
       photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
       interests: List<Interest>.from(
-          data['interests']?.map((val) => Interest.fromGqlData(val)).toList() ??
+          data['interests']?.map((val) => Interest.fromGqlData(val)).toList() ?? []),
+      blockedUsers: List<EventUser>.from(
+          data['blockedUsers']?.map((user) => EventUser.fromGqlData(user)).toList() ??
               []),
-      blockedUsers: List<EventUser>.from(data['blockedUsers']
-              ?.map((user) => EventUser.fromGqlData(user))
-              .toList() ??
-          []),
       friends: List<EventUser>.from([
-        ...(data['inverseFriends']
-                ?.map((user) => EventUser.fromGqlData(user)) ??
-            []),
-        ...(data['friends']
-                ?.map((user) => EventUser.fromGqlData(user))
-                .toList() ??
-            [])
+        ...(data['inverseFriends']?.map((user) => EventUser.fromGqlData(user)) ?? []),
+        ...(data['friends']?.map((user) => EventUser.fromGqlData(user)).toList() ?? [])
       ]),
-      friendRequests: List<EventUser>.from(data['friendRequests']
-              ?.map((user) => EventUser.fromGqlData(user))
-              .toList() ??
-          []),
-      requestedFriends: List<EventUser>.from(data['requestedFriends']
-              ?.map((user) => EventUser.fromGqlData(user))
-              .toList() ??
-          []),
-      birthday: data['birthday'] == null
-          ? DateTime.now()
-          : DateTime.parse(data['birthday']),
-      groups: List<Group>.from(
-          data['groups']?.map((group) => Group.fromGqlData(group)).toList() ??
+      friendRequests: List<EventUser>.from(
+          data['friendRequests']?.map((user) => EventUser.fromGqlData(user)).toList() ??
               []),
+      requestedFriends: List<EventUser>.from(
+          data['requestedFriends']?.map((user) => EventUser.fromGqlData(user)).toList() ??
+              []),
+      birthday:
+          data['birthday'] == null ? DateTime.now() : DateTime.parse(data['birthday']),
+      groups: List<Group>.from(
+          data['groups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
+      location: GeoJsonPoint(geoPoint: GeoPoint(latitude: 100, longitude: 100)),
     );
   }
 

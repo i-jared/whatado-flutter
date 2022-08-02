@@ -86,6 +86,7 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
                         filterRadius: 5, // not yet used
                         privacy: eventState.privacy,
                         location: eventState.locationController.text,
+                        coordinates: eventState.coordinates,
                         relatedInterestsIds: List<int>.from(interests.data ??
                             eventState.selectedInterests.map((v) => v.id).toList()),
                         time: finalTime,

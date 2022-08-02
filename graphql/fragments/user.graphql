@@ -35,4 +35,5 @@ fragment UserFields on User {
     lastAccessed
     muted
   }
+  location
 }

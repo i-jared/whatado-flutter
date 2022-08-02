@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:geojson/geojson.dart';
+import 'package:geopoint/geopoint.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
@@ -13,6 +17,7 @@ class Event {
   DateTime time;
   Gender filterGender;
   String location;
+  GeoJsonPoint coordinates;
   List<int> relatedInterestIds;
   List<Wannago> wannago;
   List<EventUser> invited;
@@ -26,6 +31,7 @@ class Event {
     required this.time,
     required this.relatedInterestIds,
     required this.location,
+    required this.coordinates,
     required this.filterGender,
     this.wannago = const [],
     this.invited = const [],
@@ -33,6 +39,7 @@ class Event {
   });
 
   static Event fromGqlData(Map data) {
+    print('jcl $data');
     return Event(
       id: data['id'],
       createdAt: DateTime.parse(data['createdAt']),
@@ -43,13 +50,12 @@ class Event {
       relatedInterestIds: List<int>.from(
           data['relatedInterests']?.map((obj) => obj['id']).toList() ?? []),
       location: data['location'] ?? [],
+      coordinates: parseCoordinates(data['coordinates']),
       description: data['description'],
       wannago: List<Wannago>.from(
-          data['wannago']?.map((obj) => Wannago.fromGqlData(obj)).toList() ??
-              []),
+          data['wannago']?.map((obj) => Wannago.fromGqlData(obj)).toList() ?? []),
       invited: List<EventUser>.from(
-          data['invited']?.map((obj) => EventUser.fromGqlData(obj)).toList() ??
-              []),
+          data['invited']?.map((obj) => EventUser.fromGqlData(obj)).toList() ?? []),
       filterGender: Gender.values.firstWhere((val) {
         return val.toString() ==
             'Gender.' + data['filterGender'].toString().toLowerCase();
@@ -59,5 +65,20 @@ class Event {
       //filter age
       //filter age
     );
+  }
+
+  static GeoJsonPoint parseCoordinates(String? coordinates) {
+    GeoJsonPoint defaultReturn =
+        GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: 111.8338));
+    if (coordinates == null) {
+      return defaultReturn;
+    }
+    Map<String, num> latlong = Map<String, num>.from(json.decode(coordinates));
+    if (latlong['x'] == null || latlong['y'] == null) {
+      return defaultReturn;
+    }
+    return GeoJsonPoint(
+        geoPoint:
+            GeoPoint(latitude: latlong['y']! * 1.0, longitude: latlong['x']! * 1.0));
   }
 }

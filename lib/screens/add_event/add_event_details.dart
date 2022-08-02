@@ -108,15 +108,16 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             TypeAheadFormField(
               direction: AxisDirection.up,
               noItemsFoundBuilder: (context) => SizedBox.shrink(),
-              onSuggestionSelected: (String place) {
-                eventState.locationController.text = place;
+              onSuggestionSelected: (Map<String, dynamic> place) {
+                eventState.locationController.text = place['description'];
+                print('jcl $place');
               },
               suggestionsCallback: (String pattern) async {
                 final result = await placesService.findPlace(pattern);
                 return result;
               },
-              itemBuilder: (context, String place) =>
-                  ListTile(title: Text(place)),
+              itemBuilder: (context, Map<String, dynamic> place) =>
+                  ListTile(title: Text(place['description'])),
               textFieldConfiguration: TextFieldConfiguration(
                 decoration: InputDecoration(
                   isDense: true,
@@ -137,8 +138,8 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                     readOnly: true,
                     controller: eventState.dateController,
                     onTap: () => DatePicker.showDatePicker(context,
-                        onConfirm: (time) => eventState.dateController.text =
-                            dateFormat.format(time),
+                        onConfirm: (time) =>
+                            eventState.dateController.text = dateFormat.format(time),
                         minTime: DateTime.now(),
                         maxTime: DateTime.now().add(Duration(days: 100))),
                     decoration: InputDecoration(
@@ -156,8 +157,8 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                     controller: eventState.timeController,
                     onTap: () => DatePicker.showTime12hPicker(
                       context,
-                      onConfirm: (time) => eventState.timeController.text =
-                          timeFormat.format(time),
+                      onConfirm: (time) =>
+                          eventState.timeController.text = timeFormat.format(time),
                       currentTime: DateTime.now(),
                     ),
                     decoration: InputDecoration(
@@ -174,18 +175,15 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             TextButton(
                 onPressed: !ready
                     ? null
-                    : () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TargetAudience())),
+                    : () => Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TargetAudience())),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('SELECT TARGET AUDIENCE',
                         style: TextStyle(
                             fontSize: 18,
-                            color:
-                                !ready ? Colors.grey[400] : Color(0xfff7941d))),
+                            color: !ready ? Colors.grey[400] : Color(0xfff7941d))),
                     Icon(Icons.arrow_forward_ios,
                         color: !ready ? Colors.grey[400] : Color(0xfff7941d))
                   ],
@@ -204,8 +202,8 @@ class _AddEventDetailsState extends State<AddEventDetails> {
               title: 'Add Event',
               buttonTitle: 'NEXT',
               disabled: !ready,
-              onSave: () => Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => TargetAudience())),
+              onSave: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => TargetAudience())),
             ),
             body: chooseWidget(context)),
       ),

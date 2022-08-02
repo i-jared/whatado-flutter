@@ -35,6 +35,8 @@
 	</array>
 	<key>NSContactsUsageDescription</key>
      <string>Whatado needs access to your contacts to display your friends currently using the app.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+     <string>Whatado needs your location to show events near you.</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

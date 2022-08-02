@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:geojson/geojson.dart';
+import 'package:geopoint/geopoint.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
@@ -30,98 +32,96 @@ class EditEventDetails extends StatelessWidget {
             body: SingleChildScrollView(
                 child: Padding(
               padding: EdgeInsets.symmetric(horizontal: padding),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                SizedBox(height: sectionSpacing),
+                Text('TITLE', style: headingStyle),
+                SizedBox(height: headingSpacing),
+                MyTextField(
+                  controller: editEventState.titleController,
+                  hintText: 'Enter title',
+                ),
+                SizedBox(height: sectionSpacing),
+                Text('DESCRIPTION', style: headingStyle),
+                SizedBox(height: headingSpacing),
+                MyTextField(
+                  controller: editEventState.descriptionController,
+                  hintText: 'Enter description',
+                  maxLines: null,
+                ),
+                SizedBox(height: sectionSpacing),
+                Text('LOCATION', style: headingStyle),
+                SizedBox(height: headingSpacing),
+                TypeAheadFormField(
+                  direction: AxisDirection.up,
+                  noItemsFoundBuilder: (context) => SizedBox.shrink(),
+                  onSuggestionSelected: (Map<String, dynamic> place) {
+                    editEventState.locationController.text = place['description'];
+                    editEventState.coordinates = GeoJsonPoint(
+                        geoPoint: GeoPoint(
+                            latitude: place['location']['y'],
+                            longitude: place['location']['x']));
+                  },
+                  suggestionsCallback: (String pattern) async {
+                    final result = await placesService.findPlace(pattern);
+                    return result;
+                  },
+                  itemBuilder: (context, Map<String, dynamic> place) =>
+                      ListTile(title: Text(place['description'])),
+                  textFieldConfiguration: TextFieldConfiguration(
+                    decoration: InputDecoration(
+                      isDense: true,
+                      hintText: 'Enter location',
+                      hintStyle: TextStyle(fontSize: 13),
+                      contentPadding: EdgeInsets.symmetric(vertical: 12),
+                    ),
+                    controller: editEventState.locationController,
+                  ),
+                ),
+                SizedBox(height: sectionSpacing),
+                Text('TIME', style: headingStyle),
+                SizedBox(height: headingSpacing),
+                Row(
                   children: [
-                    SizedBox(height: sectionSpacing),
-                    Text('TITLE', style: headingStyle),
-                    SizedBox(height: headingSpacing),
-                    MyTextField(
-                      controller: editEventState.titleController,
-                      hintText: 'Enter title',
-                    ),
-                    SizedBox(height: sectionSpacing),
-                    Text('DESCRIPTION', style: headingStyle),
-                    SizedBox(height: headingSpacing),
-                    MyTextField(
-                      controller: editEventState.descriptionController,
-                      hintText: 'Enter description',
-                      maxLines: null,
-                    ),
-                    SizedBox(height: sectionSpacing),
-                    Text('LOCATION', style: headingStyle),
-                    SizedBox(height: headingSpacing),
-                    TypeAheadFormField(
-                      direction: AxisDirection.up,
-                      noItemsFoundBuilder: (context) => SizedBox.shrink(),
-                      onSuggestionSelected: (String place) {
-                        editEventState.locationController.text = place;
-                      },
-                      suggestionsCallback: (String pattern) async {
-                        final result = await placesService.findPlace(pattern);
-                        return result;
-                      },
-                      itemBuilder: (context, String place) =>
-                          ListTile(title: Text(place)),
-                      textFieldConfiguration: TextFieldConfiguration(
+                    Flexible(
+                      child: TextFormField(
+                        readOnly: true,
+                        controller: editEventState.dateController,
+                        onTap: () => DatePicker.showDatePicker(context,
+                            onConfirm: (time) => editEventState.dateController.text =
+                                dateFormat.format(time),
+                            minTime: DateTime.now(),
+                            maxTime: DateTime.now().add(Duration(days: 100))),
                         decoration: InputDecoration(
                           isDense: true,
-                          hintText: 'Enter location',
+                          hintText: 'Date',
                           hintStyle: TextStyle(fontSize: 13),
                           contentPadding: EdgeInsets.symmetric(vertical: 12),
                         ),
-                        controller: editEventState.locationController,
                       ),
                     ),
-                    SizedBox(height: sectionSpacing),
-                    Text('TIME', style: headingStyle),
-                    SizedBox(height: headingSpacing),
-                    Row(
-                      children: [
-                        Flexible(
-                          child: TextFormField(
-                            readOnly: true,
-                            controller: editEventState.dateController,
-                            onTap: () => DatePicker.showDatePicker(context,
-                                onConfirm: (time) => editEventState
-                                    .dateController
-                                    .text = dateFormat.format(time),
-                                minTime: DateTime.now(),
-                                maxTime:
-                                    DateTime.now().add(Duration(days: 100))),
-                            decoration: InputDecoration(
-                              isDense: true,
-                              hintText: 'Date',
-                              hintStyle: TextStyle(fontSize: 13),
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 12),
-                            ),
-                          ),
+                    SizedBox(width: 20),
+                    Flexible(
+                      child: TextFormField(
+                        readOnly: true,
+                        controller: editEventState.timeController,
+                        onTap: () => DatePicker.showTime12hPicker(
+                          context,
+                          onConfirm: (time) => editEventState.timeController.text =
+                              timeFormat.format(time),
+                          currentTime: DateTime.now(),
                         ),
-                        SizedBox(width: 20),
-                        Flexible(
-                          child: TextFormField(
-                            readOnly: true,
-                            controller: editEventState.timeController,
-                            onTap: () => DatePicker.showTime12hPicker(
-                              context,
-                              onConfirm: (time) => editEventState.timeController
-                                  .text = timeFormat.format(time),
-                              currentTime: DateTime.now(),
-                            ),
-                            decoration: InputDecoration(
-                              hintText: 'Time',
-                              isDense: true,
-                              hintStyle: TextStyle(fontSize: 13),
-                              contentPadding:
-                                  EdgeInsets.symmetric(vertical: 12),
-                            ),
-                          ),
+                        decoration: InputDecoration(
+                          hintText: 'Time',
+                          isDense: true,
+                          hintStyle: TextStyle(fontSize: 13),
+                          contentPadding: EdgeInsets.symmetric(vertical: 12),
                         ),
-                      ],
+                      ),
                     ),
-                    SizedBox(height: sectionSpacing),
-                  ]),
+                  ],
+                ),
+                SizedBox(height: sectionSpacing),
+              ]),
             ))),
       ),
     );

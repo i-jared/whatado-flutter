@@ -2,9 +2,11 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   package="io.whatado"
 >
-  <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-<uses-permission android:name="android.permission.READ_CALENDAR" />
+ <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+ <uses-permission android:name="android.permission.READ_CALENDAR" />
  <uses-permission android:name="android.permission.READ_CONTACTS" />
+ <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
 <queries>
   <intent>
     <action android:name="android.intent.action.INSERT" />

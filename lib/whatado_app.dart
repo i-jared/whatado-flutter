@@ -2,10 +2,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:geojson/geojson.dart';
+import 'package:geopoint/geopoint.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
+import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/validate.dart';
@@ -60,6 +64,17 @@ class _MyAppState extends State<MyApp> {
     invalidAuth = localStorageService.refreshToken?.isEmpty ?? true;
     if (!invalidAuth) {
       SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
+        await locationService.getLocation();
+        UserGqlProvider provider = UserGqlProvider();
+        if (locationService.locationData != null &&
+            locationService.locationData!.latitude != null &&
+            locationService.locationData!.longitude != null) {
+          provider.updateUser(UserFilterInput(
+              location: GeoJsonPoint(
+                  geoPoint: GeoPoint(
+                      latitude: locationService.locationData!.latitude!,
+                      longitude: locationService.locationData!.longitude!))));
+        }
         await loginService.attemptAutoLogin();
         setState(() => loading = false);
       });
@@ -76,8 +91,7 @@ class _MyAppState extends State<MyApp> {
         child: MultiProvider(
             providers: [
               ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
-              ChangeNotifierProvider<AddEventState>(
-                  create: (_) => AddEventState()),
+              ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
               ChangeNotifierProvider<UserState>(create: (_) => UserState()),
               ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
             ],
@@ -87,8 +101,8 @@ class _MyAppState extends State<MyApp> {
                 debugShowCheckedModeBanner: false,
                 title: 'Flutter Demo',
                 theme: ThemeData(
-                    textSelectionTheme: TextSelectionThemeData(
-                        selectionColor: Color(0xfff7941d)),
+                    textSelectionTheme:
+                        TextSelectionThemeData(selectionColor: Color(0xfff7941d)),
                     primarySwatch: MaterialColor(
                       0xFF000000,
                       <int, Color>{

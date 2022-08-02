@@ -88,6 +88,7 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 scalar DateTime
 
 type Event {
+  coordinates: Point!
   createdAt: DateTime!
   creator: User!
   description: String!
@@ -119,6 +120,7 @@ type EventApiResponse {
 }
 
 input EventFilterInput {
+  coordinates: Point
   createdAt: String
   creatorId: Int
   description: String
@@ -142,6 +144,7 @@ input EventFilterInput {
 }
 
 input EventInput {
+  coordinates: Point!
   creatorId: Int!
   description: String!
   filterGender: Gender!
@@ -332,6 +335,9 @@ type Mutation {
   vote(answerId: Int!, chatId: Int!, forumId: Int!): BoolApiResponse!
 }
 
+"""Geojson scalar point type"""
+scalar Point
+
 enum Privacy {
   GROUP
   PRIVATE
@@ -411,6 +417,7 @@ type User {
   inverseFriendsIds: [Int!]!
   invitedEvents: [Event!]!
   invitedEventsIds: [Int!]!
+  location: Point
   myEvents: [Event!]!
   myEventsIds: [Int!]!
   name: String!
@@ -436,6 +443,7 @@ input UserFilterInput {
   deviceId: String
   gender: Gender
   id: Int
+  location: Point
   name: String
   password: String
   phone: String
@@ -446,6 +454,7 @@ input UserFilterInput {
 input UserInput {
   birthday: DateTime
   gender: Gender
+  location: Point
   name: String
   password: String!
   phone: String

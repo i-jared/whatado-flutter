@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:geojson/geojson.dart';
 import 'package:intl/intl.dart';
 import 'package:whatado/models/event.dart';
 
@@ -11,8 +12,11 @@ class EditEventState extends ChangeNotifier {
   TextEditingController locationController;
   TextEditingController dateController;
   TextEditingController timeController;
+  GeoJsonPoint coordinates;
+
   EditEventState(Event event)
       : _loading = false,
+        coordinates = event.coordinates,
         titleController = TextEditingController(text: event.title),
         descriptionController = TextEditingController(text: event.description),
         locationController = TextEditingController(text: event.location),

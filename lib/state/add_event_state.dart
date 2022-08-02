@@ -5,6 +5,8 @@ import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
 import 'package:flutter/material.dart';
+import 'package:geojson/geojson.dart';
+import 'package:geopoint/geopoint.dart';
 import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
@@ -42,6 +44,8 @@ class AddEventState extends ChangeNotifier {
   bool _postLoading;
   bool _failed;
   bool _succeeded;
+  GeoJsonPoint coordinates =
+      GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: 111.8338));
 
   List<Interest> popularInterests = [];
   List<Interest> customInterests = [];
