@@ -56,6 +56,7 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
                       }
 
                       if (!eventState.textMode && downloadUrl == null) {
+                        print('error: no image');
                         eventState.clear();
                         eventState.failed = true;
                         eventState.postLoading = false;
@@ -100,7 +101,9 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
                             ? eventState.selectedGroup!.users.map((u) => u.id).toList()
                             : eventState.selectedUsers.map((u) => u.id).toList(),
                       ));
-                    } catch (e) {
+                    } catch (e, stack) {
+                      print(e.toString());
+                      print(stack);
                       eventState.clear();
                       eventState.failed = true;
                       eventState.postLoading = false;

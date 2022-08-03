@@ -41,7 +41,6 @@ class User {
   });
 
   factory User.fromGqlData(Map data) {
-    print('jcl user data $data');
     return User(
       id: data['id'],
       phone: data['phone'] ?? '',
@@ -69,8 +68,18 @@ class User {
           data['birthday'] == null ? DateTime.now() : DateTime.parse(data['birthday']),
       groups: List<Group>.from(
           data['groups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
-      location: GeoJsonPoint(geoPoint: GeoPoint(latitude: 100, longitude: 100)),
+      location: getLocation(data['location']),
     );
+  }
+
+  static GeoJsonPoint? getLocation(String? data) {
+    if (data == null) {
+      return null;
+    }
+    Map<String, dynamic> location = json.decode(data);
+    if (location['x'] == null || location['y'] == null) return null;
+    return GeoJsonPoint(
+        geoPoint: GeoPoint(latitude: location['y'], longitude: location['x']));
   }
 
   @override

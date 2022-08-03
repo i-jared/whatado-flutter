@@ -9,6 +9,12 @@ String get whatadoWsUrl => EnvironmentConfig.flavor == PROD
 String get whatadoRefreshUrl => EnvironmentConfig.flavor == PROD
     ? 'https://api.whatado.io/refresh_token'
     : "http://192.168.0.96:4000/refresh_token";
+String get whatadoAutocompleteUrl => EnvironmentConfig.flavor == PROD
+    ? 'https://api.whatado.io/autocomplete'
+    : "http://192.168.0.96:4000/autocomplete";
+String get whatadoPlaceDetailsUrl => EnvironmentConfig.flavor == PROD
+    ? 'https://api.whatado.io/place_details'
+    : "http://192.168.0.96:4000/place_details";
 
 // ignore: non_constant_identifier_names
 String get PROD => "PROD";

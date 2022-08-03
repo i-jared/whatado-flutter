@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
@@ -81,6 +83,8 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<User>> updateUser(UserFilterInput userInput) async {
+    print('jcl update User ${userInput.location}');
+    print('jcl update User ${json.encode(userInput)}');
     final mutation =
         UpdateUserMutation(variables: UpdateUserArguments(userInput: userInput));
     final result = await graphqlClientService.mutate(mutation);

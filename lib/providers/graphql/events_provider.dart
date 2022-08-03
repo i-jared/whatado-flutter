@@ -54,8 +54,6 @@ class EventsGqlProvider {
       });
     }
 
-    print('jcl ${result}');
-
     final root = result.data?['groupEvents'];
     final data = root != null && root['nodes'] != null
         ? List<Event>.from((root?['nodes']).map((event) {

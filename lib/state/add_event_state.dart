@@ -46,6 +46,7 @@ class AddEventState extends ChangeNotifier {
   bool _succeeded;
   GeoJsonPoint coordinates =
       GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: 111.8338));
+  // TODO use real values
 
   List<Interest> popularInterests = [];
   List<Interest> customInterests = [];

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:geojson/geojson.dart';
+import 'package:geopoint/geopoint.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/add_event/target_audience.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -41,6 +44,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
+    final userState = Provider.of<UserState>(context);
     final ready = eventState.timeController.text.isNotEmpty &&
         eventState.dateController.text.isNotEmpty &&
         eventState.locationController.text.isNotEmpty &&
@@ -108,12 +112,20 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             TypeAheadFormField(
               direction: AxisDirection.up,
               noItemsFoundBuilder: (context) => SizedBox.shrink(),
-              onSuggestionSelected: (Map<String, dynamic> place) {
+              onSuggestionSelected: (Map<String, dynamic> place) async {
                 eventState.locationController.text = place['description'];
-                print('jcl $place');
+                final location = await placesService.placeDetails(place['place_id']);
+                if (location['lat'] == null || location['lng'] == null) {
+                  // TODO make an error here somehow.
+                  // Invalidate location entry
+                }
+                eventState.coordinates = GeoJsonPoint(
+                    geoPoint:
+                        GeoPoint(latitude: location['lat'], longitude: location['lng']));
               },
               suggestionsCallback: (String pattern) async {
-                final result = await placesService.findPlace(pattern);
+                final result =
+                    await placesService.findPlace(pattern, userState.user?.location);
                 return result;
               },
               itemBuilder: (context, Map<String, dynamic> place) =>

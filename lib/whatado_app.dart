@@ -69,7 +69,8 @@ class _MyAppState extends State<MyApp> {
         if (locationService.locationData != null &&
             locationService.locationData!.latitude != null &&
             locationService.locationData!.longitude != null) {
-          provider.updateUser(UserFilterInput(
+          print('jcl update user 1');
+          await provider.updateUser(UserFilterInput(
               location: GeoJsonPoint(
                   geoPoint: GeoPoint(
                       latitude: locationService.locationData!.latitude!,
@@ -79,7 +80,20 @@ class _MyAppState extends State<MyApp> {
         setState(() => loading = false);
       });
     } else {
-      setState(() => loading = false);
+      locationService.getLocation().then((_) async {
+        UserGqlProvider provider = UserGqlProvider();
+        if (locationService.locationData != null &&
+            locationService.locationData!.latitude != null &&
+            locationService.locationData!.longitude != null) {
+          print('jcl update user 1');
+          await provider.updateUser(UserFilterInput(
+              location: GeoJsonPoint(
+                  geoPoint: GeoPoint(
+                      latitude: locationService.locationData!.latitude!,
+                      longitude: locationService.locationData!.longitude!))));
+        }
+        setState(() => loading = false);
+      });
     }
   }
 

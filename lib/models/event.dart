@@ -39,7 +39,6 @@ class Event {
   });
 
   static Event fromGqlData(Map data) {
-    print('jcl $data');
     return Event(
       id: data['id'],
       createdAt: DateTime.parse(data['createdAt']),
@@ -68,17 +67,19 @@ class Event {
   }
 
   static GeoJsonPoint parseCoordinates(String? coordinates) {
+    print('jcl $coordinates');
     GeoJsonPoint defaultReturn =
-        GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: 111.8338));
+        GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: -111.8338));
     if (coordinates == null) {
       return defaultReturn;
     }
-    Map<String, num> latlong = Map<String, num>.from(json.decode(coordinates));
-    if (latlong['x'] == null || latlong['y'] == null) {
+    Map<String, dynamic> geojson = Map<String, dynamic>.from(json.decode(coordinates));
+    if (geojson['coordinates'] == null || geojson['coordinates'].length < 2) {
       return defaultReturn;
     }
     return GeoJsonPoint(
-        geoPoint:
-            GeoPoint(latitude: latlong['y']! * 1.0, longitude: latlong['x']! * 1.0));
+        geoPoint: GeoPoint(
+            latitude: geojson['coordinates'][1] * 1.0,
+            longitude: geojson['coordinates'][0] * 1.0));
   }
 }

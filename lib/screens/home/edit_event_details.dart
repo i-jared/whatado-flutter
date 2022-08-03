@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/edit_event_state.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/edit_event_app_bar.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 
@@ -24,6 +25,7 @@ class EditEventDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final editEventState = Provider.of<EditEventState>(context);
+    final userState = Provider.of<UserState>(context);
     return Container(
       color: Colors.grey[50],
       child: SafeArea(
@@ -62,7 +64,8 @@ class EditEventDetails extends StatelessWidget {
                             longitude: place['location']['x']));
                   },
                   suggestionsCallback: (String pattern) async {
-                    final result = await placesService.findPlace(pattern);
+                    final result =
+                        await placesService.findPlace(pattern, userState.user!.location);
                     return result;
                   },
                   itemBuilder: (context, Map<String, dynamic> place) =>

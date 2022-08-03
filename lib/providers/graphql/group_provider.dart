@@ -16,9 +16,8 @@ class GroupGqlProvider {
     }
 
     final root = result.data?['myGroups'];
-    final data = root != null && root['nodes'] != null
-        ? Group.fromGqlData(root['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? Group.fromGqlData(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -29,10 +28,9 @@ class GroupGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<Group>> updateGroup(
-      GroupFilterInput groupInput) async {
-    final mutation = UpdateGroupMutation(
-        variables: UpdateGroupArguments(groupInput: groupInput));
+  Future<MyQueryResponse<Group>> updateGroup(GroupFilterInput groupInput) async {
+    final mutation =
+        UpdateGroupMutation(variables: UpdateGroupArguments(groupInput: groupInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -40,10 +38,9 @@ class GroupGqlProvider {
         print(element.message);
       });
     }
-    print('jcl $result');
+
     final root = result.data?['updateGroup'];
-    final data =
-        root?['nodes'] == null ? null : Group.fromGqlData(root?['nodes']);
+    final data = root?['nodes'] == null ? null : Group.fromGqlData(root?['nodes']);
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -56,8 +53,8 @@ class GroupGqlProvider {
 
   Future<MyQueryResponse<Group>> createGroup(GroupInput groupInput) async {
     print(groupInput);
-    final mutation = CreateGroupMutation(
-        variables: CreateGroupArguments(groupInput: groupInput));
+    final mutation =
+        CreateGroupMutation(variables: CreateGroupArguments(groupInput: groupInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -67,8 +64,7 @@ class GroupGqlProvider {
     }
     print(result);
     final root = result.data?['createGroup'];
-    final data =
-        root?['nodes'] == null ? null : Group.fromGqlData(root?['nodes']);
+    final data = root?['nodes'] == null ? null : Group.fromGqlData(root?['nodes']);
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
