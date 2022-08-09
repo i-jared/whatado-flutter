@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
+import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -35,9 +36,8 @@ class UserState extends ChangeNotifier {
   Future<void> updatePhotos() async {
     if (user == null) return;
     final initialPhotoData = await Future.wait(user!.photoUrls
-        .map((url) async => (await NetworkAssetBundle(Uri.parse(url)).load(url))
-            .buffer
-            .asUint8List())
+        .map((url) async =>
+            (await NetworkAssetBundle(Uri.parse(url)).load(url)).buffer.asUint8List())
         .toList());
     photos = initialPhotoData;
     ogphotos = List.from(initialPhotoData);
@@ -90,6 +90,11 @@ class UserState extends ChangeNotifier {
     final response = await query.me();
     _user = response.data;
     await updatePhotos();
+    notifyListeners();
+  }
+
+  Future<void> updateFriendRequest(EventUser newUser) async {
+    user?.requestedFriends.add(newUser);
     notifyListeners();
   }
 

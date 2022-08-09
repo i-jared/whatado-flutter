@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/widgets/appbars/add_event_app_bar.dart';
 import 'package:whatado/widgets/events/event_photo_selector.dart';
@@ -50,8 +51,7 @@ class _AddEventState extends State<AddEvent> {
                           textAlign: TextAlign.center,
                           maxLines: null,
                           decoration: InputDecoration(
-                              hintText: "What are your plans?",
-                              border: InputBorder.none),
+                              hintText: "What are your plans?", border: InputBorder.none),
                           style: TextStyle(fontSize: 30),
                         ),
                       ))
@@ -69,8 +69,8 @@ class _AddEventState extends State<AddEvent> {
                                 minScale: PhotoViewComputedScale.covered,
                                 backgroundDecoration:
                                     BoxDecoration(color: Colors.grey[200]),
-                                imageProvider: MemoryImage(
-                                    eventState.selectedImageBytes!))),
+                                imageProvider:
+                                    MemoryImage(eventState.selectedImageBytes!))),
 
                 // final bytes = file.readAsBytesSync();
                 // final widget = FadeIn(
@@ -97,16 +97,12 @@ class _AddEventState extends State<AddEvent> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             IconButton(
-                                color: eventState.textMode
-                                    ? Color(0xfff7941d)
-                                    : null,
+                                color: eventState.textMode ? AppColors.primary : null,
                                 icon: Icon(Icons.text_fields_outlined),
                                 iconSize: 30,
                                 onPressed: () => eventState.textMode = true),
                             IconButton(
-                                color: !eventState.textMode
-                                    ? Color(0xfff7941d)
-                                    : null,
+                                color: !eventState.textMode ? AppColors.primary : null,
                                 icon: Icon(Icons.camera_alt_outlined),
                                 iconSize: 30,
                                 onPressed: () => eventState.textMode = false)
@@ -116,8 +112,7 @@ class _AddEventState extends State<AddEvent> {
               Flexible(
                   fit: FlexFit.tight,
                   flex: 5,
-                  child:
-                      eventState.textMode ? Container() : EventPhotoSelector()),
+                  child: eventState.textMode ? Container() : EventPhotoSelector()),
             ],
           ),
         ),

@@ -3135,6 +3135,63 @@ class GroupInput extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$GroupInputToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class CreateReferral$Mutation$CreateReferral$Errors extends JsonSerializable
+    with EquatableMixin {
+  CreateReferral$Mutation$CreateReferral$Errors();
+
+  factory CreateReferral$Mutation$CreateReferral$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateReferral$Mutation$CreateReferral$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateReferral$Mutation$CreateReferral$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateReferral$Mutation$CreateReferral extends JsonSerializable
+    with EquatableMixin {
+  CreateReferral$Mutation$CreateReferral();
+
+  factory CreateReferral$Mutation$CreateReferral.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateReferral$Mutation$CreateReferralFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<CreateReferral$Mutation$CreateReferral$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateReferral$Mutation$CreateReferralToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateReferral$Mutation extends JsonSerializable with EquatableMixin {
+  CreateReferral$Mutation();
+
+  factory CreateReferral$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CreateReferral$MutationFromJson(json);
+
+  late CreateReferral$Mutation$CreateReferral createReferral;
+
+  @override
+  List<Object?> get props => [createReferral];
+  @override
+  Map<String, dynamic> toJson() => _$CreateReferral$MutationToJson(this);
+}
+
 enum Privacy {
   @JsonValue('GROUP')
   group,
@@ -8160,4 +8217,100 @@ class CreateGroupMutation
   @override
   CreateGroup$Mutation parse(Map<String, dynamic> json) =>
       CreateGroup$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateReferralArguments extends JsonSerializable with EquatableMixin {
+  CreateReferralArguments({required this.phone});
+
+  @override
+  factory CreateReferralArguments.fromJson(Map<String, dynamic> json) =>
+      _$CreateReferralArgumentsFromJson(json);
+
+  late String phone;
+
+  @override
+  List<Object?> get props => [phone];
+  @override
+  Map<String, dynamic> toJson() => _$CreateReferralArgumentsToJson(this);
+}
+
+final CREATE_REFERRAL_MUTATION_DOCUMENT_OPERATION_NAME = 'createReferral';
+final CREATE_REFERRAL_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'createReferral'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'phone')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'createReferral'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'phone'),
+                  value: VariableNode(name: NameNode(value: 'phone')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class CreateReferralMutation
+    extends GraphQLQuery<CreateReferral$Mutation, CreateReferralArguments> {
+  CreateReferralMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CREATE_REFERRAL_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = CREATE_REFERRAL_MUTATION_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final CreateReferralArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CreateReferral$Mutation parse(Map<String, dynamic> json) =>
+      CreateReferral$Mutation.fromJson(json);
 }

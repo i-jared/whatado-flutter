@@ -1,0 +1,12 @@
+query usersFromContacts($numbers: [String!]!) {
+  usersFromContacts(numbers: $numbers) {
+    ok
+    nodes {
+      ...EventUser
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

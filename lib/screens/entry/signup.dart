@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/providers/graphql/register_query.dart';
 import 'package:whatado/screens/entry/login.dart';
 import 'package:whatado/screens/entry/validate.dart';
@@ -63,34 +64,29 @@ class _SignupScreenState extends State<StatefulWidget> {
                               children: [
                                 SizedBox(height: 50),
                                 Center(
-                                  child: Image.asset(
-                                      'assets/Whatado_FullColor.png',
+                                  child: Image.asset('assets/Whatado_FullColor.png',
                                       height: 100),
                                 ),
                                 SizedBox(height: 40),
                                 Text('Sign Up',
                                     style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w600)),
+                                        fontSize: 25, fontWeight: FontWeight.w600)),
                                 SizedBox(height: 35),
                                 MyTextField(
                                   hintText: 'Full Name',
                                   controller: nameController,
                                   errorText: nameError,
-                                  validator: (val) =>
-                                      val == null || val.length == 0
-                                          ? 'please enter your full name'
-                                          : null,
+                                  validator: (val) => val == null || val.length == 0
+                                      ? 'please enter your full name'
+                                      : null,
                                 ),
                                 const SizedBox(height: 20),
                                 InternationalPhoneNumberInput(
                                   initialValue: PhoneNumber(isoCode: 'US'),
                                   locale: 'US',
-                                  autoValidateMode:
-                                      AutovalidateMode.onUserInteraction,
+                                  autoValidateMode: AutovalidateMode.onUserInteraction,
                                   onInputChanged: (PhoneNumber value) {
-                                    setState(
-                                        () => phoneNumber = value.toString());
+                                    setState(() => phoneNumber = value.toString());
                                   },
                                   textFieldController: phoneController,
                                   errorMessage: phoneError,
@@ -110,8 +106,7 @@ class _SignupScreenState extends State<StatefulWidget> {
                                   hintText: 'Password',
                                   controller: passwordController,
                                   errorText: passwordError,
-                                  validator: (val) => val == null ||
-                                          val.length < 6
+                                  validator: (val) => val == null || val.length < 6
                                       ? 'password must be at least 6 characters'
                                       : val != confirmController.text
                                           ? "passwords don't match"
@@ -129,9 +124,7 @@ class _SignupScreenState extends State<StatefulWidget> {
                                 ),
                                 SizedBox(height: 30),
                                 if (loading)
-                                  Center(
-                                      child: CircularProgressIndicator(
-                                          value: null)),
+                                  Center(child: CircularProgressIndicator(value: null)),
                                 Spacer(),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -140,15 +133,12 @@ class _SignupScreenState extends State<StatefulWidget> {
                                     TextButton(
                                       child: Text(
                                         'Sign in.',
-                                        style:
-                                            TextStyle(color: Color(0xfff7941d)),
+                                        style: TextStyle(color: AppColors.primary),
                                       ),
-                                      onPressed: () =>
-                                          Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (ctx) =>
-                                                      LoginScreen())),
+                                      onPressed: () => Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (ctx) => LoginScreen())),
                                     ),
                                   ],
                                 ),
@@ -156,13 +146,10 @@ class _SignupScreenState extends State<StatefulWidget> {
                                   child: TextButton(
                                     child: Text(
                                       'Terms of Service',
-                                      style:
-                                          TextStyle(color: Color(0xfff7941d)),
+                                      style: TextStyle(color: AppColors.primary),
                                     ),
-                                    onPressed: () => Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (ctx) => Eula())),
+                                    onPressed: () => Navigator.push(context,
+                                        MaterialPageRoute(builder: (ctx) => Eula())),
                                   ),
                                 ),
                                 SizedBox(height: 40)
@@ -191,16 +178,14 @@ class _SignupScreenState extends State<StatefulWidget> {
         name: nameController.text,
       );
       if (res.ok) {
-        authenticationService.updateTokens(
-            res.accessToken ?? '', res.refreshToken ?? '');
+        authenticationService.updateTokens(res.accessToken ?? '', res.refreshToken ?? '');
         userState.getUser();
         setState(() => loading = false);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (ctx) => ValidatePhoneScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (ctx) => ValidatePhoneScreen()));
       } else {
         setState(() {
-          phoneError = res.errors?.firstWhere(
-              (element) => element['field'] == 'phone',
+          phoneError = res.errors?.firstWhere((element) => element['field'] == 'phone',
               orElse: () => {})['message'];
           passwordError = res.errors?.firstWhere(
               (element) => element['field'] == 'password',

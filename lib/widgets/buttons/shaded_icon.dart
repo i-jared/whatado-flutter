@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class ShadedIcon extends StatelessWidget {
   final IconData icon;
@@ -12,6 +13,6 @@ class ShadedIcon extends StatelessWidget {
             color: Color(0xfffff2e2), borderRadius: BorderRadius.circular(15)),
         width: width,
         height: width,
-        child: Icon(icon, size: iconSize, color: Color(0xfff7941d)));
+        child: Icon(icon, size: iconSize, color: AppColors.primary));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class RoundedArrowButton extends StatelessWidget {
   final Function? onPressed;
@@ -17,9 +18,7 @@ class RoundedArrowButton extends StatelessWidget {
               (states) => onPressed == null || disabled ? 0 : 30),
           fixedSize: MaterialStateProperty.all(Size(double.infinity, 50)),
           backgroundColor: MaterialStateProperty.resolveWith((states) =>
-              onPressed == null || disabled
-                  ? Colors.grey[300]
-                  : Color(0xfff7941d))),
+              onPressed == null || disabled ? Colors.grey[300] : AppColors.primary)),
       child: Stack(
         children: [
           Center(child: Text(text)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 
 class LeaveButton extends StatelessWidget {
@@ -27,9 +28,9 @@ class LeaveButton extends StatelessWidget {
         // }
         // },
         style: ButtonStyle(
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50))),
-            backgroundColor: MaterialStateProperty.all(Color(0xfff7941d))),
+            shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+            backgroundColor: MaterialStateProperty.all(AppColors.primary)),
         child: Icon(Icons.check_outlined, size: 15, color: Colors.white));
   }
 }

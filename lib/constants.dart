@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:whatado/services/environment_config.dart';
 
 String get whatadoGqlUrl => EnvironmentConfig.flavor == PROD
@@ -20,3 +21,8 @@ String get whatadoPlaceDetailsUrl => EnvironmentConfig.flavor == PROD
 String get PROD => "PROD";
 // ignore: non_constant_identifier_names
 String get LOCAL_DEV => "LOCAL_DEV";
+
+class AppColors {
+  static Color primary = Color(0xfff7941d);
+  static Color secondary = Color(0xff0073ab);
+}

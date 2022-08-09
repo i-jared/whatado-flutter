@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event.dart';
@@ -30,16 +31,13 @@ class EditEventAppBar extends StatelessWidget implements PreferredSizeWidget {
         (editEventState.titleController.text == event.title &&
             editEventState.locationController.text == event.location &&
             editEventState.descriptionController.text == event.description &&
-            editEventState.dateController.text ==
-                dateFormat.format(event.time) &&
-            editEventState.timeController.text ==
-                timeFormat.format(event.time));
+            editEventState.dateController.text == dateFormat.format(event.time) &&
+            editEventState.timeController.text == timeFormat.format(event.time));
     return AppBar(
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.grey[50],
       elevation: 0,
-      title: Text('Edit Event',
-          style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+      title: Text('Edit Event', style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       centerTitle: true,
       actions: [
         editEventState.loading
@@ -54,8 +52,7 @@ class EditEventAppBar extends StatelessWidget implements PreferredSizeWidget {
                           title: editEventState.titleController.text,
                           time: formatMyTime(editEventState.dateController.text,
                               editEventState.timeController.text),
-                          description:
-                              editEventState.descriptionController.text,
+                          description: editEventState.descriptionController.text,
                           location: editEventState.locationController.text,
                         );
                         final provider = EventsGqlProvider();
@@ -68,7 +65,7 @@ class EditEventAppBar extends StatelessWidget implements PreferredSizeWidget {
                         Navigator.pop(context);
                       },
                 icon: Icon(Icons.save_outlined),
-                color: Color(0xfff7941d)),
+                color: AppColors.primary),
         SizedBox(width: 15),
       ],
     );

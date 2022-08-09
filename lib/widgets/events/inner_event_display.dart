@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/wannago.dart';
 import 'package:whatado/state/user_state.dart';
@@ -52,7 +53,7 @@ class InnerEventDisplay extends StatelessWidget {
                     Row(children: [
                       Icon(
                         Icons.calendar_today_outlined,
-                        color: Color(0xfff7941d),
+                        color: AppColors.primary,
                         size: 16,
                       ),
                       const SizedBox(width: 5),
@@ -61,7 +62,7 @@ class InnerEventDisplay extends StatelessWidget {
                     Row(children: [
                       Icon(
                         Icons.location_on_outlined,
-                        color: Color(0xfff7941d),
+                        color: AppColors.primary,
                         size: 16,
                       ),
                       const SizedBox(width: 5),
@@ -76,7 +77,7 @@ class InnerEventDisplay extends StatelessWidget {
                       Row(children: [
                         Icon(
                           Icons.person_outline,
-                          color: Color(0xfff7941d),
+                          color: AppColors.primary,
                           size: 16,
                         ),
                         const SizedBox(width: 5),
@@ -86,13 +87,13 @@ class InnerEventDisplay extends StatelessWidget {
                               text: "Gonnago ", style: TextStyle(color: Colors.black)),
                           TextSpan(
                               text: "${event.invited.length}  ",
-                              style: TextStyle(color: Color(0xfff7941d))),
+                              style: TextStyle(color: AppColors.primary)),
                         ])),
                         Container(
                           height: 20,
                           decoration: BoxDecoration(
                               border:
-                                  Border(right: BorderSide(color: Color(0xfff7941d)))),
+                                  Border(right: BorderSide(color: AppColors.primary))),
                         ),
                         RichText(
                             text: TextSpan(children: [
@@ -100,7 +101,7 @@ class InnerEventDisplay extends StatelessWidget {
                               text: "  Wannago ", style: TextStyle(color: Colors.black)),
                           TextSpan(
                               text: "${filteredWannago.length}",
-                              style: TextStyle(color: Color(0xfff7941d))),
+                              style: TextStyle(color: AppColors.primary)),
                         ]))
                       ])
                   ],

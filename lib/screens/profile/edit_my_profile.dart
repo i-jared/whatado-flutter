@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
@@ -71,8 +72,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
   @override
   Widget build(BuildContext context) {
     final imageWidth =
-        (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) /
-            3.0;
+        (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) / 3.0;
     final userState = Provider.of<UserState>(context);
     final theList = userState.photos == null
         ? [Center(child: CircularProgressIndicator())]
@@ -115,10 +115,8 @@ class _EditMyProfileState extends State<EditMyProfile> {
               },
               disabled: userState.loading ||
                   (bioController.text == widget.user!.bio &&
-                          listsEqual<Interest>(
-                              interests, widget.user!.interests) &&
-                          listsEqual<Uint8List>(
-                              userState.photos, userState.ogphotos) ||
+                          listsEqual<Interest>(interests, widget.user!.interests) &&
+                          listsEqual<Uint8List>(userState.photos, userState.ogphotos) ||
                       (userState.photos!.isEmpty ||
                           bioController.text.isEmpty ||
                           interests.isEmpty))),
@@ -153,8 +151,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
                               Text('INTERESTS', style: headingStyle),
                               SizedBox(width: 10),
                               Text('(ONLY VISIBLE TO YOU)',
-                                  style: TextStyle(
-                                      fontSize: 15, color: Colors.grey)),
+                                  style: TextStyle(fontSize: 15, color: Colors.grey)),
                             ],
                           ),
                           SizedBox(height: headingSpacing),
@@ -163,8 +160,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
                               : InterestWrap(
                                   interests: allInterests,
                                   selectedInterests: interests,
-                                  onSelected:
-                                      (bool notSelected, Interest interest) {
+                                  onSelected: (bool notSelected, Interest interest) {
                                     if (notSelected) {
                                       interests.add(interest);
                                       setState(() {
@@ -195,8 +191,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
                               Expanded(
                                 child: TypeAheadFormField(
                                   direction: AxisDirection.up,
-                                  noItemsFoundBuilder: (context) =>
-                                      SizedBox.shrink(),
+                                  noItemsFoundBuilder: (context) => SizedBox.shrink(),
                                   onSuggestionSelected: (Interest interest) {
                                     if (interests
                                         .map((val) => val.title)
@@ -214,17 +209,14 @@ class _EditMyProfileState extends State<EditMyProfile> {
                                   },
                                   itemBuilder: (context, Interest interest) =>
                                       ListTile(title: Text(interest.title)),
-                                  textFieldConfiguration:
-                                      TextFieldConfiguration(
+                                  textFieldConfiguration: TextFieldConfiguration(
                                     decoration: InputDecoration(
                                       isDense: true,
                                       hintText: 'Add your interest here...',
                                       hintStyle: TextStyle(fontSize: 13),
-                                      contentPadding:
-                                          EdgeInsets.symmetric(vertical: 12),
+                                      contentPadding: EdgeInsets.symmetric(vertical: 12),
                                     ),
-                                    textCapitalization:
-                                        TextCapitalization.words,
+                                    textCapitalization: TextCapitalization.words,
                                     controller: textController,
                                   ),
                                 ),
@@ -235,19 +227,16 @@ class _EditMyProfileState extends State<EditMyProfile> {
                                 icon: Icon(Icons.add_circle_outline,
                                     color: textController.text.isEmpty
                                         ? Colors.grey[400]
-                                        : Color(0xfff7941d),
+                                        : AppColors.primary,
                                     size: 35),
                                 onPressed: textController.text.isEmpty
                                     ? null
                                     : () {
                                         if (interests
                                             .map((val) => val.title)
-                                            .contains(
-                                                textController.text.trim()))
-                                          return;
+                                            .contains(textController.text.trim())) return;
                                         final Interest newInterest = Interest(
-                                            id: 1,
-                                            title: textController.text.trim());
+                                            id: 1, title: textController.text.trim());
                                         interests.add(newInterest);
                                         allInterests.add(newInterest);
                                         setState(() {

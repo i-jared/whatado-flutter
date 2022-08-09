@@ -2675,6 +2675,52 @@ Map<String, dynamic> _$GroupInputToJson(GroupInput instance) =>
       'userIds': instance.userIds,
     };
 
+CreateReferral$Mutation$CreateReferral$Errors
+    _$CreateReferral$Mutation$CreateReferral$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        CreateReferral$Mutation$CreateReferral$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$CreateReferral$Mutation$CreateReferral$ErrorsToJson(
+        CreateReferral$Mutation$CreateReferral$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+CreateReferral$Mutation$CreateReferral
+    _$CreateReferral$Mutation$CreateReferralFromJson(
+            Map<String, dynamic> json) =>
+        CreateReferral$Mutation$CreateReferral()
+          ..ok = json['ok'] as bool?
+          ..nodes = json['nodes'] as bool?
+          ..errors = (json['errors'] as List<dynamic>?)
+              ?.map((e) =>
+                  CreateReferral$Mutation$CreateReferral$Errors.fromJson(
+                      e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$CreateReferral$Mutation$CreateReferralToJson(
+        CreateReferral$Mutation$CreateReferral instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+CreateReferral$Mutation _$CreateReferral$MutationFromJson(
+        Map<String, dynamic> json) =>
+    CreateReferral$Mutation()
+      ..createReferral = CreateReferral$Mutation$CreateReferral.fromJson(
+          json['createReferral'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$CreateReferral$MutationToJson(
+        CreateReferral$Mutation instance) =>
+    <String, dynamic>{
+      'createReferral': instance.createReferral.toJson(),
+    };
+
 AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
         Map<String, dynamic> json) =>
     AcceptFriendArguments(
@@ -3081,4 +3127,16 @@ Map<String, dynamic> _$CreateGroupArgumentsToJson(
         CreateGroupArguments instance) =>
     <String, dynamic>{
       'groupInput': instance.groupInput.toJson(),
+    };
+
+CreateReferralArguments _$CreateReferralArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    CreateReferralArguments(
+      phone: json['phone'] as String,
+    );
+
+Map<String, dynamic> _$CreateReferralArgumentsToJson(
+        CreateReferralArguments instance) =>
+    <String, dynamic>{
+      'phone': instance.phone,
     };

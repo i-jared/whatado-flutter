@@ -1,0 +1,10 @@
+query numbersNotUsers($numbers: [String!]!) {
+  numbersNotUsers(numbers: $numbers) {
+    ok
+    nodes 
+    errors {
+      field
+      message
+    }
+  }
+}

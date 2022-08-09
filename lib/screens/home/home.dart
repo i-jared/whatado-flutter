@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
@@ -13,7 +14,7 @@ import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/all_events.dart';
 import 'package:whatado/screens/home/chats.dart';
-import 'package:whatado/screens/home/search_users.dart';
+import 'package:whatado/screens/home/search_page.dart';
 import 'package:whatado/screens/profile/my_profile.dart';
 import 'package:whatado/screens/home/settings.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
@@ -33,7 +34,7 @@ class HomeScreen extends StatefulWidget {
     if (pageNo == 0)
       return HomeAppBar();
     else if (pageNo == 1)
-      return DefaultAppBar(title: "Search");
+      return null;
     else if (pageNo == 2)
       return DefaultAppBar(title: "Settings");
     else
@@ -49,8 +50,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Future<void> setupInteractedMessage() async {
     // notifications when terminated
-    RemoteMessage? initialMessage =
-        await FirebaseMessaging.instance.getInitialMessage();
+    RemoteMessage? initialMessage = await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
       await _handleMessage(initialMessage);
     }
@@ -70,8 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 android: AndroidNotificationDetails(
                   localNotificationService.channel.id,
                   localNotificationService.channel.name,
-                  channelDescription:
-                      localNotificationService.channel.description,
+                  channelDescription: localNotificationService.channel.description,
                   // other properties...
                 ),
               ));
@@ -110,8 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else if (message.data['type'] == 'event') {
       final homeState = Provider.of<HomeState>(context, listen: false);
       final eventProvider = EventsGqlProvider();
-      final eventResult =
-          await eventProvider.event(int.parse(message.data['eventId']));
+      final eventResult = await eventProvider.event(int.parse(message.data['eventId']));
       await homeState.myEventsRefresh();
       if (eventResult.ok) {
         Navigator.push(
@@ -123,10 +121,8 @@ class _HomeScreenState extends State<HomeScreen> {
       final userProvider = UserGqlProvider();
       final result = await userProvider.user(int.parse(message.data['userId']));
       if (result.ok)
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UserProfile(user: result.data!)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => UserProfile(user: result.data!)));
     }
   }
 
@@ -146,10 +142,10 @@ class _HomeScreenState extends State<HomeScreen> {
     // request permissions
     final messaging = FirebaseMessaging.instance;
     final settings = await messaging.requestPermission();
+    await FlutterContacts.requestPermission(readonly: true);
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('permission granted');
-    } else if (settings.authorizationStatus ==
-        AuthorizationStatus.provisional) {
+    } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
       print('provisional permissions');
     } else {
       print('permission declined');
@@ -184,13 +180,12 @@ class _HomeScreenState extends State<HomeScreen> {
               appBar: widget.getAppBar(homeState.bottomBarPageNo),
               body: homeState.bottomBarPageNo == 0
                   ? PageView(
-                      onPageChanged: (pageNo) =>
-                          homeState.appBarPageNo = pageNo,
+                      onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
                       controller: homeState.homePageController,
                       children: [AllEvents(), MyEvents(), MyForums()],
                     )
                   : homeState.bottomBarPageNo == 1
-                      ? SearchUsers()
+                      ? SearchPage()
                       : homeState.bottomBarPageNo == 2
                           ? Settings()
                           : MyProfile(),

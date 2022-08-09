@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
@@ -18,12 +19,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
     super.initState();
     final homeState = Provider.of<HomeState>(context, listen: false);
     if (!(localStorageService.initialized ?? false))
-      WidgetsBinding.instance?.addPostFrameCallback((_) =>
-          ShowCaseWidget.of(context)?.startShowCase([
-            homeState.showcase_1,
-            homeState.showcase_2,
-            homeState.showcase_3
-          ]));
+      WidgetsBinding.instance?.addPostFrameCallback((_) => ShowCaseWidget.of(context)
+          ?.startShowCase(
+              [homeState.showcase_1, homeState.showcase_2, homeState.showcase_3]));
   }
 
   @override
@@ -39,8 +37,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
     final haveUnread = homeState.myForums?.any((forum) {
           return forum.chats.isEmpty
               ? false
-              : forum.userNotification.lastAccessed
-                  .isBefore(forum.chats.first.createdAt);
+              : forum.userNotification.lastAccessed.isBefore(forum.chats.first.createdAt);
         }) ??
         false;
 
@@ -87,15 +84,14 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     title: 'Home',
                     description:
                         'Click here to see a feed of events going on around you.',
-                    titleTextStyle:
-                        TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     descTextStyle: TextStyle(fontSize: 18),
                     child: Container(
                       width: 70,
                       height: switcherHeight,
                       decoration: BoxDecoration(
                         boxShadow: kElevationToShadow[2],
-                        color: Color(0xfff7941d),
+                        color: AppColors.primary,
                         borderRadius: BorderRadius.circular(100),
                       ),
                     ),
@@ -112,8 +108,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
                         title: 'Home',
                         description:
                             'Click here to see a feed of events going on around you.',
-                        titleTextStyle: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.bold),
+                        titleTextStyle:
+                            TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         descTextStyle: TextStyle(fontSize: 18),
                         child: Center(
                           child: IconButton(
@@ -134,8 +130,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
                           title: 'My Events',
                           description:
                               'This screen shows events you\'ve been invited to.',
-                          titleTextStyle: TextStyle(
-                              fontSize: 25, fontWeight: FontWeight.bold),
+                          titleTextStyle:
+                              TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                           descTextStyle: TextStyle(fontSize: 18),
                           child: Container(
                             child: IconButton(
@@ -159,7 +155,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                                 borderRadius: BorderRadius.circular(5),
                                 color: homeState.appBarPageNo == 1
                                     ? Colors.grey[350]
-                                    : Color(0xfff7941d),
+                                    : AppColors.primary,
                               ),
                             ),
                           )
@@ -172,10 +168,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
                           child: Showcase(
                             key: homeState.showcase_3,
                             title: 'Forums',
-                            description:
-                                'Chat with your event groups in forums!',
-                            titleTextStyle: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
+                            description: 'Chat with your event groups in forums!',
+                            titleTextStyle:
+                                TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                             descTextStyle: TextStyle(fontSize: 18),
                             child: IconButton(
                                 padding: EdgeInsets.zero,
@@ -198,7 +193,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                                 borderRadius: BorderRadius.circular(5),
                                 color: homeState.appBarPageNo == 2
                                     ? Colors.grey[350]
-                                    : Color(0xfff7941d),
+                                    : AppColors.primary,
                               ),
                             ),
                           )

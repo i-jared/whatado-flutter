@@ -8,6 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
@@ -23,6 +24,7 @@ import 'package:whatado/services/startup.dart';
 import 'package:flutter/services.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
+import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
 
@@ -69,7 +71,6 @@ class _MyAppState extends State<MyApp> {
         if (locationService.locationData != null &&
             locationService.locationData!.latitude != null &&
             locationService.locationData!.longitude != null) {
-          print('jcl update user 1');
           await provider.updateUser(UserFilterInput(
               location: GeoJsonPoint(
                   geoPoint: GeoPoint(
@@ -85,7 +86,6 @@ class _MyAppState extends State<MyApp> {
         if (locationService.locationData != null &&
             locationService.locationData!.latitude != null &&
             locationService.locationData!.longitude != null) {
-          print('jcl update user 1');
           await provider.updateUser(UserFilterInput(
               location: GeoJsonPoint(
                   geoPoint: GeoPoint(
@@ -108,6 +108,7 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
               ChangeNotifierProvider<UserState>(create: (_) => UserState()),
               ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
+              ChangeNotifierProvider<SearchState>(create: (_) => SearchState()),
             ],
             builder: (BuildContext context, _) {
               final userState = Provider.of<UserState>(context);
@@ -116,7 +117,7 @@ class _MyAppState extends State<MyApp> {
                 title: 'Flutter Demo',
                 theme: ThemeData(
                     textSelectionTheme:
-                        TextSelectionThemeData(selectionColor: Color(0xfff7941d)),
+                        TextSelectionThemeData(selectionColor: AppColors.primary),
                     primarySwatch: MaterialColor(
                       0xFF000000,
                       <int, Color>{

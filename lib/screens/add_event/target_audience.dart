@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
@@ -201,7 +202,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                   icon: Icon(Icons.add_circle_outline,
                       color: textController.text.isEmpty
                           ? Colors.grey[400]
-                          : Color(0xfff7941d),
+                          : AppColors.primary,
                       size: 35),
                   onPressed: textController.text.isEmpty
                       ? null

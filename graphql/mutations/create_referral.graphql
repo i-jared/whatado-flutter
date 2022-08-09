@@ -1,0 +1,10 @@
+mutation createReferral($phone: String!) {
+  createReferral(phone: $phone) {
+    ok
+    nodes 
+    errors {
+      field
+      message
+    }
+  }
+}

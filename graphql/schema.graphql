@@ -306,6 +306,7 @@ type Mutation {
   createForum(eventId: Int!): ForumApiResponse!
   createGroup(options: GroupInput!): GroupApiResponse!
   createInterest(interestsText: [String!]!): IntsApiResponse!
+  createReferral(phone: String!): BoolApiResponse!
   deleteChat(id: Int!): BoolApiResponse!
   deleteEvent(eventId: Int!): BoolApiResponse!
   deleteInterest(id: Int!): BoolApiResponse!
@@ -314,6 +315,7 @@ type Mutation {
   flagUser(userId: Int!): BoolApiResponse!
   forgotPassword(phone: String!): BoolApiResponse!
   helloMutation(message: String!): Boolean!
+  inviteReferral(number: String!): BoolApiResponse!
   login(options: UserInput!): BoolApiResponse!
   mute(id: Int!): BoolApiResponse!
   register(options: UserInput!): UserApiResponse!
@@ -363,18 +365,30 @@ type Query {
   myChatNotifications: ChatNotificationsApiResponse!
   myEvents: EventsApiResponse!
   myGroups: GroupsApiResponse!
+  myReferrals: StringsApiResponse!
+  numbersNotUsers(numbers: [String!]!): StringsApiResponse!
   otherEvents(dateRange: DateRangeInput!, skip: Int!, sortType: SortType!, take: Int!): EventsApiResponse!
   popularInterests: InterestsApiResponse!
+  searchEvents(partial: String!): EventsApiResponse!
+  searchGroups(partial: String!): GroupsApiResponse!
   searchInterests(partial: String!): InterestsApiResponse!
   searchUsers(partial: String!): UsersApiResponse!
   user(id: Int!): UserApiResponse!
   users: UsersApiResponse!
   usersById(ids: [Int!]!): UsersApiResponse!
+  usersFromContacts(numbers: [String!]!): UsersApiResponse!
 }
 
 enum SortType {
   NEWEST
   SOONEST
+}
+
+type StringsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [String!]
+  ok: Boolean
 }
 
 type Subscription {

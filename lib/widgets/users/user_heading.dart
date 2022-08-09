@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/user_list_page.dart';
@@ -10,8 +11,7 @@ class UserHeading extends StatefulWidget {
   final EventUser user;
   final Widget child;
   final Function() onPressed;
-  UserHeading(
-      {required this.user, required this.onPressed, required this.child});
+  UserHeading({required this.user, required this.onPressed, required this.child});
   @override
   State<StatefulWidget> createState() => _UserHeadingState();
 }
@@ -53,13 +53,12 @@ class _UserHeadingState extends State<UserHeading> {
           ),
           TextButton(
             style: ButtonStyle(
-                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(50))),
-                backgroundColor: MaterialStateProperty.all(Color(0xfff7941d))),
+                shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+                backgroundColor: MaterialStateProperty.all(AppColors.primary)),
             onPressed: widget.onPressed,
             child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 10),
                 child: widget.child),
           ),
         ],
@@ -92,7 +91,7 @@ class _UserHeadingState extends State<UserHeading> {
                     style: TextStyle(
                         color: friendRequests.length == 0
                             ? Colors.grey[400]
-                            : Color(0xfff7941d))))
+                            : AppColors.primary)))
         ],
       ),
       SizedBox(height: headingSpacing),
@@ -112,8 +111,7 @@ class _UserHeadingState extends State<UserHeading> {
                     alignment: Alignment.center,
                     child: Text("--", style: TextStyle(fontSize: 30)),
                   )
-                : PictureWaterfall(
-                    radius: 20, loading: loading, users: friends)),
+                : PictureWaterfall(radius: 20, loading: loading, users: friends)),
       ),
     ]);
   }

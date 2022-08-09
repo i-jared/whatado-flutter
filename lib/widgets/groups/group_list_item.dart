@@ -9,6 +9,7 @@ class GroupListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(group.users.length);
     return InkWell(
       onTap: () => Navigator.push(
           context, MaterialPageRoute(builder: (context) => GroupDetails(group: group))),

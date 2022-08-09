@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/state/user_state.dart';
@@ -33,7 +34,7 @@ class MyEventDisplay extends StatelessWidget {
                         width: 12,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xfff7941d)),
+                            color: AppColors.primary),
                       )
                     : const SizedBox(width: 24),
                 InnerEventDisplay(event, filteredWannago),

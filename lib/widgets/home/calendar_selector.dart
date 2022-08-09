@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:quiver/time.dart';
 
@@ -20,8 +21,7 @@ class CalendarSelector extends StatefulWidget {
 class _CalendarSelectorState extends State<CalendarSelector> {
   final List<_IndexedDate> dates = List<_IndexedDate>.generate(100, (i) {
     final now = DateTime.now();
-    return _IndexedDate(
-        i, DateTime(now.year, now.month, now.day).add(Duration(days: i)));
+    return _IndexedDate(i, DateTime(now.year, now.month, now.day).add(Duration(days: i)));
   });
 
   final monthWidth = 70.0;
@@ -34,10 +34,10 @@ class _CalendarSelectorState extends State<CalendarSelector> {
     calendarScrollController = ScrollController();
     final now = DateTime.now();
     final daysLeftThisMonth = daysInMonth(now.year, now.month) - now.day + 1;
-    final daysNextMonth = daysInMonth(
-        now.month == 12 ? now.year + 1 : now.year, (now.month + 1) % 12);
-    final daysLastMonth = daysInMonth(
-        now.month >= 11 ? now.year + 1 : now.year, (now.month + 2) % 12);
+    final daysNextMonth =
+        daysInMonth(now.month == 12 ? now.year + 1 : now.year, (now.month + 1) % 12);
+    final daysLastMonth =
+        daysInMonth(now.month >= 11 ? now.year + 1 : now.year, (now.month + 2) % 12);
     final dayWidth = (widget.width - monthWidth) / 6;
 
     List<double> monthOffsets = [
@@ -98,7 +98,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                   child: Container(
                       decoration: BoxDecoration(
                         color: homeState.selectedDate == indexedDate.dateTime
-                            ? Color(0xff0073ab)
+                            ? AppColors.secondary
                             : Colors.grey[50],
                       ),
                       height: double.infinity,
@@ -109,15 +109,13 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                           Text(indexedDate.dateTime.day.toString(),
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: homeState.selectedDate ==
-                                          indexedDate.dateTime
+                                  color: homeState.selectedDate == indexedDate.dateTime
                                       ? Colors.white
                                       : Colors.black,
                                   fontSize: 18)),
                           Text(DateFormat('EE').format(indexedDate.dateTime),
                               style: TextStyle(
-                                color: homeState.selectedDate ==
-                                        indexedDate.dateTime
+                                color: homeState.selectedDate == indexedDate.dateTime
                                     ? Colors.white
                                     : Colors.black,
                               )),
@@ -147,14 +145,13 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                     width: monthWidth,
                     height: double.infinity,
                     decoration: BoxDecoration(
-                        color: Color(0xfff7941d),
+                        color: AppColors.primary,
                         borderRadius: BorderRadius.only(
                             topRight: Radius.circular(50),
                             bottomRight: Radius.circular(50))),
                     child: Center(
                         child: Text(
-                            DateFormat('MMM')
-                                .format(DateTime(now.year, scrollingMonth)),
+                            DateFormat('MMM').format(DateTime(now.year, scrollingMonth)),
                             style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -171,7 +168,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                             height: double.infinity,
                             width: 15,
                             decoration: BoxDecoration(
-                              color: Color(0xff0073ab),
+                              color: AppColors.secondary,
                               // borderRadius: BorderRadius.only(
                               // topRight: Radius.circular(10),
                               // bottomRight: Radius.circular(10))

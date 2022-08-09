@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/graphql/queries_graphql_api.graphql.dart';
 import 'package:whatado/state/home_state.dart';
@@ -52,13 +53,13 @@ class SortEventsBottomSheet extends StatelessWidget {
                             width: 60,
                             height: 60,
                             child:
-                                Icon(getIcon(type), size: 30, color: Color(0xfff7941d))),
+                                Icon(getIcon(type), size: 30, color: AppColors.primary)),
                         SizedBox(width: 20),
                         Text(getText(type), style: TextStyle(fontSize: 20)),
                         Spacer(),
                         if (homeState.sortType == type)
                           Icon(Icons.check_circle_outline_rounded,
-                              color: Color(0xfff7941d), size: 40)
+                              color: AppColors.primary, size: 40)
                       ],
                     ),
                   ),

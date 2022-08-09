@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/widgets/buttons/shaded_icon.dart';
 import 'package:whatado/widgets/input/bottom_sheet_list.dart';
@@ -60,7 +61,7 @@ class SortMyEventsBottomSheet extends StatelessWidget {
                   Spacer(),
                   if (homeState.mySortType == type)
                     Icon(Icons.check_circle_outline_rounded,
-                        color: Color(0xfff7941d), size: 40)
+                        color: AppColors.primary, size: 40)
                 ],
               ),
             ),

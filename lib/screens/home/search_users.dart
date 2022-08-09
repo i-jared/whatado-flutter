@@ -1,72 +1,38 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:whatado/models/event_user.dart';
-import 'package:whatado/providers/graphql/user_provider.dart';
+import 'package:provider/provider.dart';
+import 'package:whatado/state/search_state.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
-class SearchUsers extends StatefulWidget {
-  @override
-  _StateSearchUsers createState() => _StateSearchUsers();
-}
-
-class _StateSearchUsers extends State<SearchUsers> {
-  Timer? debounce;
-  late bool loading = false;
-  late List<EventUser>? users = [];
-  late UserGqlProvider provider = UserGqlProvider();
-
-  void onSearchChanged(String partial) {
-    if (debounce?.isActive ?? false) debounce?.cancel();
-    setState(() => loading = true);
-    debounce = Timer(Duration(milliseconds: 500), () async {
-      final result = await provider.searchUsers(partial);
-      if (mounted)
-        setState(() {
-          users = result.data;
-          loading = false;
-        });
-    });
-  }
-
-  Widget getWidget(context) {
-    if (loading) {
-      return Center(child: CircularProgressIndicator());
-    } else if (users?.isEmpty ?? false) {
-      return Center(child: Text('Nobody matches your search :('));
-    } else if (users == null) {
-      return Center(child: Text('Something went wrong... Try again later!'));
-    } else {
-      return ListView.builder(
-        itemCount: 2 * (users!.length) - 1,
-        itemBuilder: (BuildContext context, int i) {
-          if (i.isOdd) {
-            return Divider();
-          } else {
-            int j = i ~/ 2;
-            return UserListItem(users![j]);
-          }
-        },
-      );
-    }
-  }
-
+class SearchUsers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
-      child: Column(
-        children: [
-          Container(
-              height: 100,
-              child: TextFormField(
-                decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
-                onChanged: onSearchChanged,
-              )),
-          Expanded(child: getWidget(context))
-        ],
-      ),
-    ));
+    final searchState = Provider.of<SearchState>(context);
+    if (searchState.usersLoading) {
+      return Center(child: CircularProgressIndicator());
+    }
+    if (searchState.filteredUsers == null) {
+      return Center(child: CircularProgressIndicator());
+    }
+    if (searchState.filteredUsers!.isEmpty) {
+      return Center(child: Text('No users to list'));
+    }
+    int userLength = searchState.filteredUsers!.length;
+
+    return ListView.builder(
+        itemCount: userLength * 2 + (userLength > 0 ? 1 : 0),
+        itemBuilder: (context, i) {
+          if (i == 0) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text('Suggested Users',
+                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+            );
+          }
+          if (i.isOdd) {
+            return Divider();
+          }
+          int j = i ~/ 2 - 1;
+          return UserListItem(searchState.filteredUsers![j]);
+        });
   }
 }

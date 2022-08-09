@@ -1,0 +1,12 @@
+query searchEvents($partial: String!) {
+  searchEvents(partial: $partial) {
+    ok
+    nodes {
+      ...EventFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

@@ -20,6 +20,7 @@ class SurveyBubble extends StatefulWidget {
 
 class _SurveyBubbleState extends State<SurveyBubble> {
   late bool loading = false;
+
   @override
   Widget build(BuildContext context) {
     final survey = widget.chat.survey!;
@@ -41,58 +42,48 @@ class _SurveyBubbleState extends State<SurveyBubble> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: answers.map((a) {
-                final _selected =
-                    a.votes.map((e) => e.id).contains(userState.user?.id);
+                final _selected = a.votes.map((e) => e.id).contains(userState.user?.id);
 
-                return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: InkWell(
-                          onTap: loading || _selected
-                              ? () => null
-                              : () async {
-                                  setState(() => loading = true);
-                                  final provider = ChatGqlProvider();
-                                  await provider.vote(
-                                      widget.chat.id, a.id, chatState.forum.id);
-                                  setState(() => loading = false);
-                                },
-                          child: Container(
-                            constraints: BoxConstraints(minWidth: 75),
-                            margin: EdgeInsets.symmetric(vertical: 4),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 12),
-                            child: Text(a.text,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: _selected
-                                      ? Colors.grey[50]
-                                      : Colors.grey[850],
-                                )),
-                            decoration: BoxDecoration(
-                                color: _selected
-                                    ? Colors.grey[850]
-                                    : Colors.grey[50],
-                                borderRadius: BorderRadius.circular(100)),
-                          ),
-                        ),
+                return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                  Flexible(
+                    child: InkWell(
+                      onTap: loading || _selected
+                          ? () => null
+                          : () async {
+                              setState(() => loading = true);
+                              final provider = ChatGqlProvider();
+                              await provider.vote(
+                                  widget.chat.id, a.id, chatState.forum.id);
+                              setState(() => loading = false);
+                            },
+                      child: Container(
+                        constraints: BoxConstraints(minWidth: 75),
+                        margin: EdgeInsets.symmetric(vertical: 4),
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                        child: Text(a.text,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: _selected ? Colors.grey[50] : Colors.grey[850],
+                            )),
+                        decoration: BoxDecoration(
+                            color: _selected ? Colors.grey[850] : Colors.grey[50],
+                            borderRadius: BorderRadius.circular(100)),
                       ),
-                      SizedBox(width: 5),
-                      a.votes.length > 0
-                          ? IntrinsicWidth(
-                              child: InkWell(
-                              onTap: () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (BuildContext context) =>
-                                          UserListPage(
-                                              title: a.text, users: a.votes))),
-                              child: PictureWaterfall(
-                                  loading: false, users: a.votes),
-                            ))
-                          : Text('--')
-                    ]);
+                    ),
+                  ),
+                  SizedBox(width: 5),
+                  a.votes.length > 0
+                      ? IntrinsicWidth(
+                          child: InkWell(
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      UserListPage(title: a.text, users: a.votes))),
+                          child: PictureWaterfall(loading: false, users: a.votes),
+                        ))
+                      : Text('--')
+                ]);
               }).toList(),
             )
           ],
@@ -117,12 +108,11 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                       onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => UserProfile(
-                                          user: widget.chat.author)))
+                                      builder: (context) =>
+                                          UserProfile(user: widget.chat.author)))
                               .then((_) async {
                             await Future.delayed(Duration(milliseconds: 500));
-                            SystemChrome.setSystemUIOverlayStyle(
-                                SystemUiOverlayStyle(
+                            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
                               statusBarBrightness: Brightness.dark,
                               statusBarIconBrightness: Brightness.dark,
                               systemNavigationBarColor: Colors.grey[50],

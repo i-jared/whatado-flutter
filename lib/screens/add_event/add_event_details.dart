@@ -5,6 +5,7 @@ import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/screens/add_event/target_audience.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
@@ -23,7 +24,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
   final timeFormat = DateFormat('jm');
   final sizes = [
     {'Any': Colors.red},
-    {'Small (2-4)': Colors.orange},
+    {'Small (2-4)': AppColors.primary},
     {'Med (5-8)': Colors.yellow[600]},
     {'Big (9-20)': Colors.green},
     {'Huge (21+)': Colors.blue}
@@ -195,9 +196,9 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                     Text('SELECT TARGET AUDIENCE',
                         style: TextStyle(
                             fontSize: 18,
-                            color: !ready ? Colors.grey[400] : Color(0xfff7941d))),
+                            color: !ready ? Colors.grey[400] : AppColors.primary)),
                     Icon(Icons.arrow_forward_ios,
-                        color: !ready ? Colors.grey[400] : Color(0xfff7941d))
+                        color: !ready ? Colors.grey[400] : AppColors.primary)
                   ],
                 )),
             SizedBox(height: sectionSpacing),

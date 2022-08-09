@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/screens/profile/create_group.dart';
@@ -35,7 +36,7 @@ class TargetGroup extends StatelessWidget {
           onPressed: () => Navigator.push(
               context, MaterialPageRoute(builder: (context) => CreateGroup())),
           child: Text("Create Group +",
-              style: TextStyle(color: Color(0xfff7941d), fontSize: 18))),
+              style: TextStyle(color: AppColors.primary, fontSize: 18))),
       Expanded(
         child: Container(
           child: InviteGroups(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/state/home_state.dart';
@@ -17,8 +18,8 @@ class JoinButton extends StatelessWidget {
           try {
             if (userState.user == null) return;
             final provider = EventsGqlProvider();
-            final result = await provider.addWannago(
-                eventId: event.id, userId: userState.user!.id);
+            final result =
+                await provider.addWannago(eventId: event.id, userId: userState.user!.id);
             // update the event
             if (result.ok) homeState.updateEvent(result.data as Event);
           } catch (e) {
@@ -26,9 +27,9 @@ class JoinButton extends StatelessWidget {
           }
         },
         style: ButtonStyle(
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50))),
-            backgroundColor: MaterialStateProperty.all(Color(0xfff7941d))),
+            shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+            backgroundColor: MaterialStateProperty.all(AppColors.primary)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

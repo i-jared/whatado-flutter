@@ -23,8 +23,7 @@ class WelcomeScreen extends StatelessWidget {
       SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
             SizedBox(height: 50),
             Image.asset('assets/Whatado_FullColor.png', height: 100),
             SizedBox(height: 20),
@@ -39,7 +38,7 @@ class WelcomeScreen extends StatelessWidget {
             //           TextSpan(
             //             text: 'social ',
             //             style:
-            //                 TextStyle(fontSize: 20, color: Color(0xfff7941d)),
+            //                 TextStyle(fontSize: 20, color: AppColors.primary),
             //           ),
             //           TextSpan(text: 'back in social media.'),
             //         ],

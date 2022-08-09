@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
@@ -27,31 +28,29 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: Colors.grey[50],
       elevation: 0,
-      title: Text('Event Details',
-          style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+      title:
+          Text('Event Details', style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       centerTitle: true,
       actions: [
         IconButton(
             onPressed: homeState.myForums == null || homeState.myForums!.isEmpty
                 ? null
                 : () async {
-                    final Forum forum = homeState.myForums!
-                        .firstWhere((f) => f.eventId == event.id);
+                    final Forum forum =
+                        homeState.myForums!.firstWhere((f) => f.eventId == event.id);
                     final provider = ForumsGqlProvider();
-                    final result =
-                        await provider.access(forum.userNotification.id);
+                    final result = await provider.access(forum.userNotification.id);
                     if (result.ok) homeState.accessForum(forum);
                     Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>
-                                    Chats(event: event, forum: forum)))
+                                builder: (context) => Chats(event: event, forum: forum)))
                         .then((_) async {
                       await homeState.myEventsRefresh();
                     });
                   },
             icon: Icon(Icons.forum_outlined),
-            color: Color(0xfff7941d)),
+            color: AppColors.primary),
         if (userState.user?.id == event.creator.id)
           IconButton(
               onPressed: () => Navigator.push(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/create_event_query.dart';
@@ -35,7 +36,7 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
           padding: const EdgeInsets.only(right: 15.0),
           child: TextButton(
             child: Text('PUBLISH',
-                style: TextStyle(color: !ready ? Colors.grey : Color(0xfff7941d))),
+                style: TextStyle(color: !ready ? Colors.grey : AppColors.primary)),
             onPressed: !ready || eventState.postLoading
                 ? null
                 : () async {

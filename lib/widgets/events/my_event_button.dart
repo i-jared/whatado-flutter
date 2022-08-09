@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class NoJoinButton extends StatelessWidget {
   final String text;
@@ -10,9 +11,9 @@ class NoJoinButton extends StatelessWidget {
     return ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-            shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(50))),
-            backgroundColor: MaterialStateProperty.all(Color(0xfff7941d))),
+            shape: MaterialStateProperty.all(
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+            backgroundColor: MaterialStateProperty.all(AppColors.primary)),
         child: Text(text, style: TextStyle(fontSize: 12, color: Colors.white)));
   }
 }

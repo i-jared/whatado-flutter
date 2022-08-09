@@ -1,0 +1,10 @@
+query myReferrals {
+  myReferrals {
+    ok
+    nodes 
+    errors {
+      field
+      message
+    }
+  }
+}

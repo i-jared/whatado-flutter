@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -44,68 +45,63 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                 child: IntrinsicHeight(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: padding),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 50),
-                          Center(
-                            child: Image.asset("assets/Whatado_FullColor.png",
-                                height: 100),
-                          ),
-                          SizedBox(height: sectionSpacing),
-                          Text('Phone Verification', style: headingStyle),
-                          SizedBox(height: headingSpacing),
-                          Text('Enter the 5-digit code we texted to you.',
-                              style: paragraphStyle),
-                          SizedBox(height: headingSpacing),
-                          MyTextField(
-                            maxLength: 5,
-                            hintText: 'text code',
-                            maxLines: 1,
-                            controller: otpController,
-                            errorText: errorText,
-                          ),
-                          SizedBox(height: sectionSpacing),
-                          TextButton(
-                            style: ButtonStyle(
-                                padding:
-                                    MaterialStateProperty.all(EdgeInsets.zero)),
-                            child: Text(
-                              'Resend Code',
-                              style: TextStyle(color: Color(0xfff7941d)),
-                            ),
-                            onPressed: () async {
-                              final provider = UserGqlProvider();
-                              await provider.sendCode();
-                            },
-                          ),
-                          Spacer(),
-                          Center(
-                            child: RoundedArrowButton(
-                              disabled: otpController.text.length < 5,
-                              onPressed: () async {
-                                setState(() => errorText = null);
-                                final provider = UserGqlProvider();
-                                final result = await provider
-                                    .checkValidation(otpController.text);
-                                if (result.ok) {
-                                  await provider.updateUser(
-                                      UserFilterInput(verified: true));
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ChooseInterestsScreen()));
-                                } else {
-                                  otpController.clear();
-                                  setState(() => errorText = 'incorrect code');
-                                }
-                              },
-                              text: "Continue",
-                            ),
-                          ),
-                          SizedBox(height: sectionSpacing)
-                        ]),
+                    child:
+                        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      SizedBox(height: 50),
+                      Center(
+                        child: Image.asset("assets/Whatado_FullColor.png", height: 100),
+                      ),
+                      SizedBox(height: sectionSpacing),
+                      Text('Phone Verification', style: headingStyle),
+                      SizedBox(height: headingSpacing),
+                      Text('Enter the 5-digit code we texted to you.',
+                          style: paragraphStyle),
+                      SizedBox(height: headingSpacing),
+                      MyTextField(
+                        maxLength: 5,
+                        hintText: 'text code',
+                        maxLines: 1,
+                        controller: otpController,
+                        errorText: errorText,
+                      ),
+                      SizedBox(height: sectionSpacing),
+                      TextButton(
+                        style: ButtonStyle(
+                            padding: MaterialStateProperty.all(EdgeInsets.zero)),
+                        child: Text(
+                          'Resend Code',
+                          style: TextStyle(color: AppColors.primary),
+                        ),
+                        onPressed: () async {
+                          final provider = UserGqlProvider();
+                          await provider.sendCode();
+                        },
+                      ),
+                      Spacer(),
+                      Center(
+                        child: RoundedArrowButton(
+                          disabled: otpController.text.length < 5,
+                          onPressed: () async {
+                            setState(() => errorText = null);
+                            final provider = UserGqlProvider();
+                            final result =
+                                await provider.checkValidation(otpController.text);
+                            if (result.ok) {
+                              await provider.updateUser(UserFilterInput(verified: true));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ChooseInterestsScreen()));
+                            } else {
+                              otpController.clear();
+                              setState(() => errorText = 'incorrect code');
+                            }
+                          },
+                          text: "Continue",
+                        ),
+                      ),
+                      SizedBox(height: sectionSpacing)
+                    ]),
                   ),
                 ),
               ),

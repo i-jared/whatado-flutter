@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -50,10 +51,9 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                     }
                     setState(() => createSurvey = !createSurvey);
                   },
-                  icon: Icon(createSurvey
-                      ? Icons.cancel_outlined
-                      : Icons.add_circle_outline),
-                  color: Color(0xfff7941d)),
+                  icon: Icon(
+                      createSurvey ? Icons.cancel_outlined : Icons.add_circle_outline),
+                  color: AppColors.primary),
               Expanded(
                 child: TextFormField(
                   controller: chatState.textController,
@@ -65,8 +65,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                     setState(() => createSurvey = false);
                   },
                   decoration: InputDecoration(
-                      hintText: "Type your message...",
-                      border: InputBorder.none),
+                      hintText: "Type your message...", border: InputBorder.none),
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -75,15 +74,14 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                       height: height,
                       width: height,
                       decoration: BoxDecoration(
-                        color: Color(0xfff7941d),
+                        color: AppColors.primary,
                         borderRadius: BorderRadius.circular(height / 2.0),
                       ),
                       child: IconButton(
                           onPressed: () => userState.user == null
                               ? null
                               : chatState.sendMessage(userState.user!.id),
-                          icon:
-                              Icon(Icons.send, color: Colors.white, size: 30)),
+                          icon: Icon(Icons.send, color: Colors.white, size: 30)),
                     )
                   : SizedBox.shrink(),
               SizedBox(width: 30),
@@ -102,8 +100,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                           Align(
                             child: Text(
                               'Create Survey',
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             alignment: Alignment.topCenter,
                           ),
@@ -111,8 +108,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                           Row(
                             children: [
                               Text('Question: ',
-                                  style:
-                                      TextStyle(fontWeight: FontWeight.bold)),
+                                  style: TextStyle(fontWeight: FontWeight.bold)),
                               SizedBox(width: 10),
                               Expanded(
                                   child: MyTextField(
@@ -125,8 +121,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                               Radio<int>(
                                 value: 0,
                                 groupValue: selectedSurvey,
-                                onChanged: (val) =>
-                                    setState(() => selectedSurvey = val),
+                                onChanged: (val) => setState(() => selectedSurvey = val),
                               ),
                               Text('Yes/No/Maybe'),
                             ],
@@ -136,42 +131,36 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                               Radio<int>(
                                 value: 1,
                                 groupValue: selectedSurvey,
-                                onChanged: (val) =>
-                                    setState(() => selectedSurvey = val),
+                                onChanged: (val) => setState(() => selectedSurvey = val),
                               ),
                               Text('Custom Text'),
                             ],
                           ),
                           if (selectedSurvey == 1) ...customTextFields,
                           if (selectedSurvey == 1)
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  IconButton(
-                                      onPressed: () {
-                                        customTextControllers
-                                            .add(TextEditingController());
-                                        customTextFields.add(MyTextField(
-                                          hintText: 'New Answer...',
-                                          controller:
-                                              customTextControllers.last,
-                                        ));
-                                        setState(() {});
-                                      },
-                                      color: Color(0xfff7941d),
-                                      icon: Icon(Icons.add_circle_outline)),
-                                  if (customTextFields.length > 2)
-                                    SizedBox(width: 10),
-                                  if (customTextFields.length > 2)
-                                    IconButton(
-                                        onPressed: () {
-                                          customTextFields.removeLast();
-                                          customTextControllers.removeLast();
-                                          setState(() {});
-                                        },
-                                        color: Color(0xfff7941d),
-                                        icon: Icon(Icons.cancel_outlined)),
-                                ]),
+                            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                              IconButton(
+                                  onPressed: () {
+                                    customTextControllers.add(TextEditingController());
+                                    customTextFields.add(MyTextField(
+                                      hintText: 'New Answer...',
+                                      controller: customTextControllers.last,
+                                    ));
+                                    setState(() {});
+                                  },
+                                  color: AppColors.primary,
+                                  icon: Icon(Icons.add_circle_outline)),
+                              if (customTextFields.length > 2) SizedBox(width: 10),
+                              if (customTextFields.length > 2)
+                                IconButton(
+                                    onPressed: () {
+                                      customTextFields.removeLast();
+                                      customTextControllers.removeLast();
+                                      setState(() {});
+                                    },
+                                    color: AppColors.primary,
+                                    icon: Icon(Icons.cancel_outlined)),
+                            ]),
                         ],
                       ),
                     )),
@@ -188,9 +177,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                               userState.user!.id,
                               selectedSurvey == 0
                                   ? ["Yes", "No", "Maybe"]
-                                  : customTextControllers
-                                      .map((v) => v.text)
-                                      .toList(),
+                                  : customTextControllers.map((v) => v.text).toList(),
                               chatState.surveyController.text);
                           chatState.surveyController.clear();
                           setState(() {
@@ -212,7 +199,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                             ];
                           });
                         },
-                        color: Color(0xfff7941d),
+                        color: AppColors.primary,
                         icon: Icon(Icons.check_circle),
                         iconSize: 45,
                       ))

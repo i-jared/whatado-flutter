@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
@@ -52,11 +53,10 @@ class _ForumCardState extends State<ForumCard> {
         final result = await provider.access(widget.forum.userNotification.id);
         if (result.ok) homeState.accessForum(widget.forum);
         Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        Chats(event: widget.event, forum: widget.forum)))
-            .then((_) async {
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    Chats(event: widget.event, forum: widget.forum))).then((_) async {
           await homeState.myEventsRefresh();
         });
       },
@@ -72,16 +72,14 @@ class _ForumCardState extends State<ForumCard> {
                         width: 12,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Color(0xfff7941d)),
+                            color: AppColors.primary),
                       )
                     : const SizedBox(width: 24),
                 Expanded(
                   child: Container(
                     padding: EdgeInsets.symmetric(vertical: 5),
                     decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(blurRadius: 10, color: Colors.grey[200]!)
-                      ],
+                      boxShadow: [BoxShadow(blurRadius: 10, color: Colors.grey[200]!)],
                       borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(40),
                           bottomLeft: Radius.circular(40),
@@ -95,12 +93,11 @@ class _ForumCardState extends State<ForumCard> {
                           height: 80,
                           width: 80,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100)),
+                          decoration:
+                              BoxDecoration(borderRadius: BorderRadius.circular(100)),
                           child: !hasImage
                               ? Image.asset('assets/Whatado_Transparent.png')
-                              : CachedNetworkImage(
-                                  imageUrl: widget.event.imageUrl!),
+                              : CachedNetworkImage(imageUrl: widget.event.imageUrl!),
                         ),
                         SizedBox(width: 5),
                         Expanded(
@@ -120,40 +117,34 @@ class _ForumCardState extends State<ForumCard> {
                               ),
                               SizedBox(height: 4),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
                                       height: 26,
                                       width: 100,
                                       child: PictureWaterfall(
-                                          loading: loading,
-                                          users: firstInvited ?? [])),
+                                          loading: loading, users: firstInvited ?? [])),
                                   if (muted)
                                     Icon(Icons.volume_off_outlined,
-                                        color: Color(0xfff7941d))
+                                        color: AppColors.primary)
                                 ],
                               ),
                               SizedBox(height: 4),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   loading
                                       ? Flexible(
                                           flex: 3,
                                           child: Shimmer.fromColors(
-                                              baseColor: Colors.grey[200] ??
-                                                  Colors.grey,
+                                              baseColor: Colors.grey[200] ?? Colors.grey,
                                               highlightColor: Colors.white,
                                               child: Container(
-                                                  color: Colors.grey[100],
-                                                  height: 15)),
+                                                  color: Colors.grey[100], height: 15)),
                                         )
                                       : Flexible(
                                           flex: 5,
-                                          child: Text(
-                                              widget.lastChat?.text ?? '',
+                                          child: Text(widget.lastChat?.text ?? '',
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
                                                   fontWeight: unread
@@ -165,23 +156,19 @@ class _ForumCardState extends State<ForumCard> {
                                       ? Flexible(
                                           flex: 1,
                                           child: Shimmer.fromColors(
-                                              baseColor: Colors.grey[200] ??
-                                                  Colors.grey,
+                                              baseColor: Colors.grey[200] ?? Colors.grey,
                                               highlightColor: Colors.white,
                                               child: Container(
-                                                  color: Colors.grey[100],
-                                                  height: 15)),
+                                                  color: Colors.grey[100], height: 15)),
                                         )
                                       : Flexible(
                                           flex: 1,
                                           child: Padding(
-                                            padding: const EdgeInsets.only(
-                                                right: 10.0),
+                                            padding: const EdgeInsets.only(right: 10.0),
                                             child: Text(
                                                 widget.lastChat != null
                                                     ? timeago.format(
-                                                        widget.lastChat!
-                                                            .createdAt,
+                                                        widget.lastChat!.createdAt,
                                                         locale: 'en_short')
                                                     : '',
                                                 style: TextStyle(
@@ -207,10 +194,8 @@ class _ForumCardState extends State<ForumCard> {
 
   Future<void> init() async {
     final userProvider = UserGqlProvider();
-    final result = await userProvider.eventUserPreview([
-      ...widget.event.invited.map((eu) => eu.id).toList(),
-      widget.event.creator.id
-    ]);
+    final result = await userProvider.eventUserPreview(
+        [...widget.event.invited.map((eu) => eu.id).toList(), widget.event.creator.id]);
     if (mounted)
       setState(() {
         firstInvited = result.data;

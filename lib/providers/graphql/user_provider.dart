@@ -83,8 +83,6 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<User>> updateUser(UserFilterInput userInput) async {
-    print('jcl update User ${userInput.location}');
-    print('jcl update User ${json.encode(userInput)}');
     final mutation =
         UpdateUserMutation(variables: UpdateUserArguments(userInput: userInput));
     final result = await graphqlClientService.mutate(mutation);
@@ -378,6 +376,99 @@ class UserGqlProvider {
     final errors = root?['errors'];
 
     return MyQueryResponse<List<EventUser>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<List<EventUser>>> usersFromContacts(List<String> numbers) async {
+    final query =
+        UsersFromContactsQuery(variables: UsersFromContactsArguments(numbers: numbers));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['usersFromContacts'];
+    final data = root != null && root['nodes'] != null
+        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<EventUser>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<List<String>>> myReferrals() async {
+    final query = MyReferralsQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['myReferrals'];
+    final data = root != null ? List<String>.from(root['nodes']) : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<String>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<bool>> createReferral(String phone) async {
+    final mutation =
+        CreateReferralMutation(variables: CreateReferralArguments(phone: phone));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['createReferral'];
+    final data = root != null ? root['nodes'] : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<List<String>>> numbersNotUsers(List<String> numbers) async {
+    final query =
+        NumbersNotUsersQuery(variables: NumbersNotUsersArguments(numbers: numbers));
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['numbersNotUsers'];
+    final data = root != null ? List<String>.from(root['nodes']) : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<String>>(
       ok: ok,
       data: data,
       errors: errors,

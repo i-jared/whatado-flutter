@@ -1,0 +1,12 @@
+query searchGroups($partial: String!) {
+  searchGroups(partial: $partial) {
+    ok
+    nodes {
+      ...GroupFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

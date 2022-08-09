@@ -67,7 +67,6 @@ class Event {
   }
 
   static GeoJsonPoint parseCoordinates(String? coordinates) {
-    print('jcl $coordinates');
     GeoJsonPoint defaultReturn =
         GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: -111.8338));
     if (coordinates == null) {
