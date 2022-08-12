@@ -1,0 +1,13 @@
+query groupIcons {
+  groupIcons {
+    ok
+    nodes {
+      url 
+      id
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

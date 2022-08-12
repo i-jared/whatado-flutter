@@ -84,6 +84,12 @@ mixin GroupFieldsMixin {
   late String name;
   late int owner;
   late List<GroupFieldsMixin$Users> users;
+  late bool screened;
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? location;
+  late GroupFieldsMixin$Icon icon;
 }
 mixin ForumFieldsMixin {
   late int id;
@@ -875,7 +881,7 @@ class UserFieldsMixin$Groups extends JsonSerializable
       _$UserFieldsMixin$GroupsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, owner, users];
+  List<Object?> get props => [id, name, owner, users, screened, location, icon];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$GroupsToJson(this);
 }
@@ -947,6 +953,23 @@ class GroupFieldsMixin$Users extends JsonSerializable
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$GroupFieldsMixin$UsersToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupFieldsMixin$Icon extends JsonSerializable with EquatableMixin {
+  GroupFieldsMixin$Icon();
+
+  factory GroupFieldsMixin$Icon.fromJson(Map<String, dynamic> json) =>
+      _$GroupFieldsMixin$IconFromJson(json);
+
+  late int id;
+
+  late String url;
+
+  @override
+  List<Object?> get props => [id, url];
+  @override
+  Map<String, dynamic> toJson() => _$GroupFieldsMixin$IconToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1348,7 +1371,7 @@ class MyGroups$Query$MyGroups$Nodes extends JsonSerializable
       _$MyGroups$Query$MyGroups$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, owner, users];
+  List<Object?> get props => [id, name, owner, users, screened, location, icon];
   @override
   Map<String, dynamic> toJson() => _$MyGroups$Query$MyGroups$NodesToJson(this);
 }
@@ -2308,7 +2331,7 @@ class SearchGroups$Query$SearchGroups$Nodes extends JsonSerializable
       _$SearchGroups$Query$SearchGroups$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, owner, users];
+  List<Object?> get props => [id, name, owner, users, screened, location, icon];
   @override
   Map<String, dynamic> toJson() =>
       _$SearchGroups$Query$SearchGroups$NodesToJson(this);
@@ -2460,6 +2483,80 @@ class SearchEvents$Query extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [searchEvents];
   @override
   Map<String, dynamic> toJson() => _$SearchEvents$QueryToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupIcons$Query$GroupIcons$Nodes extends JsonSerializable
+    with EquatableMixin {
+  GroupIcons$Query$GroupIcons$Nodes();
+
+  factory GroupIcons$Query$GroupIcons$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$GroupIcons$Query$GroupIcons$NodesFromJson(json);
+
+  late String url;
+
+  late int id;
+
+  @override
+  List<Object?> get props => [url, id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$GroupIcons$Query$GroupIcons$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupIcons$Query$GroupIcons$Errors extends JsonSerializable
+    with EquatableMixin {
+  GroupIcons$Query$GroupIcons$Errors();
+
+  factory GroupIcons$Query$GroupIcons$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$GroupIcons$Query$GroupIcons$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$GroupIcons$Query$GroupIcons$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupIcons$Query$GroupIcons extends JsonSerializable with EquatableMixin {
+  GroupIcons$Query$GroupIcons();
+
+  factory GroupIcons$Query$GroupIcons.fromJson(Map<String, dynamic> json) =>
+      _$GroupIcons$Query$GroupIconsFromJson(json);
+
+  bool? ok;
+
+  List<GroupIcons$Query$GroupIcons$Nodes>? nodes;
+
+  List<GroupIcons$Query$GroupIcons$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() => _$GroupIcons$Query$GroupIconsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupIcons$Query extends JsonSerializable with EquatableMixin {
+  GroupIcons$Query();
+
+  factory GroupIcons$Query.fromJson(Map<String, dynamic> json) =>
+      _$GroupIcons$QueryFromJson(json);
+
+  late GroupIcons$Query$GroupIcons groupIcons;
+
+  @override
+  List<Object?> get props => [groupIcons];
+  @override
+  Map<String, dynamic> toJson() => _$GroupIcons$QueryToJson(this);
 }
 
 enum Privacy {
@@ -4151,6 +4248,37 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
                   name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'screened'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'icon'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'url'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);
@@ -5124,6 +5252,37 @@ final MY_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
                   name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'screened'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'icon'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'url'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ])),
   FragmentDefinitionNode(
@@ -6610,6 +6769,37 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
                   name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'screened'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'icon'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'url'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);
@@ -7043,6 +7233,37 @@ final SEARCH_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
                   name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'screened'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'icon'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'url'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ])),
   FragmentDefinitionNode(
@@ -7394,4 +7615,82 @@ class SearchEventsQuery
   @override
   SearchEvents$Query parse(Map<String, dynamic> json) =>
       SearchEvents$Query.fromJson(json);
+}
+
+final GROUP_ICONS_QUERY_DOCUMENT_OPERATION_NAME = 'groupIcons';
+final GROUP_ICONS_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'groupIcons'),
+      variableDefinitions: [],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'groupIcons'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'url'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'id'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class GroupIconsQuery extends GraphQLQuery<GroupIcons$Query, JsonSerializable> {
+  GroupIconsQuery();
+
+  @override
+  final DocumentNode document = GROUP_ICONS_QUERY_DOCUMENT;
+
+  @override
+  final String operationName = GROUP_ICONS_QUERY_DOCUMENT_OPERATION_NAME;
+
+  @override
+  List<Object?> get props => [document, operationName];
+  @override
+  GroupIcons$Query parse(Map<String, dynamic> json) =>
+      GroupIcons$Query.fromJson(json);
 }

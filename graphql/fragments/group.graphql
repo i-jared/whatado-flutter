@@ -5,4 +5,10 @@ fragment GroupFields on Group {
     users {
         ...EventUser
     }
+    screened
+    location
+    icon {
+        id
+        url 
+    }
 }

@@ -106,6 +106,7 @@ type Event {
   pictureUrl: String
   privacy: Privacy!
   relatedInterests: [Interest!]!
+  screened: Boolean!
   time: DateTime!
   title: String!
   updatedAt: DateTime!
@@ -137,6 +138,7 @@ input EventFilterInput {
   pictureUrl: String
   privacy: Privacy
   relatedInterestsIds: [Int!]
+  screened: Boolean
   time: DateTime
   title: String
   updatedAt: String
@@ -159,6 +161,7 @@ input EventInput {
   pictureUrl: String
   privacy: Privacy!
   relatedInterestsIds: [Int!]!
+  screened: Boolean!
   time: DateTime!
   title: String!
   wannagoIds: [Int!]!
@@ -208,9 +211,14 @@ enum Gender {
 type Group {
   createdAt: DateTime!
   events: [Event!]!
+  icon: GroupIcon!
   id: Int!
+  invitedNumbers: [GroupPhone!]!
+  location: Point
   name: String!
   owner: Int!
+  requested: [User!]!
+  screened: Boolean!
   updatedAt: DateTime!
   userIds: [Int!]!
   users: [User!]!
@@ -225,18 +233,42 @@ type GroupApiResponse {
 
 input GroupFilterInput {
   createdAt: String
+  groupIconId: Int
   id: Int
+  location: Point
   name: String
   owner: Int
+  screened: Boolean
   updatedAt: String
   userIds: [Int!]
 }
 
+type GroupIcon {
+  id: Int!
+  url: String!
+}
+
+type GroupIconsApiResponse {
+  errors: [FieldError!]
+  jwt: JwtResponse
+  nodes: [GroupIcon!]
+  ok: Boolean
+}
+
 input GroupInput {
+  groupIconId: Int!
   id: Int
+  location: Point!
   name: String!
   owner: Int!
+  screened: Boolean!
   userIds: [Int!]!
+}
+
+type GroupPhone {
+  group: Group!
+  id: Int!
+  phone: String!
 }
 
 type GroupsApiResponse {
@@ -358,6 +390,7 @@ type Query {
   forumsByEventId(ids: [Int!]!): ForumsApiResponse!
   friendsById(id: Int!): UsersApiResponse!
   groupEvents(groupId: Int!): EventsApiResponse!
+  groupIcons: GroupIconsApiResponse!
   hello: String!
   interest(id: Int!): InterestApiResponse!
   lastChat(forumId: Int!): ChatApiResponse!

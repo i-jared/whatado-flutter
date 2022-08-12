@@ -97,6 +97,7 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
                             ? eventState.textModeController.text
                             : eventState.titleController.text,
                         wannagoIds: [],
+                        screened: eventState.screened,
                         groupId: eventState.selectedGroup?.id,
                         invitedIds: eventState.privacy == Privacy.group
                             ? eventState.selectedGroup!.users.map((u) => u.id).toList()

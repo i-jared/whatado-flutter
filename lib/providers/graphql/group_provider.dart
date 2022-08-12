@@ -1,6 +1,7 @@
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/models/group.dart';
+import 'package:whatado/models/group_icon.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
 
@@ -22,6 +23,30 @@ class GroupGqlProvider {
     final errors = root?['errors'];
 
     return MyQueryResponse<Group>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<List<GroupIcon>>> groupIcons() async {
+    final query = GroupIconsQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['groupIcons'];
+    final data = root != null && root['nodes'] != null
+        ? (root['nodes'] as List).map((val) => GroupIcon.fromGqlData(val)).toList()
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<GroupIcon>>(
       ok: ok,
       data: data,
       errors: errors,

@@ -59,6 +59,12 @@ mixin GroupFieldsMixin {
   late String name;
   late int owner;
   late List<GroupFieldsMixin$Users> users;
+  late bool screened;
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? location;
+  late GroupFieldsMixin$Icon icon;
 }
 mixin UserFieldsMixin {
   late int id;
@@ -508,6 +514,7 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
       this.pictureUrl,
       this.privacy,
       this.relatedInterestsIds,
+      this.screened,
       this.time,
       this.title,
       this.updatedAt,
@@ -555,6 +562,8 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
 
   List<int>? relatedInterestsIds;
 
+  bool? screened;
+
   @JsonKey(
       fromJson: fromGraphQLDateTimeNullableToDartDateTimeNullable,
       toJson: fromDartDateTimeNullableToGraphQLDateTimeNullable)
@@ -585,6 +594,7 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
         pictureUrl,
         privacy,
         relatedInterestsIds,
+        screened,
         time,
         title,
         updatedAt,
@@ -604,7 +614,7 @@ class UpdateGroup$Mutation$UpdateGroup$Nodes extends JsonSerializable
       _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, owner, users];
+  List<Object?> get props => [id, name, owner, users, screened, location, icon];
   @override
   Map<String, dynamic> toJson() =>
       _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(this);
@@ -682,12 +692,32 @@ class GroupFieldsMixin$Users extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class GroupFieldsMixin$Icon extends JsonSerializable with EquatableMixin {
+  GroupFieldsMixin$Icon();
+
+  factory GroupFieldsMixin$Icon.fromJson(Map<String, dynamic> json) =>
+      _$GroupFieldsMixin$IconFromJson(json);
+
+  late int id;
+
+  late String url;
+
+  @override
+  List<Object?> get props => [id, url];
+  @override
+  Map<String, dynamic> toJson() => _$GroupFieldsMixin$IconToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class GroupFilterInput extends JsonSerializable with EquatableMixin {
   GroupFilterInput(
       {this.createdAt,
+      this.groupIconId,
       this.id,
+      this.location,
       this.name,
       this.owner,
+      this.screened,
       this.updatedAt,
       this.userIds});
 
@@ -696,18 +726,37 @@ class GroupFilterInput extends JsonSerializable with EquatableMixin {
 
   String? createdAt;
 
+  int? groupIconId;
+
   int? id;
+
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? location;
 
   String? name;
 
   int? owner;
+
+  bool? screened;
 
   String? updatedAt;
 
   List<int>? userIds;
 
   @override
-  List<Object?> get props => [createdAt, id, name, owner, updatedAt, userIds];
+  List<Object?> get props => [
+        createdAt,
+        groupIconId,
+        id,
+        location,
+        name,
+        owner,
+        screened,
+        updatedAt,
+        userIds
+      ];
   @override
   Map<String, dynamic> toJson() => _$GroupFilterInputToJson(this);
 }
@@ -882,7 +931,7 @@ class UserFieldsMixin$Groups extends JsonSerializable
       _$UserFieldsMixin$GroupsFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, owner, users];
+  List<Object?> get props => [id, name, owner, users, screened, location, icon];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$GroupsToJson(this);
 }
@@ -2904,6 +2953,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
       this.pictureUrl,
       required this.privacy,
       required this.relatedInterestsIds,
+      required this.screened,
       required this.time,
       required this.title,
       required this.wannagoIds});
@@ -2946,6 +2996,8 @@ class EventInput extends JsonSerializable with EquatableMixin {
 
   late List<int> relatedInterestsIds;
 
+  late bool screened;
+
   @JsonKey(
       fromJson: fromGraphQLDateTimeToDartDateTime,
       toJson: fromDartDateTimeToGraphQLDateTime)
@@ -2972,6 +3024,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
         pictureUrl,
         privacy,
         relatedInterestsIds,
+        screened,
         time,
         title,
         wannagoIds
@@ -3047,7 +3100,7 @@ class CreateGroup$Mutation$CreateGroup$Nodes extends JsonSerializable
       _$CreateGroup$Mutation$CreateGroup$NodesFromJson(json);
 
   @override
-  List<Object?> get props => [id, name, owner, users];
+  List<Object?> get props => [id, name, owner, users, screened, location, icon];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateGroup$Mutation$CreateGroup$NodesToJson(this);
@@ -3113,24 +3166,37 @@ class CreateGroup$Mutation extends JsonSerializable with EquatableMixin {
 @JsonSerializable(explicitToJson: true)
 class GroupInput extends JsonSerializable with EquatableMixin {
   GroupInput(
-      {this.id,
+      {required this.groupIconId,
+      this.id,
+      required this.location,
       required this.name,
       required this.owner,
+      required this.screened,
       required this.userIds});
 
   factory GroupInput.fromJson(Map<String, dynamic> json) =>
       _$GroupInputFromJson(json);
 
+  late int groupIconId;
+
   int? id;
+
+  @JsonKey(
+      fromJson: fromGraphQLPointToDartGeoJsonPoint,
+      toJson: fromDartGeoJsonPointToGraphQLPoint)
+  late GeoJsonPoint location;
 
   late String name;
 
   late int owner;
 
+  late bool screened;
+
   late List<int> userIds;
 
   @override
-  List<Object?> get props => [id, name, owner, userIds];
+  List<Object?> get props =>
+      [groupIconId, id, location, name, owner, screened, userIds];
   @override
   Map<String, dynamic> toJson() => _$GroupInputToJson(this);
 }
@@ -4140,6 +4206,37 @@ final UPDATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
                   name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'screened'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'icon'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'url'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ])),
   FragmentDefinitionNode(
@@ -4507,6 +4604,37 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
                   name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'screened'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'icon'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'url'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ]))
 ]);
@@ -8158,6 +8286,37 @@ final CREATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
                   name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'screened'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'icon'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'url'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
             ]))
       ])),
   FragmentDefinitionNode(

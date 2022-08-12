@@ -105,9 +105,21 @@ class _TargetAudienceState extends State<TargetAudience> {
           ),
           if (eventState.privacy == Privacy.private) Expanded(child: TargetPrivate()),
           if (eventState.privacy == Privacy.group) Expanded(child: TargetGroup()),
-          SizedBox(height: sectionSpacing),
+          SizedBox(height: headingSpacing),
           if (eventState.privacy != Privacy.private &&
               eventState.privacy != Privacy.group) ...[
+            Row(
+              children: [
+                Switch(
+                  onChanged: (newVal) => eventState.screened = newVal,
+                  value: eventState.screened,
+                  activeColor: AppColors.primary,
+                ),
+                SizedBox(width: 20),
+                Text('Screen Event Members'),
+              ],
+            ),
+            SizedBox(height: sectionSpacing),
             Text('GENDER', style: headingStyle),
             SizedBox(height: headingSpacing),
             Wrap(
