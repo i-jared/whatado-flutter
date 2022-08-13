@@ -21,6 +21,7 @@ class User {
   List<EventUser> requestedFriends;
   List<EventUser> friendRequests;
   List<Group> groups;
+  List<Group> requestedGroups;
   GeoJsonPoint? location;
   User({
     required this.id,
@@ -37,6 +38,7 @@ class User {
     required this.friendRequests,
     required this.requestedFriends,
     required this.groups,
+    required this.requestedGroups,
     this.location,
   });
 
@@ -68,6 +70,9 @@ class User {
           data['birthday'] == null ? DateTime.now() : DateTime.parse(data['birthday']),
       groups: List<Group>.from(
           data['groups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
+      requestedGroups: List<Group>.from(
+          data['requestedGroups']?.map((group) => Group.fromGqlData(group)).toList() ??
+              []),
       location: getLocation(data['location']),
     );
   }

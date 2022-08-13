@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -24,10 +23,8 @@ class UserListItem extends StatelessWidget {
               if (Navigator.canPop(context))
                 Navigator.popUntil(context, (route) => route.isFirst);
             }
-          : () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => UserProfile(user: user)))
+          : () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => UserProfile(user: user)))
                   .then((_) async {
                 await Future.delayed(Duration(milliseconds: 500));
                 SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -52,8 +49,7 @@ class UserListItem extends StatelessWidget {
                     color: Colors.white,
                   ))
               : UserAvatar(
-                  url: user.photoUrls.isEmpty ? null : user.photoUrls.first,
-                  radius: 25),
+                  url: user.photoUrls.isEmpty ? null : user.photoUrls.first, radius: 25),
           SizedBox(width: 15),
           Flexible(
             child: Text(

@@ -18,10 +18,17 @@ class JoinButton extends StatelessWidget {
           try {
             if (userState.user == null) return;
             final provider = EventsGqlProvider();
-            final result =
-                await provider.addWannago(eventId: event.id, userId: userState.user!.id);
-            // update the event
-            if (result.ok) homeState.updateEvent(result.data as Event);
+            if (event.screened) {
+              final result = await provider.addWannago(
+                  eventId: event.id, userId: userState.user!.id);
+              // update the event
+              if (result.ok) homeState.updateEvent(result.data as Event);
+            } else {
+              final result =
+                  await provider.addInvite(eventId: event.id, userId: userState.user!.id);
+              // update the event
+              if (result.ok) homeState.updateEvent(result.data as Event);
+            }
           } catch (e) {
             print(e.toString());
           }
@@ -34,7 +41,7 @@ class JoinButton extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Join', style: TextStyle(fontSize: 15)),
-            Icon(Icons.add, size: 15),
+            if (event.screened) Icon(Icons.add, size: 15),
           ],
         ));
   }

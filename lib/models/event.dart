@@ -21,6 +21,7 @@ class Event {
   List<int> relatedInterestIds;
   List<Wannago> wannago;
   List<EventUser> invited;
+  bool screened;
 
   Event({
     required this.id,
@@ -33,6 +34,7 @@ class Event {
     required this.location,
     required this.coordinates,
     required this.filterGender,
+    required this.screened,
     this.wannago = const [],
     this.invited = const [],
     this.imageUrl,
@@ -45,6 +47,7 @@ class Event {
       creator: EventUser.fromGqlData(data['creator']),
       title: data['title'] ?? '',
       imageUrl: data['pictureUrl'],
+      screened: data['screened'] ?? true,
       time: DateTime.parse(data['time']).toLocal(),
       relatedInterestIds: List<int>.from(
           data['relatedInterests']?.map((obj) => obj['id']).toList() ?? []),

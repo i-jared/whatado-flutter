@@ -45,6 +45,7 @@ class AddEventState extends ChangeNotifier {
   bool _failed;
   bool _succeeded;
   bool _screened;
+  bool _chatDisabled;
   GeoJsonPoint coordinates =
       GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: 111.8338));
   // TODO use real values
@@ -92,6 +93,7 @@ class AddEventState extends ChangeNotifier {
         _succeeded = false,
         _failed = false,
         _screened = true,
+        _chatDisabled = false,
         _scale = 0,
         _offsetx = 0,
         _offsety = 0 {
@@ -146,9 +148,15 @@ class AddEventState extends ChangeNotifier {
   }
 
   bool get screened => _screened;
+  bool get chatDisabled => _chatDisabled;
 
   set screened(bool screened) {
     _screened = screened;
+    notifyListeners();
+  }
+
+  set chatDisabled(bool chatDisabled) {
+    _chatDisabled = chatDisabled;
     notifyListeners();
   }
 

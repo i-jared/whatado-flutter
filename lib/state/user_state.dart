@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -93,8 +94,21 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateFriendRequest(EventUser newUser) async {
-    user?.requestedFriends.add(newUser);
+  Future<void> updateFriendRequest(EventUser newUser, {bool add = true}) async {
+    if (add) {
+      user?.requestedFriends.add(newUser);
+    } else {
+      user?.requestedFriends.remove(newUser);
+    }
+    notifyListeners();
+  }
+
+  Future<void> updateGroupRequest(Group group, {bool add = true}) async {
+    if (add) {
+      user?.requestedGroups.add(group);
+    } else {
+      user?.requestedGroups.remove(group);
+    }
     notifyListeners();
   }
 

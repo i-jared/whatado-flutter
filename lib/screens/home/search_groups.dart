@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/search_state.dart';
+import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/groups/group_list_item.dart';
 
 class SearchGroups extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final searchState = Provider.of<SearchState>(context);
+    final userState = Provider.of<UserState>(context);
     if (searchState.groupsLoading) {
       return Center(child: CircularProgressIndicator());
     }
@@ -32,7 +34,13 @@ class SearchGroups extends StatelessWidget {
             return Divider();
           }
           int j = i ~/ 2 - 1;
-          return GroupListItem(searchState.filteredGroups![j]);
+          return GroupListItem(
+              group: searchState.filteredGroups![j],
+              showButton: true,
+              requested: userState.user!.requestedGroups
+                  .any((g) => g.id == searchState.filteredGroups![j].id),
+              member: userState.user!.groups
+                  .any((g) => g.id == searchState.filteredGroups![j].id));
         });
   }
 }

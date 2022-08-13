@@ -1,0 +1,10 @@
+mutation requestGroup($id: Int!) {
+    requestGroup(id: $id) {
+        nodes
+        errors {
+            field
+            message
+        }
+        ok
+    }
+}

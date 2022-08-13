@@ -25,6 +25,7 @@ fragment EventFields on Event {
     id
   }
   privacy
+  screened
   filterLocation
   filterRadius
   filterGender

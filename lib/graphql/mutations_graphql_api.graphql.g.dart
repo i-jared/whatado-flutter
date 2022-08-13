@@ -134,6 +134,7 @@ AddWannago$Mutation$AddWannago$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
+          ..screened = json['screened'] as bool?
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -159,6 +160,7 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
       'privacy': _$PrivacyEnumMap[instance.privacy],
+      'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -344,6 +346,7 @@ UpdateEvent$Mutation$UpdateEvent$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
+          ..screened = json['screened'] as bool?
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -369,6 +372,7 @@ Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
       'privacy': _$PrivacyEnumMap[instance.privacy],
+      'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -603,6 +607,9 @@ GroupFilterInput _$GroupFilterInputFromJson(Map<String, dynamic> json) =>
           json['location'] as String?),
       name: json['name'] as String?,
       owner: json['owner'] as int?,
+      requestedIds: (json['requestedIds'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
       screened: json['screened'] as bool?,
       updatedAt: json['updatedAt'] as String?,
       userIds:
@@ -618,6 +625,7 @@ Map<String, dynamic> _$GroupFilterInputToJson(GroupFilterInput instance) =>
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
       'name': instance.name,
       'owner': instance.owner,
+      'requestedIds': instance.requestedIds,
       'screened': instance.screened,
       'updatedAt': instance.updatedAt,
       'userIds': instance.userIds,
@@ -658,6 +666,10 @@ UpdateUser$Mutation$UpdateUser$Nodes
               .map((e) =>
                   UserFieldsMixin$Groups.fromJson(e as Map<String, dynamic>))
               .toList()
+          ..requestedGroups = (json['requestedGroups'] as List<dynamic>)
+              .map((e) => UserFieldsMixin$RequestedGroups.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
           ..interests = (json['interests'] as List<dynamic>)
               .map((e) =>
                   UserFieldsMixin$Interests.fromJson(e as Map<String, dynamic>))
@@ -690,6 +702,8 @@ Map<String, dynamic> _$UpdateUser$Mutation$UpdateUser$NodesToJson(
           instance.requestedFriends.map((e) => e.toJson()).toList(),
       'friendRequests': instance.friendRequests.map((e) => e.toJson()).toList(),
       'groups': instance.groups.map((e) => e.toJson()).toList(),
+      'requestedGroups':
+          instance.requestedGroups.map((e) => e.toJson()).toList(),
       'interests': instance.interests.map((e) => e.toJson()).toList(),
       'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
       'chatNotifications':
@@ -862,6 +876,35 @@ UserFieldsMixin$Groups _$UserFieldsMixin$GroupsFromJson(
 
 Map<String, dynamic> _$UserFieldsMixin$GroupsToJson(
         UserFieldsMixin$Groups instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'owner': instance.owner,
+      'users': instance.users.map((e) => e.toJson()).toList(),
+      'screened': instance.screened,
+      'location':
+          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'icon': instance.icon.toJson(),
+    };
+
+UserFieldsMixin$RequestedGroups _$UserFieldsMixin$RequestedGroupsFromJson(
+        Map<String, dynamic> json) =>
+    UserFieldsMixin$RequestedGroups()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..owner = json['owner'] as int
+      ..users = (json['users'] as List<dynamic>)
+          .map(
+              (e) => GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..screened = json['screened'] as bool
+      ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
+          json['location'] as String?)
+      ..icon =
+          GroupFieldsMixin$Icon.fromJson(json['icon'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UserFieldsMixin$RequestedGroupsToJson(
+        UserFieldsMixin$RequestedGroups instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -1514,6 +1557,8 @@ CreateForum$Mutation$CreateForum$Nodes
           ..id = json['id'] as int
           ..updatedAt =
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+          ..chatDisabled = json['chatDisabled'] as bool?
+          ..ownerId = json['ownerId'] as int?
           ..userNotifications = (json['userNotifications'] as List<dynamic>)
               .map((e) => ForumFieldsMixin$UserNotifications.fromJson(
                   e as Map<String, dynamic>))
@@ -1530,6 +1575,8 @@ Map<String, dynamic> _$CreateForum$Mutation$CreateForum$NodesToJson(
     <String, dynamic>{
       'id': instance.id,
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'chatDisabled': instance.chatDisabled,
+      'ownerId': instance.ownerId,
       'userNotifications':
           instance.userNotifications.map((e) => e.toJson()).toList(),
       'chats': instance.chats.map((e) => e.toJson()).toList(),
@@ -1939,6 +1986,7 @@ RemoveInvite$Mutation$RemoveInvite$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
+          ..screened = json['screened'] as bool?
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -1964,6 +2012,7 @@ Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
       'privacy': _$PrivacyEnumMap[instance.privacy],
+      'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -2311,6 +2360,7 @@ AddInvite$Mutation$AddInvite$Nodes _$AddInvite$Mutation$AddInvite$NodesFromJson(
           .toList()
       ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
           unknownValue: Privacy.artemisUnknown)
+      ..screened = json['screened'] as bool?
       ..filterLocation = json['filterLocation'] as String
       ..filterRadius = (json['filterRadius'] as num).toDouble()
       ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2336,6 +2386,7 @@ Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
       'privacy': _$PrivacyEnumMap[instance.privacy],
+      'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -2460,6 +2511,7 @@ CreateEvent$Mutation$CreateEvent$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
+          ..screened = json['screened'] as bool?
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2485,6 +2537,7 @@ Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
       'privacy': _$PrivacyEnumMap[instance.privacy],
+      'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
       'filterGender': _$GenderEnumMap[instance.filterGender],
@@ -2540,6 +2593,7 @@ Map<String, dynamic> _$CreateEvent$MutationToJson(
     };
 
 EventInput _$EventInputFromJson(Map<String, dynamic> json) => EventInput(
+      chatDisabled: json['chatDisabled'] as bool?,
       coordinates:
           fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String),
       creatorId: json['creatorId'] as int,
@@ -2570,6 +2624,7 @@ EventInput _$EventInputFromJson(Map<String, dynamic> json) => EventInput(
 
 Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
     <String, dynamic>{
+      'chatDisabled': instance.chatDisabled,
       'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'creatorId': instance.creatorId,
       'description': instance.description,
@@ -2777,6 +2832,50 @@ Map<String, dynamic> _$CreateReferral$MutationToJson(
         CreateReferral$Mutation instance) =>
     <String, dynamic>{
       'createReferral': instance.createReferral.toJson(),
+    };
+
+RequestGroup$Mutation$RequestGroup$Errors
+    _$RequestGroup$Mutation$RequestGroup$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        RequestGroup$Mutation$RequestGroup$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$RequestGroup$Mutation$RequestGroup$ErrorsToJson(
+        RequestGroup$Mutation$RequestGroup$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+RequestGroup$Mutation$RequestGroup _$RequestGroup$Mutation$RequestGroupFromJson(
+        Map<String, dynamic> json) =>
+    RequestGroup$Mutation$RequestGroup()
+      ..nodes = json['nodes'] as bool?
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => RequestGroup$Mutation$RequestGroup$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
+      ..ok = json['ok'] as bool?;
+
+Map<String, dynamic> _$RequestGroup$Mutation$RequestGroupToJson(
+        RequestGroup$Mutation$RequestGroup instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'ok': instance.ok,
+    };
+
+RequestGroup$Mutation _$RequestGroup$MutationFromJson(
+        Map<String, dynamic> json) =>
+    RequestGroup$Mutation()
+      ..requestGroup = RequestGroup$Mutation$RequestGroup.fromJson(
+          json['requestGroup'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$RequestGroup$MutationToJson(
+        RequestGroup$Mutation instance) =>
+    <String, dynamic>{
+      'requestGroup': instance.requestGroup.toJson(),
     };
 
 AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
@@ -3191,10 +3290,26 @@ CreateReferralArguments _$CreateReferralArgumentsFromJson(
         Map<String, dynamic> json) =>
     CreateReferralArguments(
       phone: json['phone'] as String,
+      eventId: json['eventId'] as int?,
+      groupId: json['groupId'] as int?,
     );
 
 Map<String, dynamic> _$CreateReferralArgumentsToJson(
         CreateReferralArguments instance) =>
     <String, dynamic>{
       'phone': instance.phone,
+      'eventId': instance.eventId,
+      'groupId': instance.groupId,
+    };
+
+RequestGroupArguments _$RequestGroupArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    RequestGroupArguments(
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$RequestGroupArgumentsToJson(
+        RequestGroupArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
     };

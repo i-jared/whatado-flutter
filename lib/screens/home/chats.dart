@@ -4,7 +4,6 @@ import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/widgets/appbars/chat_app_bar.dart';
-import 'package:whatado/widgets/forums/group_members_row.dart';
 import 'package:whatado/widgets/forums/messages_body.dart';
 import 'package:whatado/widgets/forums/messages_text_field.dart';
 
@@ -43,13 +42,15 @@ class _ChatsState extends State<Chats> {
                     SizedBox(height: 70),
                   ]),
                   Positioned(
-                      bottom: 00,
+                      bottom: 0,
                       right: 0,
                       child: Container(
                           padding: EdgeInsets.only(bottom: 10),
                           color: Colors.grey[50],
                           width: MediaQuery.of(context).size.width,
-                          child: MessagesTextField())),
+                          child: MessagesTextField(
+                            forum: widget.forum,
+                          ))),
                 ],
               ),
             ),

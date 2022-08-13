@@ -29,7 +29,11 @@ class InviteGroups extends StatelessWidget {
                       },
                       child: Stack(
                         children: [
-                          IgnorePointer(child: GroupListItem(groups![i])),
+                          IgnorePointer(
+                              child: GroupListItem(
+                            group: groups![i],
+                            showButton: false,
+                          )),
                           if (selectedGroup == groups![i])
                             Positioned(
                               left: 0,

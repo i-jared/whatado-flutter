@@ -63,7 +63,7 @@ class _AddEventState extends State<AddEvent> {
                             key: ValueKey(eventState.selectedImageBytes),
                             duration: Duration(milliseconds: 500),
                             child: PhotoView(
-                                loadingBuilder: (context, _) =>
+                                loadingBuilder: (photoCtx, _) =>
                                     Center(child: CircularProgressIndicator()),
                                 controller: eventState.photoController,
                                 minScale: PhotoViewComputedScale.covered,
@@ -71,20 +71,6 @@ class _AddEventState extends State<AddEvent> {
                                     BoxDecoration(color: Colors.grey[200]),
                                 imageProvider:
                                     MemoryImage(eventState.selectedImageBytes!))),
-
-                // final bytes = file.readAsBytesSync();
-                // final widget = FadeIn(
-                //     key: ValueKey(bytes),
-                //     duration: Duration(milliseconds: 500),
-                //     child: PhotoView(
-                //         loadingBuilder: (context, _) => Center(
-                //             child: CircularProgressIndicator()),
-                //         controller: eventState.photoController,
-                //         minScale: PhotoViewComputedScale.covered,
-                //         backgroundDecoration:
-                //             BoxDecoration(color: Colors.grey[200]),
-                //         imageProvider: MemoryImage(bytes)));
-                // return widget;
               ),
               Flexible(
                   flex: 1,

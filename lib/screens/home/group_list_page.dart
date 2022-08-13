@@ -27,7 +27,7 @@ class GroupListPage extends StatelessWidget {
                           return Divider();
                         } else {
                           i = i ~/ 2;
-                          return GroupListItem(groups[i]);
+                          return GroupListItem(group: groups[i]);
                         }
                       },
                     )),

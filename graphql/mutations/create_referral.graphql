@@ -1,5 +1,5 @@
-mutation createReferral($phone: String!) {
-  createReferral(phone: $phone) {
+mutation createReferral($phone: String!, $eventId: Int, $groupId: Int) {
+  createReferral(phone: $phone, eventId: $eventId, groupId: $groupId) {
     ok
     nodes 
     errors {

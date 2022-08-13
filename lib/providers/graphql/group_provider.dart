@@ -100,8 +100,28 @@ class GroupGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<bool>> requestGroup(int id) async {
+    final mutation = RequestGroupMutation(variables: RequestGroupArguments(id: id));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+    final root = result.data?['requestGroup'];
+    final data = root?['nodes'];
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<Group>> createGroup(GroupInput groupInput) async {
-    print(groupInput);
     final mutation =
         CreateGroupMutation(variables: CreateGroupArguments(groupInput: groupInput));
     final result = await graphqlClientService.mutate(mutation);

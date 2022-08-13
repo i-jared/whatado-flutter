@@ -418,7 +418,8 @@ class UserGqlProvider {
     }
 
     final root = result.data?['myReferrals'];
-    final data = root != null ? List<String>.from(root['nodes']) : null;
+    final data =
+        root != null && root['nodes'] != null ? List<String>.from(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 

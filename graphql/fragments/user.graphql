@@ -24,6 +24,9 @@ fragment UserFields on User {
   groups {
     ...GroupFields
   }
+  requestedGroups {
+    ...GroupFields
+  }
   interests {
     id
     title

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
-import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/screens/add_event/post_failed.dart';
@@ -13,8 +12,6 @@ import 'package:whatado/screens/add_event/post_succeeded.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/add_event_details_app_bar.dart';
-import 'package:whatado/widgets/events/invite_friends.dart';
-import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/events/target_group.dart';
 import 'package:whatado/widgets/events/target_private.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
@@ -117,6 +114,17 @@ class _TargetAudienceState extends State<TargetAudience> {
                 ),
                 SizedBox(width: 20),
                 Text('Screen Event Members'),
+              ],
+            ),
+            Row(
+              children: [
+                Switch(
+                  onChanged: (newVal) => eventState.chatDisabled = !newVal,
+                  value: !eventState.chatDisabled,
+                  activeColor: AppColors.primary,
+                ),
+                SizedBox(width: 20),
+                Text('Chat Open'),
               ],
             ),
             SizedBox(height: sectionSpacing),

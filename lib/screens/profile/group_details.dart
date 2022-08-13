@@ -8,7 +8,6 @@ import 'package:whatado/screens/profile/edit_group_details.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/events/inner_event_display.dart';
-import 'package:whatado/widgets/events/my_event_display.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
 class GroupDetails extends StatefulWidget {
@@ -17,6 +16,8 @@ class GroupDetails extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _GroupDetailsState();
 }
+
+// TODO: create a page where you can approve people who request to join the group
 
 class _GroupDetailsState extends State<GroupDetails> {
   List<Event>? groupEvents;
