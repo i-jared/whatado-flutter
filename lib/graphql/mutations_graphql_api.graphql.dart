@@ -2491,6 +2491,120 @@ class RequestFriend$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
+class RequestGroup$Mutation$RequestGroup$Errors extends JsonSerializable
+    with EquatableMixin {
+  RequestGroup$Mutation$RequestGroup$Errors();
+
+  factory RequestGroup$Mutation$RequestGroup$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$RequestGroup$Mutation$RequestGroup$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RequestGroup$Mutation$RequestGroup$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RequestGroup$Mutation$RequestGroup extends JsonSerializable
+    with EquatableMixin {
+  RequestGroup$Mutation$RequestGroup();
+
+  factory RequestGroup$Mutation$RequestGroup.fromJson(
+          Map<String, dynamic> json) =>
+      _$RequestGroup$Mutation$RequestGroupFromJson(json);
+
+  bool? nodes;
+
+  List<RequestGroup$Mutation$RequestGroup$Errors>? errors;
+
+  bool? ok;
+
+  @override
+  List<Object?> get props => [nodes, errors, ok];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$RequestGroup$Mutation$RequestGroupToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class RequestGroup$Mutation extends JsonSerializable with EquatableMixin {
+  RequestGroup$Mutation();
+
+  factory RequestGroup$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$RequestGroup$MutationFromJson(json);
+
+  late RequestGroup$Mutation$RequestGroup requestGroup;
+
+  @override
+  List<Object?> get props => [requestGroup];
+  @override
+  Map<String, dynamic> toJson() => _$RequestGroup$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateReferral$Mutation$CreateReferral$Errors extends JsonSerializable
+    with EquatableMixin {
+  CreateReferral$Mutation$CreateReferral$Errors();
+
+  factory CreateReferral$Mutation$CreateReferral$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateReferral$Mutation$CreateReferral$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateReferral$Mutation$CreateReferral$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateReferral$Mutation$CreateReferral extends JsonSerializable
+    with EquatableMixin {
+  CreateReferral$Mutation$CreateReferral();
+
+  factory CreateReferral$Mutation$CreateReferral.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateReferral$Mutation$CreateReferralFromJson(json);
+
+  bool? ok;
+
+  bool? nodes;
+
+  List<CreateReferral$Mutation$CreateReferral$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$CreateReferral$Mutation$CreateReferralToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateReferral$Mutation extends JsonSerializable with EquatableMixin {
+  CreateReferral$Mutation();
+
+  factory CreateReferral$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$CreateReferral$MutationFromJson(json);
+
+  late CreateReferral$Mutation$CreateReferral createReferral;
+
+  @override
+  List<Object?> get props => [createReferral];
+  @override
+  Map<String, dynamic> toJson() => _$CreateReferral$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class CreateInterest$Mutation$CreateInterest$Errors extends JsonSerializable
     with EquatableMixin {
   CreateInterest$Mutation$CreateInterest$Errors();
@@ -3273,120 +3387,6 @@ class GroupInput extends JsonSerializable with EquatableMixin {
       [groupIconId, id, location, name, owner, screened, userIds];
   @override
   Map<String, dynamic> toJson() => _$GroupInputToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateReferral$Mutation$CreateReferral$Errors extends JsonSerializable
-    with EquatableMixin {
-  CreateReferral$Mutation$CreateReferral$Errors();
-
-  factory CreateReferral$Mutation$CreateReferral$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateReferral$Mutation$CreateReferral$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateReferral$Mutation$CreateReferral$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateReferral$Mutation$CreateReferral extends JsonSerializable
-    with EquatableMixin {
-  CreateReferral$Mutation$CreateReferral();
-
-  factory CreateReferral$Mutation$CreateReferral.fromJson(
-          Map<String, dynamic> json) =>
-      _$CreateReferral$Mutation$CreateReferralFromJson(json);
-
-  bool? ok;
-
-  bool? nodes;
-
-  List<CreateReferral$Mutation$CreateReferral$Errors>? errors;
-
-  @override
-  List<Object?> get props => [ok, nodes, errors];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$CreateReferral$Mutation$CreateReferralToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateReferral$Mutation extends JsonSerializable with EquatableMixin {
-  CreateReferral$Mutation();
-
-  factory CreateReferral$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$CreateReferral$MutationFromJson(json);
-
-  late CreateReferral$Mutation$CreateReferral createReferral;
-
-  @override
-  List<Object?> get props => [createReferral];
-  @override
-  Map<String, dynamic> toJson() => _$CreateReferral$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class RequestGroup$Mutation$RequestGroup$Errors extends JsonSerializable
-    with EquatableMixin {
-  RequestGroup$Mutation$RequestGroup$Errors();
-
-  factory RequestGroup$Mutation$RequestGroup$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$RequestGroup$Mutation$RequestGroup$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$RequestGroup$Mutation$RequestGroup$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class RequestGroup$Mutation$RequestGroup extends JsonSerializable
-    with EquatableMixin {
-  RequestGroup$Mutation$RequestGroup();
-
-  factory RequestGroup$Mutation$RequestGroup.fromJson(
-          Map<String, dynamic> json) =>
-      _$RequestGroup$Mutation$RequestGroupFromJson(json);
-
-  bool? nodes;
-
-  List<RequestGroup$Mutation$RequestGroup$Errors>? errors;
-
-  bool? ok;
-
-  @override
-  List<Object?> get props => [nodes, errors, ok];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$RequestGroup$Mutation$RequestGroupToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class RequestGroup$Mutation extends JsonSerializable with EquatableMixin {
-  RequestGroup$Mutation();
-
-  factory RequestGroup$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$RequestGroup$MutationFromJson(json);
-
-  late RequestGroup$Mutation$RequestGroup requestGroup;
-
-  @override
-  List<Object?> get props => [requestGroup];
-  @override
-  Map<String, dynamic> toJson() => _$RequestGroup$MutationToJson(this);
 }
 
 enum Privacy {
@@ -7125,6 +7125,217 @@ class RequestFriendMutation
 }
 
 @JsonSerializable(explicitToJson: true)
+class RequestGroupArguments extends JsonSerializable with EquatableMixin {
+  RequestGroupArguments({required this.id});
+
+  @override
+  factory RequestGroupArguments.fromJson(Map<String, dynamic> json) =>
+      _$RequestGroupArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$RequestGroupArgumentsToJson(this);
+}
+
+final REQUEST_GROUP_MUTATION_DOCUMENT_OPERATION_NAME = 'requestGroup';
+final REQUEST_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'requestGroup'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'requestGroup'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class RequestGroupMutation
+    extends GraphQLQuery<RequestGroup$Mutation, RequestGroupArguments> {
+  RequestGroupMutation({required this.variables});
+
+  @override
+  final DocumentNode document = REQUEST_GROUP_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = REQUEST_GROUP_MUTATION_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final RequestGroupArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  RequestGroup$Mutation parse(Map<String, dynamic> json) =>
+      RequestGroup$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class CreateReferralArguments extends JsonSerializable with EquatableMixin {
+  CreateReferralArguments({required this.phone, this.eventId, this.groupId});
+
+  @override
+  factory CreateReferralArguments.fromJson(Map<String, dynamic> json) =>
+      _$CreateReferralArgumentsFromJson(json);
+
+  late String phone;
+
+  final int? eventId;
+
+  final int? groupId;
+
+  @override
+  List<Object?> get props => [phone, eventId, groupId];
+  @override
+  Map<String, dynamic> toJson() => _$CreateReferralArgumentsToJson(this);
+}
+
+final CREATE_REFERRAL_MUTATION_DOCUMENT_OPERATION_NAME = 'createReferral';
+final CREATE_REFERRAL_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'createReferral'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'phone')),
+            type:
+                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'eventId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: []),
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'groupId')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'createReferral'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'phone'),
+                  value: VariableNode(name: NameNode(value: 'phone'))),
+              ArgumentNode(
+                  name: NameNode(value: 'eventId'),
+                  value: VariableNode(name: NameNode(value: 'eventId'))),
+              ArgumentNode(
+                  name: NameNode(value: 'groupId'),
+                  value: VariableNode(name: NameNode(value: 'groupId')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ]))
+]);
+
+class CreateReferralMutation
+    extends GraphQLQuery<CreateReferral$Mutation, CreateReferralArguments> {
+  CreateReferralMutation({required this.variables});
+
+  @override
+  final DocumentNode document = CREATE_REFERRAL_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = CREATE_REFERRAL_MUTATION_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final CreateReferralArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  CreateReferral$Mutation parse(Map<String, dynamic> json) =>
+      CreateReferral$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
 class CreateInterestArguments extends JsonSerializable with EquatableMixin {
   CreateInterestArguments({required this.interestsText});
 
@@ -8625,215 +8836,4 @@ class CreateGroupMutation
   @override
   CreateGroup$Mutation parse(Map<String, dynamic> json) =>
       CreateGroup$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class CreateReferralArguments extends JsonSerializable with EquatableMixin {
-  CreateReferralArguments({required this.phone, this.eventId, this.groupId});
-
-  @override
-  factory CreateReferralArguments.fromJson(Map<String, dynamic> json) =>
-      _$CreateReferralArgumentsFromJson(json);
-
-  late String phone;
-
-  final int? eventId;
-
-  final int? groupId;
-
-  @override
-  List<Object?> get props => [phone, eventId, groupId];
-  @override
-  Map<String, dynamic> toJson() => _$CreateReferralArgumentsToJson(this);
-}
-
-final CREATE_REFERRAL_MUTATION_DOCUMENT_OPERATION_NAME = 'createReferral';
-final CREATE_REFERRAL_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'createReferral'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'phone')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'eventId')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: []),
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'groupId')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: false),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'createReferral'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'phone'),
-                  value: VariableNode(name: NameNode(value: 'phone'))),
-              ArgumentNode(
-                  name: NameNode(value: 'eventId'),
-                  value: VariableNode(name: NameNode(value: 'eventId'))),
-              ArgumentNode(
-                  name: NameNode(value: 'groupId'),
-                  value: VariableNode(name: NameNode(value: 'groupId')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ]))
-            ]))
-      ]))
-]);
-
-class CreateReferralMutation
-    extends GraphQLQuery<CreateReferral$Mutation, CreateReferralArguments> {
-  CreateReferralMutation({required this.variables});
-
-  @override
-  final DocumentNode document = CREATE_REFERRAL_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = CREATE_REFERRAL_MUTATION_DOCUMENT_OPERATION_NAME;
-
-  @override
-  final CreateReferralArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  CreateReferral$Mutation parse(Map<String, dynamic> json) =>
-      CreateReferral$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class RequestGroupArguments extends JsonSerializable with EquatableMixin {
-  RequestGroupArguments({required this.id});
-
-  @override
-  factory RequestGroupArguments.fromJson(Map<String, dynamic> json) =>
-      _$RequestGroupArgumentsFromJson(json);
-
-  late int id;
-
-  @override
-  List<Object?> get props => [id];
-  @override
-  Map<String, dynamic> toJson() => _$RequestGroupArgumentsToJson(this);
-}
-
-final REQUEST_GROUP_MUTATION_DOCUMENT_OPERATION_NAME = 'requestGroup';
-final REQUEST_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'requestGroup'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'id')),
-            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'requestGroup'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'id'),
-                  value: VariableNode(name: NameNode(value: 'id')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ])),
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null)
-            ]))
-      ]))
-]);
-
-class RequestGroupMutation
-    extends GraphQLQuery<RequestGroup$Mutation, RequestGroupArguments> {
-  RequestGroupMutation({required this.variables});
-
-  @override
-  final DocumentNode document = REQUEST_GROUP_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = REQUEST_GROUP_MUTATION_DOCUMENT_OPERATION_NAME;
-
-  @override
-  final RequestGroupArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  RequestGroup$Mutation parse(Map<String, dynamic> json) =>
-      RequestGroup$Mutation.fromJson(json);
 }

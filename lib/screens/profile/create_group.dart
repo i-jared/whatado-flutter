@@ -67,7 +67,6 @@ class _CreateGroupState extends State<CreateGroup> {
                     selectedFriends.isEmpty,
                 buttonTitle: 'CREATE',
                 onSave: () async {
-                  print('jcl $coordinates');
                   setState(() => loading = true);
                   final response = await GroupGqlProvider().createGroup(GroupInput(
                       name: groupNameController.text,

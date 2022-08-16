@@ -163,13 +163,11 @@ class SearchState extends ChangeNotifier {
   }
 
   void _debounceEvents() async {
-    print('jcl debounce');
     _eventsLoading = true;
     _eventsDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
       final provider = EventsGqlProvider();
       final result = await provider.suggestedEvents();
-      print('jcl $result');
       if (result.ok) {
         _filteredEvents = result.data ?? [];
       } else {

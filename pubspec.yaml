@@ -64,6 +64,7 @@ dependencies:
   permission_handler: ^10.0.0
   fuzzywuzzy: ^0.2.0
   collection: ^1.16.0
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_test:

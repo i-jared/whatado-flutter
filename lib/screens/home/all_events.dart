@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/events/all_events_sort_bar.dart';
 import 'package:whatado/widgets/events/event_display.dart';
 import 'package:whatado/widgets/home/calendar_selector.dart';
@@ -22,17 +23,14 @@ class AllEvents extends StatelessWidget {
             controller: homeState.refreshController,
             onRefresh: homeState.allEventsRefresh,
             child: ListView(
-              shrinkWrap:
-                  (homeState.allEvents != null && homeState.allEvents!.isEmpty),
+              shrinkWrap: (homeState.allEvents != null && homeState.allEvents!.isEmpty),
               key: PageStorageKey(0),
               controller: homeState.allEventsScrollController,
               children: [
-                if (homeState.allEvents == null ||
-                    homeState.otherEvents == null)
+                if (homeState.allEvents == null || homeState.otherEvents == null)
                   Container(
                       height: MediaQuery.of(context).size.height - 200,
-                      child: Center(
-                          child: CircularProgressIndicator(value: null))),
+                      child: Center(child: CircularProgressIndicator(value: null))),
                 if (homeState.allEvents != null &&
                     homeState.allEvents!.isEmpty &&
                     homeState.otherEvents != null &&
@@ -43,23 +41,24 @@ class AllEvents extends StatelessWidget {
                       child: Text('No events to display.. :('),
                     ),
                   ),
-                if ((homeState.allEvents != null &&
-                        homeState.allEvents!.isNotEmpty) ||
-                    (homeState.otherEvents != null &&
-                        homeState.otherEvents!.isNotEmpty))
+                if ((homeState.allEvents != null && homeState.allEvents!.isNotEmpty) ||
+                    (homeState.otherEvents != null && homeState.otherEvents!.isNotEmpty))
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
                     child: AllEventsSortBar(),
                   ),
-                if (homeState.allEvents != null &&
-                    homeState.allEvents!.isNotEmpty)
+                if (homeState.allEvents != null && homeState.allEvents!.isNotEmpty)
                   ...homeState.allEvents!
                       .where((event) => !(userState.user?.blockedUsers
                               .map((u) => u.id)
                               .contains(event.creator.id) ??
                           false))
-                      .map((e) => EventDisplay(event: e))
-                      .toList(),
+                      .map((e) {
+                    if (e.title == "final 1") {
+                      logger.wtf(e.wannago);
+                    }
+                    return EventDisplay(event: e);
+                  }).toList(),
                 // if (homeState.otherEvents != null &&
                 //     homeState.otherEvents!.isNotEmpty)
                 //   FadeIn(
@@ -67,8 +66,7 @@ class AllEvents extends StatelessWidget {
                 //       child: Center(
                 //           child: Text('Look at these events',
                 //               style: TextStyle(fontSize: 30)))),
-                if (homeState.otherEvents != null &&
-                    homeState.otherEvents!.isNotEmpty)
+                if (homeState.otherEvents != null && homeState.otherEvents!.isNotEmpty)
                   ...homeState.otherEvents!
                       .where((event) => !(userState.user?.blockedUsers
                               .map((u) => u.id)

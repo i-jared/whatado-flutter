@@ -21,7 +21,6 @@ class Forum {
       this.chats = const []});
 
   factory Forum.fromGqlData(Map data) {
-    print('jcl $data');
     return Forum(
         id: data['id'],
         ownerId: data['ownerId'],

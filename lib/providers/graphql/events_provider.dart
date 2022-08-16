@@ -6,6 +6,7 @@ import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class EventsGqlProvider {
   Future<MyQueryResponse<List<Event>>> events(
@@ -19,9 +20,9 @@ class EventsGqlProvider {
     ));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -48,9 +49,9 @@ class EventsGqlProvider {
     ));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -81,9 +82,9 @@ class EventsGqlProvider {
     ));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -107,9 +108,9 @@ class EventsGqlProvider {
     final query = SuggestedEventsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -131,9 +132,9 @@ class EventsGqlProvider {
     final query = SearchEventsQuery(variables: SearchEventsArguments(partial: partial));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -156,9 +157,9 @@ class EventsGqlProvider {
         CreateEventMutation(variables: CreateEventArguments(eventInput: eventInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -179,9 +180,9 @@ class EventsGqlProvider {
     final query = MyEventsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -204,9 +205,9 @@ class EventsGqlProvider {
     final mutation = FlagEventMutation(variables: FlagEventArguments(eventId: eventId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -227,9 +228,9 @@ class EventsGqlProvider {
         UpdateEventMutation(variables: UpdateEventArguments(eventInput: eventInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
     final root = result.data?['updateEvent'];
@@ -249,9 +250,9 @@ class EventsGqlProvider {
     final query = FlaggedEventsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
     final root = result.data?['flaggedEvents'];
@@ -276,12 +277,12 @@ class EventsGqlProvider {
         variables: AddWannagoArguments(eventId: eventId, userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
-    print('add wannago $result');
+    logger.e('add wannago $result');
     final root = result.data?['addWannago'];
     final data =
         root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
@@ -301,9 +302,9 @@ class EventsGqlProvider {
         variables: AddInviteArguments(eventId: eventId, userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
     final root = result.data?['addInvite'];
@@ -325,9 +326,9 @@ class EventsGqlProvider {
         variables: RemoveInviteArguments(eventId: eventId, userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -350,12 +351,12 @@ class EventsGqlProvider {
         variables: UpdateWannagoArguments(id: wannagoId, declined: declined));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
-    print('update wannago $result');
+    logger.e('update wannago $result');
     final root = result.data?['updateWannago'];
     final data = root?['ok'] ?? false;
     final ok = root?['ok'] ?? false;
@@ -373,9 +374,9 @@ class EventsGqlProvider {
         DeleteEventMutation(variables: DeleteEventArguments(eventId: eventId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
     final root = result.data?['deleteEvent'];
@@ -395,9 +396,9 @@ class EventsGqlProvider {
         DeleteWannagoMutation(variables: DeleteWannagoArguments(id: wannagoId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
     final root = result.data?['deleteWannago'];
@@ -416,9 +417,9 @@ class EventsGqlProvider {
     final query = EventQuery(variables: EventArguments(eventId: eventId));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 

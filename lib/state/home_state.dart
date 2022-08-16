@@ -1,7 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:geojson/geojson.dart';
+import 'package:geopoint/geopoint.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
@@ -10,6 +13,9 @@ import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/graphql/queries_graphql_api.dart';
+import 'package:whatado/providers/graphql/user_provider.dart';
+import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 enum MySortType {
   mine,
@@ -75,7 +81,9 @@ class HomeState extends ChangeNotifier {
       }
     });
     // get initial events
-    getNewEvents();
+    loadLocation().then((_) {
+      getNewEvents();
+    });
     getMyEvents().then((myEvents) {
       if (myEvents == null || myEvents.isEmpty) {
         myForums = [];
@@ -93,6 +101,20 @@ class HomeState extends ChangeNotifier {
             duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
       notifyListeners();
     });
+  }
+
+  Future<void> loadLocation() async {
+    await locationService.getLocation();
+    UserGqlProvider provider = UserGqlProvider();
+    if (locationService.locationData != null &&
+        locationService.locationData!.latitude != null &&
+        locationService.locationData!.longitude != null) {
+      await provider.updateUser(UserFilterInput(
+          location: GeoJsonPoint(
+              geoPoint: GeoPoint(
+                  latitude: locationService.locationData!.latitude!,
+                  longitude: locationService.locationData!.longitude!))));
+    }
   }
 
   @override
@@ -159,8 +181,8 @@ class HomeState extends ChangeNotifier {
   Future<void> otherEventsRequest() async {
     final query = EventsGqlProvider();
     final start = _selectedDate ?? DateTime.now();
-    final end = _selectedDate?.add(Duration(days: 1)) ??
-        DateTime.now().add(Duration(days: 1000));
+    final end =
+        _selectedDate?.add(Duration(days: 1)) ?? DateTime.now().add(Duration(days: 1000));
     // events related to interests are empty, get others
     final response = await query.otherEvents(start, end, 20, _skip, _sortType);
     _skip += response.data?.length ?? 0;
@@ -177,8 +199,8 @@ class HomeState extends ChangeNotifier {
   Future<void> getNewEvents() async {
     final query = EventsGqlProvider();
     final start = _selectedDate ?? DateTime.now();
-    final end = _selectedDate?.add(Duration(days: 1)) ??
-        DateTime.now().add(Duration(days: 1000));
+    final end =
+        _selectedDate?.add(Duration(days: 1)) ?? DateTime.now().add(Duration(days: 1000));
     if (_favoritesEmpty && !_othersEmpty) {
       await otherEventsRequest();
     } else if (!_favoritesEmpty) {
@@ -238,8 +260,9 @@ class HomeState extends ChangeNotifier {
       return b['chat']?.createdAt.compareTo(a['chat'].createdAt);
     });
     myForums?.sort((a, b) =>
-        lastMessages?.indexWhere((obj) => obj['forumId'] == a.id).compareTo(
-            lastMessages?.indexWhere((obj) => obj['forumId'] == b.id) ?? 1) ??
+        lastMessages
+            ?.indexWhere((obj) => obj['forumId'] == a.id)
+            .compareTo(lastMessages?.indexWhere((obj) => obj['forumId'] == b.id) ?? 1) ??
         0.compareTo(1));
     notifyListeners();
   }
@@ -281,10 +304,12 @@ class HomeState extends ChangeNotifier {
       if (index == -1) {
         return;
       }
+      logger.wtf('updated other');
       otherEvents![index] = event;
       notifyListeners();
       return;
     }
+    logger.wtf('updated');
     allEvents![index] = event;
     notifyListeners();
   }

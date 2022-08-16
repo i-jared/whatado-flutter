@@ -66,33 +66,7 @@ class _MyAppState extends State<MyApp> {
     invalidAuth = localStorageService.refreshToken?.isEmpty ?? true;
     if (!invalidAuth) {
       SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
-        await locationService.getLocation();
-        UserGqlProvider provider = UserGqlProvider();
-        if (locationService.locationData != null &&
-            locationService.locationData!.latitude != null &&
-            locationService.locationData!.longitude != null) {
-          await provider.updateUser(UserFilterInput(
-              location: GeoJsonPoint(
-                  geoPoint: GeoPoint(
-                      latitude: locationService.locationData!.latitude!,
-                      longitude: locationService.locationData!.longitude!))));
-        }
         await loginService.attemptAutoLogin();
-        setState(() => loading = false);
-      });
-    } else {
-      // TODO remove this why do i ineed it
-      locationService.getLocation().then((_) async {
-        UserGqlProvider provider = UserGqlProvider();
-        if (locationService.locationData != null &&
-            locationService.locationData!.latitude != null &&
-            locationService.locationData!.longitude != null) {
-          await provider.updateUser(UserFilterInput(
-              location: GeoJsonPoint(
-                  geoPoint: GeoPoint(
-                      latitude: locationService.locationData!.latitude!,
-                      longitude: locationService.locationData!.longitude!))));
-        }
         setState(() => loading = false);
       });
     }

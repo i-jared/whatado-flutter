@@ -372,6 +372,250 @@ Map<String, dynamic> _$DateRangeInputToJson(DateRangeInput instance) =>
       'startDate': fromDartDateTimeToGraphQLDateTime(instance.startDate),
     };
 
+SearchGroups$Query$SearchGroups$Nodes
+    _$SearchGroups$Query$SearchGroups$NodesFromJson(
+            Map<String, dynamic> json) =>
+        SearchGroups$Query$SearchGroups$Nodes()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..owner = json['owner'] as int
+          ..users = (json['users'] as List<dynamic>)
+              .map((e) =>
+                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..requested = (json['requested'] as List<dynamic>)
+              .map((e) => GroupFieldsMixin$Requested.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..screened = json['screened'] as bool
+          ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
+              json['location'] as String?)
+          ..icon = GroupFieldsMixin$Icon.fromJson(
+              json['icon'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$SearchGroups$Query$SearchGroups$NodesToJson(
+        SearchGroups$Query$SearchGroups$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'owner': instance.owner,
+      'users': instance.users.map((e) => e.toJson()).toList(),
+      'requested': instance.requested.map((e) => e.toJson()).toList(),
+      'screened': instance.screened,
+      'location':
+          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'icon': instance.icon.toJson(),
+    };
+
+SearchGroups$Query$SearchGroups$Errors
+    _$SearchGroups$Query$SearchGroups$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        SearchGroups$Query$SearchGroups$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$SearchGroups$Query$SearchGroups$ErrorsToJson(
+        SearchGroups$Query$SearchGroups$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+SearchGroups$Query$SearchGroups _$SearchGroups$Query$SearchGroupsFromJson(
+        Map<String, dynamic> json) =>
+    SearchGroups$Query$SearchGroups()
+      ..ok = json['ok'] as bool?
+      ..nodes = (json['nodes'] as List<dynamic>?)
+          ?.map((e) => SearchGroups$Query$SearchGroups$Nodes.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => SearchGroups$Query$SearchGroups$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$SearchGroups$Query$SearchGroupsToJson(
+        SearchGroups$Query$SearchGroups instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+SearchGroups$Query _$SearchGroups$QueryFromJson(Map<String, dynamic> json) =>
+    SearchGroups$Query()
+      ..searchGroups = SearchGroups$Query$SearchGroups.fromJson(
+          json['searchGroups'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$SearchGroups$QueryToJson(SearchGroups$Query instance) =>
+    <String, dynamic>{
+      'searchGroups': instance.searchGroups.toJson(),
+    };
+
+GroupFieldsMixin$Users _$GroupFieldsMixin$UsersFromJson(
+        Map<String, dynamic> json) =>
+    GroupFieldsMixin$Users()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$GroupFieldsMixin$UsersToJson(
+        GroupFieldsMixin$Users instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+GroupFieldsMixin$Requested _$GroupFieldsMixin$RequestedFromJson(
+        Map<String, dynamic> json) =>
+    GroupFieldsMixin$Requested()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$GroupFieldsMixin$RequestedToJson(
+        GroupFieldsMixin$Requested instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+GroupFieldsMixin$Icon _$GroupFieldsMixin$IconFromJson(
+        Map<String, dynamic> json) =>
+    GroupFieldsMixin$Icon()
+      ..id = json['id'] as int
+      ..url = json['url'] as String;
+
+Map<String, dynamic> _$GroupFieldsMixin$IconToJson(
+        GroupFieldsMixin$Icon instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'url': instance.url,
+    };
+
+SearchEvents$Query$SearchEvents$Nodes
+    _$SearchEvents$Query$SearchEvents$NodesFromJson(
+            Map<String, dynamic> json) =>
+        SearchEvents$Query$SearchEvents$Nodes()
+          ..id = json['id'] as int
+          ..createdAt =
+              fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+          ..updatedAt =
+              fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+          ..title = json['title'] as String
+          ..description = json['description'] as String
+          ..creator = EventFieldsMixin$Creator.fromJson(
+              json['creator'] as Map<String, dynamic>)
+          ..invited = (json['invited'] as List<dynamic>)
+              .map((e) =>
+                  EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..wannago = (json['wannago'] as List<dynamic>)
+              .map((e) =>
+                  EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
+          ..location = json['location'] as String
+          ..coordinates =
+              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
+          ..pictureUrl = json['pictureUrl'] as String?
+          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+              .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
+              unknownValue: Privacy.artemisUnknown)
+          ..screened = json['screened'] as bool
+          ..filterLocation = json['filterLocation'] as String
+          ..filterRadius = (json['filterRadius'] as num).toDouble()
+          ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
+              unknownValue: Gender.artemisUnknown)
+          ..filterMinAge = json['filterMinAge'] as int
+          ..filterMaxAge = json['filterMaxAge'] as int;
+
+Map<String, dynamic> _$SearchEvents$Query$SearchEvents$NodesToJson(
+        SearchEvents$Query$SearchEvents$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'title': instance.title,
+      'description': instance.description,
+      'creator': instance.creator.toJson(),
+      'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
+      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
+      'location': instance.location,
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
+      'pictureUrl': instance.pictureUrl,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'screened': instance.screened,
+      'filterLocation': instance.filterLocation,
+      'filterRadius': instance.filterRadius,
+      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
+    };
+
+SearchEvents$Query$SearchEvents$Errors
+    _$SearchEvents$Query$SearchEvents$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        SearchEvents$Query$SearchEvents$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$SearchEvents$Query$SearchEvents$ErrorsToJson(
+        SearchEvents$Query$SearchEvents$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+SearchEvents$Query$SearchEvents _$SearchEvents$Query$SearchEventsFromJson(
+        Map<String, dynamic> json) =>
+    SearchEvents$Query$SearchEvents()
+      ..ok = json['ok'] as bool?
+      ..nodes = (json['nodes'] as List<dynamic>?)
+          ?.map((e) => SearchEvents$Query$SearchEvents$Nodes.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => SearchEvents$Query$SearchEvents$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$SearchEvents$Query$SearchEventsToJson(
+        SearchEvents$Query$SearchEvents instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+SearchEvents$Query _$SearchEvents$QueryFromJson(Map<String, dynamic> json) =>
+    SearchEvents$Query()
+      ..searchEvents = SearchEvents$Query$SearchEvents.fromJson(
+          json['searchEvents'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$SearchEvents$QueryToJson(SearchEvents$Query instance) =>
+    <String, dynamic>{
+      'searchEvents': instance.searchEvents.toJson(),
+    };
+
 EventUserPreview$Query$UsersById$Errors
     _$EventUserPreview$Query$UsersById$ErrorsFromJson(
             Map<String, dynamic> json) =>
@@ -547,6 +791,125 @@ OtherEvents$Query _$OtherEvents$QueryFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$OtherEvents$QueryToJson(OtherEvents$Query instance) =>
     <String, dynamic>{
       'otherEvents': instance.otherEvents.toJson(),
+    };
+
+UsersFromContacts$Query$UsersFromContacts$Nodes
+    _$UsersFromContacts$Query$UsersFromContacts$NodesFromJson(
+            Map<String, dynamic> json) =>
+        UsersFromContacts$Query$UsersFromContacts$Nodes()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..photoUrls = json['photoUrls'] as String
+          ..bio = json['bio'] as String
+          ..birthday =
+              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$UsersFromContacts$Query$UsersFromContacts$NodesToJson(
+        UsersFromContacts$Query$UsersFromContacts$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+UsersFromContacts$Query$UsersFromContacts$Errors
+    _$UsersFromContacts$Query$UsersFromContacts$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        UsersFromContacts$Query$UsersFromContacts$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$UsersFromContacts$Query$UsersFromContacts$ErrorsToJson(
+        UsersFromContacts$Query$UsersFromContacts$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+UsersFromContacts$Query$UsersFromContacts
+    _$UsersFromContacts$Query$UsersFromContactsFromJson(
+            Map<String, dynamic> json) =>
+        UsersFromContacts$Query$UsersFromContacts()
+          ..ok = json['ok'] as bool?
+          ..nodes = (json['nodes'] as List<dynamic>?)
+              ?.map((e) =>
+                  UsersFromContacts$Query$UsersFromContacts$Nodes.fromJson(
+                      e as Map<String, dynamic>))
+              .toList()
+          ..errors = (json['errors'] as List<dynamic>?)
+              ?.map((e) =>
+                  UsersFromContacts$Query$UsersFromContacts$Errors.fromJson(
+                      e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$UsersFromContacts$Query$UsersFromContactsToJson(
+        UsersFromContacts$Query$UsersFromContacts instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+UsersFromContacts$Query _$UsersFromContacts$QueryFromJson(
+        Map<String, dynamic> json) =>
+    UsersFromContacts$Query()
+      ..usersFromContacts = UsersFromContacts$Query$UsersFromContacts.fromJson(
+          json['usersFromContacts'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UsersFromContacts$QueryToJson(
+        UsersFromContacts$Query instance) =>
+    <String, dynamic>{
+      'usersFromContacts': instance.usersFromContacts.toJson(),
+    };
+
+NumbersNotUsers$Query$NumbersNotUsers$Errors
+    _$NumbersNotUsers$Query$NumbersNotUsers$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        NumbersNotUsers$Query$NumbersNotUsers$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$NumbersNotUsers$Query$NumbersNotUsers$ErrorsToJson(
+        NumbersNotUsers$Query$NumbersNotUsers$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+NumbersNotUsers$Query$NumbersNotUsers
+    _$NumbersNotUsers$Query$NumbersNotUsersFromJson(
+            Map<String, dynamic> json) =>
+        NumbersNotUsers$Query$NumbersNotUsers()
+          ..ok = json['ok'] as bool?
+          ..nodes = (json['nodes'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList()
+          ..errors = (json['errors'] as List<dynamic>?)
+              ?.map((e) =>
+                  NumbersNotUsers$Query$NumbersNotUsers$Errors.fromJson(
+                      e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$NumbersNotUsers$Query$NumbersNotUsersToJson(
+        NumbersNotUsers$Query$NumbersNotUsers instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+NumbersNotUsers$Query _$NumbersNotUsers$QueryFromJson(
+        Map<String, dynamic> json) =>
+    NumbersNotUsers$Query()
+      ..numbersNotUsers = NumbersNotUsers$Query$NumbersNotUsers.fromJson(
+          json['numbersNotUsers'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$NumbersNotUsers$QueryToJson(
+        NumbersNotUsers$Query instance) =>
+    <String, dynamic>{
+      'numbersNotUsers': instance.numbersNotUsers.toJson(),
     };
 
 Event$Query$Event$Nodes _$Event$Query$Event$NodesFromJson(
@@ -977,59 +1340,6 @@ Map<String, dynamic> _$UserFieldsMixin$ChatNotificationsToJson(
     <String, dynamic>{
       'lastAccessed': fromDartDateTimeToGraphQLDateTime(instance.lastAccessed),
       'muted': instance.muted,
-    };
-
-GroupFieldsMixin$Users _$GroupFieldsMixin$UsersFromJson(
-        Map<String, dynamic> json) =>
-    GroupFieldsMixin$Users()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
-
-Map<String, dynamic> _$GroupFieldsMixin$UsersToJson(
-        GroupFieldsMixin$Users instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'photoUrls': instance.photoUrls,
-      'bio': instance.bio,
-      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
-    };
-
-GroupFieldsMixin$Requested _$GroupFieldsMixin$RequestedFromJson(
-        Map<String, dynamic> json) =>
-    GroupFieldsMixin$Requested()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
-
-Map<String, dynamic> _$GroupFieldsMixin$RequestedToJson(
-        GroupFieldsMixin$Requested instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'photoUrls': instance.photoUrls,
-      'bio': instance.bio,
-      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
-    };
-
-GroupFieldsMixin$Icon _$GroupFieldsMixin$IconFromJson(
-        Map<String, dynamic> json) =>
-    GroupFieldsMixin$Icon()
-      ..id = json['id'] as int
-      ..url = json['url'] as String;
-
-Map<String, dynamic> _$GroupFieldsMixin$IconToJson(
-        GroupFieldsMixin$Icon instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'url': instance.url,
     };
 
 ForumsByEventId$Query$ForumsByEventId$Errors
@@ -1542,6 +1852,63 @@ Map<String, dynamic> _$MyGroups$QueryToJson(MyGroups$Query instance) =>
       'myGroups': instance.myGroups.toJson(),
     };
 
+GroupIcons$Query$GroupIcons$Nodes _$GroupIcons$Query$GroupIcons$NodesFromJson(
+        Map<String, dynamic> json) =>
+    GroupIcons$Query$GroupIcons$Nodes()
+      ..url = json['url'] as String
+      ..id = json['id'] as int;
+
+Map<String, dynamic> _$GroupIcons$Query$GroupIcons$NodesToJson(
+        GroupIcons$Query$GroupIcons$Nodes instance) =>
+    <String, dynamic>{
+      'url': instance.url,
+      'id': instance.id,
+    };
+
+GroupIcons$Query$GroupIcons$Errors _$GroupIcons$Query$GroupIcons$ErrorsFromJson(
+        Map<String, dynamic> json) =>
+    GroupIcons$Query$GroupIcons$Errors()
+      ..field = json['field'] as String?
+      ..message = json['message'] as String;
+
+Map<String, dynamic> _$GroupIcons$Query$GroupIcons$ErrorsToJson(
+        GroupIcons$Query$GroupIcons$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+GroupIcons$Query$GroupIcons _$GroupIcons$Query$GroupIconsFromJson(
+        Map<String, dynamic> json) =>
+    GroupIcons$Query$GroupIcons()
+      ..ok = json['ok'] as bool?
+      ..nodes = (json['nodes'] as List<dynamic>?)
+          ?.map((e) => GroupIcons$Query$GroupIcons$Nodes.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => GroupIcons$Query$GroupIcons$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$GroupIcons$Query$GroupIconsToJson(
+        GroupIcons$Query$GroupIcons instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+GroupIcons$Query _$GroupIcons$QueryFromJson(Map<String, dynamic> json) =>
+    GroupIcons$Query()
+      ..groupIcons = GroupIcons$Query$GroupIcons.fromJson(
+          json['groupIcons'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$GroupIcons$QueryToJson(GroupIcons$Query instance) =>
+    <String, dynamic>{
+      'groupIcons': instance.groupIcons.toJson(),
+    };
+
 MyEvents$Query$MyEvents$Nodes _$MyEvents$Query$MyEvents$NodesFromJson(
         Map<String, dynamic> json) =>
     MyEvents$Query$MyEvents$Nodes()
@@ -1649,6 +2016,273 @@ MyEvents$Query _$MyEvents$QueryFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MyEvents$QueryToJson(MyEvents$Query instance) =>
     <String, dynamic>{
       'myEvents': instance.myEvents.toJson(),
+    };
+
+SuggestedEvents$Query$SuggestedEvents$Nodes
+    _$SuggestedEvents$Query$SuggestedEvents$NodesFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedEvents$Query$SuggestedEvents$Nodes()
+          ..id = json['id'] as int
+          ..createdAt =
+              fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
+          ..updatedAt =
+              fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+          ..title = json['title'] as String
+          ..description = json['description'] as String
+          ..creator = EventFieldsMixin$Creator.fromJson(
+              json['creator'] as Map<String, dynamic>)
+          ..invited = (json['invited'] as List<dynamic>)
+              .map((e) =>
+                  EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..wannago = (json['wannago'] as List<dynamic>)
+              .map((e) =>
+                  EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
+          ..location = json['location'] as String
+          ..coordinates =
+              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
+          ..pictureUrl = json['pictureUrl'] as String?
+          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+              .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
+              unknownValue: Privacy.artemisUnknown)
+          ..screened = json['screened'] as bool
+          ..filterLocation = json['filterLocation'] as String
+          ..filterRadius = (json['filterRadius'] as num).toDouble()
+          ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
+              unknownValue: Gender.artemisUnknown)
+          ..filterMinAge = json['filterMinAge'] as int
+          ..filterMaxAge = json['filterMaxAge'] as int;
+
+Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEvents$NodesToJson(
+        SuggestedEvents$Query$SuggestedEvents$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'title': instance.title,
+      'description': instance.description,
+      'creator': instance.creator.toJson(),
+      'invited': instance.invited.map((e) => e.toJson()).toList(),
+      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
+      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
+      'location': instance.location,
+      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
+      'pictureUrl': instance.pictureUrl,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
+      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'screened': instance.screened,
+      'filterLocation': instance.filterLocation,
+      'filterRadius': instance.filterRadius,
+      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterMinAge': instance.filterMinAge,
+      'filterMaxAge': instance.filterMaxAge,
+    };
+
+SuggestedEvents$Query$SuggestedEvents$Errors
+    _$SuggestedEvents$Query$SuggestedEvents$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedEvents$Query$SuggestedEvents$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEvents$ErrorsToJson(
+        SuggestedEvents$Query$SuggestedEvents$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+SuggestedEvents$Query$SuggestedEvents
+    _$SuggestedEvents$Query$SuggestedEventsFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedEvents$Query$SuggestedEvents()
+          ..ok = json['ok'] as bool?
+          ..nodes = (json['nodes'] as List<dynamic>?)
+              ?.map((e) => SuggestedEvents$Query$SuggestedEvents$Nodes.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..errors = (json['errors'] as List<dynamic>?)
+              ?.map((e) =>
+                  SuggestedEvents$Query$SuggestedEvents$Errors.fromJson(
+                      e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEventsToJson(
+        SuggestedEvents$Query$SuggestedEvents instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+SuggestedEvents$Query _$SuggestedEvents$QueryFromJson(
+        Map<String, dynamic> json) =>
+    SuggestedEvents$Query()
+      ..suggestedEvents = SuggestedEvents$Query$SuggestedEvents.fromJson(
+          json['suggestedEvents'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$SuggestedEvents$QueryToJson(
+        SuggestedEvents$Query instance) =>
+    <String, dynamic>{
+      'suggestedEvents': instance.suggestedEvents.toJson(),
+    };
+
+SuggestedGroups$Query$SuggestedGroups$Nodes
+    _$SuggestedGroups$Query$SuggestedGroups$NodesFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedGroups$Query$SuggestedGroups$Nodes()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..owner = json['owner'] as int
+          ..users = (json['users'] as List<dynamic>)
+              .map((e) =>
+                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..requested = (json['requested'] as List<dynamic>)
+              .map((e) => GroupFieldsMixin$Requested.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..screened = json['screened'] as bool
+          ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
+              json['location'] as String?)
+          ..icon = GroupFieldsMixin$Icon.fromJson(
+              json['icon'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$SuggestedGroups$Query$SuggestedGroups$NodesToJson(
+        SuggestedGroups$Query$SuggestedGroups$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'owner': instance.owner,
+      'users': instance.users.map((e) => e.toJson()).toList(),
+      'requested': instance.requested.map((e) => e.toJson()).toList(),
+      'screened': instance.screened,
+      'location':
+          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'icon': instance.icon.toJson(),
+    };
+
+SuggestedGroups$Query$SuggestedGroups$Errors
+    _$SuggestedGroups$Query$SuggestedGroups$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedGroups$Query$SuggestedGroups$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$SuggestedGroups$Query$SuggestedGroups$ErrorsToJson(
+        SuggestedGroups$Query$SuggestedGroups$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+SuggestedGroups$Query$SuggestedGroups
+    _$SuggestedGroups$Query$SuggestedGroupsFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedGroups$Query$SuggestedGroups()
+          ..ok = json['ok'] as bool?
+          ..nodes = (json['nodes'] as List<dynamic>?)
+              ?.map((e) => SuggestedGroups$Query$SuggestedGroups$Nodes.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..errors = (json['errors'] as List<dynamic>?)
+              ?.map((e) =>
+                  SuggestedGroups$Query$SuggestedGroups$Errors.fromJson(
+                      e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$SuggestedGroups$Query$SuggestedGroupsToJson(
+        SuggestedGroups$Query$SuggestedGroups instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+SuggestedGroups$Query _$SuggestedGroups$QueryFromJson(
+        Map<String, dynamic> json) =>
+    SuggestedGroups$Query()
+      ..suggestedGroups = SuggestedGroups$Query$SuggestedGroups.fromJson(
+          json['suggestedGroups'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$SuggestedGroups$QueryToJson(
+        SuggestedGroups$Query instance) =>
+    <String, dynamic>{
+      'suggestedGroups': instance.suggestedGroups.toJson(),
+    };
+
+SuggestedUsers$Query$SuggestedUsers$Nodes
+    _$SuggestedUsers$Query$SuggestedUsers$NodesFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedUsers$Query$SuggestedUsers$Nodes()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..photoUrls = json['photoUrls'] as String
+          ..bio = json['bio'] as String
+          ..birthday =
+              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$SuggestedUsers$Query$SuggestedUsers$NodesToJson(
+        SuggestedUsers$Query$SuggestedUsers$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+SuggestedUsers$Query$SuggestedUsers$Errors
+    _$SuggestedUsers$Query$SuggestedUsers$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        SuggestedUsers$Query$SuggestedUsers$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$SuggestedUsers$Query$SuggestedUsers$ErrorsToJson(
+        SuggestedUsers$Query$SuggestedUsers$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+SuggestedUsers$Query$SuggestedUsers
+    _$SuggestedUsers$Query$SuggestedUsersFromJson(Map<String, dynamic> json) =>
+        SuggestedUsers$Query$SuggestedUsers()
+          ..ok = json['ok'] as bool?
+          ..nodes = (json['nodes'] as List<dynamic>?)
+              ?.map((e) => SuggestedUsers$Query$SuggestedUsers$Nodes.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..errors = (json['errors'] as List<dynamic>?)
+              ?.map((e) => SuggestedUsers$Query$SuggestedUsers$Errors.fromJson(
+                  e as Map<String, dynamic>))
+              .toList();
+
+Map<String, dynamic> _$SuggestedUsers$Query$SuggestedUsersToJson(
+        SuggestedUsers$Query$SuggestedUsers instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+SuggestedUsers$Query _$SuggestedUsers$QueryFromJson(
+        Map<String, dynamic> json) =>
+    SuggestedUsers$Query()
+      ..suggestedUsers = SuggestedUsers$Query$SuggestedUsers.fromJson(
+          json['suggestedUsers'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$SuggestedUsers$QueryToJson(
+        SuggestedUsers$Query instance) =>
+    <String, dynamic>{
+      'suggestedUsers': instance.suggestedUsers.toJson(),
     };
 
 SearchInterests$Query$SearchInterests$Nodes
@@ -2003,6 +2637,48 @@ Map<String, dynamic> _$Chats$QueryToJson(Chats$Query instance) =>
       'chats': instance.chats.toJson(),
     };
 
+MyReferrals$Query$MyReferrals$Errors
+    _$MyReferrals$Query$MyReferrals$ErrorsFromJson(Map<String, dynamic> json) =>
+        MyReferrals$Query$MyReferrals$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$MyReferrals$Query$MyReferrals$ErrorsToJson(
+        MyReferrals$Query$MyReferrals$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+MyReferrals$Query$MyReferrals _$MyReferrals$Query$MyReferralsFromJson(
+        Map<String, dynamic> json) =>
+    MyReferrals$Query$MyReferrals()
+      ..ok = json['ok'] as bool?
+      ..nodes =
+          (json['nodes'] as List<dynamic>?)?.map((e) => e as String).toList()
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => MyReferrals$Query$MyReferrals$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$MyReferrals$Query$MyReferralsToJson(
+        MyReferrals$Query$MyReferrals instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+MyReferrals$Query _$MyReferrals$QueryFromJson(Map<String, dynamic> json) =>
+    MyReferrals$Query()
+      ..myReferrals = MyReferrals$Query$MyReferrals.fromJson(
+          json['myReferrals'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$MyReferrals$QueryToJson(MyReferrals$Query instance) =>
+    <String, dynamic>{
+      'myReferrals': instance.myReferrals.toJson(),
+    };
+
 PopularInterests$Query$PopularInterests$Nodes
     _$PopularInterests$Query$PopularInterests$NodesFromJson(
             Map<String, dynamic> json) =>
@@ -2269,682 +2945,6 @@ Map<String, dynamic> _$FlaggedUsers$QueryToJson(FlaggedUsers$Query instance) =>
       'flaggedUsers': instance.flaggedUsers.toJson(),
     };
 
-UsersFromContacts$Query$UsersFromContacts$Nodes
-    _$UsersFromContacts$Query$UsersFromContacts$NodesFromJson(
-            Map<String, dynamic> json) =>
-        UsersFromContacts$Query$UsersFromContacts$Nodes()
-          ..id = json['id'] as int
-          ..name = json['name'] as String
-          ..photoUrls = json['photoUrls'] as String
-          ..bio = json['bio'] as String
-          ..birthday =
-              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
-
-Map<String, dynamic> _$UsersFromContacts$Query$UsersFromContacts$NodesToJson(
-        UsersFromContacts$Query$UsersFromContacts$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'photoUrls': instance.photoUrls,
-      'bio': instance.bio,
-      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
-    };
-
-UsersFromContacts$Query$UsersFromContacts$Errors
-    _$UsersFromContacts$Query$UsersFromContacts$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        UsersFromContacts$Query$UsersFromContacts$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$UsersFromContacts$Query$UsersFromContacts$ErrorsToJson(
-        UsersFromContacts$Query$UsersFromContacts$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-UsersFromContacts$Query$UsersFromContacts
-    _$UsersFromContacts$Query$UsersFromContactsFromJson(
-            Map<String, dynamic> json) =>
-        UsersFromContacts$Query$UsersFromContacts()
-          ..ok = json['ok'] as bool?
-          ..nodes = (json['nodes'] as List<dynamic>?)
-              ?.map((e) =>
-                  UsersFromContacts$Query$UsersFromContacts$Nodes.fromJson(
-                      e as Map<String, dynamic>))
-              .toList()
-          ..errors = (json['errors'] as List<dynamic>?)
-              ?.map((e) =>
-                  UsersFromContacts$Query$UsersFromContacts$Errors.fromJson(
-                      e as Map<String, dynamic>))
-              .toList();
-
-Map<String, dynamic> _$UsersFromContacts$Query$UsersFromContactsToJson(
-        UsersFromContacts$Query$UsersFromContacts instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-UsersFromContacts$Query _$UsersFromContacts$QueryFromJson(
-        Map<String, dynamic> json) =>
-    UsersFromContacts$Query()
-      ..usersFromContacts = UsersFromContacts$Query$UsersFromContacts.fromJson(
-          json['usersFromContacts'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$UsersFromContacts$QueryToJson(
-        UsersFromContacts$Query instance) =>
-    <String, dynamic>{
-      'usersFromContacts': instance.usersFromContacts.toJson(),
-    };
-
-NumbersNotUsers$Query$NumbersNotUsers$Errors
-    _$NumbersNotUsers$Query$NumbersNotUsers$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        NumbersNotUsers$Query$NumbersNotUsers$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$NumbersNotUsers$Query$NumbersNotUsers$ErrorsToJson(
-        NumbersNotUsers$Query$NumbersNotUsers$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-NumbersNotUsers$Query$NumbersNotUsers
-    _$NumbersNotUsers$Query$NumbersNotUsersFromJson(
-            Map<String, dynamic> json) =>
-        NumbersNotUsers$Query$NumbersNotUsers()
-          ..ok = json['ok'] as bool?
-          ..nodes = (json['nodes'] as List<dynamic>?)
-              ?.map((e) => e as String)
-              .toList()
-          ..errors = (json['errors'] as List<dynamic>?)
-              ?.map((e) =>
-                  NumbersNotUsers$Query$NumbersNotUsers$Errors.fromJson(
-                      e as Map<String, dynamic>))
-              .toList();
-
-Map<String, dynamic> _$NumbersNotUsers$Query$NumbersNotUsersToJson(
-        NumbersNotUsers$Query$NumbersNotUsers instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-NumbersNotUsers$Query _$NumbersNotUsers$QueryFromJson(
-        Map<String, dynamic> json) =>
-    NumbersNotUsers$Query()
-      ..numbersNotUsers = NumbersNotUsers$Query$NumbersNotUsers.fromJson(
-          json['numbersNotUsers'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$NumbersNotUsers$QueryToJson(
-        NumbersNotUsers$Query instance) =>
-    <String, dynamic>{
-      'numbersNotUsers': instance.numbersNotUsers.toJson(),
-    };
-
-MyReferrals$Query$MyReferrals$Errors
-    _$MyReferrals$Query$MyReferrals$ErrorsFromJson(Map<String, dynamic> json) =>
-        MyReferrals$Query$MyReferrals$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$MyReferrals$Query$MyReferrals$ErrorsToJson(
-        MyReferrals$Query$MyReferrals$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-MyReferrals$Query$MyReferrals _$MyReferrals$Query$MyReferralsFromJson(
-        Map<String, dynamic> json) =>
-    MyReferrals$Query$MyReferrals()
-      ..ok = json['ok'] as bool?
-      ..nodes =
-          (json['nodes'] as List<dynamic>?)?.map((e) => e as String).toList()
-      ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => MyReferrals$Query$MyReferrals$Errors.fromJson(
-              e as Map<String, dynamic>))
-          .toList();
-
-Map<String, dynamic> _$MyReferrals$Query$MyReferralsToJson(
-        MyReferrals$Query$MyReferrals instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-MyReferrals$Query _$MyReferrals$QueryFromJson(Map<String, dynamic> json) =>
-    MyReferrals$Query()
-      ..myReferrals = MyReferrals$Query$MyReferrals.fromJson(
-          json['myReferrals'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$MyReferrals$QueryToJson(MyReferrals$Query instance) =>
-    <String, dynamic>{
-      'myReferrals': instance.myReferrals.toJson(),
-    };
-
-SearchGroups$Query$SearchGroups$Nodes
-    _$SearchGroups$Query$SearchGroups$NodesFromJson(
-            Map<String, dynamic> json) =>
-        SearchGroups$Query$SearchGroups$Nodes()
-          ..id = json['id'] as int
-          ..name = json['name'] as String
-          ..owner = json['owner'] as int
-          ..users = (json['users'] as List<dynamic>)
-              .map((e) =>
-                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..requested = (json['requested'] as List<dynamic>)
-              .map((e) => GroupFieldsMixin$Requested.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..screened = json['screened'] as bool
-          ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
-              json['location'] as String?)
-          ..icon = GroupFieldsMixin$Icon.fromJson(
-              json['icon'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$SearchGroups$Query$SearchGroups$NodesToJson(
-        SearchGroups$Query$SearchGroups$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'owner': instance.owner,
-      'users': instance.users.map((e) => e.toJson()).toList(),
-      'requested': instance.requested.map((e) => e.toJson()).toList(),
-      'screened': instance.screened,
-      'location':
-          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
-      'icon': instance.icon.toJson(),
-    };
-
-SearchGroups$Query$SearchGroups$Errors
-    _$SearchGroups$Query$SearchGroups$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        SearchGroups$Query$SearchGroups$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$SearchGroups$Query$SearchGroups$ErrorsToJson(
-        SearchGroups$Query$SearchGroups$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-SearchGroups$Query$SearchGroups _$SearchGroups$Query$SearchGroupsFromJson(
-        Map<String, dynamic> json) =>
-    SearchGroups$Query$SearchGroups()
-      ..ok = json['ok'] as bool?
-      ..nodes = (json['nodes'] as List<dynamic>?)
-          ?.map((e) => SearchGroups$Query$SearchGroups$Nodes.fromJson(
-              e as Map<String, dynamic>))
-          .toList()
-      ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => SearchGroups$Query$SearchGroups$Errors.fromJson(
-              e as Map<String, dynamic>))
-          .toList();
-
-Map<String, dynamic> _$SearchGroups$Query$SearchGroupsToJson(
-        SearchGroups$Query$SearchGroups instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-SearchGroups$Query _$SearchGroups$QueryFromJson(Map<String, dynamic> json) =>
-    SearchGroups$Query()
-      ..searchGroups = SearchGroups$Query$SearchGroups.fromJson(
-          json['searchGroups'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$SearchGroups$QueryToJson(SearchGroups$Query instance) =>
-    <String, dynamic>{
-      'searchGroups': instance.searchGroups.toJson(),
-    };
-
-SearchEvents$Query$SearchEvents$Nodes
-    _$SearchEvents$Query$SearchEvents$NodesFromJson(
-            Map<String, dynamic> json) =>
-        SearchEvents$Query$SearchEvents$Nodes()
-          ..id = json['id'] as int
-          ..createdAt =
-              fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
-          ..updatedAt =
-              fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
-          ..title = json['title'] as String
-          ..description = json['description'] as String
-          ..creator = EventFieldsMixin$Creator.fromJson(
-              json['creator'] as Map<String, dynamic>)
-          ..invited = (json['invited'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..wannago = (json['wannago'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
-          ..location = json['location'] as String
-          ..coordinates =
-              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
-          ..pictureUrl = json['pictureUrl'] as String?
-          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
-              .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
-              unknownValue: Privacy.artemisUnknown)
-          ..screened = json['screened'] as bool
-          ..filterLocation = json['filterLocation'] as String
-          ..filterRadius = (json['filterRadius'] as num).toDouble()
-          ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
-              unknownValue: Gender.artemisUnknown)
-          ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int;
-
-Map<String, dynamic> _$SearchEvents$Query$SearchEvents$NodesToJson(
-        SearchEvents$Query$SearchEvents$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
-      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
-      'title': instance.title,
-      'description': instance.description,
-      'creator': instance.creator.toJson(),
-      'invited': instance.invited.map((e) => e.toJson()).toList(),
-      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
-      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
-      'location': instance.location,
-      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
-      'pictureUrl': instance.pictureUrl,
-      'relatedInterests':
-          instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
-      'screened': instance.screened,
-      'filterLocation': instance.filterLocation,
-      'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
-      'filterMinAge': instance.filterMinAge,
-      'filterMaxAge': instance.filterMaxAge,
-    };
-
-SearchEvents$Query$SearchEvents$Errors
-    _$SearchEvents$Query$SearchEvents$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        SearchEvents$Query$SearchEvents$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$SearchEvents$Query$SearchEvents$ErrorsToJson(
-        SearchEvents$Query$SearchEvents$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-SearchEvents$Query$SearchEvents _$SearchEvents$Query$SearchEventsFromJson(
-        Map<String, dynamic> json) =>
-    SearchEvents$Query$SearchEvents()
-      ..ok = json['ok'] as bool?
-      ..nodes = (json['nodes'] as List<dynamic>?)
-          ?.map((e) => SearchEvents$Query$SearchEvents$Nodes.fromJson(
-              e as Map<String, dynamic>))
-          .toList()
-      ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => SearchEvents$Query$SearchEvents$Errors.fromJson(
-              e as Map<String, dynamic>))
-          .toList();
-
-Map<String, dynamic> _$SearchEvents$Query$SearchEventsToJson(
-        SearchEvents$Query$SearchEvents instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-SearchEvents$Query _$SearchEvents$QueryFromJson(Map<String, dynamic> json) =>
-    SearchEvents$Query()
-      ..searchEvents = SearchEvents$Query$SearchEvents.fromJson(
-          json['searchEvents'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$SearchEvents$QueryToJson(SearchEvents$Query instance) =>
-    <String, dynamic>{
-      'searchEvents': instance.searchEvents.toJson(),
-    };
-
-GroupIcons$Query$GroupIcons$Nodes _$GroupIcons$Query$GroupIcons$NodesFromJson(
-        Map<String, dynamic> json) =>
-    GroupIcons$Query$GroupIcons$Nodes()
-      ..url = json['url'] as String
-      ..id = json['id'] as int;
-
-Map<String, dynamic> _$GroupIcons$Query$GroupIcons$NodesToJson(
-        GroupIcons$Query$GroupIcons$Nodes instance) =>
-    <String, dynamic>{
-      'url': instance.url,
-      'id': instance.id,
-    };
-
-GroupIcons$Query$GroupIcons$Errors _$GroupIcons$Query$GroupIcons$ErrorsFromJson(
-        Map<String, dynamic> json) =>
-    GroupIcons$Query$GroupIcons$Errors()
-      ..field = json['field'] as String?
-      ..message = json['message'] as String;
-
-Map<String, dynamic> _$GroupIcons$Query$GroupIcons$ErrorsToJson(
-        GroupIcons$Query$GroupIcons$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-GroupIcons$Query$GroupIcons _$GroupIcons$Query$GroupIconsFromJson(
-        Map<String, dynamic> json) =>
-    GroupIcons$Query$GroupIcons()
-      ..ok = json['ok'] as bool?
-      ..nodes = (json['nodes'] as List<dynamic>?)
-          ?.map((e) => GroupIcons$Query$GroupIcons$Nodes.fromJson(
-              e as Map<String, dynamic>))
-          .toList()
-      ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => GroupIcons$Query$GroupIcons$Errors.fromJson(
-              e as Map<String, dynamic>))
-          .toList();
-
-Map<String, dynamic> _$GroupIcons$Query$GroupIconsToJson(
-        GroupIcons$Query$GroupIcons instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-GroupIcons$Query _$GroupIcons$QueryFromJson(Map<String, dynamic> json) =>
-    GroupIcons$Query()
-      ..groupIcons = GroupIcons$Query$GroupIcons.fromJson(
-          json['groupIcons'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$GroupIcons$QueryToJson(GroupIcons$Query instance) =>
-    <String, dynamic>{
-      'groupIcons': instance.groupIcons.toJson(),
-    };
-
-SuggestedEvents$Query$SuggestedEvents$Nodes
-    _$SuggestedEvents$Query$SuggestedEvents$NodesFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedEvents$Query$SuggestedEvents$Nodes()
-          ..id = json['id'] as int
-          ..createdAt =
-              fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
-          ..updatedAt =
-              fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
-          ..title = json['title'] as String
-          ..description = json['description'] as String
-          ..creator = EventFieldsMixin$Creator.fromJson(
-              json['creator'] as Map<String, dynamic>)
-          ..invited = (json['invited'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..wannago = (json['wannago'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
-          ..location = json['location'] as String
-          ..coordinates =
-              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
-          ..pictureUrl = json['pictureUrl'] as String?
-          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
-              .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
-              unknownValue: Privacy.artemisUnknown)
-          ..screened = json['screened'] as bool
-          ..filterLocation = json['filterLocation'] as String
-          ..filterRadius = (json['filterRadius'] as num).toDouble()
-          ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
-              unknownValue: Gender.artemisUnknown)
-          ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int;
-
-Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEvents$NodesToJson(
-        SuggestedEvents$Query$SuggestedEvents$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
-      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
-      'title': instance.title,
-      'description': instance.description,
-      'creator': instance.creator.toJson(),
-      'invited': instance.invited.map((e) => e.toJson()).toList(),
-      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
-      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
-      'location': instance.location,
-      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
-      'pictureUrl': instance.pictureUrl,
-      'relatedInterests':
-          instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
-      'screened': instance.screened,
-      'filterLocation': instance.filterLocation,
-      'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
-      'filterMinAge': instance.filterMinAge,
-      'filterMaxAge': instance.filterMaxAge,
-    };
-
-SuggestedEvents$Query$SuggestedEvents$Errors
-    _$SuggestedEvents$Query$SuggestedEvents$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedEvents$Query$SuggestedEvents$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEvents$ErrorsToJson(
-        SuggestedEvents$Query$SuggestedEvents$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-SuggestedEvents$Query$SuggestedEvents
-    _$SuggestedEvents$Query$SuggestedEventsFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedEvents$Query$SuggestedEvents()
-          ..ok = json['ok'] as bool?
-          ..nodes = (json['nodes'] as List<dynamic>?)
-              ?.map((e) => SuggestedEvents$Query$SuggestedEvents$Nodes.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..errors = (json['errors'] as List<dynamic>?)
-              ?.map((e) =>
-                  SuggestedEvents$Query$SuggestedEvents$Errors.fromJson(
-                      e as Map<String, dynamic>))
-              .toList();
-
-Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEventsToJson(
-        SuggestedEvents$Query$SuggestedEvents instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-SuggestedEvents$Query _$SuggestedEvents$QueryFromJson(
-        Map<String, dynamic> json) =>
-    SuggestedEvents$Query()
-      ..suggestedEvents = SuggestedEvents$Query$SuggestedEvents.fromJson(
-          json['suggestedEvents'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$SuggestedEvents$QueryToJson(
-        SuggestedEvents$Query instance) =>
-    <String, dynamic>{
-      'suggestedEvents': instance.suggestedEvents.toJson(),
-    };
-
-SuggestedGroups$Query$SuggestedGroups$Nodes
-    _$SuggestedGroups$Query$SuggestedGroups$NodesFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedGroups$Query$SuggestedGroups$Nodes()
-          ..id = json['id'] as int
-          ..name = json['name'] as String
-          ..owner = json['owner'] as int
-          ..users = (json['users'] as List<dynamic>)
-              .map((e) =>
-                  GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..requested = (json['requested'] as List<dynamic>)
-              .map((e) => GroupFieldsMixin$Requested.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..screened = json['screened'] as bool
-          ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
-              json['location'] as String?)
-          ..icon = GroupFieldsMixin$Icon.fromJson(
-              json['icon'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$SuggestedGroups$Query$SuggestedGroups$NodesToJson(
-        SuggestedGroups$Query$SuggestedGroups$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'owner': instance.owner,
-      'users': instance.users.map((e) => e.toJson()).toList(),
-      'requested': instance.requested.map((e) => e.toJson()).toList(),
-      'screened': instance.screened,
-      'location':
-          fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
-      'icon': instance.icon.toJson(),
-    };
-
-SuggestedGroups$Query$SuggestedGroups$Errors
-    _$SuggestedGroups$Query$SuggestedGroups$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedGroups$Query$SuggestedGroups$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$SuggestedGroups$Query$SuggestedGroups$ErrorsToJson(
-        SuggestedGroups$Query$SuggestedGroups$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-SuggestedGroups$Query$SuggestedGroups
-    _$SuggestedGroups$Query$SuggestedGroupsFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedGroups$Query$SuggestedGroups()
-          ..ok = json['ok'] as bool?
-          ..nodes = (json['nodes'] as List<dynamic>?)
-              ?.map((e) => SuggestedGroups$Query$SuggestedGroups$Nodes.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..errors = (json['errors'] as List<dynamic>?)
-              ?.map((e) =>
-                  SuggestedGroups$Query$SuggestedGroups$Errors.fromJson(
-                      e as Map<String, dynamic>))
-              .toList();
-
-Map<String, dynamic> _$SuggestedGroups$Query$SuggestedGroupsToJson(
-        SuggestedGroups$Query$SuggestedGroups instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-SuggestedGroups$Query _$SuggestedGroups$QueryFromJson(
-        Map<String, dynamic> json) =>
-    SuggestedGroups$Query()
-      ..suggestedGroups = SuggestedGroups$Query$SuggestedGroups.fromJson(
-          json['suggestedGroups'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$SuggestedGroups$QueryToJson(
-        SuggestedGroups$Query instance) =>
-    <String, dynamic>{
-      'suggestedGroups': instance.suggestedGroups.toJson(),
-    };
-
-SuggestedUsers$Query$SuggestedUsers$Nodes
-    _$SuggestedUsers$Query$SuggestedUsers$NodesFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedUsers$Query$SuggestedUsers$Nodes()
-          ..id = json['id'] as int
-          ..name = json['name'] as String
-          ..photoUrls = json['photoUrls'] as String
-          ..bio = json['bio'] as String
-          ..birthday =
-              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
-
-Map<String, dynamic> _$SuggestedUsers$Query$SuggestedUsers$NodesToJson(
-        SuggestedUsers$Query$SuggestedUsers$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'name': instance.name,
-      'photoUrls': instance.photoUrls,
-      'bio': instance.bio,
-      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
-    };
-
-SuggestedUsers$Query$SuggestedUsers$Errors
-    _$SuggestedUsers$Query$SuggestedUsers$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        SuggestedUsers$Query$SuggestedUsers$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$SuggestedUsers$Query$SuggestedUsers$ErrorsToJson(
-        SuggestedUsers$Query$SuggestedUsers$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-SuggestedUsers$Query$SuggestedUsers
-    _$SuggestedUsers$Query$SuggestedUsersFromJson(Map<String, dynamic> json) =>
-        SuggestedUsers$Query$SuggestedUsers()
-          ..ok = json['ok'] as bool?
-          ..nodes = (json['nodes'] as List<dynamic>?)
-              ?.map((e) => SuggestedUsers$Query$SuggestedUsers$Nodes.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..errors = (json['errors'] as List<dynamic>?)
-              ?.map((e) => SuggestedUsers$Query$SuggestedUsers$Errors.fromJson(
-                  e as Map<String, dynamic>))
-              .toList();
-
-Map<String, dynamic> _$SuggestedUsers$Query$SuggestedUsersToJson(
-        SuggestedUsers$Query$SuggestedUsers instance) =>
-    <String, dynamic>{
-      'ok': instance.ok,
-      'nodes': instance.nodes?.map((e) => e.toJson()).toList(),
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-    };
-
-SuggestedUsers$Query _$SuggestedUsers$QueryFromJson(
-        Map<String, dynamic> json) =>
-    SuggestedUsers$Query()
-      ..suggestedUsers = SuggestedUsers$Query$SuggestedUsers.fromJson(
-          json['suggestedUsers'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$SuggestedUsers$QueryToJson(
-        SuggestedUsers$Query instance) =>
-    <String, dynamic>{
-      'suggestedUsers': instance.suggestedUsers.toJson(),
-    };
-
 UserArguments _$UserArgumentsFromJson(Map<String, dynamic> json) =>
     UserArguments(
       id: json['id'] as int,
@@ -2979,6 +2979,30 @@ const _$SortTypeEnumMap = {
   SortType.artemisUnknown: 'ARTEMIS_UNKNOWN',
 };
 
+SearchGroupsArguments _$SearchGroupsArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    SearchGroupsArguments(
+      partial: json['partial'] as String,
+    );
+
+Map<String, dynamic> _$SearchGroupsArgumentsToJson(
+        SearchGroupsArguments instance) =>
+    <String, dynamic>{
+      'partial': instance.partial,
+    };
+
+SearchEventsArguments _$SearchEventsArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    SearchEventsArguments(
+      partial: json['partial'] as String,
+    );
+
+Map<String, dynamic> _$SearchEventsArgumentsToJson(
+        SearchEventsArguments instance) =>
+    <String, dynamic>{
+      'partial': instance.partial,
+    };
+
 EventUserPreviewArguments _$EventUserPreviewArgumentsFromJson(
         Map<String, dynamic> json) =>
     EventUserPreviewArguments(
@@ -3009,6 +3033,32 @@ Map<String, dynamic> _$OtherEventsArgumentsToJson(
       'take': instance.take,
       'skip': instance.skip,
       'sortType': _$SortTypeEnumMap[instance.sortType],
+    };
+
+UsersFromContactsArguments _$UsersFromContactsArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    UsersFromContactsArguments(
+      numbers:
+          (json['numbers'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$UsersFromContactsArgumentsToJson(
+        UsersFromContactsArguments instance) =>
+    <String, dynamic>{
+      'numbers': instance.numbers,
+    };
+
+NumbersNotUsersArguments _$NumbersNotUsersArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    NumbersNotUsersArguments(
+      numbers:
+          (json['numbers'] as List<dynamic>).map((e) => e as String).toList(),
+    );
+
+Map<String, dynamic> _$NumbersNotUsersArgumentsToJson(
+        NumbersNotUsersArguments instance) =>
+    <String, dynamic>{
+      'numbers': instance.numbers,
     };
 
 EventArguments _$EventArgumentsFromJson(Map<String, dynamic> json) =>
@@ -3114,54 +3164,4 @@ ForumArguments _$ForumArgumentsFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$ForumArgumentsToJson(ForumArguments instance) =>
     <String, dynamic>{
       'forumId': instance.forumId,
-    };
-
-UsersFromContactsArguments _$UsersFromContactsArgumentsFromJson(
-        Map<String, dynamic> json) =>
-    UsersFromContactsArguments(
-      numbers:
-          (json['numbers'] as List<dynamic>).map((e) => e as String).toList(),
-    );
-
-Map<String, dynamic> _$UsersFromContactsArgumentsToJson(
-        UsersFromContactsArguments instance) =>
-    <String, dynamic>{
-      'numbers': instance.numbers,
-    };
-
-NumbersNotUsersArguments _$NumbersNotUsersArgumentsFromJson(
-        Map<String, dynamic> json) =>
-    NumbersNotUsersArguments(
-      numbers:
-          (json['numbers'] as List<dynamic>).map((e) => e as String).toList(),
-    );
-
-Map<String, dynamic> _$NumbersNotUsersArgumentsToJson(
-        NumbersNotUsersArguments instance) =>
-    <String, dynamic>{
-      'numbers': instance.numbers,
-    };
-
-SearchGroupsArguments _$SearchGroupsArgumentsFromJson(
-        Map<String, dynamic> json) =>
-    SearchGroupsArguments(
-      partial: json['partial'] as String,
-    );
-
-Map<String, dynamic> _$SearchGroupsArgumentsToJson(
-        SearchGroupsArguments instance) =>
-    <String, dynamic>{
-      'partial': instance.partial,
-    };
-
-SearchEventsArguments _$SearchEventsArgumentsFromJson(
-        Map<String, dynamic> json) =>
-    SearchEventsArguments(
-      partial: json['partial'] as String,
-    );
-
-Map<String, dynamic> _$SearchEventsArgumentsToJson(
-        SearchEventsArguments instance) =>
-    <String, dynamic>{
-      'partial': instance.partial,
     };
