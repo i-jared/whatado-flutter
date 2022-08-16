@@ -10,8 +10,8 @@
     {
       "type": "SINGLE",
       "filters": [],
-      "versionCode": 33,
-      "versionName": "1.2.4",
+      "versionCode": 34,
+      "versionName": "1.2.5",
       "outputFile": "AndroidManifest.xml"
     }
   ]

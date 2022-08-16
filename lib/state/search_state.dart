@@ -137,7 +137,6 @@ class SearchState extends ChangeNotifier {
       // get list of user contacts
       final usersResult = await provider.usersFromContacts(numbersUsers);
       _userContacts = usersResult.data ?? [];
-      _filteredUsers = _userContacts;
       _filteredUserContacts = _userContacts;
     }
     _contactsLoading = false;
