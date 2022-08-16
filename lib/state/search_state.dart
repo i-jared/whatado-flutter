@@ -90,6 +90,12 @@ class SearchState extends ChangeNotifier {
     _debounceEvents();
   }
 
+  Future<void> reset() async {
+    searchController.text = '';
+
+    notifyListeners();
+  }
+
   Future<void> loadContacts() async {
     // get permissin to load contacts
     _contactsPermission = await FlutterContacts.requestPermission(readonly: true);
@@ -157,12 +163,19 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _debounceEvents() {
+  void _debounceEvents() async {
+    print('jcl debounce');
     _eventsLoading = true;
     _eventsDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
-      // TODO create an endpoint to get list of suggested events
-      _filteredEvents = [];
+      final provider = EventsGqlProvider();
+      final result = await provider.suggestedEvents();
+      print('jcl $result');
+      if (result.ok) {
+        _filteredEvents = result.data ?? [];
+      } else {
+        _filteredEvents = [];
+      }
       _eventsLoading = false;
       notifyListeners();
       return;
@@ -177,12 +190,17 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _debounceGroups() {
+  void _debounceGroups() async {
     _groupsLoading = true;
     _groupsDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
-      // TODO create an endpoint to get list of suggested groups
-      _filteredGroups = [];
+      final provider = GroupGqlProvider();
+      final result = await provider.suggestedGroups();
+      if (result.ok) {
+        _filteredGroups = result.data ?? [];
+      } else {
+        _filteredGroups = [];
+      }
       _groupsLoading = false;
       notifyListeners();
       return;
@@ -198,12 +216,17 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _debounceUsers() {
+  void _debounceUsers() async {
     _usersLoading = true;
     _usersDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
-      // TODO create an endpoint to get list of suggested users
-      _filteredUsers = _userContacts;
+      final provider = UserGqlProvider();
+      final result = await provider.suggestedUsers();
+      if (result.ok) {
+        _filteredUsers = result.data ?? [];
+      } else {
+        _filteredUsers = _userContacts;
+      }
       _usersLoading = false;
       notifyListeners();
       return;

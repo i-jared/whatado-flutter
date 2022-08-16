@@ -50,7 +50,8 @@ class _StateSearchPage extends State<SearchPage> {
     final searchState = Provider.of<SearchState>(context);
     return Container(
         child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding:
+          EdgeInsets.symmetric(horizontal: searchState.selectedSearchType == 0 ? 0 : 24),
       child: Column(
         children: [
           Container(
@@ -59,7 +60,11 @@ class _StateSearchPage extends State<SearchPage> {
                 decoration: InputDecoration(prefixIcon: Icon(Icons.search)),
                 controller: searchState.searchController,
               )),
-          SearchSelectionRow(),
+          Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: searchState.selectedSearchType == 0 ? 24 : 0),
+            child: SearchSelectionRow(),
+          ),
           Expanded(
               child: searchState.selectedSearchType == 0
                   ? SearchEvents()

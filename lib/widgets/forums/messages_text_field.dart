@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
+import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
@@ -8,7 +9,8 @@ import 'package:whatado/widgets/input/my_text_field.dart';
 
 class MessagesTextField extends StatefulWidget {
   final Forum forum;
-  MessagesTextField({required this.forum});
+  final Event event;
+  MessagesTextField({required this.forum, required this.event});
   @override
   State<StatefulWidget> createState() => _MessagesTextFieldState();
 }
@@ -39,10 +41,9 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
   Widget build(BuildContext context) {
     final chatState = Provider.of<ChatState>(context);
     final userState = Provider.of<UserState>(context);
-    print('jcl ${userState.user?.id} ${widget.forum.ownerId}');
     return Container(
       color: Colors.grey[50],
-      child: widget.forum.chatDisabled && userState.user?.id != widget.forum.ownerId
+      child: widget.forum.chatDisabled && userState.user?.id != widget.event.creator.id
           ? SizedBox(
               height: height,
               child: Center(

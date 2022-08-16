@@ -1,17 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/models/group.dart';
 import 'package:whatado/screens/home/non_user_contact_item.dart';
 import 'package:whatado/screens/home/user_contact_item.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';
 
-class SearchContacts extends StatelessWidget {
+class InviteGroupMembers extends StatefulWidget {
+  final Group group;
+  InviteGroupMembers(this.group);
+  @override
+  State<StatefulWidget> createState() => _InviteGroupMembersState();
+}
+
+class _InviteGroupMembersState extends State<InviteGroupMembers> {
+  @override
+  void initState() {
+    super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      final searchState = Provider.of<SearchState>(context, listen: false);
+      searchState.loadContacts();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final searchState = Provider.of<SearchState>(context);
     final userState = Provider.of<UserState>(context);
+    final nonMemberFriends =
+        userState.user!.friends.where((f) => !widget.group.users.contains(f)).toList();
     if (searchState.contactsLoading) {
       return Center(child: CircularProgressIndicator());
     }
@@ -32,16 +52,14 @@ class SearchContacts extends StatelessWidget {
         ),
       );
     }
-    if (searchState.filteredUserContacts == null ||
-        searchState.filteredNonUserContacts == null) {
+    if (searchState.filteredNonUserContacts == null) {
       return Center(child: CircularProgressIndicator());
     }
-    if (searchState.filteredUserContacts!.isEmpty &&
-        searchState.filteredNonUserContacts!.isEmpty) {
-      return Center(child: Text('No contacts to list'));
+    if (nonMemberFriends.isEmpty && searchState.filteredNonUserContacts!.isEmpty) {
+      return Center(child: Text('No friends or contacts to list'));
     }
     int nonUserLength = searchState.filteredNonUserContacts!.length;
-    int userLength = searchState.filteredUserContacts!.length;
+    int userLength = nonMemberFriends.length;
     int listLength = 2 * (nonUserLength) +
         2 * (userLength) +
         (userLength > 0 && nonUserLength > 0 ? 4 : 2);
@@ -55,7 +73,7 @@ class SearchContacts extends StatelessWidget {
           if (i == 0 && userLength > 0) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text('Add Friends',
+              child: Text('Add Members',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             );
           }
@@ -63,21 +81,27 @@ class SearchContacts extends StatelessWidget {
               (i == 2 * userLength + 2 && userLength > 0)) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text('Invite Friends',
+              child: Text('Invite Contacts',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             );
           }
           int j = i ~/ 2 - 1;
           if (j < userLength) {
-            final user = searchState.filteredUserContacts![j];
-            return UserContactItem(user,
-                accepted: userState.user?.friends.any((f) => f.id == user.id) ?? false,
-                requested: userState.user?.requestedFriends.any((f) => f.id == user.id) ??
-                    false);
+            final user = nonMemberFriends[j];
+            return UserContactItem(
+              user,
+              accepted: widget.group.users.any((f) => f.id == user.id),
+              requested: widget.group.requested.any((f) => f.id == user.id),
+              group: widget.group,
+              groupRequest: true,
+            );
           }
           j -= (userLength + (userLength > 0 ? 1 : 0));
           final contact = searchState.filteredNonUserContacts![j];
-          return NonUserContactItem(contact);
+          return NonUserContactItem(
+            contact,
+            groupId: widget.group.id,
+          );
         });
   }
 }

@@ -35,11 +35,11 @@ class _MyConsoleState extends State<MyConsole> {
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance!.addPostFrameCallback((timeStamp) async {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
       await loginService.attemptAutoLogin();
       setState(() => loading = false);
     });
-    SchedulerBinding.instance!.scheduleForcedFrame();
+    SchedulerBinding.instance.scheduleForcedFrame();
   }
 
   @override

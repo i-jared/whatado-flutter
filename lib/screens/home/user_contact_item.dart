@@ -2,15 +2,24 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/models/group.dart';
+import 'package:whatado/providers/graphql/group_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/state/user_state.dart';
 
 class UserContactItem extends StatefulWidget {
   final EventUser user;
-  final bool friends;
+  final bool accepted;
   final bool requested;
-  UserContactItem(this.user, {this.friends = false, this.requested = false});
+  final bool groupRequest;
+  final Group? group;
+  UserContactItem(this.user,
+      {this.accepted = false,
+      this.requested = false,
+      this.groupRequest = false,
+      this.group});
 
   @override
   State<StatefulWidget> createState() => _UserContactItemState();
@@ -64,13 +73,25 @@ class _UserContactItemState extends State<UserContactItem> {
           width: 75,
           height: 35,
           child: TextButton(
-            onPressed: widget.friends || requested || loading
+            onPressed: widget.accepted || requested || loading
                 ? null
                 : () async {
                     setState(() => loading = true);
-                    final provider = UserGqlProvider();
-                    await provider.requestFriend(widget.user.id);
-                    await userState.updateFriendRequest(widget.user);
+                    if (widget.groupRequest && widget.group != null) {
+                      final provider = GroupGqlProvider();
+                      await provider.updateGroup(GroupFilterInput(
+                        id: widget.group!.id,
+                        userIds: [
+                          ...widget.group!.users.map((u) => u.id),
+                          widget.user.id
+                        ],
+                      ));
+                      await userState.updateGroupMembers(widget.group!, widget.user);
+                    } else {
+                      final provider = UserGqlProvider();
+                      await provider.requestFriend(widget.user.id);
+                      await userState.updateFriendRequest(widget.user);
+                    }
                     setState(() {
                       requested = true;
                       loading = false;
@@ -82,8 +103,10 @@ class _UserContactItemState extends State<UserContactItem> {
                     width: 20,
                     child: Center(child: CircularProgressIndicator(color: Colors.white)))
                 : Text(
-                    widget.friends
-                        ? 'friends'
+                    widget.accepted
+                        ? widget.groupRequest
+                            ? 'member'
+                            : 'friends'
                         : requested
                             ? 'pending'
                             : 'add+',
@@ -93,7 +116,7 @@ class _UserContactItemState extends State<UserContactItem> {
                     )),
             style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all(
-              widget.friends
+              widget.accepted
                   ? Colors.grey[400]
                   : requested
                       ? Colors.grey[400]

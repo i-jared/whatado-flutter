@@ -81,6 +81,7 @@ class _MyAppState extends State<MyApp> {
         setState(() => loading = false);
       });
     } else {
+      // TODO remove this why do i ineed it
       locationService.getLocation().then((_) async {
         UserGqlProvider provider = UserGqlProvider();
         if (locationService.locationData != null &&

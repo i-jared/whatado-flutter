@@ -1,0 +1,12 @@
+query suggestedUsers {
+  suggestedUsers {
+    ok
+    nodes {
+      ...EventUser
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

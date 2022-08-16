@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/home/group_list_page.dart';
 import 'package:whatado/screens/profile/create_group.dart';
@@ -34,8 +35,7 @@ class _MyProfileState extends State<MyProfile> {
   void didChangeDependencies() {
     final userState = Provider.of<UserState>(context, listen: false);
     final images =
-        userState.user?.photoUrls.map((url) => Image.network(url)).toList() ??
-            [];
+        userState.user?.photoUrls.map((url) => Image.network(url)).toList() ?? [];
     for (Image image in images) {
       precacheImage(image.image, context);
     }
@@ -46,6 +46,8 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     final user = userState.user!;
+    final groupRequests =
+        user.groups.fold<int>(0, (sum, group) => sum + group.requested.length);
     if (userState.user == null) {
       SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
         await userState.getUser();
@@ -84,9 +86,8 @@ class _MyProfileState extends State<MyProfile> {
                               height: 10,
                               width: 10,
                               decoration: BoxDecoration(
-                                  color: i / 2 == selectedIndex
-                                      ? Colors.black
-                                      : Colors.grey,
+                                  color:
+                                      i / 2 == selectedIndex ? Colors.black : Colors.grey,
                                   shape: BoxShape.circle),
                             )
                           : Container(width: 5))),
@@ -103,8 +104,7 @@ class _MyProfileState extends State<MyProfile> {
                   user: EventUser.fromUser(user),
                   child: Row(
                     children: [
-                      Text('Edit',
-                          style: TextStyle(fontSize: 15, color: Colors.white)),
+                      Text('Edit', style: TextStyle(fontSize: 15, color: Colors.white)),
                       SizedBox(width: 10),
                       Icon(Icons.edit_outlined, color: Colors.white, size: 15)
                     ],
@@ -117,13 +117,22 @@ class _MyProfileState extends State<MyProfile> {
               Row(children: [
                 Text('Groups', style: headingStyle),
                 Spacer(),
-                IconButton(
-                    onPressed: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CreateGroup(),
-                        )),
-                    icon: Icon(Icons.group_add_outlined))
+                TextButton(
+                    onPressed: groupRequests == 0
+                        ? null
+                        : () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GroupListPage(
+                                      title: 'Groups',
+                                      groups: user.groups,
+                                      leftPadding: false,
+                                    ))),
+                    child: Text("$groupRequests group requests",
+                        style: TextStyle(
+                            color: groupRequests == 0
+                                ? Colors.grey[400]
+                                : AppColors.primary)))
               ]),
               SizedBox(height: headingSpacing),
               InkWell(
@@ -133,7 +142,9 @@ class _MyProfileState extends State<MyProfile> {
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) => GroupListPage(
-                                title: "Groups", groups: user.groups))),
+                                title: "Groups",
+                                groups: user.groups,
+                                leftPadding: false))),
                 child: Container(
                     height: 40,
                     child: user.groups.isEmpty
@@ -160,6 +171,7 @@ class _MyProfileState extends State<MyProfile> {
                 children: [
                   Text('Interests', style: headingStyle),
                   SizedBox(width: 10),
+                  // Remove this replace with hint
                   Text('(only visible to you)',
                       style: TextStyle(fontSize: 15, color: Colors.grey)),
                 ],

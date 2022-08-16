@@ -19,7 +19,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
     super.initState();
     final homeState = Provider.of<HomeState>(context, listen: false);
     if (!(localStorageService.initialized ?? false))
-      WidgetsBinding.instance?.addPostFrameCallback((_) => ShowCaseWidget.of(context)
+      WidgetsBinding.instance.addPostFrameCallback((_) => ShowCaseWidget.of(context)
           ?.startShowCase(
               [homeState.showcase_1, homeState.showcase_2, homeState.showcase_3]));
   }

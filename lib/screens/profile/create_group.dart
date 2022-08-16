@@ -183,24 +183,31 @@ class _CreateGroupState extends State<CreateGroup> {
                     if (friends == null || friends.isEmpty)
                       Expanded(child: Center(child: Text('no friends'))),
                     if (friends != null && friends.isNotEmpty)
-                      ...friends.map((friend) => InkWell(
-                            onTap: () {
-                              if (selectedFriends.contains(friend)) {
-                                selectedFriends.remove(friend);
-                              } else {
-                                selectedFriends.add(friend);
-                              }
-                              setState(() => selectedFriends = selectedFriends);
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: IgnorePointer(
-                                  child: UserListItem(
-                                friend,
-                                selected: selectedFriends.contains(friend),
-                              )),
-                            ),
-                          ))
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: friends.length,
+                            itemBuilder: (context, i) {
+                              EventUser friend = friends[i];
+                              return InkWell(
+                                onTap: () {
+                                  if (selectedFriends.contains(friend)) {
+                                    selectedFriends.remove(friend);
+                                  } else {
+                                    selectedFriends.add(friend);
+                                  }
+                                  setState(() => selectedFriends = selectedFriends);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                                  child: IgnorePointer(
+                                      child: UserListItem(
+                                    friend,
+                                    selected: selectedFriends.contains(friend),
+                                  )),
+                                ),
+                              );
+                            }),
+                      )
                   ],
                 )),
           ),

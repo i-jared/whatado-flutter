@@ -5,6 +5,9 @@ fragment GroupFields on Group {
     users {
         ...EventUser
     }
+    requested {
+        ...EventUser
+    }
     screened
     location
     icon {

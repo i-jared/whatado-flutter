@@ -33,6 +33,8 @@ class InviteGroups extends StatelessWidget {
                               child: GroupListItem(
                             group: groups![i],
                             showButton: false,
+                            showRequest: false,
+                            noPadding: true,
                           )),
                           if (selectedGroup == groups![i])
                             Positioned(
@@ -45,8 +47,8 @@ class InviteGroups extends StatelessWidget {
                                     color: Colors.blue,
                                     borderRadius: BorderRadius.circular(100),
                                   ),
-                                  height: 50,
-                                  width: 50,
+                                  height: 60,
+                                  width: 60,
                                 ),
                               ),
                             ),
@@ -55,8 +57,8 @@ class InviteGroups extends StatelessWidget {
                               left: 0,
                               top: 0,
                               child: Container(
-                                height: 50,
-                                width: 50,
+                                height: 60,
+                                width: 60,
                                 child: Icon(Icons.check_outlined, color: Colors.white),
                               ),
                             )

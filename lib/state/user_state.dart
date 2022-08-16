@@ -112,6 +112,28 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> removeGroupRequests(Group group, EventUser removeUser) async {
+    int i = user!.groups.indexWhere((g) => g.id == group.id);
+    if (i < 0) return;
+    group.requested = group.requested.where((u) => u.id != removeUser.id).toList();
+    user!.groups[i] = group;
+    notifyListeners();
+  }
+
+  Future<void> updateGroupMembers(Group group, EventUser newuser,
+      {bool add = true}) async {
+    if (add) {
+      group.users = [...group.users, newuser];
+      int i = user!.groups.indexWhere((g) => g.id == group.id);
+      user?.groups[i] = group;
+    } else {
+      group.users = group.users.where((u) => u.id != newuser.id).toList();
+      int i = user!.groups.indexWhere((g) => g.id == group.id);
+      user?.groups[i] = group;
+    }
+    notifyListeners();
+  }
+
   User? get user => _user;
   set user(User? user) {
     _user = user;

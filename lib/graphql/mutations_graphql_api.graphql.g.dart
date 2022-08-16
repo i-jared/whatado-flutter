@@ -134,7 +134,7 @@ AddWannago$Mutation$AddWannago$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
-          ..screened = json['screened'] as bool?
+          ..screened = json['screened'] as bool
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -346,7 +346,7 @@ UpdateEvent$Mutation$UpdateEvent$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
-          ..screened = json['screened'] as bool?
+          ..screened = json['screened'] as bool
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -499,6 +499,10 @@ UpdateGroup$Mutation$UpdateGroup$Nodes
               .map((e) =>
                   GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
               .toList()
+          ..requested = (json['requested'] as List<dynamic>)
+              .map((e) => GroupFieldsMixin$Requested.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
           ..screened = json['screened'] as bool
           ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
               json['location'] as String?)
@@ -512,6 +516,7 @@ Map<String, dynamic> _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(
       'name': instance.name,
       'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
+      'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
@@ -577,6 +582,26 @@ GroupFieldsMixin$Users _$GroupFieldsMixin$UsersFromJson(
 
 Map<String, dynamic> _$GroupFieldsMixin$UsersToJson(
         GroupFieldsMixin$Users instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+GroupFieldsMixin$Requested _$GroupFieldsMixin$RequestedFromJson(
+        Map<String, dynamic> json) =>
+    GroupFieldsMixin$Requested()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$GroupFieldsMixin$RequestedToJson(
+        GroupFieldsMixin$Requested instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -868,6 +893,10 @@ UserFieldsMixin$Groups _$UserFieldsMixin$GroupsFromJson(
           .map(
               (e) => GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
           .toList()
+      ..requested = (json['requested'] as List<dynamic>)
+          .map((e) =>
+              GroupFieldsMixin$Requested.fromJson(e as Map<String, dynamic>))
+          .toList()
       ..screened = json['screened'] as bool
       ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
           json['location'] as String?)
@@ -881,6 +910,7 @@ Map<String, dynamic> _$UserFieldsMixin$GroupsToJson(
       'name': instance.name,
       'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
+      'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
@@ -897,6 +927,10 @@ UserFieldsMixin$RequestedGroups _$UserFieldsMixin$RequestedGroupsFromJson(
           .map(
               (e) => GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
           .toList()
+      ..requested = (json['requested'] as List<dynamic>)
+          .map((e) =>
+              GroupFieldsMixin$Requested.fromJson(e as Map<String, dynamic>))
+          .toList()
       ..screened = json['screened'] as bool
       ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
           json['location'] as String?)
@@ -910,6 +944,7 @@ Map<String, dynamic> _$UserFieldsMixin$RequestedGroupsToJson(
       'name': instance.name,
       'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
+      'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
@@ -1557,10 +1592,13 @@ CreateForum$Mutation$CreateForum$Nodes
           ..id = json['id'] as int
           ..updatedAt =
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
-          ..chatDisabled = json['chatDisabled'] as bool?
-          ..ownerId = json['ownerId'] as int?
+          ..chatDisabled = json['chatDisabled'] as bool
           ..userNotifications = (json['userNotifications'] as List<dynamic>)
               .map((e) => ForumFieldsMixin$UserNotifications.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..moderators = (json['moderators'] as List<dynamic>)
+              .map((e) => ForumFieldsMixin$Moderators.fromJson(
                   e as Map<String, dynamic>))
               .toList()
           ..chats = (json['chats'] as List<dynamic>)
@@ -1576,9 +1614,9 @@ Map<String, dynamic> _$CreateForum$Mutation$CreateForum$NodesToJson(
       'id': instance.id,
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'chatDisabled': instance.chatDisabled,
-      'ownerId': instance.ownerId,
       'userNotifications':
           instance.userNotifications.map((e) => e.toJson()).toList(),
+      'moderators': instance.moderators.map((e) => e.toJson()).toList(),
       'chats': instance.chats.map((e) => e.toJson()).toList(),
       'event': instance.event.toJson(),
     };
@@ -1644,6 +1682,26 @@ Map<String, dynamic> _$ForumFieldsMixin$UserNotificationsToJson(
       'id': instance.id,
       'lastAccessed': fromDartDateTimeToGraphQLDateTime(instance.lastAccessed),
       'muted': instance.muted,
+    };
+
+ForumFieldsMixin$Moderators _$ForumFieldsMixin$ModeratorsFromJson(
+        Map<String, dynamic> json) =>
+    ForumFieldsMixin$Moderators()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$ForumFieldsMixin$ModeratorsToJson(
+        ForumFieldsMixin$Moderators instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
 ForumFieldsMixin$Chats _$ForumFieldsMixin$ChatsFromJson(
@@ -1986,7 +2044,7 @@ RemoveInvite$Mutation$RemoveInvite$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
-          ..screened = json['screened'] as bool?
+          ..screened = json['screened'] as bool
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2360,7 +2418,7 @@ AddInvite$Mutation$AddInvite$Nodes _$AddInvite$Mutation$AddInvite$NodesFromJson(
           .toList()
       ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
           unknownValue: Privacy.artemisUnknown)
-      ..screened = json['screened'] as bool?
+      ..screened = json['screened'] as bool
       ..filterLocation = json['filterLocation'] as String
       ..filterRadius = (json['filterRadius'] as num).toDouble()
       ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2511,7 +2569,7 @@ CreateEvent$Mutation$CreateEvent$Nodes
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
               unknownValue: Privacy.artemisUnknown)
-          ..screened = json['screened'] as bool?
+          ..screened = json['screened'] as bool
           ..filterLocation = json['filterLocation'] as String
           ..filterRadius = (json['filterRadius'] as num).toDouble()
           ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
@@ -2593,7 +2651,7 @@ Map<String, dynamic> _$CreateEvent$MutationToJson(
     };
 
 EventInput _$EventInputFromJson(Map<String, dynamic> json) => EventInput(
-      chatDisabled: json['chatDisabled'] as bool?,
+      chatDisabled: json['chatDisabled'] as bool,
       coordinates:
           fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String),
       creatorId: json['creatorId'] as int,
@@ -2701,6 +2759,10 @@ CreateGroup$Mutation$CreateGroup$Nodes
               .map((e) =>
                   GroupFieldsMixin$Users.fromJson(e as Map<String, dynamic>))
               .toList()
+          ..requested = (json['requested'] as List<dynamic>)
+              .map((e) => GroupFieldsMixin$Requested.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
           ..screened = json['screened'] as bool
           ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
               json['location'] as String?)
@@ -2714,6 +2776,7 @@ Map<String, dynamic> _$CreateGroup$Mutation$CreateGroup$NodesToJson(
       'name': instance.name,
       'owner': instance.owner,
       'users': instance.users.map((e) => e.toJson()).toList(),
+      'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),

@@ -49,6 +49,7 @@ class _ChatsState extends State<Chats> {
                           color: Colors.grey[50],
                           width: MediaQuery.of(context).size.width,
                           child: MessagesTextField(
+                            event: widget.event,
                             forum: widget.forum,
                           ))),
                 ],

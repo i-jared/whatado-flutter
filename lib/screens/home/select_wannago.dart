@@ -39,8 +39,6 @@ class _SelectWannagoState extends State<SelectWannago> {
       final provider = EventsGqlProvider();
       if (accepted) {
         final result = await provider.addInvite(eventId: event.id, userId: w.user.id);
-        print('jcl $result');
-        print('jcl ${result.ok}');
         if (result.ok) {
           final tempEvent = result.data!;
           homeState.updateEvent(tempEvent);

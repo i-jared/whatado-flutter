@@ -1,0 +1,12 @@
+query suggestedGroups {
+  suggestedGroups {
+    ok
+    nodes {
+      ...GroupFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

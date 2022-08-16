@@ -12,11 +12,16 @@ class GroupListItem extends StatefulWidget {
   final bool member;
   final bool requested;
   final bool showButton;
-  GroupListItem(
-      {required this.group,
-      this.requested = false,
-      this.member = false,
-      this.showButton = false});
+  final bool showRequest;
+  final bool noPadding;
+  GroupListItem({
+    required this.group,
+    this.requested = false,
+    this.member = false,
+    this.showButton = false,
+    this.showRequest = false,
+    this.noPadding = false,
+  });
   @override
   State<StatefulWidget> createState() => _GroupListItemState();
 }
@@ -39,9 +44,18 @@ class _GroupListItemState extends State<GroupListItem> {
           MaterialPageRoute(builder: (context) => GroupDetails(group: widget.group))),
       child: Row(
         children: [
+          widget.showRequest && widget.group.requested.length > 0
+              ? Container(
+                  margin: EdgeInsets.symmetric(horizontal: 6),
+                  height: 12,
+                  width: 12,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10), color: AppColors.primary),
+                )
+              : SizedBox(width: widget.noPadding ? 0 : 24),
           Container(
-              height: 75,
-              width: 75,
+              height: 60,
+              width: 60,
               child: CachedNetworkImage(imageUrl: widget.group.icon.url)),
           SizedBox(width: 15),
           Expanded(

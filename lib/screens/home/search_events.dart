@@ -23,7 +23,7 @@ class SearchEvents extends StatelessWidget {
         itemBuilder: (context, i) {
           if (i == 0) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
               child: Text('Suggested Events',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             );

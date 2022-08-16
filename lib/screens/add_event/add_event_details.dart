@@ -104,6 +104,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             Row(
               children: [
                 Text('LOCATION', style: headingStyle),
+                // TODO remove this replace with hint
                 SizedBox(width: 10),
                 Text('(ONLY VISIBLE TO YOU)',
                     style: TextStyle(fontSize: 15, color: Colors.grey)),

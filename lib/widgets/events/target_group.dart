@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
-import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/screens/profile/create_group.dart';
 import 'package:whatado/state/add_event_state.dart';

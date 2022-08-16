@@ -1,0 +1,12 @@
+query suggestedEvents {
+  suggestedEvents {
+    ok
+    nodes {
+      ...EventFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

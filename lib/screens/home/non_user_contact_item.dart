@@ -7,7 +7,9 @@ import 'package:whatado/state/search_state.dart';
 
 class NonUserContactItem extends StatefulWidget {
   final MyContact contact;
-  NonUserContactItem(this.contact);
+  final int? groupId;
+  final int? eventId;
+  NonUserContactItem(this.contact, {this.groupId, this.eventId});
 
   @override
   State<StatefulWidget> createState() => _NonUserContactItemState();
@@ -65,7 +67,8 @@ class _NonUserContactItemState extends State<NonUserContactItem> {
                 : () async {
                     setState(() => loading = true);
                     final provider = UserGqlProvider();
-                    final result = await provider.createReferral(widget.contact.phone!);
+                    final result = await provider.createReferral(widget.contact.phone!,
+                        eventId: widget.eventId, groupId: widget.groupId);
                     await searchState.updateReferrals(widget.contact.phone!);
                     setState(() {
                       loading = false;

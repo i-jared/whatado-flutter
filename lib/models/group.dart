@@ -1,3 +1,5 @@
+import 'package:geojson/geojson.dart';
+import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group_icon.dart';
 
@@ -6,24 +8,34 @@ class Group {
   int owner;
   String name;
   GroupIcon icon;
+  bool screened;
   List<EventUser> users;
+  List<EventUser> requested;
+  GeoJsonPoint location;
 
-  Group(
-      {required this.id,
-      required this.owner,
-      required this.name,
-      required this.icon,
-      this.users = const []});
+  Group({
+    required this.id,
+    required this.owner,
+    required this.name,
+    required this.icon,
+    required this.location,
+    required this.screened,
+    this.users = const [],
+    this.requested = const [],
+  });
 
   factory Group.fromGqlData(Map<String, dynamic> data) {
-    print(data);
     return Group(
       id: data['id'],
+      screened: data['screened'],
       owner: data['owner'],
+      location: Event.parseCoordinates(data['location']),
       name: data['name'],
       icon: GroupIcon.fromGqlData(data['icon']),
       users: List<EventUser>.from(
           data['users']?.map((user) => EventUser.fromGqlData(user)).toList() ?? []),
+      requested: List<EventUser>.from(
+          data['requested']?.map((user) => EventUser.fromGqlData(user)).toList() ?? []),
     );
   }
 

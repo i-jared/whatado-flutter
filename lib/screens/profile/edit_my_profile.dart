@@ -150,6 +150,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
                             children: [
                               Text('INTERESTS', style: headingStyle),
                               SizedBox(width: 10),
+                              // Remove this replace with hint
                               Text('(ONLY VISIBLE TO YOU)',
                                   style: TextStyle(fontSize: 15, color: Colors.grey)),
                             ],

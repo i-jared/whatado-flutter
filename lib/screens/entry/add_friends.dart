@@ -88,7 +88,7 @@ class _AddFriendsState extends State<AddFriends> {
           int j = i ~/ 2;
           final user = searchState.filteredUserContacts![j];
           return UserContactItem(user,
-              friends: userState.user?.friends.any((f) => f.id == user.id) ?? false,
+              accepted: userState.user?.friends.any((f) => f.id == user.id) ?? false,
               requested:
                   userState.user?.requestedFriends.any((f) => f.id == user.id) ?? false);
         });

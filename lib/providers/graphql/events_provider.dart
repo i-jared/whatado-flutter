@@ -103,6 +103,30 @@ class EventsGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<List<Event>>> suggestedEvents() async {
+    final query = SuggestedEventsQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['suggestedEvents'];
+    final data = root != null && root['nodes'] != null
+        ? (root?['nodes'] as List).map<Event>((e) => Event.fromGqlData(e)).toList()
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<Event>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<List<Event>>> searchEvents(String partial) async {
     final query = SearchEventsQuery(variables: SearchEventsArguments(partial: partial));
     final result = await graphqlClientService.query(query);

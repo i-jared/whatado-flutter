@@ -2,11 +2,13 @@ fragment ForumFields on Forum {
   id
   updatedAt
   chatDisabled
-  ownerId
   userNotifications {
     id
     lastAccessed
     muted
+  }
+  moderators {
+    ...EventUser
   }
   chats {
     id

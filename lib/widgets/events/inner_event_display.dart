@@ -47,7 +47,8 @@ class InnerEventDisplay extends StatelessWidget {
                   children: [
                     Text(
                       event.title,
-                      overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.fade,
+                      softWrap: false,
                       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
                     Row(children: [
@@ -69,7 +70,8 @@ class InnerEventDisplay extends StatelessWidget {
                       Flexible(
                         child: Text(
                           event.location,
-                          overflow: TextOverflow.ellipsis,
+                          overflow: TextOverflow.fade,
+                          softWrap: false,
                         ),
                       )
                     ]),
@@ -95,14 +97,19 @@ class InnerEventDisplay extends StatelessWidget {
                               border:
                                   Border(right: BorderSide(color: AppColors.primary))),
                         ),
-                        RichText(
-                            text: TextSpan(children: [
-                          TextSpan(
-                              text: "  Wannago ", style: TextStyle(color: Colors.black)),
-                          TextSpan(
-                              text: "${filteredWannago.length}",
-                              style: TextStyle(color: AppColors.primary)),
-                        ]))
+                        Flexible(
+                          child: RichText(
+                              softWrap: false,
+                              overflow: TextOverflow.fade,
+                              text: TextSpan(children: [
+                                TextSpan(
+                                    text: "  Wannago ",
+                                    style: TextStyle(color: Colors.black)),
+                                TextSpan(
+                                    text: "${filteredWannago.length}",
+                                    style: TextStyle(color: AppColors.primary)),
+                              ])),
+                        )
                       ])
                   ],
                 ),

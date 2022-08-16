@@ -53,6 +53,30 @@ class GroupGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<List<Group>>> suggestedGroups() async {
+    final query = SuggestedGroupsQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['suggestedGroups'];
+    final data = root != null && root['nodes'] != null
+        ? (root['nodes'] as List).map((val) => Group.fromGqlData(val)).toList()
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<Group>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<List<Group>>> searchGroups(String partial) async {
     final query = SearchGroupsQuery(variables: SearchGroupsArguments(partial: partial));
     final result = await graphqlClientService.query(query);

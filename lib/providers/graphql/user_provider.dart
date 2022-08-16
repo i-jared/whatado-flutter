@@ -358,6 +358,30 @@ class UserGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<List<EventUser>>> suggestedUsers() async {
+    final query = SuggestedUsersQuery();
+    final result = await graphqlClientService.query(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['suggestedUsers'];
+    final data = root != null && root['nodes'] != null
+        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
+        : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<List<EventUser>>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<List<EventUser>>> searchUsers(String partial) async {
     final query = SearchUsersQuery(variables: SearchUsersArguments(partial: partial));
     final result = await graphqlClientService.query(query);
@@ -430,9 +454,11 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<bool>> createReferral(String phone) async {
-    final mutation =
-        CreateReferralMutation(variables: CreateReferralArguments(phone: phone));
+  Future<MyQueryResponse<bool>> createReferral(String phone,
+      {int? eventId, int? groupId}) async {
+    final mutation = CreateReferralMutation(
+        variables:
+            CreateReferralArguments(phone: phone, eventId: eventId, groupId: groupId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');

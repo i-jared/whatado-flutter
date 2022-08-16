@@ -99,7 +99,7 @@ type Event {
   filterRadius: Float!
   flags: Int!
   forum: Forum!
-  group: Group!
+  group: Group
   id: Int!
   invited: [User!]!
   location: String!
@@ -146,6 +146,7 @@ input EventFilterInput {
 }
 
 input EventInput {
+  chatDisabled: Boolean!
   coordinates: Point!
   creatorId: Int!
   description: String!
@@ -180,10 +181,12 @@ type FieldError {
 }
 
 type Forum {
+  chatDisabled: Boolean!
   chats: [Chat!]!
   createdAt: DateTime!
   event: Event!
   id: Int!
+  moderators: [User!]!
   updatedAt: DateTime!
   userNotifications: [ChatNotification!]!
 }
@@ -238,6 +241,7 @@ input GroupFilterInput {
   location: Point
   name: String
   owner: Int
+  requestedIds: [Int!]
   screened: Boolean
   updatedAt: String
   userIds: [Int!]
@@ -338,7 +342,7 @@ type Mutation {
   createForum(eventId: Int!): ForumApiResponse!
   createGroup(options: GroupInput!): GroupApiResponse!
   createInterest(interestsText: [String!]!): IntsApiResponse!
-  createReferral(phone: String!): BoolApiResponse!
+  createReferral(eventId: Int, groupId: Int, phone: String!): BoolApiResponse!
   deleteChat(id: Int!): BoolApiResponse!
   deleteEvent(eventId: Int!): BoolApiResponse!
   deleteInterest(id: Int!): BoolApiResponse!
@@ -354,6 +358,7 @@ type Mutation {
   removeAccount: BoolApiResponse!
   removeInvite(eventId: Int!, userId: Int!): EventApiResponse!
   requestFriend(id: Int!): BoolApiResponse!
+  requestGroup(id: Int!): BoolApiResponse!
   sendCode: BoolApiResponse!
   unblockUser(userId: Int!): BoolApiResponse!
   unfriend(id: Int!): BoolApiResponse!
@@ -406,6 +411,9 @@ type Query {
   searchGroups(partial: String!): GroupsApiResponse!
   searchInterests(partial: String!): InterestsApiResponse!
   searchUsers(partial: String!): UsersApiResponse!
+  suggestedEvents: EventsApiResponse!
+  suggestedGroups: GroupsApiResponse!
+  suggestedUsers: UsersApiResponse!
   user(id: Int!): UserApiResponse!
   users: UsersApiResponse!
   usersById(ids: [Int!]!): UsersApiResponse!
@@ -473,6 +481,7 @@ type User {
   refreshCount: Int!
   requestedFriends: [User!]!
   requestedFriendsIds: [Int!]!
+  requestedGroups: [Group!]!
   updatedAt: DateTime!
   verified: Boolean!
 }
