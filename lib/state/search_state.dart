@@ -6,7 +6,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 import 'package:fuzzywuzzy/model/extracted_result.dart';
 import 'package:whatado/models/event_user.dart';
-import 'package:whatado/models/group.dart';
+import 'package:whatado/models/group.dart' as g;
 import 'package:whatado/models/event.dart' as e;
 import 'package:whatado/models/my_contact.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -36,7 +36,7 @@ class SearchState extends ChangeNotifier {
   List<EventUser>? _userContacts;
   List<EventUser>? _filteredUserContacts;
   List<EventUser>? _filteredUsers;
-  List<Group>? _filteredGroups;
+  List<g.Group>? _filteredGroups;
   List<MyContact>? _nonUserContacts;
   List<MyContact>? _filteredNonUserContacts;
   List<e.Event>? _filteredEvents;
@@ -56,7 +56,7 @@ class SearchState extends ChangeNotifier {
   List<MyContact>? get filteredNonUserContacts => _filteredNonUserContacts;
   List<EventUser>? get filteredUserContacts => _filteredUserContacts;
   List<EventUser>? get filteredUsers => _filteredUsers;
-  List<Group>? get filteredGroups => _filteredGroups;
+  List<g.Group>? get filteredGroups => _filteredGroups;
   List<e.Event>? get filteredEvents => _filteredEvents;
   List<EventUser>? get userContacts => _userContacts;
   bool get contactsLoading => _contactsLoading;

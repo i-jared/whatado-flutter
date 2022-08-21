@@ -1,10 +1,12 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/user_profile_app_bar.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/users/user_heading.dart';
 
 class UserProfile extends StatefulWidget {
@@ -46,98 +48,83 @@ class _StateUserProfile extends State<UserProfile> {
     final userState = Provider.of<UserState>(context);
     final user = userState.user!;
     final friends = user.friends.any((f) => f.id == widget.user.id);
-    final youRequested =
-        user.requestedFriends.any((f) => f.id == widget.user.id);
-    final theyRequested =
-        user.friendRequests.any((f) => f.id == widget.user.id);
+    final youRequested = user.requestedFriends.any((f) => f.id == widget.user.id);
+    final theyRequested = user.friendRequests.any((f) => f.id == widget.user.id);
 
-    return Container(
-      color: Colors.transparent,
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          extendBodyBehindAppBar: true,
-          appBar: UserProfileAppBar(title: widget.user.name, user: widget.user),
-          body: SingleChildScrollView(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return GenericPage(
+      extendBodyBehindAppBar: true,
+      appBar: UserProfileAppBar(title: widget.user.name, user: widget.user),
+      body: SingleChildScrollView(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Stack(
             children: [
-              Stack(
-                children: [
-                  CarouselSlider(
-                    items: images,
-                    options: CarouselOptions(
-                        onPageChanged: (i, _) =>
-                            setState(() => selectedIndex = i),
-                        height: MediaQuery.of(context).size.width,
-                        autoPlay: false,
-                        enableInfiniteScroll: false,
-                        viewportFraction: 1.0),
-                  ),
-                  Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 5,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: List<Widget>.generate(
-                            (widget.user.photoUrls.length) * 2,
-                            (i) => i.isEven
-                                ? Container(
-                                    height: 10,
-                                    width: 10,
-                                    decoration: BoxDecoration(
-                                        color: i / 2 == selectedIndex
-                                            ? Colors.black
-                                            : Colors.grey,
-                                        shape: BoxShape.circle),
-                                  )
-                                : SizedBox(width: 5))),
-                  )
-                ],
+              CarouselSlider(
+                items: images,
+                options: CarouselOptions(
+                    onPageChanged: (i, _) => setState(() => selectedIndex = i),
+                    height: MediaQuery.of(context).size.width,
+                    autoPlay: false,
+                    enableInfiniteScroll: false,
+                    viewportFraction: 1.0),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: sectionSpacing),
-                    UserHeading(
-                      user: widget.user,
-                      onPressed: () => getFunction(
-                          context, friends, youRequested, theyRequested),
-                      child: loading
-                          ? Center(
-                              child: SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                              ),
-                            ))
-                          : Row(
-                              children: [
-                                Text(
-                                    getText(
-                                        friends, youRequested, theyRequested),
-                                    style: TextStyle(
-                                        fontSize: 15, color: Colors.white)),
-                                SizedBox(width: 10),
-                                Icon(
-                                    getIcon(
-                                        friends, youRequested, theyRequested),
-                                    color: Colors.white,
-                                    size: 15)
-                              ],
-                            ),
-                    ),
-                  ],
-                ),
-              ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 5,
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List<Widget>.generate(
+                        (widget.user.photoUrls.length) * 2,
+                        (i) => i.isEven
+                            ? Container(
+                                height: 10,
+                                width: 10,
+                                decoration: BoxDecoration(
+                                    color: i / 2 == selectedIndex
+                                        ? Colors.black
+                                        : Colors.grey,
+                                    shape: BoxShape.circle),
+                              )
+                            : SizedBox(width: 5))),
+              )
             ],
-          )),
-        ),
-      ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: padding),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(height: sectionSpacing),
+                UserHeading(
+                  user: widget.user,
+                  onPressed: () =>
+                      getFunction(context, friends, youRequested, theyRequested),
+                  child: loading
+                      ? Center(
+                          child: SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        ))
+                      : Row(
+                          children: [
+                            Text(getText(friends, youRequested, theyRequested),
+                                style: TextStyle(fontSize: 15, color: Colors.white)),
+                            SizedBox(width: 10),
+                            Icon(getIcon(friends, youRequested, theyRequested),
+                                color: Colors.white, size: 15)
+                          ],
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      )),
     );
   }
 
@@ -161,8 +148,8 @@ class _StateUserProfile extends State<UserProfile> {
                 : Icons.person_add_alt_outlined;
   }
 
-  void getFunction(BuildContext context, bool friends, bool youRequested,
-      bool theyRequested) async {
+  void getFunction(
+      BuildContext context, bool friends, bool youRequested, bool theyRequested) async {
     final userState = Provider.of<UserState>(context, listen: false);
     final provider = UserGqlProvider();
     setState(() => loading = true);
@@ -172,12 +159,10 @@ class _StateUserProfile extends State<UserProfile> {
           context: context,
           builder: (BuildContext context) => AlertDialog(
                   title: Text('Unfriend?'),
-                  content: Text(
-                      'Are you sure you want to unfriend ${widget.user.name}?'),
+                  content: Text('Are you sure you want to unfriend ${widget.user.name}?'),
                   actions: [
                     TextButton(
-                        child: Text("Cancel"),
-                        onPressed: () => Navigator.pop(context)),
+                        child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
                     TextButton(
                         child: Text("Unfriend"),
                         onPressed: () async {

@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/console/screens/home.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/screens/entry/login.dart';
 import 'package:whatado/services/environment_config.dart';
 import 'package:whatado/services/service_provider.dart';
@@ -75,7 +76,7 @@ class _MyConsoleState extends State<MyConsole> {
               )),
               home: loading
                   ? Container(
-                      color: Colors.grey[50],
+                      color: AppColors.background,
                       child: Center(
                         child: Image.asset('assets/icon.png'),
                       ))

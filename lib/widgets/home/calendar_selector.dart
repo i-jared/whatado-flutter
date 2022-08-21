@@ -99,7 +99,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
                       decoration: BoxDecoration(
                         color: homeState.selectedDate == indexedDate.dateTime
                             ? AppColors.secondary
-                            : Colors.grey[50],
+                            : AppColors.background,
                       ),
                       height: double.infinity,
                       width: (width - monthWidth) / 6,
@@ -129,7 +129,7 @@ class _CalendarSelectorState extends State<CalendarSelector> {
     return Container(
         height: 40,
         decoration: BoxDecoration(
-          color: Colors.grey[50],
+          color: AppColors.background,
           boxShadow: kElevationToShadow[1],
         ),
         child: Row(

@@ -2,6 +2,7 @@ import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/screens/home/user_list_page.dart';
@@ -63,10 +64,10 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                         child: Text(a.text,
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              color: _selected ? Colors.grey[50] : Colors.grey[850],
+                              color: _selected ? AppColors.background : Colors.grey[850],
                             )),
                         decoration: BoxDecoration(
-                            color: _selected ? Colors.grey[850] : Colors.grey[50],
+                            color: _selected ? Colors.grey[850] : AppColors.background,
                             borderRadius: BorderRadius.circular(100)),
                       ),
                     ),
@@ -112,12 +113,12 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                                           UserProfile(user: widget.chat.author)))
                               .then((_) async {
                             await Future.delayed(Duration(milliseconds: 500));
-                            SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                              statusBarBrightness: Brightness.dark,
-                              statusBarIconBrightness: Brightness.dark,
-                              systemNavigationBarColor: Colors.grey[50],
-                              statusBarColor: Colors.transparent,
-                            ));
+                            // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                            //   statusBarBrightness: Brightness.dark,
+                            //   statusBarIconBrightness: Brightness.dark,
+                            //   systemNavigationBarColor: AppColors.background,
+                            //   statusBarColor: Colors.transparent,
+                            // ));
                           })),
                   SizedBox(width: 5),
                   Flexible(child: bubble)

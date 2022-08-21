@@ -1,4 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -27,18 +29,27 @@ import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-      systemNavigationBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.transparent));
+  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+  //     statusBarBrightness: Brightness.dark,
+  //     systemNavigationBarIconBrightness: Brightness.dark,
+  //     systemNavigationBarColor: Colors.transparent,
+  //     statusBarColor: Colors.transparent));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp();
+
+  if (kDebugMode) {
+    // Force disable Crashlytics collection while doing every day development.
+    // Temporarily toggle this to true if you want to test crash reporting in your app.
+    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+  }
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
       alert: true, badge: true, sound: true);
 
@@ -89,6 +100,8 @@ class _MyAppState extends State<MyApp> {
               final userState = Provider.of<UserState>(context);
               return MaterialApp(
                 debugShowCheckedModeBanner: false,
+                builder: BotToastInit(),
+                navigatorObservers: [BotToastNavigatorObserver()],
                 title: 'Flutter Demo',
                 theme: ThemeData(
                     textSelectionTheme:

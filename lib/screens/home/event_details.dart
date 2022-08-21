@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -20,6 +21,7 @@ import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/buttons/rounded_delete_button.dart';
 import 'package:whatado/widgets/buttons/shaded_icon.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/users/user_avatar.dart';
 
 class EventDetails extends StatefulWidget {
@@ -85,235 +87,222 @@ class _EventDetailsState extends State<EventDetails> {
                       ),
                     ]))
         : null;
-    return Container(
-      color: Colors.grey[50],
-      child: SafeArea(
-        child: Scaffold(
-            appBar: EventAppBar(event: event),
-            body: SingleChildScrollView(
-                child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding),
-              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                if (event.imageUrl != null)
-                  Padding(
-                    padding: EdgeInsets.only(top: sectionSpacing),
-                    child: Hero(
-                      tag: 'event_${event.id}',
-                      child: Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration:
-                              BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                          child: CachedNetworkImage(
-                            imageUrl: event.imageUrl!,
-                            placeholder: (context, _) => Shimmer.fromColors(
-                              baseColor: Colors.grey[200]!,
-                              highlightColor: Colors.white,
-                              child: Container(
-                                  color: Colors.grey,
-                                  width: MediaQuery.of(context).size.width,
-                                  height: MediaQuery.of(context).size.width),
-                            ),
-                          )),
-                    ),
-                  ),
-                SizedBox(height: headingSpacing),
-                Text(event.title,
-                    style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
-                SizedBox(height: headingSpacing),
-                Text(event.description),
-                SizedBox(height: headingSpacing),
-                Divider(),
-                SizedBox(height: headingSpacing),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              event.creator.id == userState.user?.id
-                                  ? myProfileNav()
-                                  : Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  UserProfile(user: event.creator)))
-                                      .then((_) async {
-                                      await Future.delayed(Duration(milliseconds: 500));
-                                      SystemChrome.setSystemUIOverlayStyle(
-                                          SystemUiOverlayStyle(
-                                        statusBarBrightness: Brightness.dark,
-                                        statusBarIconBrightness: Brightness.dark,
-                                        systemNavigationBarColor: Colors.grey[50],
-                                        statusBarColor: Colors.transparent,
-                                      ));
-                                    });
-                            },
-                            child: UserAvatar(
-                                url: event.creator.photoUrls.isEmpty
-                                    ? null
-                                    : event.creator.photoUrls.first,
-                                radius: 25),
-                          ),
-                          SizedBox(width: 10),
-                          Flexible(
-                            child: Text(event.creator.name,
-                                overflow: TextOverflow.ellipsis,
-                                style:
-                                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                          )
-                        ],
+    return GenericPage(
+        appBar: EventAppBar(event: event),
+        body: SingleChildScrollView(
+            child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding),
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            if (event.imageUrl != null)
+              Padding(
+                padding: EdgeInsets.only(top: sectionSpacing),
+                child: Hero(
+                  tag: 'event_${event.id}',
+                  child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                      child: CachedNetworkImage(
+                        imageUrl: event.imageUrl!,
+                        placeholder: (context, _) => Shimmer.fromColors(
+                          baseColor: Colors.grey[200]!,
+                          highlightColor: Colors.white,
+                          child: Container(
+                              color: Colors.grey,
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.width),
+                        ),
+                      )),
+                ),
+              ),
+            SizedBox(height: headingSpacing),
+            Text(event.title,
+                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+            SizedBox(height: headingSpacing),
+            Text(event.description),
+            SizedBox(height: headingSpacing),
+            Divider(),
+            SizedBox(height: headingSpacing),
+            Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          event.creator.id == userState.user?.id
+                              ? myProfileNav()
+                              : Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              UserProfile(user: event.creator)))
+                                  .then((_) async {
+                                  await Future.delayed(Duration(milliseconds: 500));
+                                  // SystemChrome.setSystemUIOverlayStyle(
+                                  //     SystemUiOverlayStyle(
+                                  //   statusBarBrightness: Brightness.dark,
+                                  //   statusBarIconBrightness: Brightness.dark,
+                                  //   systemNavigationBarColor: AppColors.background,
+                                  //   statusBarColor: Colors.transparent,
+                                  // ));
+                                });
+                        },
+                        child: UserAvatar(
+                            url: event.creator.photoUrls.isEmpty
+                                ? null
+                                : event.creator.photoUrls.first,
+                            radius: 25),
                       ),
-                    ),
-                    Text("Organizer", style: headingStyle)
-                  ],
-                ),
-                SizedBox(height: headingSpacing),
-                Divider(),
-                SizedBox(height: headingSpacing),
-                InkWell(
-                  onTap: () => cal.Add2Calendar.addEvent2Cal(cal.Event(
-                      location: event.location,
-                      title: event.title,
-                      startDate: event.time,
-                      endDate: event.time.add(Duration(hours: 1)))),
-                  child: Row(
-                    children: [
-                      ShadedIcon(
-                          icon: Icons.calendar_today_outlined, width: 50, iconSize: 25),
-                      SizedBox(width: 10),
-                      Text(dateFormat.format(event.time), style: TextStyle(fontSize: 18)),
-                    ],
-                  ),
-                ),
-                SizedBox(height: headingSpacing),
-                Divider(),
-                SizedBox(height: headingSpacing),
-                InkWell(
-                  onTap: () async => await MapsLauncher.launchQuery(event.location),
-                  child: Row(
-                    children: [
-                      ShadedIcon(
-                          icon: Icons.location_on_outlined, width: 50, iconSize: 25),
                       SizedBox(width: 10),
                       Flexible(
-                          child: Text(event.location, style: TextStyle(fontSize: 18))),
+                        child: Text(event.creator.name,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                      )
                     ],
                   ),
                 ),
-                SizedBox(height: headingSpacing),
-                Divider(),
-                SizedBox(height: headingSpacing),
-                InkWell(
-                  onTap: event.invited.isEmpty
-                      ? null
-                      : () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (BuildContext context) =>
-                                  UserListPage(title: "Gonnago", users: event.invited))),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Flexible(
-                        child: Container(
-                            height: 40,
-                            child: event.invited.isEmpty
-                                ? Container(
-                                    width: 40,
-                                    alignment: Alignment.center,
-                                    child: Text("--", style: TextStyle(fontSize: 30)),
-                                  )
-                                : PictureWaterfall(
-                                    radius: 20, loading: false, users: event.invited)),
-                      ),
-                      Text('Gonnago', style: headingStyle)
-                    ],
-                  ),
-                ),
-                SizedBox(height: headingSpacing),
-                if (event.creator.id == userState.user?.id)
-                  InkWell(
-                    onTap: wannago.isEmpty
-                        ? null
-                        : () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => SelectWannago(event: event)));
-                          },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        wannagoUsers.isEmpty
+                Text("Organizer", style: headingStyle)
+              ],
+            ),
+            SizedBox(height: headingSpacing),
+            Divider(),
+            SizedBox(height: headingSpacing),
+            InkWell(
+              onTap: () => cal.Add2Calendar.addEvent2Cal(cal.Event(
+                  location: event.location,
+                  title: event.title,
+                  startDate: event.time,
+                  endDate: event.time.add(Duration(hours: 1)))),
+              child: Row(
+                children: [
+                  ShadedIcon(
+                      icon: Icons.calendar_today_outlined, width: 50, iconSize: 25),
+                  SizedBox(width: 10),
+                  Text(dateFormat.format(event.time), style: TextStyle(fontSize: 18)),
+                ],
+              ),
+            ),
+            SizedBox(height: headingSpacing),
+            Divider(),
+            SizedBox(height: headingSpacing),
+            InkWell(
+              onTap: () async => await MapsLauncher.launchQuery(event.location),
+              child: Row(
+                children: [
+                  ShadedIcon(icon: Icons.location_on_outlined, width: 50, iconSize: 25),
+                  SizedBox(width: 10),
+                  Flexible(child: Text(event.location, style: TextStyle(fontSize: 18))),
+                ],
+              ),
+            ),
+            SizedBox(height: headingSpacing),
+            Divider(),
+            SizedBox(height: headingSpacing),
+            InkWell(
+              onTap: event.invited.isEmpty
+                  ? null
+                  : () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              UserListPage(title: "Gonnago", users: event.invited))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Flexible(
+                    child: Container(
+                        height: 40,
+                        child: event.invited.isEmpty
                             ? Container(
                                 width: 40,
                                 alignment: Alignment.center,
                                 child: Text("--", style: TextStyle(fontSize: 30)),
                               )
                             : PictureWaterfall(
-                                radius: 20, loading: false, users: wannagoUsers),
-                        Text('Wannago', style: headingStyle)
-                      ],
-                    ),
+                                radius: 20, loading: false, users: event.invited)),
                   ),
-                if (event.creator.id == userState.user?.id)
-                  TextButton(
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddFriends(
-                                  eventId: event.id, invitedUsers: event.invited))),
-                      child: Text('add friends',
-                          style: TextStyle(color: Color(0xff0073ab)))),
-                Divider(),
-                SizedBox(height: headingSpacing),
-                if (event.creator.id == userState.user?.id)
-                  RoundedArrowButton(
-                      disabled: wannago.isEmpty,
-                      onPressed: () async {
+                  Text('Gonnago', style: headingStyle)
+                ],
+              ),
+            ),
+            SizedBox(height: headingSpacing),
+            if (event.creator.id == userState.user?.id)
+              InkWell(
+                onTap: wannago.isEmpty
+                    ? null
+                    : () async {
                         await Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => SelectWannago(event: event)));
-                        // event = homeState.myEvents
-                        // .firstWhere((e) => e.id == widget.event.id);
-                        // setState(() {});
                       },
-                      text: '${wannago.length} people wannago'),
-                if (event.creator.id == userState.user?.id)
-                  SizedBox(height: sectionSpacing),
-                if (event.creator.id == userState.user?.id)
-                  RoundedDeleteButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                                  title: Text('Remove from event?'),
-                                  content:
-                                      Text('Are you sure you want to delete the event?'),
-                                  actions: [
-                                    TextButton(
-                                        child: Text("Cancel"),
-                                        onPressed: () => Navigator.pop(context)),
-                                    TextButton(
-                                      child: Text("Delete"),
-                                      onPressed: () async {
-                                        final provider = EventsGqlProvider();
-                                        await provider.deleteEvent(event.id);
-                                        await homeState.myEventsRefresh();
-                                        Navigator.popUntil(
-                                            context, (route) => route.isFirst);
-                                      },
-                                    ),
-                                  ]));
-                    },
-                    text: 'Delete',
-                  ),
-                SizedBox(height: 50),
-              ]),
-            ))),
-      ),
-    );
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    wannagoUsers.isEmpty
+                        ? Container(
+                            width: 40,
+                            alignment: Alignment.center,
+                            child: Text("--", style: TextStyle(fontSize: 30)),
+                          )
+                        : PictureWaterfall(
+                            radius: 20, loading: false, users: wannagoUsers),
+                    Text('Wannago', style: headingStyle)
+                  ],
+                ),
+              ),
+            if (event.creator.id == userState.user?.id)
+              TextButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddFriends(
+                              eventId: event.id, invitedUsers: event.invited))),
+                  child: Text('add friends', style: TextStyle(color: Color(0xff0073ab)))),
+            Divider(),
+            SizedBox(height: headingSpacing),
+            if (event.creator.id == userState.user?.id)
+              RoundedArrowButton(
+                  disabled: wannago.isEmpty,
+                  onPressed: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => SelectWannago(event: event)));
+                    // event = homeState.myEvents
+                    // .firstWhere((e) => e.id == widget.event.id);
+                    // setState(() {});
+                  },
+                  text: '${wannago.length} people wannago'),
+            if (event.creator.id == userState.user?.id) SizedBox(height: sectionSpacing),
+            if (event.creator.id == userState.user?.id)
+              RoundedDeleteButton(
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                              title: Text('Remove from event?'),
+                              content: Text('Are you sure you want to delete the event?'),
+                              actions: [
+                                TextButton(
+                                    child: Text("Cancel"),
+                                    onPressed: () => Navigator.pop(context)),
+                                TextButton(
+                                  child: Text("Delete"),
+                                  onPressed: () async {
+                                    final provider = EventsGqlProvider();
+                                    await provider.deleteEvent(event.id);
+                                    await homeState.myEventsRefresh();
+                                    Navigator.popUntil(context, (route) => route.isFirst);
+                                  },
+                                ),
+                              ]));
+                },
+                text: 'Delete',
+              ),
+            SizedBox(height: 50),
+          ]),
+        )));
   }
 }

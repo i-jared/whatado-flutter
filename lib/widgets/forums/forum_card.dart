@@ -8,12 +8,10 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/chats.dart';
 import 'package:whatado/state/home_state.dart';
-import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 
 class ForumCard extends StatefulWidget {
@@ -40,7 +38,6 @@ class _ForumCardState extends State<ForumCard> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
-    final userState = Provider.of<UserState>(context);
     final hasImage = widget.event.imageUrl != null;
     final unread = widget.forum.chats.isEmpty
         ? false
@@ -85,7 +82,7 @@ class _ForumCardState extends State<ForumCard> {
                           bottomLeft: Radius.circular(40),
                           topRight: Radius.circular(20),
                           bottomRight: Radius.circular(20)),
-                      color: Colors.grey[50],
+                      color: AppColors.background,
                     ),
                     child: Row(
                       children: [

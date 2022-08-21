@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,7 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/interests/input_interest_bubble.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
 
@@ -101,160 +103,160 @@ class _EditMyProfileState extends State<EditMyProfile> {
                     }))
           ];
 
-    return Container(
-      color: Colors.grey[50],
-      child: SafeArea(
-        child: Scaffold(
-          appBar: SavingAppBar(
-              title: 'Edit Profile',
-              onSave: () async {
-                userState.loading = true;
-                await userState.save(interests, bioController.text);
-                userState.loading = false;
-                Navigator.pop(context);
-              },
-              disabled: userState.loading ||
-                  (bioController.text == widget.user!.bio &&
-                          listsEqual<Interest>(interests, widget.user!.interests) &&
-                          listsEqual<Uint8List>(userState.photos, userState.ogphotos) ||
-                      (userState.photos!.isEmpty ||
-                          bioController.text.isEmpty ||
-                          interests.isEmpty))),
-          body: widget.user == null
-              ? Container()
-              : userState.loading
-                  ? Center(child: CircularProgressIndicator())
-                  : SingleChildScrollView(
-                      child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: padding),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+    return GenericPage(
+      appBar: SavingAppBar(
+          title: 'Edit Profile',
+          onSave: () async {
+            userState.loading = true;
+            final success = await userState.save(interests, bioController.text);
+            if (success) {
+              BotToast.showText(text: 'Successfully edited user');
+            } else {
+              BotToast.showText(text: 'Error editing user');
+            }
+            userState.loading = false;
+            Navigator.pop(context);
+          },
+          disabled: userState.loading ||
+              (bioController.text == widget.user!.bio &&
+                      listsEqual<Interest>(interests, widget.user!.interests) &&
+                      listsEqual<Uint8List>(userState.photos, userState.ogphotos) ||
+                  (userState.photos!.isEmpty ||
+                      bioController.text.isEmpty ||
+                      interests.isEmpty))),
+      body: widget.user == null
+          ? Container()
+          : userState.loading
+              ? Center(child: CircularProgressIndicator())
+              : SingleChildScrollView(
+                  child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: padding),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: headingSpacing),
+                      Text('BIO', style: headingStyle),
+                      SizedBox(height: headingSpacing),
+                      TextFormField(
+                          maxLines: null,
+                          controller: bioController,
+                          style: TextStyle(fontSize: 18)),
+                      SizedBox(height: sectionSpacing),
+                      Text('PHOTOS', style: headingStyle),
+                      SizedBox(height: headingSpacing),
+                      Wrap(
+                        spacing: imageSpacing,
+                        runSpacing: 10.0,
+                        children: theList,
+                      ),
+                      SizedBox(height: sectionSpacing),
+                      Row(
                         children: [
-                          SizedBox(height: headingSpacing),
-                          Text('BIO', style: headingStyle),
-                          SizedBox(height: headingSpacing),
-                          TextFormField(
-                              maxLines: null,
-                              controller: bioController,
-                              style: TextStyle(fontSize: 18)),
-                          SizedBox(height: sectionSpacing),
-                          Text('PHOTOS', style: headingStyle),
-                          SizedBox(height: headingSpacing),
-                          Wrap(
-                            spacing: imageSpacing,
-                            runSpacing: 10.0,
-                            children: theList,
+                          Text('INTERESTS', style: headingStyle),
+                          SizedBox(width: 10),
+                          // Remove this replace with hint
+                          Text('(ONLY VISIBLE TO YOU)',
+                              style: TextStyle(fontSize: 15, color: Colors.grey)),
+                        ],
+                      ),
+                      SizedBox(height: headingSpacing),
+                      loading
+                          ? Center(child: CircularProgressIndicator())
+                          : InterestWrap(
+                              interests: allInterests,
+                              selectedInterests: interests,
+                              onSelected: (bool notSelected, Interest interest) {
+                                if (notSelected) {
+                                  interests.add(interest);
+                                  setState(() {
+                                    interests = interests;
+                                  });
+                                } else {
+                                  interests.remove(interest);
+                                  setState(() {
+                                    interests = interests;
+                                  });
+                                }
+                              }),
+                      // Wrap(
+                      //   spacing: 10.0,
+                      //   runSpacing: 0.0,
+                      //   children: interests
+                      //       .map((interest) => InputInterestBubble(
+                      //             interest: interest,
+                      //             onDeleted: () => setState(() {
+                      //               interests.remove(interest);
+                      //               setState(() => interests = interests);
+                      //             }),
+                      //           ))
+                      //       .toList(),
+                      // ),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: TypeAheadFormField(
+                              direction: AxisDirection.up,
+                              noItemsFoundBuilder: (context) => SizedBox.shrink(),
+                              onSuggestionSelected: (Interest interest) {
+                                if (interests
+                                    .map((val) => val.title)
+                                    .contains(interest.title)) return;
+                                interests.add(interest);
+                                setState(() {
+                                  interests = interests;
+                                });
+                                textController.clear();
+                              },
+                              suggestionsCallback: (String pattern) {
+                                final provider = InterestGqlProvider();
+                                final result = provider.search(pattern);
+                                return result;
+                              },
+                              itemBuilder: (context, Interest interest) =>
+                                  ListTile(title: Text(interest.title)),
+                              textFieldConfiguration: TextFieldConfiguration(
+                                decoration: InputDecoration(
+                                  isDense: true,
+                                  hintText: 'Add your interest here...',
+                                  hintStyle: TextStyle(fontSize: 13),
+                                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                                ),
+                                textCapitalization: TextCapitalization.words,
+                                controller: textController,
+                              ),
+                            ),
                           ),
-                          SizedBox(height: sectionSpacing),
-                          Row(
-                            children: [
-                              Text('INTERESTS', style: headingStyle),
-                              SizedBox(width: 10),
-                              // Remove this replace with hint
-                              Text('(ONLY VISIBLE TO YOU)',
-                                  style: TextStyle(fontSize: 15, color: Colors.grey)),
-                            ],
-                          ),
-                          SizedBox(height: headingSpacing),
-                          loading
-                              ? Center(child: CircularProgressIndicator())
-                              : InterestWrap(
-                                  interests: allInterests,
-                                  selectedInterests: interests,
-                                  onSelected: (bool notSelected, Interest interest) {
-                                    if (notSelected) {
-                                      interests.add(interest);
-                                      setState(() {
-                                        interests = interests;
-                                      });
-                                    } else {
-                                      interests.remove(interest);
-                                      setState(() {
-                                        interests = interests;
-                                      });
-                                    }
-                                  }),
-                          // Wrap(
-                          //   spacing: 10.0,
-                          //   runSpacing: 0.0,
-                          //   children: interests
-                          //       .map((interest) => InputInterestBubble(
-                          //             interest: interest,
-                          //             onDeleted: () => setState(() {
-                          //               interests.remove(interest);
-                          //               setState(() => interests = interests);
-                          //             }),
-                          //           ))
-                          //       .toList(),
-                          // ),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: TypeAheadFormField(
-                                  direction: AxisDirection.up,
-                                  noItemsFoundBuilder: (context) => SizedBox.shrink(),
-                                  onSuggestionSelected: (Interest interest) {
+                          const SizedBox(width: 10),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: Icon(Icons.add_circle_outline,
+                                color: textController.text.isEmpty
+                                    ? Colors.grey[400]
+                                    : AppColors.primary,
+                                size: 35),
+                            onPressed: textController.text.isEmpty
+                                ? null
+                                : () {
                                     if (interests
                                         .map((val) => val.title)
-                                        .contains(interest.title)) return;
-                                    interests.add(interest);
+                                        .contains(textController.text.trim())) return;
+                                    final Interest newInterest = Interest(
+                                        id: 1, title: textController.text.trim());
+                                    interests.add(newInterest);
+                                    allInterests.add(newInterest);
                                     setState(() {
                                       interests = interests;
+                                      allInterests = allInterests;
                                     });
                                     textController.clear();
                                   },
-                                  suggestionsCallback: (String pattern) {
-                                    final provider = InterestGqlProvider();
-                                    final result = provider.search(pattern);
-                                    return result;
-                                  },
-                                  itemBuilder: (context, Interest interest) =>
-                                      ListTile(title: Text(interest.title)),
-                                  textFieldConfiguration: TextFieldConfiguration(
-                                    decoration: InputDecoration(
-                                      isDense: true,
-                                      hintText: 'Add your interest here...',
-                                      hintStyle: TextStyle(fontSize: 13),
-                                      contentPadding: EdgeInsets.symmetric(vertical: 12),
-                                    ),
-                                    textCapitalization: TextCapitalization.words,
-                                    controller: textController,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                icon: Icon(Icons.add_circle_outline,
-                                    color: textController.text.isEmpty
-                                        ? Colors.grey[400]
-                                        : AppColors.primary,
-                                    size: 35),
-                                onPressed: textController.text.isEmpty
-                                    ? null
-                                    : () {
-                                        if (interests
-                                            .map((val) => val.title)
-                                            .contains(textController.text.trim())) return;
-                                        final Interest newInterest = Interest(
-                                            id: 1, title: textController.text.trim());
-                                        interests.add(newInterest);
-                                        allInterests.add(newInterest);
-                                        setState(() {
-                                          interests = interests;
-                                          allInterests = allInterests;
-                                        });
-                                        textController.clear();
-                                      },
-                              ),
-                            ],
                           ),
-                          SizedBox(height: 150),
                         ],
                       ),
-                    )),
-        ),
-      ),
+                      SizedBox(height: 150),
+                    ],
+                  ),
+                )),
     );
   }
 }

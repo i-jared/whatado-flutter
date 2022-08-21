@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
@@ -26,7 +27,7 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
     final homeState = Provider.of<HomeState>(context);
     return AppBar(
       iconTheme: IconThemeData(color: Colors.black),
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.background,
       elevation: 0,
       title:
           Text('Event Details', style: TextStyle(fontSize: 23, color: Colors.grey[850])),
@@ -53,12 +54,15 @@ class EventAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: AppColors.primary),
         if (userState.user?.id == event.creator.id)
           IconButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ChangeNotifierProvider(
-                          create: (context) => EditEventState(event),
-                          child: EditEventDetails(event: event)))),
+              onPressed: () =>
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    final forum = homeState.myForums
+                            ?.firstWhereOrNull((f) => f.eventId == event.id) ??
+                        null;
+                    return ChangeNotifierProvider(
+                        create: (context) => EditEventState(event, forum),
+                        child: EditEventDetails(event: event, forum: forum));
+                  })),
               icon: Icon(Icons.edit_outlined),
               color: Colors.grey[850]),
       ],

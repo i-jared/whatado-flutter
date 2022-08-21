@@ -3389,6 +3389,106 @@ class GroupInput extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$GroupInputToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class UpdateForum$Mutation$UpdateForum$Nodes extends JsonSerializable
+    with EquatableMixin, ForumFieldsMixin {
+  UpdateForum$Mutation$UpdateForum$Nodes();
+
+  factory UpdateForum$Mutation$UpdateForum$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateForum$Mutation$UpdateForum$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [
+        id,
+        updatedAt,
+        chatDisabled,
+        userNotifications,
+        moderators,
+        chats,
+        event
+      ];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateForum$Mutation$UpdateForum$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateForum$Mutation$UpdateForum$Errors extends JsonSerializable
+    with EquatableMixin {
+  UpdateForum$Mutation$UpdateForum$Errors();
+
+  factory UpdateForum$Mutation$UpdateForum$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateForum$Mutation$UpdateForum$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateForum$Mutation$UpdateForum$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateForum$Mutation$UpdateForum extends JsonSerializable
+    with EquatableMixin {
+  UpdateForum$Mutation$UpdateForum();
+
+  factory UpdateForum$Mutation$UpdateForum.fromJson(
+          Map<String, dynamic> json) =>
+      _$UpdateForum$Mutation$UpdateForumFromJson(json);
+
+  bool? ok;
+
+  UpdateForum$Mutation$UpdateForum$Nodes? nodes;
+
+  List<UpdateForum$Mutation$UpdateForum$Errors>? errors;
+
+  @override
+  List<Object?> get props => [ok, nodes, errors];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UpdateForum$Mutation$UpdateForumToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateForum$Mutation extends JsonSerializable with EquatableMixin {
+  UpdateForum$Mutation();
+
+  factory UpdateForum$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$UpdateForum$MutationFromJson(json);
+
+  late UpdateForum$Mutation$UpdateForum updateForum;
+
+  @override
+  List<Object?> get props => [updateForum];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateForum$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class ForumFilterInput extends JsonSerializable with EquatableMixin {
+  ForumFilterInput({this.chatDisabled, this.id, this.moderatorsIds});
+
+  factory ForumFilterInput.fromJson(Map<String, dynamic> json) =>
+      _$ForumFilterInputFromJson(json);
+
+  bool? chatDisabled;
+
+  int? id;
+
+  List<int>? moderatorsIds;
+
+  @override
+  List<Object?> get props => [chatDisabled, id, moderatorsIds];
+  @override
+  Map<String, dynamic> toJson() => _$ForumFilterInputToJson(this);
+}
+
 enum Privacy {
   @JsonValue('GROUP')
   group,
@@ -8836,4 +8936,237 @@ class CreateGroupMutation
   @override
   CreateGroup$Mutation parse(Map<String, dynamic> json) =>
       CreateGroup$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UpdateForumArguments extends JsonSerializable with EquatableMixin {
+  UpdateForumArguments({required this.options});
+
+  @override
+  factory UpdateForumArguments.fromJson(Map<String, dynamic> json) =>
+      _$UpdateForumArgumentsFromJson(json);
+
+  late ForumFilterInput options;
+
+  @override
+  List<Object?> get props => [options];
+  @override
+  Map<String, dynamic> toJson() => _$UpdateForumArgumentsToJson(this);
+}
+
+final UPDATE_FORUM_MUTATION_DOCUMENT_OPERATION_NAME = 'updateForum';
+final UPDATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'updateForum'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'options')),
+            type: NamedTypeNode(
+                name: NameNode(value: 'ForumFilterInput'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'updateForum'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'options'),
+                  value: VariableNode(name: NameNode(value: 'options')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'ForumFields'), directives: [])
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'ForumFields'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'Forum'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'updatedAt'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'chatDisabled'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'userNotifications'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'lastAccessed'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'muted'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'moderators'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FragmentSpreadNode(
+                  name: NameNode(value: 'EventUser'), directives: [])
+            ])),
+        FieldNode(
+            name: NameNode(value: 'chats'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'createdAt'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'text'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
+        FieldNode(
+            name: NameNode(value: 'event'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'EventUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class UpdateForumMutation
+    extends GraphQLQuery<UpdateForum$Mutation, UpdateForumArguments> {
+  UpdateForumMutation({required this.variables});
+
+  @override
+  final DocumentNode document = UPDATE_FORUM_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = UPDATE_FORUM_MUTATION_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final UpdateForumArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  UpdateForum$Mutation parse(Map<String, dynamic> json) =>
+      UpdateForum$Mutation.fromJson(json);
 }

@@ -11,6 +11,7 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
@@ -33,12 +34,12 @@ class _AddEventDetailsState extends State<AddEventDetails> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.grey[50],
-      statusBarColor: Colors.transparent,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarBrightness: Brightness.dark,
+    //   statusBarIconBrightness: Brightness.dark,
+    //   systemNavigationBarColor: AppColors.background,
+    //   statusBarColor: Colors.transparent,
+    // ));
     selectedSize = 'Any';
   }
 
@@ -133,6 +134,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
               itemBuilder: (context, Map<String, dynamic> place) =>
                   ListTile(title: Text(place['description'])),
               textFieldConfiguration: TextFieldConfiguration(
+                maxLines: null,
                 decoration: InputDecoration(
                   isDense: true,
                   hintText: 'Enter location',
@@ -208,19 +210,15 @@ class _AddEventDetailsState extends State<AddEventDetails> {
       ));
     }
 
-    return Container(
-      color: Colors.grey[50],
-      child: SafeArea(
-        child: Scaffold(
-            appBar: SavingAppBar(
-              title: 'Add Event',
-              buttonTitle: 'NEXT',
-              disabled: !ready,
-              onSave: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => TargetAudience())),
-            ),
-            body: chooseWidget(context)),
-      ),
-    );
+    return GenericPage(
+        context: context,
+        appBar: SavingAppBar(
+          title: 'Add Event',
+          buttonTitle: 'NEXT',
+          disabled: !ready,
+          onSave: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => TargetAudience())),
+        ),
+        body: chooseWidget(context));
   }
 }

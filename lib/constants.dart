@@ -25,4 +25,5 @@ String get LOCAL_DEV => "LOCAL_DEV";
 class AppColors {
   static Color primary = Color(0xfff7941d);
   static Color secondary = Color(0xff0073ab);
+  static Color background = Colors.grey[50]!;
 }

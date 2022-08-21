@@ -3,14 +3,14 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/models/group.dart';
+import 'package:whatado/models/group.dart' as g;
 import 'package:whatado/screens/home/non_user_contact_item.dart';
 import 'package:whatado/screens/home/user_contact_item.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';
 
 class InviteGroupMembers extends StatefulWidget {
-  final Group group;
+  final g.Group group;
   InviteGroupMembers(this.group);
   @override
   State<StatefulWidget> createState() => _InviteGroupMembersState();

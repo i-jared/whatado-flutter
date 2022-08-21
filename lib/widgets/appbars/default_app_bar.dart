@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -10,9 +11,8 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
-      backgroundColor: Colors.grey[50],
-      title:
-          Text(title, style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+      backgroundColor: AppColors.background,
+      title: Text(title, style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       centerTitle: true,
       elevation: 0.0,
     );

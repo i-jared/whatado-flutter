@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
@@ -30,17 +31,15 @@ class EventTopBar extends StatelessWidget {
                         builder: (context) => UserProfile(user: event.creator)))
                 .then((_) async {
                 await Future.delayed(Duration(milliseconds: 500));
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                  statusBarBrightness: Brightness.dark,
-                  statusBarIconBrightness: Brightness.dark,
-                  systemNavigationBarColor: Colors.grey[50],
-                  statusBarColor: Colors.transparent,
-                ));
+                // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                //   statusBarBrightness: Brightness.dark,
+                //   statusBarIconBrightness: Brightness.dark,
+                //   systemNavigationBarColor: AppColors.background,
+                //   statusBarColor: Colors.transparent,
+                // ));
               }),
         child: UserAvatar(
-            url: event.creator.photoUrls.isEmpty
-                ? null
-                : event.creator.photoUrls.first,
+            url: event.creator.photoUrls.isEmpty ? null : event.creator.photoUrls.first,
             radius: 17),
       ),
       SizedBox(width: 10),
@@ -53,13 +52,16 @@ class EventTopBar extends StatelessWidget {
         PopupMenuButton(
             onSelected: (value) async {
               if (value == 'edit') {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChangeNotifierProvider(
-                          create: (context) => EditEventState(event),
-                          child: EditEventDetails(event: event)),
-                    ));
+                Navigator.push(context, MaterialPageRoute(
+                  builder: (context) {
+                    final forum = homeState.myForums
+                            ?.firstWhereOrNull((f) => f.eventId == event.id) ??
+                        null;
+                    return ChangeNotifierProvider(
+                        create: (context) => EditEventState(event, forum),
+                        child: EditEventDetails(event: event, forum: forum));
+                  },
+                ));
               }
               if (value == 'delete') {
                 final provider = EventsGqlProvider();
@@ -79,8 +81,7 @@ class EventTopBar extends StatelessWidget {
                   PopupMenuItem(
                     child: Row(
                       children: [
-                        Icon(Icons.delete_outlined,
-                            color: Colors.red, size: 30),
+                        Icon(Icons.delete_outlined, color: Colors.red, size: 30),
                         SizedBox(width: 10),
                         Text('delete', style: TextStyle(color: Colors.red))
                       ],

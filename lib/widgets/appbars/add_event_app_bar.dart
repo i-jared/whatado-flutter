@@ -16,7 +16,7 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
         (eventState.textMode && eventState.textModeController.text.isNotEmpty);
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.background,
       leading: IconButton(
           icon: Icon(Icons.clear),
           onPressed: () {
@@ -34,13 +34,13 @@ class AddEventAppBar extends StatelessWidget implements PreferredSizeWidget {
                   : () {
                       eventState.savePhotoInfo();
                       Navigator.push(context,
-                              MaterialPageRoute(builder: (context) => AddEventDetails()))
-                          .then((_) => SystemChrome.setSystemUIOverlayStyle(
-                              SystemUiOverlayStyle(
-                                  statusBarBrightness: Brightness.dark,
-                                  statusBarIconBrightness: Brightness.dark,
-                                  systemNavigationBarColor: Colors.grey[50],
-                                  statusBarColor: Colors.grey[50])));
+                          MaterialPageRoute(builder: (context) => AddEventDetails()));
+                      // .then((_) => SystemChrome.setSystemUIOverlayStyle(
+                      // SystemUiOverlayStyle(
+                      //     statusBarBrightness: Brightness.dark,
+                      //     statusBarIconBrightness: Brightness.dark,
+                      //     systemNavigationBarColor: AppColors.background,
+                      //     statusBarColor: AppColors.background)));
                     }),
         ),
       ],

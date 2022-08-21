@@ -64,26 +64,38 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> save(List<Interest> interests, String bio) async {
-    final filter = UserFilterInput(bio: bio);
-    final provider = UserGqlProvider();
-    if (interests != _user!.interests) {
-      final strings = interests.map((interest) => interest.title).toList();
-      await provider.addInterests(strings);
-      _user!.interests = interests;
-    }
-    List<String?> photoUrls = user!.photoUrls;
-    if (photos != ogphotos) {
-      photoUrls = await Future.wait(photos!.map<Future<String?>>((data) {
-        return cloudStorageService.uploadImage(data, user!.id, userImage: true);
-      }));
-      filter.photoUrls = json.encode(photoUrls);
-    }
+  Future<bool> save(List<Interest> interests, String bio) async {
+    // TODO make this more efficient so I'm not uploading duplicate photos
+    try {
+      final filter = UserFilterInput(bio: bio);
+      final provider = UserGqlProvider();
+      if (interests != _user!.interests) {
+        final strings = interests.map((interest) => interest.title).toList();
+        final result = await provider.addInterests(strings);
+        _user!.interests = interests;
+        if (!result.ok) {
+          return false;
+        }
+      }
+      List<String?> photoUrls = user!.photoUrls;
+      if (photos != ogphotos) {
+        photoUrls = await Future.wait(photos!.map<Future<String?>>((data) {
+          return cloudStorageService.uploadImage(data, user!.id, userImage: true);
+        }));
+        filter.photoUrls = json.encode(photoUrls);
+      }
 
-    await provider.updateUser(filter);
-    _user!.bio = bio;
-    _user!.photoUrls = List<String>.from(photoUrls);
-    notifyListeners();
+      final result = await provider.updateUser(filter);
+      if (!result.ok) {
+        return false;
+      }
+      _user!.bio = bio;
+      _user!.photoUrls = List<String>.from(photoUrls);
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future<void> getUser() async {

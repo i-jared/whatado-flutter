@@ -29,15 +29,14 @@ class _ChatBubbleState extends State<ChatBubble> {
   @override
   Widget build(BuildContext context) {
     final now = DateTime.now();
-    final isNew = now.month == widget.chat.createdAt.month &&
-        now.day == widget.chat.createdAt.day;
+    final isNew =
+        now.month == widget.chat.createdAt.month && now.day == widget.chat.createdAt.day;
     final userState = Provider.of<UserState>(context);
     final isOwner = widget.chat.author.id == userState.user?.id;
     final Widget bubble = InkWell(
         onTap: () => setState(() => showDate = !showDate),
         child: Bubble(
-          margin:
-              BubbleEdges.only(left: isOwner ? 50 : 0, right: isOwner ? 0 : 50),
+          margin: BubbleEdges.only(left: isOwner ? 50 : 0, right: isOwner ? 0 : 50),
           color: isOwner ? Colors.grey[850] : Colors.white,
           radius: Radius.circular(20),
           child: Padding(
@@ -45,8 +44,7 @@ class _ChatBubbleState extends State<ChatBubble> {
             child: SelectableText(widget.chat.text,
                 onTap: () => setState(() => showDate = !showDate),
                 style: TextStyle(
-                    fontSize: 18,
-                    color: isOwner ? Colors.white : Colors.grey[850])),
+                    fontSize: 18, color: isOwner ? Colors.white : Colors.grey[850])),
           ),
           alignment: isOwner ? Alignment.topRight : Alignment.topLeft,
           nip: isOwner ? BubbleNip.rightTop : BubbleNip.leftTop,
@@ -86,18 +84,17 @@ class _ChatBubbleState extends State<ChatBubble> {
                           onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => UserProfile(
-                                              user: widget.chat.author)))
+                                          builder: (context) =>
+                                              UserProfile(user: widget.chat.author)))
                                   .then((_) async {
-                                await Future.delayed(
-                                    Duration(milliseconds: 500));
-                                SystemChrome.setSystemUIOverlayStyle(
-                                    SystemUiOverlayStyle(
-                                  statusBarBrightness: Brightness.dark,
-                                  statusBarIconBrightness: Brightness.dark,
-                                  systemNavigationBarColor: Colors.grey[50],
-                                  statusBarColor: Colors.transparent,
-                                ));
+                                await Future.delayed(Duration(milliseconds: 500));
+                                // SystemChrome.setSystemUIOverlayStyle(
+                                //     SystemUiOverlayStyle(
+                                //   statusBarBrightness: Brightness.dark,
+                                //   statusBarIconBrightness: Brightness.dark,
+                                //   systemNavigationBarColor: AppColors.background,
+                                //   statusBarColor: Colors.transparent,
+                                // ));
                               })),
                       SizedBox(width: 5),
                       Flexible(child: bubble)

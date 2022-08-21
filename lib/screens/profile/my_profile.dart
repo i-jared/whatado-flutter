@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/home/group_list_page.dart';
-import 'package:whatado/screens/profile/create_group.dart';
 import 'package:whatado/screens/profile/edit_my_profile.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';

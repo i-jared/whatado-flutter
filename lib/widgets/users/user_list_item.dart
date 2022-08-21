@@ -27,12 +27,12 @@ class UserListItem extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => UserProfile(user: user)))
                   .then((_) async {
                 await Future.delayed(Duration(milliseconds: 500));
-                SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                  statusBarBrightness: Brightness.dark,
-                  statusBarIconBrightness: Brightness.dark,
-                  systemNavigationBarColor: Colors.grey[50],
-                  statusBarColor: Colors.transparent,
-                ));
+                // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                //   statusBarBrightness: Brightness.dark,
+                //   statusBarIconBrightness: Brightness.dark,
+                //   systemNavigationBarColor: AppColors.background,
+                //   statusBarColor: Colors.transparent,
+                // ));
               }),
       child: Row(
         children: [

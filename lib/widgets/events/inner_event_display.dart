@@ -21,7 +21,7 @@ class InnerEventDisplay extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [BoxShadow(blurRadius: 10, color: Colors.grey[200]!)],
           borderRadius: BorderRadius.circular(20),
-          color: Colors.grey[50],
+          color: AppColors.background,
         ),
         child: Row(
           children: [

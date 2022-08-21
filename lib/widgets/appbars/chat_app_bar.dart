@@ -1,7 +1,7 @@
-import 'dart:math';
-
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -27,7 +27,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     final userState = Provider.of<UserState>(context);
     return AppBar(
       iconTheme: IconThemeData(color: Colors.black),
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.background,
       title: InkWell(
         onTap: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => EventDetails(event: event))),
@@ -35,14 +35,16 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             UserAvatar(url: event.imageUrl, radius: 18),
             SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(event.title,
-                    style: TextStyle(fontSize: 23, color: Colors.grey[850])),
-                Text('${event.invited.length + 1} members',
-                    style: TextStyle(fontSize: 12, color: Colors.grey[400])),
-              ],
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(event.title,
+                      style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+                  Text('${event.invited.length + 1} members',
+                      style: TextStyle(fontSize: 12, color: Colors.grey[400])),
+                ],
+              ),
             ),
           ],
         ),
@@ -67,21 +69,34 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                   final provider = ForumsGqlProvider();
                   final result = await provider.mute(forum.userNotification.id);
                   if (result.ok) {
+                    BotToast.showText(text: "Successfully muted chat");
                     Forum copy = forum..userNotification.muted = false;
                     forum.userNotification.muted = true;
                     homeState.updateForum(copy);
+                  } else {
+                    BotToast.showText(text: "Error muting chat");
                   }
                 }
                 if (value == 'leave') {
                   final provider = EventsGqlProvider();
-                  await provider.removeInvite(
+                  final result = await provider.removeInvite(
                       eventId: event.id, userId: userState.user!.id);
-                  await homeState.myEventsRefresh();
+                  if (result.ok) {
+                    BotToast.showText(text: "Successfully left event");
+                    await homeState.myEventsRefresh();
+                  } else {
+                    BotToast.showText(text: "Error leaving event");
+                  }
                 }
                 if (value == 'delete') {
                   final provider = EventsGqlProvider();
-                  await provider.deleteEvent(event.id);
-                  await homeState.myEventsRefresh();
+                  final result = await provider.deleteEvent(event.id);
+                  if (result.ok) {
+                    BotToast.showText(text: "Successfully deleted event");
+                    await homeState.myEventsRefresh();
+                  } else {
+                    BotToast.showText(text: "Error deleting event");
+                  }
                 }
               },
               itemBuilder: (context) => [

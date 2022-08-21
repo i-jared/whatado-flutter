@@ -304,12 +304,10 @@ class HomeState extends ChangeNotifier {
       if (index == -1) {
         return;
       }
-      logger.wtf('updated other');
       otherEvents![index] = event;
       notifyListeners();
       return;
     }
-    logger.wtf('updated');
     allEvents![index] = event;
     notifyListeners();
   }

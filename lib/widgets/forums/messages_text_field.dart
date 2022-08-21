@@ -42,7 +42,7 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
     final chatState = Provider.of<ChatState>(context);
     final userState = Provider.of<UserState>(context);
     return Container(
-      color: Colors.grey[50],
+      color: AppColors.background,
       child: widget.forum.chatDisabled && userState.user?.id != widget.event.creator.id
           ? SizedBox(
               height: height,

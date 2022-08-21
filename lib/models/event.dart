@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
-import 'package:whatado/graphql/mutations_graphql_api.dart';
-import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/wannago.dart';
 
+import '../graphql/queries_graphql_api.graphql.dart';
+
 class Event {
   int id;
+  Privacy privacy;
   DateTime createdAt;
   EventUser creator;
   String title;
@@ -25,6 +26,7 @@ class Event {
 
   Event({
     required this.id,
+    required this.privacy,
     required this.createdAt,
     required this.creator,
     required this.title,
@@ -43,6 +45,7 @@ class Event {
   static Event fromGqlData(Map data) {
     return Event(
       id: data['id'],
+      privacy: getPrivacy(data['privacy']),
       createdAt: DateTime.parse(data['createdAt']),
       creator: EventUser.fromGqlData(data['creator']),
       title: data['title'] ?? '',
@@ -83,5 +86,15 @@ class Event {
         geoPoint: GeoPoint(
             latitude: geojson['coordinates'][1] * 1.0,
             longitude: geojson['coordinates'][0] * 1.0));
+  }
+
+  static Privacy getPrivacy(String? data) {
+    if (data == 'PUBLIC') {
+      return Privacy.public;
+    }
+    if (data == 'PRIVATE') {
+      return Privacy.private;
+    }
+    return Privacy.group;
   }
 }

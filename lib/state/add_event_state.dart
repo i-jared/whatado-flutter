@@ -304,7 +304,8 @@ class AddEventState extends ChangeNotifier {
     );
     final rerotatedImage =
         copyRotate(face, -iosPortrait + iosLandscape + -selectedImage!.orientation);
-    final resizedFace = copyResize(rerotatedImage, height: 1080, width: 1080);
+    final resizedFace = copyResize(rerotatedImage,
+        height: 1080, width: 1080, interpolation: Interpolation.cubic);
     return Uint8List.fromList(encodePng(resizedFace));
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -23,6 +25,7 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/appbars/home_app_bar.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/home/my_navigation_bar.dart';
 
 import 'event_details.dart';
@@ -136,6 +139,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final token = await FirebaseMessaging.instance.getToken();
     await saveDeviceToken(token);
     FirebaseMessaging.instance.onTokenRefresh.listen(saveDeviceToken);
+    // set firebase crashlytics id
+    final userState = Provider.of<UserState>(context, listen: false);
+    if (userState.user != null) {
+      FirebaseCrashlytics.instance.setUserIdentifier(userState.user!.id.toString());
+    }
   }
 
   Future<void> setupPermissions() async {
@@ -155,12 +163,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
-      systemNavigationBarColor: Colors.grey[50],
-      statusBarColor: Colors.transparent,
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //   statusBarBrightness: Brightness.dark,
+    //   statusBarIconBrightness: Brightness.dark,
+    //   systemNavigationBarColor: AppColors.background,
+    //   statusBarColor: Colors.transparent,
+    // ));
     setupPermissions();
     setupTokenSaving();
     setupInteractedMessage();
@@ -172,28 +180,22 @@ class _HomeScreenState extends State<HomeScreen> {
     return ShowCaseWidget(
       onFinish: () => localStorageService.initialized = true,
       builder: Builder(builder: (context) {
-        return Container(
-          color: Colors.grey[50],
-          child: SafeArea(
-            top: homeState.bottomBarPageNo != 3,
-            child: Scaffold(
-              appBar: widget.getAppBar(homeState.bottomBarPageNo),
-              body: homeState.bottomBarPageNo == 0
-                  ? PageView(
-                      onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
-                      controller: homeState.homePageController,
-                      children: [AllEvents(), MyEvents(), MyForums()],
-                    )
-                  : homeState.bottomBarPageNo == 1
-                      ? SearchPage()
-                      : homeState.bottomBarPageNo == 2
-                          ? Settings()
-                          : MyProfile(),
-              bottomNavigationBar: MyNavigationBar(
-                indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
-                selectedIndex: homeState.bottomBarPageNo,
-              ),
-            ),
+        return GenericPage(
+          appBar: widget.getAppBar(homeState.bottomBarPageNo),
+          body: homeState.bottomBarPageNo == 0
+              ? PageView(
+                  onPageChanged: (pageNo) => homeState.appBarPageNo = pageNo,
+                  controller: homeState.homePageController,
+                  children: [AllEvents(), MyEvents(), MyForums()],
+                )
+              : homeState.bottomBarPageNo == 1
+                  ? SearchPage()
+                  : homeState.bottomBarPageNo == 2
+                      ? Settings()
+                      : MyProfile(),
+          bottomNavigationBar: MyNavigationBar(
+            indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,
+            selectedIndex: homeState.bottomBarPageNo,
           ),
         );
       }),

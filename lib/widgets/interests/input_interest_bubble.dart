@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/interest.dart';
 
 class InputInterestBubble extends StatelessWidget {
@@ -11,7 +12,7 @@ class InputInterestBubble extends StatelessWidget {
     return InputChip(
         deleteIcon: Icon(Icons.clear),
         deleteIconColor: Colors.white,
-        backgroundColor: Colors.grey[50],
+        backgroundColor: AppColors.background,
         selectedColor: Colors.grey[850],
         showCheckmark: false,
         labelPadding: EdgeInsets.fromLTRB(20, 3, 10, 3),

@@ -1,0 +1,12 @@
+mutation updateForum($options: ForumFilterInput!) {
+  updateForum(options: $options) {
+    ok
+    nodes {
+      ...ForumFields
+    }
+    errors {
+      field
+      message
+    }
+  }
+}

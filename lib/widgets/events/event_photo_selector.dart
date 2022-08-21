@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/state/add_event_state.dart';
 
 class EventPhotoSelector extends StatefulWidget {
@@ -121,7 +122,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
             TextButton(onPressed: PhotoManager.openSetting, child: Text('open settings'))
           ]))
         : Container(
-            color: Colors.grey[50],
+            color: AppColors.background,
             child: GridView.count(
                 controller: _controller,
                 crossAxisSpacing: 1.0,

@@ -14,6 +14,7 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/add_event_details_app_bar.dart';
 import 'package:whatado/widgets/events/target_group.dart';
 import 'package:whatado/widgets/events/target_private.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/interests/input_interest_wrap.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
@@ -63,18 +64,13 @@ class _TargetAudienceState extends State<TargetAudience> {
       return PostFailed();
     else if (eventState.succeeded) return PostSucceeded();
 
-    return Container(
-      color: Colors.grey[50],
-      child: SafeArea(
-        child: Scaffold(
-            appBar: AddEventDetailsAppBar(),
-            body: eventState.privacy == Privacy.public
-                ? SingleChildScrollView(child: _buildBody(context))
-                : eventState.privacy == Privacy.group
-                    ? _buildBody(context)
-                    : _buildBody(context)),
-      ),
-    );
+    return GenericPage(
+        appBar: AddEventDetailsAppBar(),
+        body: eventState.privacy == Privacy.public
+            ? SingleChildScrollView(child: _buildBody(context))
+            : eventState.privacy == Privacy.group
+                ? _buildBody(context)
+                : _buildBody(context));
   }
 
   _buildBody(BuildContext context) {
@@ -165,8 +161,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                   triggerMode: TooltipTriggerMode.tap,
                   margin: EdgeInsets.symmetric(horizontal: 50),
                   padding: EdgeInsets.all(8),
-                  message:
-                      "Prioritize your event for people who have one of these interests. Will prioritize for everyone if no interests are selected.",
+                  message: "What are some interests related to your event?",
                   child: Icon(Icons.help_outline, size: 20),
                 ),
               ],

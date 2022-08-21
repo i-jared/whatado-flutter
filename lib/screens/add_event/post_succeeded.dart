@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class PostSucceeded extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _PostSucceededState extends State<PostSucceeded> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[50],
+      color: AppColors.background,
       child: Scaffold(
           body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -30,8 +31,7 @@ class _PostSucceededState extends State<PostSucceeded> {
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
-                    color: Colors.green,
-                    borderRadius: BorderRadius.circular(50)),
+                    color: Colors.green, borderRadius: BorderRadius.circular(50)),
                 child: Icon(Icons.check, size: 70, color: Colors.white)),
           ),
           SizedBox(height: 30),

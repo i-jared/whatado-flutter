@@ -159,11 +159,11 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -371,11 +371,11 @@ Map<String, dynamic> _$UpdateEvent$Mutation$UpdateEvent$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -2069,11 +2069,11 @@ Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -2533,11 +2533,11 @@ Map<String, dynamic> _$AddInvite$Mutation$AddInvite$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -2684,11 +2684,11 @@ Map<String, dynamic> _$CreateEvent$Mutation$CreateEvent$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -2776,7 +2776,7 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
       'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'creatorId': instance.creatorId,
       'description': instance.description,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterLocation': instance.filterLocation,
       'filterMaxAge': instance.filterMaxAge,
       'filterMinAge': instance.filterMinAge,
@@ -2786,7 +2786,7 @@ Map<String, dynamic> _$EventInputToJson(EventInput instance) =>
       'invitedIds': instance.invitedIds,
       'location': instance.location,
       'pictureUrl': instance.pictureUrl,
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'relatedInterestsIds': instance.relatedInterestsIds,
       'screened': instance.screened,
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
@@ -2939,6 +2939,105 @@ Map<String, dynamic> _$GroupInputToJson(GroupInput instance) =>
       'owner': instance.owner,
       'screened': instance.screened,
       'userIds': instance.userIds,
+    };
+
+UpdateForum$Mutation$UpdateForum$Nodes
+    _$UpdateForum$Mutation$UpdateForum$NodesFromJson(
+            Map<String, dynamic> json) =>
+        UpdateForum$Mutation$UpdateForum$Nodes()
+          ..id = json['id'] as int
+          ..updatedAt =
+              fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
+          ..chatDisabled = json['chatDisabled'] as bool
+          ..userNotifications = (json['userNotifications'] as List<dynamic>)
+              .map((e) => ForumFieldsMixin$UserNotifications.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..moderators = (json['moderators'] as List<dynamic>)
+              .map((e) => ForumFieldsMixin$Moderators.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+          ..chats = (json['chats'] as List<dynamic>)
+              .map((e) =>
+                  ForumFieldsMixin$Chats.fromJson(e as Map<String, dynamic>))
+              .toList()
+          ..event = ForumFieldsMixin$Event.fromJson(
+              json['event'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UpdateForum$Mutation$UpdateForum$NodesToJson(
+        UpdateForum$Mutation$UpdateForum$Nodes instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
+      'chatDisabled': instance.chatDisabled,
+      'userNotifications':
+          instance.userNotifications.map((e) => e.toJson()).toList(),
+      'moderators': instance.moderators.map((e) => e.toJson()).toList(),
+      'chats': instance.chats.map((e) => e.toJson()).toList(),
+      'event': instance.event.toJson(),
+    };
+
+UpdateForum$Mutation$UpdateForum$Errors
+    _$UpdateForum$Mutation$UpdateForum$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        UpdateForum$Mutation$UpdateForum$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$UpdateForum$Mutation$UpdateForum$ErrorsToJson(
+        UpdateForum$Mutation$UpdateForum$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+UpdateForum$Mutation$UpdateForum _$UpdateForum$Mutation$UpdateForumFromJson(
+        Map<String, dynamic> json) =>
+    UpdateForum$Mutation$UpdateForum()
+      ..ok = json['ok'] as bool?
+      ..nodes = json['nodes'] == null
+          ? null
+          : UpdateForum$Mutation$UpdateForum$Nodes.fromJson(
+              json['nodes'] as Map<String, dynamic>)
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => UpdateForum$Mutation$UpdateForum$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList();
+
+Map<String, dynamic> _$UpdateForum$Mutation$UpdateForumToJson(
+        UpdateForum$Mutation$UpdateForum instance) =>
+    <String, dynamic>{
+      'ok': instance.ok,
+      'nodes': instance.nodes?.toJson(),
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+    };
+
+UpdateForum$Mutation _$UpdateForum$MutationFromJson(
+        Map<String, dynamic> json) =>
+    UpdateForum$Mutation()
+      ..updateForum = UpdateForum$Mutation$UpdateForum.fromJson(
+          json['updateForum'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UpdateForum$MutationToJson(
+        UpdateForum$Mutation instance) =>
+    <String, dynamic>{
+      'updateForum': instance.updateForum.toJson(),
+    };
+
+ForumFilterInput _$ForumFilterInputFromJson(Map<String, dynamic> json) =>
+    ForumFilterInput(
+      chatDisabled: json['chatDisabled'] as bool?,
+      id: json['id'] as int?,
+      moderatorsIds: (json['moderatorsIds'] as List<dynamic>?)
+          ?.map((e) => e as int)
+          .toList(),
+    );
+
+Map<String, dynamic> _$ForumFilterInputToJson(ForumFilterInput instance) =>
+    <String, dynamic>{
+      'chatDisabled': instance.chatDisabled,
+      'id': instance.id,
+      'moderatorsIds': instance.moderatorsIds,
     };
 
 AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
@@ -3375,4 +3474,17 @@ Map<String, dynamic> _$CreateGroupArgumentsToJson(
         CreateGroupArguments instance) =>
     <String, dynamic>{
       'groupInput': instance.groupInput.toJson(),
+    };
+
+UpdateForumArguments _$UpdateForumArgumentsFromJson(
+        Map<String, dynamic> json) =>
+    UpdateForumArguments(
+      options:
+          ForumFilterInput.fromJson(json['options'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UpdateForumArgumentsToJson(
+        UpdateForumArguments instance) =>
+    <String, dynamic>{
+      'options': instance.options.toJson(),
     };

@@ -20,7 +20,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
     final homeState = Provider.of<HomeState>(context, listen: false);
     if (!(localStorageService.initialized ?? false))
       WidgetsBinding.instance.addPostFrameCallback((_) => ShowCaseWidget.of(context)
-          ?.startShowCase(
+          .startShowCase(
               [homeState.showcase_1, homeState.showcase_2, homeState.showcase_3]));
   }
 
@@ -54,7 +54,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
     final switcherMargin = (widget.preferredSize.height - switcherHeight) / 2;
     return AppBar(
       leadingWidth: 150,
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.background,
       elevation: 0.0,
       leading: Padding(
         padding: EdgeInsets.only(left: 10),

@@ -33,8 +33,8 @@ class ForumsGqlProvider {
   }
 
   Future<MyQueryResponse<List<Forum>>> myForums(List<int> eventIds) async {
-    final query = ForumsByEventIdQuery(
-        variables: ForumsByEventIdArguments(eventIds: eventIds));
+    final query =
+        ForumsByEventIdQuery(variables: ForumsByEventIdArguments(eventIds: eventIds));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -70,8 +70,33 @@ class ForumsGqlProvider {
     }
 
     final root = result.data?['forum'];
-    final data = root != null && root['nodes'] != null
-        ? Forum.fromGqlData(root?['nodes'])
+    final data =
+        root != null && root['nodes'] != null ? Forum.fromGqlData(root?['nodes']) : null;
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<Forum>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
+  Future<MyQueryResponse<Forum>> updateForum(ForumFilterInput options) async {
+    final query = UpdateForumMutation(variables: UpdateForumArguments(options: options));
+    final result = await graphqlClientService.mutate(query);
+    if (result.hasException) {
+      print('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        print(element.message);
+      });
+    }
+
+    final root = result.data?['updateForum'];
+    final data = root != null
+        ? root['nodes'] != null
+            ? Forum.fromGqlData(root['nodes'])
+            : null
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];

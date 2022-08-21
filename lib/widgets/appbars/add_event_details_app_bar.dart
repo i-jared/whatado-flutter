@@ -29,7 +29,7 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
 
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
-      backgroundColor: Colors.grey[50],
+      backgroundColor: AppColors.background,
       title: Text('Add Event', style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       actions: [
         Padding(

@@ -54,9 +54,6 @@ class AllEvents extends StatelessWidget {
                               .contains(event.creator.id) ??
                           false))
                       .map((e) {
-                    if (e.title == "final 1") {
-                      logger.wtf(e.wannago);
-                    }
                     return EventDisplay(event: e);
                   }).toList(),
                 // if (homeState.otherEvents != null &&

@@ -209,11 +209,11 @@ Map<String, dynamic> _$Events$Query$Events$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -562,11 +562,11 @@ Map<String, dynamic> _$SearchEvents$Query$SearchEvents$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -740,11 +740,11 @@ Map<String, dynamic> _$OtherEvents$Query$OtherEvents$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -968,11 +968,11 @@ Map<String, dynamic> _$Event$Query$Event$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -1545,11 +1545,11 @@ Map<String, dynamic> _$GroupEvents$Query$GroupEvents$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -1719,11 +1719,11 @@ Map<String, dynamic> _$FlaggedEvents$Query$FlaggedEvents$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -1965,11 +1965,11 @@ Map<String, dynamic> _$MyEvents$Query$MyEvents$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -2075,11 +2075,11 @@ Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEvents$NodesToJson(
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy],
+      'privacy': _$PrivacyEnumMap[instance.privacy]!,
       'screened': instance.screened,
       'filterLocation': instance.filterLocation,
       'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender],
+      'filterGender': _$GenderEnumMap[instance.filterGender]!,
       'filterMinAge': instance.filterMinAge,
       'filterMaxAge': instance.filterMaxAge,
     };
@@ -2970,7 +2970,7 @@ Map<String, dynamic> _$EventsArgumentsToJson(EventsArguments instance) =>
       'dateRange': instance.dateRange.toJson(),
       'take': instance.take,
       'skip': instance.skip,
-      'sortType': _$SortTypeEnumMap[instance.sortType],
+      'sortType': _$SortTypeEnumMap[instance.sortType]!,
     };
 
 const _$SortTypeEnumMap = {
@@ -3032,7 +3032,7 @@ Map<String, dynamic> _$OtherEventsArgumentsToJson(
       'dateRange': instance.dateRange.toJson(),
       'take': instance.take,
       'skip': instance.skip,
-      'sortType': _$SortTypeEnumMap[instance.sortType],
+      'sortType': _$SortTypeEnumMap[instance.sortType]!,
     };
 
 UsersFromContactsArguments _$UsersFromContactsArgumentsFromJson(

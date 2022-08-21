@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class BottomSheetList extends StatelessWidget {
   final List<Widget> items;
@@ -10,7 +11,7 @@ class BottomSheetList extends StatelessWidget {
       height: 500,
       decoration: BoxDecoration(
           boxShadow: kElevationToShadow[16],
-          color: Colors.grey[50],
+          color: AppColors.background,
           borderRadius: BorderRadius.only(
               topLeft: Radius.circular(40), topRight: Radius.circular(40))),
       child: Padding(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -22,40 +24,33 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey[50],
-      child: SafeArea(
-        child: Scaffold(
-          appBar: SavingAppBar(title: 'Change Password', onSave: () => null),
-          body: Form(
-              child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30.0),
-            child: Column(
-              children: [
-                SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: MyPasswordField(
-                      hintText: 'Current Password',
-                      controller: currentPasswordController),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: MyPasswordField(
-                      hintText: 'New Password',
-                      controller: newPasswordController),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: MyPasswordField(
-                      hintText: 'Confirm New Password',
-                      controller: confirmNewPasswordController),
-                ),
-              ],
+    return GenericPage(
+      appBar: SavingAppBar(title: 'Change Password', onSave: () => null),
+      body: Form(
+          child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30.0),
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: MyPasswordField(
+                  hintText: 'Current Password', controller: currentPasswordController),
             ),
-          )),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: MyPasswordField(
+                  hintText: 'New Password', controller: newPasswordController),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 20.0),
+              child: MyPasswordField(
+                  hintText: 'Confirm New Password',
+                  controller: confirmNewPasswordController),
+            ),
+          ],
         ),
-      ),
+      )),
     );
   }
 }

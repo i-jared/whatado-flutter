@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class InterestBubble extends StatelessWidget {
   final String text;
@@ -6,14 +7,11 @@ class InterestBubble extends StatelessWidget {
   final Function(bool)? onSelected;
   final Color? selectedColor;
   InterestBubble(
-      {required this.text,
-      required this.selected,
-      this.onSelected,
-      this.selectedColor});
+      {required this.text, required this.selected, this.onSelected, this.selectedColor});
   @override
   Widget build(BuildContext context) {
     return FilterChip(
-        backgroundColor: Colors.grey[50],
+        backgroundColor: AppColors.background,
         selectedColor: selectedColor ?? Colors.grey[850],
         showCheckmark: false,
         labelPadding: EdgeInsets.symmetric(vertical: 3, horizontal: 12),

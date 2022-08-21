@@ -19,18 +19,18 @@ class _AddEventState extends State<AddEvent> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-        statusBarBrightness: Brightness.dark,
-        systemNavigationBarIconBrightness: Brightness.dark,
-        systemNavigationBarColor: Colors.grey[50],
-        statusBarColor: Colors.grey[50]));
+    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    //     statusBarBrightness: Brightness.dark,
+    //     systemNavigationBarIconBrightness: Brightness.dark,
+    //     systemNavigationBarColor: AppColors.background,
+    //     statusBarColor: AppColors.background));
   }
 
   @override
   Widget build(BuildContext context) {
     final eventState = Provider.of<AddEventState>(context);
     return Container(
-      color: Colors.grey[50],
+      color: AppColors.background,
       child: SafeArea(
         top: Platform.isIOS ? false : true,
         bottom: Platform.isIOS ? false : true,
@@ -76,7 +76,7 @@ class _AddEventState extends State<AddEvent> {
                   flex: 1,
                   fit: FlexFit.tight,
                   child: Container(
-                      color: Colors.grey[50],
+                      color: AppColors.background,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Row(

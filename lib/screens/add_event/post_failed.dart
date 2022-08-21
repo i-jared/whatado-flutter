@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class PostFailed extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _PostFailedState extends State<PostFailed> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.grey[50],
+      color: AppColors.background,
       child: Scaffold(
           body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

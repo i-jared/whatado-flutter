@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -44,15 +45,13 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                         'Are you sure you want to remove ${user.name} from the event and chat?'),
                     actions: [
                       TextButton(
-                          child: Text("Cancel"),
-                          onPressed: () => Navigator.pop(context)),
+                          child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
                       TextButton(
                         child: Text("Remove"),
                         onPressed: () async {
                           final provider = EventsGqlProvider();
                           final result = await provider.removeInvite(
-                              eventId: widget.event.id,
-                              userId: userState.user!.id);
+                              eventId: widget.event.id, userId: userState.user!.id);
                           if (result.ok) {
                             users.removeWhere((u) => u.id == user.id);
                             setState(() => users = users);
@@ -81,29 +80,24 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                         ? () {
                                             homeState.bottomBarPageNo = 3;
                                             if (Navigator.canPop(context))
-                                              Navigator.popUntil(context,
-                                                  (route) => route.isFirst);
+                                              Navigator.popUntil(
+                                                  context, (route) => route.isFirst);
                                           }
                                         : () => Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
                                                         builder: (context) =>
-                                                            UserProfile(
-                                                                user: user)))
+                                                            UserProfile(user: user)))
                                                 .then((_) async {
                                               await Future.delayed(
                                                   Duration(milliseconds: 500));
-                                              SystemChrome
-                                                  .setSystemUIOverlayStyle(
-                                                      SystemUiOverlayStyle(
-                                                statusBarBrightness:
-                                                    Brightness.dark,
-                                                statusBarIconBrightness:
-                                                    Brightness.dark,
+                                              SystemChrome.setSystemUIOverlayStyle(
+                                                  SystemUiOverlayStyle(
+                                                statusBarBrightness: Brightness.dark,
+                                                statusBarIconBrightness: Brightness.dark,
                                                 systemNavigationBarColor:
-                                                    Colors.grey[50],
-                                                statusBarColor:
-                                                    Colors.transparent,
+                                                    AppColors.background,
+                                                statusBarColor: Colors.transparent,
                                               ));
                                             }),
                                     child: UserAvatar(
@@ -136,10 +130,8 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
 
   Future<void> init() async {
     final provider = UserGqlProvider();
-    final result = await provider.eventUserPreview([
-      ...widget.event.invited.map((eu) => eu.id).toList(),
-      widget.event.creator.id
-    ]);
+    final result = await provider.eventUserPreview(
+        [...widget.event.invited.map((eu) => eu.id).toList(), widget.event.creator.id]);
     setState(() {
       users = result.data ?? [];
       loading = false;

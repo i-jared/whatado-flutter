@@ -198,6 +198,12 @@ type ForumApiResponse {
   ok: Boolean
 }
 
+input ForumFilterInput {
+  chatDisabled: Boolean
+  id: Int
+  moderatorsIds: [Int!]
+}
+
 type ForumsApiResponse {
   errors: [FieldError!]
   jwt: JwtResponse
@@ -366,6 +372,7 @@ type Mutation {
   unrequestFriend(id: Int!): BoolApiResponse!
   updateChat(options: ChatFilterInput!): BoolApiResponse!
   updateEvent(options: EventFilterInput!): EventApiResponse!
+  updateForum(options: ForumFilterInput!): ForumApiResponse!
   updateGroup(options: GroupFilterInput!): GroupApiResponse!
   updateInterest(options: InterestFilterInput!): BoolApiResponse!
   updatePhotos(urls: [String!]!): BoolApiResponse!

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/screens/home/user_contact_item.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
+import 'package:whatado/widgets/general/generic_page.dart';
 
 class AddFriends extends StatefulWidget {
   @override
@@ -32,40 +34,35 @@ class _AddFriendsState extends State<AddFriends> {
     final userState = Provider.of<UserState>(context);
     final searchState = Provider.of<SearchState>(context);
 
-    return Container(
-      color: Colors.grey[50],
-      child: SafeArea(
-        child: Scaffold(
-            body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: padding),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: 50),
-            Center(
-              child: Image.asset("assets/Whatado_FullColor.png", height: 100),
-            ),
-            SizedBox(height: sectionSpacing),
-            Text('Add Friends', style: headingStyle),
-            SizedBox(height: headingSpacing),
-            Flexible(child: getMainWidget(context, searchState, userState)),
-            Center(
-              child: loading
-                  ? Center(child: CircularProgressIndicator())
-                  : RoundedArrowButton(
-                      disabled: false,
-                      text: "Finish",
-                      onPressed: userState.user == null
-                          ? null
-                          : () => Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(builder: (context) => HomeScreen()),
-                              (_) => false),
-                    ),
-            ),
-            SizedBox(height: 40)
-          ]),
-        )),
-      ),
-    );
+    return GenericPage(
+        body: Padding(
+      padding: EdgeInsets.symmetric(horizontal: padding),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SizedBox(height: 50),
+        Center(
+          child: Image.asset("assets/Whatado_FullColor.png", height: 100),
+        ),
+        SizedBox(height: sectionSpacing),
+        Text('Add Friends', style: headingStyle),
+        SizedBox(height: headingSpacing),
+        Flexible(child: getMainWidget(context, searchState, userState)),
+        Center(
+          child: loading
+              ? Center(child: CircularProgressIndicator())
+              : RoundedArrowButton(
+                  disabled: false,
+                  text: "Finish",
+                  onPressed: userState.user == null
+                      ? null
+                      : () => Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                          (_) => false),
+                ),
+        ),
+        SizedBox(height: 40)
+      ]),
+    ));
   }
 
   Widget getMainWidget(
