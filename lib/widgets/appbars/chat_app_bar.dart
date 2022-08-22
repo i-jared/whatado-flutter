@@ -9,6 +9,9 @@ import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/dialogs.dart';
+import 'package:whatado/utils/logger.dart';
+import 'package:whatado/widgets/dialog/confirm_cancel_dialog.dart';
 import 'package:whatado/widgets/users/user_avatar.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -40,7 +43,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(event.title,
-                      style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+                      softWrap: false, style: TextStyle(fontSize: 23, color: Colors.grey[850])),
                   Text('${event.invited.length + 1} members',
                       style: TextStyle(fontSize: 12, color: Colors.grey[400])),
                 ],
@@ -78,25 +81,46 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                   }
                 }
                 if (value == 'leave') {
-                  final provider = EventsGqlProvider();
-                  final result = await provider.removeInvite(
-                      eventId: event.id, userId: userState.user!.id);
-                  if (result.ok) {
-                    BotToast.showText(text: "Successfully left event");
-                    await homeState.myEventsRefresh();
-                  } else {
-                    BotToast.showText(text: "Error leaving event");
-                  }
+                  showMyDialog(
+                      context,
+                      ConfirmCancelDialog.async(
+                          title: 'Leave Event?',
+                          body: 'Are you sure you want to leave the event?',
+                          confirmText: 'Leave',
+                          onConfirmAsync: () async {
+                            final provider = EventsGqlProvider();
+                            final result = await provider.removeInvite(
+                                eventId: event.id, userId: userState.user!.id);
+                            if (result.ok) {
+                              await homeState.myEventsRefresh();
+                              Navigator.popUntil(context, (route) => route.isFirst);
+                              BotToast.showText(text: "Successfully left event");
+                            } else {
+                              logger.e(result.errors);
+                              BotToast.showText(text: "Error leaving event");
+                            }
+                          }));
                 }
                 if (value == 'delete') {
-                  final provider = EventsGqlProvider();
-                  final result = await provider.deleteEvent(event.id);
-                  if (result.ok) {
-                    BotToast.showText(text: "Successfully deleted event");
-                    await homeState.myEventsRefresh();
-                  } else {
-                    BotToast.showText(text: "Error deleting event");
-                  }
+// TODO: when you delete an event, delete the forum and chats along with it.
+                  showMyDialog(
+                      context,
+                      ConfirmCancelDialog.async(
+                          title: 'Delete Event?',
+                          body:
+                              'Are you sure you want to delete the event? This will delete the event and chat for all members.',
+                          confirmText: 'Delete',
+                          onConfirmAsync: () async {
+                            final provider = EventsGqlProvider();
+                            final result = await provider.deleteEvent(event.id);
+                            if (result.ok) {
+                              await homeState.myEventsRefresh();
+                              Navigator.popUntil(context, (route) => route.isFirst);
+                              BotToast.showText(text: "Successfully deleted event");
+                            } else {
+                              BotToast.showText(text: "Error deleting event");
+                            }
+                          }));
                 }
               },
               itemBuilder: (context) => [
