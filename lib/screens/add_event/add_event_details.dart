@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
@@ -13,7 +13,6 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class AddEventDetails extends StatefulWidget {
   @override
@@ -211,7 +210,6 @@ class _AddEventDetailsState extends State<AddEventDetails> {
     }
 
     return GenericPage(
-        context: context,
         appBar: SavingAppBar(
           title: 'Add Event',
           buttonTitle: 'NEXT',

@@ -67,14 +67,13 @@ class _TargetAudienceState extends State<TargetAudience> {
     return GenericPage(
         appBar: AddEventDetailsAppBar(),
         body: eventState.privacy == Privacy.public
-            ? SingleChildScrollView(child: _buildBody(context))
+            ? SingleChildScrollView(child: _buildBody(eventState))
             : eventState.privacy == Privacy.group
-                ? _buildBody(context)
-                : _buildBody(context));
+                ? _buildBody(eventState)
+                : _buildBody(eventState));
   }
 
-  _buildBody(BuildContext context) {
-    final eventState = Provider.of<AddEventState>(context);
+  _buildBody(AddEventState eventState) {
     final userState = Provider.of<UserState>(context);
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
@@ -99,8 +98,7 @@ class _TargetAudienceState extends State<TargetAudience> {
           if (eventState.privacy == Privacy.private) Expanded(child: TargetPrivate()),
           if (eventState.privacy == Privacy.group) Expanded(child: TargetGroup()),
           SizedBox(height: headingSpacing),
-          if (eventState.privacy != Privacy.private &&
-              eventState.privacy != Privacy.group) ...[
+          if (eventState.privacy != Privacy.private && eventState.privacy != Privacy.group) ...[
             Row(
               children: [
                 Switch(
@@ -215,9 +213,7 @@ class _TargetAudienceState extends State<TargetAudience> {
                 IconButton(
                   padding: EdgeInsets.zero,
                   icon: Icon(Icons.add_circle_outline,
-                      color: textController.text.isEmpty
-                          ? Colors.grey[400]
-                          : AppColors.primary,
+                      color: textController.text.isEmpty ? Colors.grey[400] : AppColors.primary,
                       size: 35),
                   onPressed: textController.text.isEmpty
                       ? null

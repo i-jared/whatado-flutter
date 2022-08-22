@@ -1,22 +1,30 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:isolate';
 import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_contacts/properties/note.dart';
 import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
 import 'package:heic_to_jpg/heic_to_jpg.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:image/image.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
+import 'package:whatado/providers/graphql/create_event_query.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
+import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
+import 'package:whatado/utils/time_tools.dart';
 
 class AddEventState extends ChangeNotifier {
   PhotoViewController photoController;
@@ -178,6 +186,7 @@ class AddEventState extends ChangeNotifier {
 
   set postLoading(bool loading) {
     _postLoading = loading;
+    logger.wtf('notify post loading: $postLoading');
     notifyListeners();
   }
 
@@ -259,6 +268,7 @@ class AddEventState extends ChangeNotifier {
   }
 
   Future<Uint8List> cropResizeImage(double deviceWidth) async {
+    logger.wtf('upload image');
     if (selectedImageBytes == null) return Uint8List.fromList([]);
     // convert if heic
     final isHeic = selectedImageFile!.path.toLowerCase().endsWith('heic');
@@ -280,9 +290,9 @@ class AddEventState extends ChangeNotifier {
     final bottom = ((height / 2.0) - (length / 2.0) + offsety).round();
     final left = ((width / 2.0) - (length / 2.0) - offsetx).round();
     // crop image and encode it as png
-    final decodedImage = decodeImage(List.from(selectedImageBytes ?? []));
+    final decodedImage = await compute(decodeImage, List<int>.from(selectedImageBytes ?? []));
     if (decodedImage == null) return Uint8List.fromList([]);
-    final exifData = await readExifFromBytes(List<int>.from(selectedImageBytes!));
+    final exifData = await compute(readExifFromBytes, List<int>.from(selectedImageBytes!));
     final iosLandscape = Platform.isIOS &&
             (exifData.containsKey("Image Orientation") &&
                 exifData["Image Orientation"].toString().contains("180"))
@@ -293,8 +303,9 @@ class AddEventState extends ChangeNotifier {
                 exifData["Image Orientation"].toString().contains("90"))
         ? 90
         : 0;
-    final rotatedImage =
-        copyRotate(decodedImage, iosPortrait + iosLandscape + selectedImage!.orientation);
+    final rotatedImage = await compute(
+        (Map<String, dynamic> args) => copyRotate(args['face'], args['degrees']),
+        {'face': decodedImage, 'degrees': iosPortrait + iosLandscape + selectedImage!.orientation});
     final face = copyCrop(
       rotatedImage,
       left,
@@ -302,10 +313,95 @@ class AddEventState extends ChangeNotifier {
       width - right - left,
       height - top - bottom,
     );
-    final rerotatedImage =
-        copyRotate(face, -iosPortrait + iosLandscape + -selectedImage!.orientation);
-    final resizedFace = copyResize(rerotatedImage,
-        height: 1080, width: 1080, interpolation: Interpolation.cubic);
+    final rerotatedImage = await compute(
+        (Map<String, dynamic> args) => copyRotate(args['face'], args['degrees']),
+        {'face': face, 'degrees': -iosPortrait + iosLandscape + -selectedImage!.orientation});
+    final resizedFace = await compute(
+        (Map<String, dynamic> args) => copyResize(args['image'],
+            height: args['height'], width: args['width'], interpolation: args['interpolation']),
+        {
+          'image': rerotatedImage,
+          'height': 1080,
+          'width': 1080,
+          'interpolation': Interpolation.cubic
+        });
+    logger.wtf('finish uploading');
     return Uint8List.fromList(encodePng(resizedFace));
+  }
+
+  Future<void> postEvent(int userId, double width, VoidFutureCallBack getMyEvents,
+      VoidFutureCallBack getMyForums) async {
+    _postLoading = true;
+    notifyListeners();
+    try {
+      String? downloadUrl;
+      if (!textMode) {
+        final bytes = await cropResizeImage(width);
+        downloadUrl = await cloudStorageService.uploadImage(
+          bytes,
+          userId,
+        );
+      }
+
+      if (!textMode && downloadUrl == null) {
+        logger.e('error: no image');
+        clear();
+        _failed = true;
+        _postLoading = false;
+        notifyListeners();
+        return;
+      }
+
+      // frankenstein the time from user input
+      final finalTime = formatMyTime(dateController.text, timeController.text);
+      // create interests
+      final interestsProvider = InterestGqlProvider();
+      final interests = await interestsProvider.create(interestsText: [
+        ...(customInterests.map((i) => i.title).toList()),
+        if (selectedInterests.isNotEmpty) ...(selectedInterests.map((i) => i.title).toList())
+      ]);
+
+      // make query
+      final query = CreateEventGqlQuery();
+      await query.create(
+          eventInput: EventInput(
+        creatorId: userId,
+        description: descriptionController.text,
+        filterMinAge: filterAgeStart.toInt(),
+        filterMaxAge: filterAgeEnd.toInt(),
+        filterGender: selectedGender,
+        filterLocation: '', // not yet used
+        filterRadius: 5, // not yet used
+        privacy: privacy,
+        location: locationController.text,
+        coordinates: coordinates,
+        relatedInterestsIds:
+            List<int>.from(interests.data ?? selectedInterests.map((v) => v.id).toList()),
+        time: finalTime,
+        pictureUrl: downloadUrl,
+        title: textMode ? textModeController.text : titleController.text,
+        wannagoIds: [],
+        screened: screened,
+        chatDisabled: chatDisabled,
+        groupId: selectedGroup?.id,
+        invitedIds: privacy == Privacy.group
+            ? selectedGroup!.users.map((u) => u.id).toList()
+            : selectedUsers.map((u) => u.id).toList(),
+      ));
+    } catch (e, stack) {
+      logger.e(e.toString());
+      logger.e(stack);
+      clear();
+      _failed = true;
+      _postLoading = false;
+      notifyListeners();
+      return;
+    }
+    await getMyEvents();
+    await getMyForums();
+    clear();
+    _succeeded = true;
+    _postLoading = false;
+    notifyListeners();
   }
 }

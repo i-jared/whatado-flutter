@@ -8,8 +8,8 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
+import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 
 class MyBottomSheet extends StatefulWidget {
@@ -55,19 +55,16 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             controller: newPasswordController,
             errorText: passwordError,
             validator: (val) {
-              if ((val?.length ?? 0) < 6)
-                return 'password must be 6+ characters';
+              if ((val?.length ?? 0) < 6) return 'password must be 6+ characters';
             }),
         SizedBox(height: 40),
-        Text('Text Code',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
+        Text('Text Code', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
         SizedBox(height: 35),
         MyTextField(
             hintText: 'Text Code',
             controller: codeController,
             maxLength: 5,
-            validator: (val) =>
-                val?.length != 5 ? 'please enter 5 digit code' : null),
+            validator: (val) => val?.length != 5 ? 'please enter 5 digit code' : null),
         SizedBox(height: 50),
         RoundedArrowButton(
             onPressed: loading
@@ -138,8 +135,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
     if (response.ok) {
       setState(() => success = true);
     } else {
-      phoneError = response.errors?.firstWhere(
-          (element) => element['field'] == 'phone',
+      phoneError = response.errors?.firstWhere((element) => element['field'] == 'phone',
           orElse: () => {})['message'];
     }
   }
@@ -148,10 +144,8 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
     final userState = Provider.of<UserState>(context, listen: false);
     setState(() => loading = true);
     final provider = UserGqlProvider();
-    final res =
-        await provider.checkValidationLogin(codeController.text, phoneNumber);
-    authenticationService.updateTokens(
-        res.accessToken ?? '', res.refreshToken ?? '');
+    final res = await provider.checkValidationLogin(codeController.text, phoneNumber);
+    authenticationService.updateTokens(res.accessToken ?? '', res.refreshToken ?? '');
     if (res.ok) {
       final response = await provider
           .updateUser(UserFilterInput(password: newPasswordController.text));
@@ -164,13 +158,11 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
             (_) => false);
       } else {
-        phoneError = response.errors?.firstWhere(
-            (element) => element['field'] == 'phone',
+        phoneError = response.errors?.firstWhere((element) => element['field'] == 'phone',
             orElse: () => {})['message'];
       }
     } else {
-      phoneError = res.errors?.firstWhere(
-          (element) => element['field'] == 'phone',
+      phoneError = res.errors?.firstWhere((element) => element['field'] == 'phone',
           orElse: () => {})['message'];
     }
   }

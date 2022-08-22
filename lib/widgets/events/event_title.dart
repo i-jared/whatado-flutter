@@ -4,9 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/logger.dart';
-import 'package:whatado/widgets/events/join_button.dart';
 import 'package:whatado/widgets/events/leave_button.dart';
+import 'package:whatado/widgets/events/join_button.dart';
 import 'package:whatado/widgets/events/my_event_button.dart';
 
 class EventTitle extends StatelessWidget {

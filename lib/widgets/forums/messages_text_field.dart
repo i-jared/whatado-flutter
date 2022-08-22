@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';

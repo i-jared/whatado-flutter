@@ -2,17 +2,16 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:geojson/geojson.dart';
-import 'package:geopoint/geopoint.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/constants.dart';
-import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
-import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/validate.dart';
@@ -23,13 +22,11 @@ import 'package:whatado/screens/home/shimmer_screen.dart';
 import 'package:whatado/services/environment_config.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/services/startup.dart';
-import 'package:flutter/services.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,15 +47,15 @@ Future<void> run(String flavor) async {
   }
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-  await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
-      alert: true, badge: true, sound: true);
+  await FirebaseMessaging.instance
+      .setForegroundNotificationPresentationOptions(alert: true, badge: true, sound: true);
 
   await Hive.initFlutter();
   await Hive.openBox<Map<dynamic, dynamic>>('whatado');
   Startup.initDependencies();
 
   EnvironmentConfig.initFlavor(flavor);
-  runApp(MyApp());
+  runApp(Phoenix(child: MyApp()));
 }
 
 class MyApp extends StatefulWidget {
@@ -104,8 +101,7 @@ class _MyAppState extends State<MyApp> {
                 navigatorObservers: [BotToastNavigatorObserver()],
                 title: 'Flutter Demo',
                 theme: ThemeData(
-                    textSelectionTheme:
-                        TextSelectionThemeData(selectionColor: AppColors.primary),
+                    textSelectionTheme: TextSelectionThemeData(selectionColor: AppColors.primary),
                     primarySwatch: MaterialColor(
                       0xFF000000,
                       <int, Color>{

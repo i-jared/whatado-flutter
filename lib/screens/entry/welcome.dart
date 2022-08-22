@@ -1,22 +1,46 @@
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 import 'package:whatado/screens/entry/login.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 
-class WelcomeScreen extends StatelessWidget {
+class WelcomeScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _WelcomeScreenState();
+}
+
+class _WelcomeScreenState extends State<WelcomeScreen> {
+  late VideoPlayerController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = VideoPlayerController.asset('assets/welcome_video.mp4')
+      ..initialize().then((_) {
+        _controller.setLooping(true);
+        _controller.play();
+        setState(() {});
+      });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Stack(children: [
       // background image
-      Opacity(
-        opacity: 0.2,
+      FittedBox(
+        fit: BoxFit.cover,
         child: Container(
           height: MediaQuery.of(context).size.height,
-          child: Image.network(
-              "https://cdn.aarp.net/content/dam/aarp/entertainment/music/2018/03/1140-concert-ticket-prices.jpg",
-              fit: BoxFit.cover),
+          width: MediaQuery.of(context).size.width,
+          child: VideoPlayer(_controller),
         ),
       ),
+      Opacity(opacity: 0.6, child: Container(color: Colors.black)),
 
       // front page elements. all padded 30 horizontally
       // slogan text
@@ -24,9 +48,9 @@ class WelcomeScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 30.0),
           child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            SizedBox(height: 50),
-            Image.asset('assets/Whatado_FullColor.png', height: 100),
-            SizedBox(height: 20),
+            Spacer(),
+            Image.asset('assets/Whatado_White.png'),
+            Spacer(),
             // Center(
             //   child: Padding(
             //     padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -50,8 +74,8 @@ class WelcomeScreen extends StatelessWidget {
             // continue arrow button @ bottom
             Spacer(),
             RoundedArrowButton(
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
+              onPressed: () =>
+                  Navigator.push(context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
               text: "Let's Go!",
             ),
             SizedBox(height: 30)

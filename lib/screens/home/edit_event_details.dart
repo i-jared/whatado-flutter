@@ -11,7 +11,6 @@ import 'package:whatado/models/forum.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/edit_event_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/edit_event_app_bar.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
@@ -40,14 +39,14 @@ class EditEventDetails extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: padding),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: sectionSpacing),
-            Text('TITLE', style: headingStyle),
+            Text('Title', style: headingStyle),
             SizedBox(height: headingSpacing),
             MyTextField(
               controller: editEventState.titleController,
               hintText: 'Enter title',
             ),
             SizedBox(height: sectionSpacing),
-            Text('DESCRIPTION', style: headingStyle),
+            Text('Description', style: headingStyle),
             SizedBox(height: headingSpacing),
             MyTextField(
               controller: editEventState.descriptionController,
@@ -55,7 +54,7 @@ class EditEventDetails extends StatelessWidget {
               maxLines: null,
             ),
             SizedBox(height: sectionSpacing),
-            Text('LOCATION', style: headingStyle),
+            Text('Location', style: headingStyle),
             SizedBox(height: headingSpacing),
             TypeAheadFormField(
               direction: AxisDirection.up,
@@ -64,12 +63,10 @@ class EditEventDetails extends StatelessWidget {
                 editEventState.locationController.text = place['description'];
                 editEventState.coordinates = GeoJsonPoint(
                     geoPoint: GeoPoint(
-                        latitude: place['location']['y'],
-                        longitude: place['location']['x']));
+                        latitude: place['location']['y'], longitude: place['location']['x']));
               },
               suggestionsCallback: (String pattern) async {
-                final result =
-                    await placesService.findPlace(pattern, userState.user!.location);
+                final result = await placesService.findPlace(pattern, userState.user!.location);
                 return result;
               },
               itemBuilder: (context, Map<String, dynamic> place) =>
@@ -86,7 +83,7 @@ class EditEventDetails extends StatelessWidget {
               ),
             ),
             SizedBox(height: sectionSpacing),
-            Text('TIME', style: headingStyle),
+            Text('Time', style: headingStyle),
             SizedBox(height: headingSpacing),
             Row(
               children: [

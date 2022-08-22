@@ -9,6 +9,7 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/utils/time_tools.dart';
 
 class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -35,88 +36,18 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
           child: TextButton(
-            child: Text('PUBLISH',
-                style: TextStyle(color: !ready ? Colors.grey : AppColors.primary)),
+            child: eventState.postLoading
+                ? CircularProgressIndicator()
+                : Text('Publish',
+                    style: TextStyle(color: !ready ? Colors.grey : AppColors.primary)),
             onPressed: !ready || eventState.postLoading
                 ? null
                 : () async {
-                    if (eventState.postLoading) return;
-                    eventState.postLoading = true;
-                    if (userState.user == null) {
-                      await userState.getUser();
-                    }
-
-                    try {
-                      String? downloadUrl;
-                      if (!eventState.textMode) {
-                        downloadUrl = await cloudStorageService.uploadImage(
-                          await eventState
-                              .cropResizeImage(MediaQuery.of(context).size.width),
-                          userState.user!.id,
-                        );
-                      }
-
-                      if (!eventState.textMode && downloadUrl == null) {
-                        print('error: no image');
-                        eventState.clear();
-                        eventState.failed = true;
-                        eventState.postLoading = false;
-                        return;
-                      }
-
-                      // frankenstein the time from user input
-                      final finalTime = formatMyTime(
-                          eventState.dateController.text, eventState.timeController.text);
-                      // create interests
-                      final interestsProvider = InterestGqlProvider();
-                      final interests = await interestsProvider.create(interestsText: [
-                        ...(eventState.customInterests.map((i) => i.title).toList()),
-                        if (eventState.selectedInterests.isNotEmpty)
-                          ...(eventState.selectedInterests.map((i) => i.title).toList())
-                      ]);
-
-                      // make query
-                      final query = CreateEventGqlQuery();
-                      await query.create(
-                          eventInput: EventInput(
-                        creatorId: userState.user!.id,
-                        description: eventState.descriptionController.text,
-                        filterMinAge: eventState.filterAgeStart.toInt(),
-                        filterMaxAge: eventState.filterAgeEnd.toInt(),
-                        filterGender: eventState.selectedGender,
-                        filterLocation: '', // not yet used
-                        filterRadius: 5, // not yet used
-                        privacy: eventState.privacy,
-                        location: eventState.locationController.text,
-                        coordinates: eventState.coordinates,
-                        relatedInterestsIds: List<int>.from(interests.data ??
-                            eventState.selectedInterests.map((v) => v.id).toList()),
-                        time: finalTime,
-                        pictureUrl: downloadUrl,
-                        title: eventState.textMode
-                            ? eventState.textModeController.text
-                            : eventState.titleController.text,
-                        wannagoIds: [],
-                        screened: eventState.screened,
-                        chatDisabled: eventState.chatDisabled,
-                        groupId: eventState.selectedGroup?.id,
-                        invitedIds: eventState.privacy == Privacy.group
-                            ? eventState.selectedGroup!.users.map((u) => u.id).toList()
-                            : eventState.selectedUsers.map((u) => u.id).toList(),
-                      ));
-                    } catch (e, stack) {
-                      print(e.toString());
-                      print(stack);
-                      eventState.clear();
-                      eventState.failed = true;
-                      eventState.postLoading = false;
-                      return;
-                    }
-                    await homeState.getMyEvents();
-                    await homeState.getMyForums();
-                    eventState.clear();
-                    eventState.succeeded = true;
-                    eventState.postLoading = false;
+                    await eventState.postEvent(
+                        userState.user!.id,
+                        MediaQuery.of(context).size.width,
+                        homeState.getMyEvents,
+                        homeState.getMyForums);
                   },
           ),
         ),

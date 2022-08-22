@@ -169,8 +169,7 @@ class HomeState extends ChangeNotifier {
     if ((this.appBarPageNo - newPageNo).abs() == 1) {
       this
           .homePageController
-          .animateToPage(newPageNo,
-              duration: Duration(milliseconds: 200), curve: Curves.easeInOut)
+          .animateToPage(newPageNo, duration: Duration(milliseconds: 200), curve: Curves.easeInOut)
           .then((_) => notifyListeners());
     } else {
       homePageController.jumpToPage(newPageNo);
@@ -181,8 +180,7 @@ class HomeState extends ChangeNotifier {
   Future<void> otherEventsRequest() async {
     final query = EventsGqlProvider();
     final start = _selectedDate ?? DateTime.now();
-    final end =
-        _selectedDate?.add(Duration(days: 1)) ?? DateTime.now().add(Duration(days: 1000));
+    final end = _selectedDate?.add(Duration(days: 1)) ?? DateTime.now().add(Duration(days: 1000));
     // events related to interests are empty, get others
     final response = await query.otherEvents(start, end, 20, _skip, _sortType);
     _skip += response.data?.length ?? 0;
@@ -199,8 +197,7 @@ class HomeState extends ChangeNotifier {
   Future<void> getNewEvents() async {
     final query = EventsGqlProvider();
     final start = _selectedDate ?? DateTime.now();
-    final end =
-        _selectedDate?.add(Duration(days: 1)) ?? DateTime.now().add(Duration(days: 1000));
+    final end = _selectedDate?.add(Duration(days: 1)) ?? DateTime.now().add(Duration(days: 1000));
     if (_favoritesEmpty && !_othersEmpty) {
       await otherEventsRequest();
     } else if (!_favoritesEmpty) {
@@ -230,8 +227,7 @@ class HomeState extends ChangeNotifier {
 
   Future<List<Forum>?> getMyForums() async {
     final query = ForumsGqlProvider();
-    final response =
-        await query.myForums(myEvents?.map((event) => event.id).toList() ?? []);
+    final response = await query.myForums(myEvents?.map((event) => event.id).toList() ?? []);
     myForums = response.data ?? [];
     await getFirstChats();
     notifyListeners();
