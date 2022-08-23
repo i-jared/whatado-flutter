@@ -23,6 +23,7 @@ class _ChatsState extends State<Chats> {
   @override
   Widget build(BuildContext context) {
     return GenericPage(
+      resizeToAvoidBottomInset: true,
       appBar: ChatAppBar(event: widget.event, forum: widget.forum),
       body: ChangeNotifierProvider<ChatState>(
         create: (BuildContext context) => ChatState(
@@ -32,8 +33,7 @@ class _ChatsState extends State<Chats> {
         child: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  repeat: ImageRepeat.repeat,
-                  image: AssetImage('assets/chat_background.png'))),
+                  repeat: ImageRepeat.repeat, image: AssetImage('assets/chat_background.png'))),
           child: Stack(
             children: [
               Column(children: [

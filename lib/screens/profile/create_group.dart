@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -146,16 +147,14 @@ class _CreateGroupState extends State<CreateGroup> {
                   groupLocationController.text = place['description'];
                   final location = await placesService.placeDetails(place['place_id']);
                   if (location['lat'] == null || location['lng'] == null) {
-                    // TODO make an error here somehow.
-                    // Invalidate location entry
+                    BotToast.showText(text: 'Invalid location; please make another selection.');
+                    groupNameController.text = '';
                   }
                   coordinates = GeoJsonPoint(
-                      geoPoint: GeoPoint(
-                          latitude: location['lat'], longitude: location['lng']));
+                      geoPoint: GeoPoint(latitude: location['lat'], longitude: location['lng']));
                 },
                 suggestionsCallback: (String pattern) async {
-                  final result =
-                      await placesService.findPlace(pattern, userState.user?.location);
+                  final result = await placesService.findPlace(pattern, userState.user?.location);
                   return result;
                 },
                 itemBuilder: (context, Map<String, dynamic> place) =>

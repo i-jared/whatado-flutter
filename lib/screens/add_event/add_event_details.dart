@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -104,10 +105,15 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             Row(
               children: [
                 Text('LOCATION', style: headingStyle),
-                // TODO remove this replace with hint
                 SizedBox(width: 10),
-                Text('(ONLY VISIBLE TO YOU)',
-                    style: TextStyle(fontSize: 15, color: Colors.grey)),
+                Tooltip(
+                  preferBelow: false,
+                  triggerMode: TooltipTriggerMode.tap,
+                  margin: EdgeInsets.symmetric(horizontal: 50),
+                  padding: EdgeInsets.all(8),
+                  message: "Location is only visible for invited event members.",
+                  child: Icon(Icons.help_outline, size: 20),
+                ),
               ],
             ),
             SizedBox(height: headingSpacing),
@@ -118,16 +124,14 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                 eventState.locationController.text = place['description'];
                 final location = await placesService.placeDetails(place['place_id']);
                 if (location['lat'] == null || location['lng'] == null) {
-                  // TODO make an error here somehow.
-                  // Invalidate location entry
+                  BotToast.showText(text: 'Invalid location; please make another selection.');
+                  eventState.locationController.text = '';
                 }
                 eventState.coordinates = GeoJsonPoint(
-                    geoPoint:
-                        GeoPoint(latitude: location['lat'], longitude: location['lng']));
+                    geoPoint: GeoPoint(latitude: location['lat'], longitude: location['lng']));
               },
               suggestionsCallback: (String pattern) async {
-                final result =
-                    await placesService.findPlace(pattern, userState.user?.location);
+                final result = await placesService.findPlace(pattern, userState.user?.location);
                 return result;
               },
               itemBuilder: (context, Map<String, dynamic> place) =>
@@ -172,8 +176,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                     controller: eventState.timeController,
                     onTap: () => DatePicker.showTime12hPicker(
                       context,
-                      onConfirm: (time) =>
-                          eventState.timeController.text = timeFormat.format(time),
+                      onConfirm: (time) => eventState.timeController.text = timeFormat.format(time),
                       currentTime: DateTime.now(),
                     ),
                     decoration: InputDecoration(
@@ -190,15 +193,14 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             TextButton(
                 onPressed: !ready
                     ? null
-                    : () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TargetAudience())),
+                    : () => Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => TargetAudience())),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('SELECT TARGET AUDIENCE',
                         style: TextStyle(
-                            fontSize: 18,
-                            color: !ready ? Colors.grey[400] : AppColors.primary)),
+                            fontSize: 18, color: !ready ? Colors.grey[400] : AppColors.primary)),
                     Icon(Icons.arrow_forward_ios,
                         color: !ready ? Colors.grey[400] : AppColors.primary)
                   ],
@@ -214,8 +216,8 @@ class _AddEventDetailsState extends State<AddEventDetails> {
           title: 'Add Event',
           buttonTitle: 'NEXT',
           disabled: !ready,
-          onSave: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => TargetAudience())),
+          onSave: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => TargetAudience())),
         ),
         body: chooseWidget(context));
   }

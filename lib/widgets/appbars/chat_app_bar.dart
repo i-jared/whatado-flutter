@@ -102,7 +102,6 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
                           }));
                 }
                 if (value == 'delete') {
-// TODO: when you delete an event, delete the forum and chats along with it.
                   showMyDialog(
                       context,
                       ConfirmCancelDialog.async(

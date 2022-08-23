@@ -54,8 +54,8 @@ class _GroupDetailsState extends State<GroupDetails> {
         title: group.name,
         buttonTitle: isOwner ? "EDIT" : "LEAVE",
         onSave: () => isOwner
-            ? Navigator.push(context,
-                MaterialPageRoute(builder: (context) => EditGroupDetails(group: group)))
+            ? Navigator.push(
+                context, MaterialPageRoute(builder: (context) => EditGroupDetails(group: group)))
             : null, //TODO add function for user to leave group. delete group if last member
       ),
       body: Padding(
@@ -63,10 +63,7 @@ class _GroupDetailsState extends State<GroupDetails> {
         child: SingleChildScrollView(
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: 30),
-            Container(
-                height: 75,
-                width: 75,
-                child: CachedNetworkImage(imageUrl: group.icon.url)),
+            Container(height: 75, width: 75, child: CachedNetworkImage(imageUrl: group.icon.url)),
             if (group.requested.isNotEmpty) ...[
               SizedBox(height: 30),
               InkWell(
@@ -83,8 +80,7 @@ class _GroupDetailsState extends State<GroupDetails> {
                             alignment: Alignment.center,
                             child: Text("--", style: TextStyle(fontSize: 30)),
                           )
-                        : PictureWaterfall(
-                            radius: 20, loading: false, users: group.requested),
+                        : PictureWaterfall(radius: 20, loading: false, users: group.requested),
                     Text('Requests', style: headingStyle)
                   ],
                 ),
@@ -124,18 +120,16 @@ class _GroupDetailsState extends State<GroupDetails> {
               if (groupEvents != null && groupEvents!.isNotEmpty)
                 ...groupEvents!.map((e) {
                   final filteredWannago = e.wannago.where((wannago) =>
-                      !wannago.declined &&
-                      !e.invited.map((eu) => eu.id).contains(wannago.user.id));
+                      !wannago.declined && !e.invited.map((eu) => eu.id).contains(wannago.user.id));
                   return InkWell(
-                    onTap: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => EventDetails(event: e))),
+                    onTap: () => Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => EventDetails(event: e))),
                     child: Container(
                         height: 150,
                         margin: EdgeInsets.symmetric(vertical: 8),
                         child: InnerEventDisplay(e, filteredWannago)),
                   );
                 })
-              // TODO list all the events that a group has done (groupId in event == group.id)
             ],
           ]),
         ),

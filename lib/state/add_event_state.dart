@@ -54,9 +54,7 @@ class AddEventState extends ChangeNotifier {
   bool _succeeded;
   bool _screened;
   bool _chatDisabled;
-  GeoJsonPoint coordinates =
-      GeoJsonPoint(geoPoint: GeoPoint(latitude: 41.7370, longitude: 111.8338));
-  // TODO use real values
+  GeoJsonPoint? coordinates;
 
   List<Interest> popularInterests = [];
   List<Interest> customInterests = [];
@@ -374,7 +372,7 @@ class AddEventState extends ChangeNotifier {
         filterRadius: 5, // not yet used
         privacy: privacy,
         location: locationController.text,
-        coordinates: coordinates,
+        coordinates: coordinates!,
         relatedInterestsIds:
             List<int>.from(interests.data ?? selectedInterests.map((v) => v.id).toList()),
         time: finalTime,

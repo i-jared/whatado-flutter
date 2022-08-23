@@ -9,8 +9,6 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/logger.dart';
-import 'package:whatado/utils/time_tools.dart';
 
 class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -24,6 +22,7 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
     final ready = eventState.timeController.text.isNotEmpty &&
         eventState.dateController.text.isNotEmpty &&
         eventState.locationController.text.isNotEmpty &&
+        eventState.coordinates != null &&
         (eventState.textMode || eventState.titleController.text.isNotEmpty) &&
         (eventState.privacy != Privacy.private || eventState.selectedUsers.isNotEmpty) &&
         (eventState.privacy != Privacy.group || eventState.selectedGroup != null);

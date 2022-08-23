@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
@@ -51,8 +52,8 @@ class _SelectGroupRequestedState extends State<SelectGroupRequested> {
           SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text("Invite People",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+            child:
+                Text("Invite People", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
           ),
           SizedBox(height: 10),
           Expanded(
@@ -108,28 +109,25 @@ class _SelectGroupRequestedState extends State<SelectGroupRequested> {
     final provider = GroupGqlProvider();
     if (accepted) {
       final result = await provider.updateGroup(GroupFilterInput(
-          id: widget.group.id,
-          userIds: [user.id, ...widget.group.users.map((u) => u.id)]));
+          id: widget.group.id, userIds: [user.id, ...widget.group.users.map((u) => u.id)]));
       if (result.ok) {
         userState.updateGroupMembers(widget.group, user);
         await userState.getUser();
         setState(() => requested = requested.where((u) => u.id != user.id).toList());
       } else {
-        // TODO display error message
+        BotToast.showText(text: 'Error accepting user to group.');
       }
     } else {
       final result = await provider.updateGroup(GroupFilterInput(
           id: widget.group.id,
-          requestedIds: widget.group.requested
-              .map((u) => u.id)
-              .where((id) => id != user.id)
-              .toList()));
+          requestedIds:
+              widget.group.requested.map((u) => u.id).where((id) => id != user.id).toList()));
       if (result.ok) {
         userState.removeGroupRequests(widget.group, user);
         await userState.getUser();
         setState(() => requested = requested.where((u) => u.id != user.id).toList());
       } else {
-        // TODO display error message
+        BotToast.showText(text: 'Error denying user access to group.');
       }
     }
     setState(() => loading = false);

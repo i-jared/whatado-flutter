@@ -1,6 +1,5 @@
-import 'dart:typed_data';
-
 import 'dart:convert';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
@@ -65,9 +64,8 @@ class UserState extends ChangeNotifier {
   }
 
   Future<bool> save(List<Interest> interests, String bio) async {
-    // TODO make this more efficient so I'm not uploading duplicate photos
     try {
-      final filter = UserFilterInput(bio: bio);
+      final input = UserFilterInput(bio: bio);
       final provider = UserGqlProvider();
       if (interests != _user!.interests) {
         final strings = interests.map((interest) => interest.title).toList();
@@ -78,14 +76,27 @@ class UserState extends ChangeNotifier {
         }
       }
       List<String?> photoUrls = user!.photoUrls;
-      if (photos != ogphotos) {
-        photoUrls = await Future.wait(photos!.map<Future<String?>>((data) {
-          return cloudStorageService.uploadImage(data, user!.id, userImage: true);
-        }));
-        filter.photoUrls = json.encode(photoUrls);
+      if (photos != ogphotos && photos != null) {
+        // get new photos
+        final newPhotos = photos!.where((p) => !(ogphotos?.contains(p) ?? false));
+        // create url list with spaces for new photos
+        final missingIndices =
+            photos!.mapIndexed((i, p) => !ogphotos!.contains(p) ? i : null).whereNotNull().toList();
+        final spacedUrls =
+            photoUrls.mapIndexed((i, url) => missingIndices.contains(i) ? null : url).toList();
+        if (newPhotos.isNotEmpty) {
+          // upload photos that don't exist already
+          // TODO upload securely using url from server
+          List<String?> uploadedUrls = await Future.wait(newPhotos.map<Future<String?>>((data) {
+            return cloudStorageService.uploadImage(data, user!.id, userImage: true);
+          }));
+          // replace missing urls with new uploaded urls
+          uploadedUrls.forEach((url) => spacedUrls[spacedUrls.indexOf(null)] = url);
+          photoUrls = spacedUrls;
+        }
       }
 
-      final result = await provider.updateUser(filter);
+      final result = await provider.updateUser(input);
       if (!result.ok) {
         return false;
       }
@@ -132,8 +143,7 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateGroupMembers(Group group, EventUser newuser,
-      {bool add = true}) async {
+  Future<void> updateGroupMembers(Group group, EventUser newuser, {bool add = true}) async {
     if (add) {
       group.users = [...group.users, newuser];
       int i = user!.groups.indexWhere((g) => g.id == group.id);
