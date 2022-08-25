@@ -26,4 +26,11 @@ class AppColors {
   static Color primary = Color(0xfff7941d);
   static Color secondary = Color(0xff0073ab);
   static Color background = Colors.grey[50]!;
+  static Color unfocused = Colors.grey;
+  static Color disabled = Colors.grey[300]!;
+  static Color darkAccent = Color.fromARGB(255, 81, 81, 92);
+}
+
+class AppRadii {
+  static double button = 15.0;
 }

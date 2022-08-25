@@ -298,9 +298,9 @@ class HomeState extends ChangeNotifier {
   }
 
   void updateEvent(PublicEvent event) {
-    int index = allEvents!.indexWhere((val) => val.id == event.id);
+    int index = allEvents?.indexWhere((val) => val.id == event.id) ?? -1;
     if (index == -1) {
-      index = otherEvents!.indexWhere((val) => val.id == event.id);
+      index = otherEvents?.indexWhere((val) => val.id == event.id) ?? -1;
       if (index == -1) {
         return;
       }

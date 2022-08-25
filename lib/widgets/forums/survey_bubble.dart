@@ -1,6 +1,6 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/chat.dart';
@@ -9,6 +9,7 @@ import 'package:whatado/screens/home/user_list_page.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/users/user_avatar.dart';
 
@@ -29,17 +30,20 @@ class _SurveyBubbleState extends State<SurveyBubble> {
     final userState = Provider.of<UserState>(context);
     final isOwner = widget.chat.author.id == userState.user?.id;
     final chatState = Provider.of<ChatState>(context);
+    final textColor = isOwner ? AppColors.background : Colors.grey[850];
+    final bubbleColor = isOwner ? Color.fromARGB(255, 81, 81, 92) : Colors.white;
 
     final Widget bubble = Bubble(
-      margin: BubbleEdges.only(left: isOwner ? 50 : 5, right: 50),
-      color: Colors.orange[50],
-      radius: Radius.circular(20),
+      color: bubbleColor,
+      margin: BubbleEdges.only(left: isOwner ? 50 : 0, right: isOwner ? 0 : 50),
+      radius: Radius.circular(AppRadii.button),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(survey.question,
-                style: TextStyle(fontSize: 18, color: Colors.grey[850])),
+            Text(survey.question, style: TextStyle(fontSize: 18, color: textColor)),
+            SizedBox(height: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: answers.map((a) {
@@ -53,8 +57,13 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                           : () async {
                               setState(() => loading = true);
                               final provider = ChatGqlProvider();
-                              await provider.vote(
-                                  widget.chat.id, a.id, chatState.forum.id);
+                              final result =
+                                  await provider.vote(widget.chat.id, a.id, chatState.forum.id);
+                              if (!result.ok) {
+                                BotToast.showText(
+                                    text:
+                                        'Error voting. Please exit, wait a minute, and try again.');
+                              }
                               setState(() => loading = false);
                             },
                       child: Container(
@@ -67,8 +76,8 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                               color: _selected ? AppColors.background : Colors.grey[850],
                             )),
                         decoration: BoxDecoration(
-                            color: _selected ? Colors.grey[850] : AppColors.background,
-                            borderRadius: BorderRadius.circular(100)),
+                            color: _selected ? AppColors.primary : AppColors.background,
+                            borderRadius: BorderRadius.circular(AppRadii.button)),
                       ),
                     ),
                   ),
@@ -83,7 +92,7 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                                       UserListPage(title: a.text, users: a.votes))),
                           child: PictureWaterfall(loading: false, users: a.votes),
                         ))
-                      : Text('--')
+                      : Text('--', style: TextStyle(color: textColor))
                 ]);
               }).toList(),
             )
@@ -91,7 +100,10 @@ class _SurveyBubbleState extends State<SurveyBubble> {
         ),
       ),
       alignment: Alignment.topCenter,
-      nip: BubbleNip.no,
+      nip: isOwner ? BubbleNip.rightTop : BubbleNip.leftTop,
+      nipRadius: 0,
+      nipWidth: 0.001,
+      nipHeight: 30,
     );
 
     return Padding(
@@ -109,8 +121,7 @@ class _SurveyBubbleState extends State<SurveyBubble> {
                       onTap: () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          UserProfile(user: widget.chat.author)))
+                                      builder: (context) => UserProfile(user: widget.chat.author)))
                               .then((_) async {
                             await Future.delayed(Duration(milliseconds: 500));
                             // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(

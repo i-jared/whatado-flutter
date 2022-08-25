@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event.dart';
@@ -5,7 +6,7 @@ import 'package:whatado/constants.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/widgets/input/my_text_field.dart';
+import 'package:whatado/widgets/input/simple_outline_text.dart';
 
 class MessagesTextField extends StatefulWidget {
   final Forum forum;
@@ -17,31 +18,24 @@ class MessagesTextField extends StatefulWidget {
 
 class _MessagesTextFieldState extends State<MessagesTextField> {
   late int? selectedSurvey = 0;
-  late List<Widget> customTextFields;
+  late int customTextFields = 2;
   late List<TextEditingController> customTextControllers;
+  late bool createSurvey = false;
+  final double height = 50.0;
 
   initState() {
     super.initState();
     customTextControllers = [TextEditingController(), TextEditingController()];
-    customTextFields = [
-      MyTextField(
-        hintText: 'New Answer...',
-        controller: customTextControllers[0],
-      ),
-      MyTextField(
-        hintText: 'New Answer...',
-        controller: customTextControllers[1],
-      )
-    ];
+    customTextControllers.forEach((c) => c.addListener(() => setState(() {})));
+    customTextControllers.forEach((element) => setState(() {}));
   }
 
-  late bool createSurvey = false;
-  final double height = 50.0;
   @override
   Widget build(BuildContext context) {
     final chatState = Provider.of<ChatState>(context);
     final userState = Provider.of<UserState>(context);
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
@@ -61,10 +55,13 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                   child: Text('chat is disabled for this group', style: TextStyle(fontSize: 17))))
           : Column(
               children: [
+                SizedBox(height: 15),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     IconButton(
+                        padding: EdgeInsets.all(0),
+                        visualDensity: VisualDensity(horizontal: VisualDensity.minimumDensity),
                         onPressed: () {
                           FocusScopeNode currentFocus = FocusScope.of(context);
                           if (!currentFocus.hasPrimaryFocus) {
@@ -72,8 +69,13 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                           }
                           setState(() => createSurvey = !createSurvey);
                         },
-                        icon: Icon(createSurvey ? Icons.cancel_outlined : Icons.add_circle_outline),
+                        icon: Icon(
+                            createSurvey
+                                ? Icons.disabled_by_default_rounded
+                                : Icons.add_box_rounded,
+                            size: 30),
                         color: AppColors.primary),
+                    SizedBox(width: 10),
                     Expanded(
                       child: TextFormField(
                         controller: chatState.textController,
@@ -84,146 +86,196 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                           setState(() => createSurvey = false);
                         },
                         decoration: InputDecoration(
-                            hintText: "Type your message...", border: InputBorder.none),
-                        style: TextStyle(fontSize: 20),
+                            hintText: "Type your message", border: InputBorder.none),
+                        style: TextStyle(fontSize: 18),
                       ),
                     ),
-                    chatState.textController.text.isNotEmpty
-                        ? Container(
-                            height: height,
-                            width: height,
-                            decoration: BoxDecoration(
-                              color: AppColors.primary,
-                              borderRadius: BorderRadius.circular(height / 2.0),
-                            ),
-                            child: IconButton(
-                                onPressed: () => userState.user == null
-                                    ? null
-                                    : chatState.sendMessage(userState.user!.id),
-                                icon: Icon(Icons.send, color: Colors.white, size: 30)),
-                          )
-                        : SizedBox.shrink(),
-                    SizedBox(width: 30),
+                    IconButton(
+                        disabledColor: Colors.grey,
+                        color: AppColors.primary,
+                        onPressed: chatState.textController.text.isEmpty
+                            ? null
+                            : () => userState.user == null
+                                ? null
+                                : chatState.sendMessage(userState.user!.id),
+                        icon: Icon(Icons.send, size: 35)),
                   ],
                 ),
-                if (createSurvey)
-                  Stack(
-                    children: [
-                      Container(
-                          padding: EdgeInsets.symmetric(horizontal: 30),
-                          height: 350,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                SizedBox(height: 20),
-                                Align(
-                                  child: Text(
-                                    'Create Survey',
-                                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                if (createSurvey) ...[
+                  Divider(color: Colors.grey),
+                  Container(
+                      height: 425,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            SizedBox(height: 10),
+                            Container(
+                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 2.0,
+                                    color: AppColors.primary,
                                   ),
-                                  alignment: Alignment.topCenter,
-                                ),
-                                SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Text('Question: ',
-                                        style: TextStyle(fontWeight: FontWeight.bold)),
-                                    SizedBox(width: 10),
-                                    Expanded(
-                                        child: MyTextField(
-                                            controller: chatState.surveyController,
-                                            hintText: 'Ask question here...'))
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Radio<int>(
-                                      value: 0,
-                                      groupValue: selectedSurvey,
-                                      onChanged: (val) => setState(() => selectedSurvey = val),
-                                    ),
-                                    Text('Yes/No/Maybe'),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Radio<int>(
-                                      value: 1,
-                                      groupValue: selectedSurvey,
-                                      onChanged: (val) => setState(() => selectedSurvey = val),
-                                    ),
-                                    Text('Custom Text'),
-                                  ],
-                                ),
-                                if (selectedSurvey == 1) ...customTextFields,
-                                if (selectedSurvey == 1)
-                                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                                    IconButton(
-                                        onPressed: () {
-                                          customTextControllers.add(TextEditingController());
-                                          customTextFields.add(MyTextField(
-                                            hintText: 'New Answer...',
-                                            controller: customTextControllers.last,
-                                          ));
-                                          setState(() {});
-                                        },
-                                        color: AppColors.primary,
-                                        icon: Icon(Icons.add_circle_outline)),
-                                    if (customTextFields.length > 2) SizedBox(width: 10),
-                                    if (customTextFields.length > 2)
-                                      IconButton(
-                                          onPressed: () {
-                                            customTextFields.removeLast();
-                                            customTextControllers.removeLast();
-                                            setState(() {});
-                                          },
-                                          color: AppColors.primary,
-                                          icon: Icon(Icons.cancel_outlined)),
-                                  ]),
-                              ],
+                                  borderRadius: BorderRadius.circular(AppRadii.button)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Question', style: TextStyle(color: Colors.grey[700])),
+                                  TextFormField(
+                                    controller: chatState.surveyController,
+                                    decoration: InputDecoration(
+                                        border: InputBorder.none, hintText: 'Ask question here'),
+                                    maxLines: null,
+                                  ),
+                                ],
+                              ),
                             ),
-                          )),
-                      if (chatState.surveyController.text.isNotEmpty &&
-                          (selectedSurvey == 1
-                              ? !customTextControllers.any((c) => c.text.isEmpty)
-                              : true))
-                        Positioned(
-                            bottom: 0,
-                            right: 0,
-                            child: IconButton(
-                              onPressed: () async {
-                                await chatState.sendMessage(
-                                    userState.user!.id,
-                                    selectedSurvey == 0
-                                        ? ["Yes", "No", "Maybe"]
-                                        : customTextControllers.map((v) => v.text).toList(),
-                                    chatState.surveyController.text);
-                                chatState.surveyController.clear();
-                                setState(() {
-                                  selectedSurvey = 0;
-                                  createSurvey = false;
-                                  customTextControllers = [
-                                    TextEditingController(),
-                                    TextEditingController()
-                                  ];
-                                  customTextFields = [
-                                    MyTextField(
-                                      hintText: 'New Answer...',
-                                      controller: customTextControllers[0],
+                            SizedBox(height: 15),
+                            Container(
+                              padding: EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: AppColors.disabled,
+                                borderRadius: BorderRadius.circular(AppRadii.button),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Row(children: [
+                                      Transform.scale(
+                                        scale: 1.3,
+                                        child: Radio<int>(
+                                          value: 0,
+                                          activeColor: AppColors.primary,
+                                          groupValue: selectedSurvey,
+                                          onChanged: (val) => setState(() => selectedSurvey = val),
+                                        ),
+                                      ),
+                                      Text('Yes/No/Maybe',
+                                          style: TextStyle(fontWeight: FontWeight.w600)),
+                                    ]),
+                                  ),
+                                  Expanded(
+                                    child: Row(
+                                      children: [
+                                        Transform.scale(
+                                          scale: 1.3,
+                                          child: Radio<int>(
+                                            activeColor: AppColors.primary,
+                                            value: 1,
+                                            groupValue: selectedSurvey,
+                                            onChanged: (val) =>
+                                                setState(() => selectedSurvey = val),
+                                          ),
+                                        ),
+                                        Text('Custom Text',
+                                            style: TextStyle(fontWeight: FontWeight.w600)),
+                                      ],
                                     ),
-                                    MyTextField(
-                                      hintText: 'New Answer...',
-                                      controller: customTextControllers[1],
-                                    )
-                                  ];
-                                });
-                              },
-                              color: AppColors.primary,
-                              icon: Icon(Icons.check_circle),
-                              iconSize: 45,
-                            ))
-                    ],
-                  )
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(height: 15),
+                            if (selectedSurvey == 1)
+                              ...List.generate(
+                                  customTextFields,
+                                  (i) => Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SimpleOutlinedTextField(
+                                          hintText: 'New Answer...',
+                                          controller: customTextControllers[i],
+                                        ),
+                                      )),
+                            SizedBox(height: 10),
+                            if (selectedSurvey == 1)
+                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                                Row(
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        customTextControllers.add(TextEditingController()
+                                          ..addListener(() => setState(() {})));
+                                        setState(() => customTextFields = customTextFields + 1);
+                                      },
+                                      child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                              color: AppColors.primary,
+                                              borderRadius: BorderRadius.circular(AppRadii.button)),
+                                          child: Icon(Icons.add,
+                                              size: 30, color: AppColors.background)),
+                                    ),
+                                    SizedBox(width: 10),
+                                    InkWell(
+                                      onTap: customTextFields <= 2
+                                          ? null
+                                          : () {
+                                              customTextControllers.last.dispose();
+                                              customTextControllers.removeLast();
+                                              setState(
+                                                  () => customTextFields = customTextFields - 1);
+                                            },
+                                      child: Container(
+                                          height: 50,
+                                          width: 50,
+                                          decoration: BoxDecoration(
+                                              color: customTextFields <= 2
+                                                  ? AppColors.disabled
+                                                  : AppColors.primary,
+                                              borderRadius: BorderRadius.circular(AppRadii.button)),
+                                          child: Icon(Icons.remove,
+                                              size: 30, color: AppColors.background)),
+                                    ),
+                                  ],
+                                ),
+                                InkWell(
+                                  onTap: customTextControllers.any((c) => c.text.isEmpty) ||
+                                          chatState.surveyController.text.isEmpty
+                                      ? null
+                                      : () async {
+                                          await chatState.sendMessage(
+                                              userState.user!.id,
+                                              selectedSurvey == 0
+                                                  ? ["Yes", "No", "Maybe"]
+                                                  : customTextControllers
+                                                      .map((v) => v.text)
+                                                      .toList(),
+                                              chatState.surveyController.text);
+                                          chatState.surveyController.clear();
+                                          customTextControllers
+                                              .forEachIndexed((i, c) => c.dispose());
+                                          setState(() {
+                                            selectedSurvey = 0;
+                                            createSurvey = false;
+                                            customTextControllers =
+                                                List<TextEditingController>.generate(
+                                                    2,
+                                                    (index) => TextEditingController()
+                                                      ..addListener(() => setState(() {})));
+                                            customTextFields = 2;
+                                          });
+                                        },
+                                  child: Container(
+                                      padding: EdgeInsets.symmetric(horizontal: 25),
+                                      height: 50,
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                          color: customTextControllers.any((c) => c.text.isEmpty) ||
+                                                  chatState.surveyController.text.isEmpty
+                                              ? AppColors.disabled
+                                              : AppColors.primary,
+                                          borderRadius: BorderRadius.circular(AppRadii.button)),
+                                      child: Text('Create',
+                                          style: TextStyle(
+                                              fontSize: 16, color: AppColors.background))),
+                                ),
+                              ]),
+                          ],
+                        ),
+                      )),
+                ]
               ],
             ),
     );

@@ -58,6 +58,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
           child: PopupMenuButton(
+              icon: Icon(Icons.more_vert),
               onSelected: (value) async {
                 if (value == 'unmute') {
                   final provider = ForumsGqlProvider();
