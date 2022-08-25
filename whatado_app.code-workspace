@@ -17,7 +17,7 @@
         "label": "build_runner_local_dev",
         "command": "/opt/homebrew/bin/fvm",
         "type": "shell",
-        "args": ["dart", "scripts/build_graphql.dart", "http://192.168.0.96:4000/get_schema"]
+        "args": ["dart", "scripts/build_graphql.dart", "http://192.168.4.166:4000/get_schema"]
       }
     ]
   },

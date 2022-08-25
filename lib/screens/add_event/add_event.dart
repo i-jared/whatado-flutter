@@ -20,11 +20,11 @@ class _AddEventState extends State<AddEvent> {
   @override
   void initState() {
     super.initState();
-    // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    //     statusBarBrightness: Brightness.dark,
-    //     systemNavigationBarIconBrightness: Brightness.dark,
-    //     systemNavigationBarColor: AppColors.background,
-    //     statusBarColor: AppColors.background));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        // statusBarBrightness: Brightness.dark,
+        // systemNavigationBarIconBrightness: Brightness.dark,
+        systemNavigationBarColor: AppColors.background,
+        statusBarColor: AppColors.background));
   }
 
   @override

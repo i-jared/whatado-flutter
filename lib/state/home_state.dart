@@ -9,6 +9,7 @@ import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/forum.dart';
+import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
@@ -47,14 +48,14 @@ class HomeState extends ChangeNotifier {
 
   StreamSubscription? appBarResetSub;
   StreamController? appBarResetController;
-  List<Event>? allEvents;
-  List<Event>? otherEvents;
+  List<PublicEvent>? allEvents;
+  List<PublicEvent>? otherEvents;
   List<Event>? myEvents;
   List<Forum>? myForums;
   List<Map<String, dynamic>>? lastMessages;
 
   // for group selection
-  List<EventUser> selectedUsers;
+  List<PublicUser> selectedUsers;
 
   HomeState()
       : _appBarPageNo = 0,
@@ -67,6 +68,7 @@ class HomeState extends ChangeNotifier {
         showcase_3 = GlobalKey(),
         showcase_4 = GlobalKey(),
         selectedUsers = [],
+        otherEvents = [],
         homePageController = PageController(keepPage: true),
         allEventsScrollController = ScrollController(),
         myProfileScrollController = ScrollController(),
@@ -269,6 +271,7 @@ class HomeState extends ChangeNotifier {
       if ((result?.length ?? 0) > 0) await getMyForums();
       myEventsRefreshController.refreshCompleted();
     } catch (e) {
+      logger.e(e);
       myEventsRefreshController.refreshFailed();
     }
   }
@@ -276,13 +279,14 @@ class HomeState extends ChangeNotifier {
   Future<void> allEventsRefresh() async {
     try {
       allEvents = null;
-      otherEvents = null;
+      otherEvents = [];
       _skip = 0;
       _favoritesEmpty = false;
       _othersEmpty = false;
       await getNewEvents();
       refreshController.refreshCompleted();
     } catch (e) {
+      logger.e(e);
       refreshController.refreshFailed();
     }
   }
@@ -293,7 +297,7 @@ class HomeState extends ChangeNotifier {
     return chatResult.data;
   }
 
-  void updateEvent(Event event) {
+  void updateEvent(PublicEvent event) {
     int index = allEvents!.indexWhere((val) => val.id == event.id);
     if (index == -1) {
       index = otherEvents!.indexWhere((val) => val.id == event.id);
@@ -308,12 +312,14 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void removeEvent(Event event) {
-    if (allEvents?.contains(event) ?? false) allEvents?.remove(event);
-    if (otherEvents?.contains(event) ?? false) otherEvents?.remove(event);
-    if (myEvents?.contains(event) ?? false) {
-      myEvents?.remove(event);
-      myForums?.removeWhere((forum) => forum.eventId == event.id);
+  void removeEvent(int eventId) {
+    if (allEvents?.any((event) => event.id == eventId) ?? false)
+      allEvents?.removeWhere((event) => event.id == eventId);
+    if (otherEvents?.any((event) => event.id == eventId) ?? false)
+      otherEvents?.removeWhere((event) => event.id == eventId);
+    if (myEvents?.any((event) => event.id == eventId) ?? false) {
+      myEvents?.removeWhere((event) => event.id == eventId);
+      myForums?.removeWhere((forum) => forum.eventId == eventId);
     }
     notifyListeners();
   }
@@ -351,7 +357,7 @@ class HomeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setSelectedGroup(List<EventUser> newSelectedUsers) {
+  void setSelectedGroup(List<PublicUser> newSelectedUsers) {
     selectedUsers = newSelectedUsers;
     notifyListeners();
   }

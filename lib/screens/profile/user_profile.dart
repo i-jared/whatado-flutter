@@ -10,7 +10,7 @@ import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/users/user_heading.dart';
 
 class UserProfile extends StatefulWidget {
-  final EventUser user;
+  final PublicUser user;
   UserProfile({required this.user});
 
   @override
@@ -82,9 +82,7 @@ class _StateUserProfile extends State<UserProfile> {
                                 height: 10,
                                 width: 10,
                                 decoration: BoxDecoration(
-                                    color: i / 2 == selectedIndex
-                                        ? Colors.black
-                                        : Colors.grey,
+                                    color: i / 2 == selectedIndex ? Colors.black : Colors.grey,
                                     shape: BoxShape.circle),
                               )
                             : SizedBox(width: 5))),
@@ -99,8 +97,7 @@ class _StateUserProfile extends State<UserProfile> {
                 SizedBox(height: sectionSpacing),
                 UserHeading(
                   user: widget.user,
-                  onPressed: () =>
-                      getFunction(context, friends, youRequested, theyRequested),
+                  onPressed: () => getFunction(context, friends, youRequested, theyRequested),
                   child: loading
                       ? Center(
                           child: SizedBox(
@@ -161,8 +158,7 @@ class _StateUserProfile extends State<UserProfile> {
                   title: Text('Unfriend?'),
                   content: Text('Are you sure you want to unfriend ${widget.user.name}?'),
                   actions: [
-                    TextButton(
-                        child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
+                    TextButton(child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
                     TextButton(
                         child: Text("Unfriend"),
                         onPressed: () async {

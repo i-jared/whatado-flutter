@@ -20,7 +20,7 @@ class SearchPage extends StatefulWidget {
 class _StateSearchPage extends State<SearchPage> {
   Timer? debounce;
   late bool loading = false;
-  late List<EventUser>? users = [];
+  late List<PublicUser>? users = [];
   late UserGqlProvider provider = UserGqlProvider();
 
   Widget getWidget(context) {
@@ -50,8 +50,7 @@ class _StateSearchPage extends State<SearchPage> {
     final searchState = Provider.of<SearchState>(context);
     return Container(
         child: Padding(
-      padding:
-          EdgeInsets.symmetric(horizontal: searchState.selectedSearchType == 0 ? 0 : 24),
+      padding: EdgeInsets.symmetric(horizontal: searchState.selectedSearchType == 0 ? 0 : 24),
       child: Column(
         children: [
           Container(
@@ -61,8 +60,7 @@ class _StateSearchPage extends State<SearchPage> {
                 controller: searchState.searchController,
               )),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: searchState.selectedSearchType == 0 ? 24 : 0),
+            padding: EdgeInsets.symmetric(horizontal: searchState.selectedSearchType == 0 ? 24 : 0),
             child: SearchSelectionRow(),
           ),
           Expanded(

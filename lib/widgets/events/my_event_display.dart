@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/models/public_event.dart';
 import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/inner_event_display.dart';
@@ -15,8 +16,7 @@ class MyEventDisplay extends StatelessWidget {
     final userState = Provider.of<UserState>(context);
     final filteredWannago = event.wannago.where((wannago) =>
         !wannago.declined && !event.invited.map((eu) => eu.id).contains(wannago.user.id));
-    final haveWannago =
-        event.creator.id == userState.user?.id && filteredWannago.isNotEmpty;
+    final haveWannago = event.creator.id == userState.user?.id && filteredWannago.isNotEmpty;
     return InkWell(
         onTap: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => EventDetails(event: event))),
@@ -32,8 +32,7 @@ class MyEventDisplay extends StatelessWidget {
                         height: 12,
                         width: 12,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.primary),
+                            borderRadius: BorderRadius.circular(10), color: AppColors.primary),
                       )
                     : const SizedBox(width: 24),
                 InnerEventDisplay(event, filteredWannago),

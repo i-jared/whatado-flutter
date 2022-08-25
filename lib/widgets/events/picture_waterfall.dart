@@ -7,10 +7,9 @@ import 'package:whatado/widgets/users/user_avatar.dart';
 
 class PictureWaterfall extends StatelessWidget {
   final bool loading;
-  final List<EventUser> users;
+  final List<PublicUser> users;
   final double radius;
-  PictureWaterfall(
-      {required this.loading, required this.users, this.radius = 13});
+  PictureWaterfall({required this.loading, required this.users, this.radius = 13});
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +18,7 @@ class PictureWaterfall extends StatelessWidget {
       children: [
         Container(
           height: radius * 2,
-          width: radius *
-              (loading ? (length + 1) : (min(length, users.length) + 1)),
+          width: radius * (loading ? (length + 1) : (min(length, users.length) + 1)),
           child: Stack(
               children: loading
                   ? List<Widget>.generate(
@@ -39,17 +37,14 @@ class PictureWaterfall extends StatelessWidget {
                             left: i * radius,
                             bottom: 0,
                             child: UserAvatar(
-                                url: users[i].photoUrls.isEmpty
-                                    ? null
-                                    : users[i].photoUrls.first,
+                                url: users[i].photoUrls.isEmpty ? null : users[i].photoUrls.first,
                                 radius: radius),
                           )).toList()),
         ),
         SizedBox(width: 10),
         if (!loading && length < users.length)
           Expanded(
-            child: Text('+${users.length - 4}',
-                style: TextStyle(fontSize: radius - 2)),
+            child: Text('+${users.length - 4}', style: TextStyle(fontSize: radius - 2)),
           ),
       ],
     );

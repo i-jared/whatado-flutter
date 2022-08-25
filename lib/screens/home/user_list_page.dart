@@ -6,7 +6,7 @@ import 'package:whatado/widgets/users/user_list_item.dart';
 
 class UserListPage extends StatelessWidget {
   final String title;
-  final List<EventUser> users;
+  final List<PublicUser> users;
   UserListPage({required this.title, required this.users});
   @override
   Widget build(BuildContext context) {

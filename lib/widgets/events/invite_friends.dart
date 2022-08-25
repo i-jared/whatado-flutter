@@ -3,11 +3,10 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
 class InviteFriends extends StatelessWidget {
-  final List<EventUser>? users;
-  final List<EventUser> selectedUsers;
-  final Function(List<EventUser>) setUsers;
-  InviteFriends(
-      {required this.users, required this.selectedUsers, required this.setUsers});
+  final List<PublicUser>? users;
+  final List<PublicUser> selectedUsers;
+  final Function(List<PublicUser>) setUsers;
+  InviteFriends({required this.users, required this.selectedUsers, required this.setUsers});
 
   @override
   Widget build(BuildContext context) {

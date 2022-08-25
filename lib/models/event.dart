@@ -11,7 +11,7 @@ class Event {
   int id;
   Privacy privacy;
   DateTime createdAt;
-  EventUser creator;
+  PublicUser creator;
   String title;
   String description;
   String? imageUrl;
@@ -21,7 +21,7 @@ class Event {
   GeoJsonPoint coordinates;
   List<int> relatedInterestIds;
   List<Wannago> wannago;
-  List<EventUser> invited;
+  List<PublicUser> invited;
   bool screened;
 
   Event({
@@ -47,23 +47,22 @@ class Event {
       id: data['id'],
       privacy: getPrivacy(data['privacy']),
       createdAt: DateTime.parse(data['createdAt']),
-      creator: EventUser.fromGqlData(data['creator']),
+      creator: PublicUser.fromGqlData(data['creator']),
       title: data['title'] ?? '',
       imageUrl: data['pictureUrl'],
       screened: data['screened'] ?? true,
       time: DateTime.parse(data['time']).toLocal(),
-      relatedInterestIds: List<int>.from(
-          data['relatedInterests']?.map((obj) => obj['id']).toList() ?? []),
+      relatedInterestIds:
+          List<int>.from(data['relatedInterests']?.map((obj) => obj['id']).toList() ?? []),
       location: data['location'] ?? [],
       coordinates: parseCoordinates(data['coordinates']),
       description: data['description'],
       wannago: List<Wannago>.from(
           data['wannago']?.map((obj) => Wannago.fromGqlData(obj)).toList() ?? []),
-      invited: List<EventUser>.from(
-          data['invited']?.map((obj) => EventUser.fromGqlData(obj)).toList() ?? []),
+      invited: List<PublicUser>.from(
+          data['invited']?.map((obj) => PublicUser.fromGqlData(obj)).toList() ?? []),
       filterGender: Gender.values.firstWhere((val) {
-        return val.toString() ==
-            'Gender.' + data['filterGender'].toString().toLowerCase();
+        return val.toString() == 'Gender.' + data['filterGender'].toString().toLowerCase();
       }, orElse: () => Gender.both),
       //filter gender
       //filter radius
@@ -84,8 +83,7 @@ class Event {
     }
     return GeoJsonPoint(
         geoPoint: GeoPoint(
-            latitude: geojson['coordinates'][1] * 1.0,
-            longitude: geojson['coordinates'][0] * 1.0));
+            latitude: geojson['coordinates'][1] * 1.0, longitude: geojson['coordinates'][0] * 1.0));
   }
 
   static Privacy getPrivacy(String? data) {

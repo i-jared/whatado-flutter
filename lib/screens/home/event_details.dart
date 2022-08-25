@@ -62,7 +62,7 @@ class _EventDetailsState extends State<EventDetails> {
       Navigator.pop(context);
     }
 
-    final removeUser = (EventUser user) => userState.user?.id == event.creator.id &&
+    final removeUser = (PublicUser user) => userState.user?.id == event.creator.id &&
             userState.user?.id != user.id
         ? () => showDialog(
             context: context,
@@ -71,8 +71,7 @@ class _EventDetailsState extends State<EventDetails> {
                     content: Text(
                         'Are you sure you want to remove ${user.name} from the event and chat?'),
                     actions: [
-                      TextButton(
-                          child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
+                      TextButton(child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
                       TextButton(
                         child: Text("Remove"),
                         onPressed: () async {
@@ -115,8 +114,7 @@ class _EventDetailsState extends State<EventDetails> {
                 ),
               ),
             SizedBox(height: headingSpacing),
-            Text(event.title,
-                style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
+            Text(event.title, style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold)),
             SizedBox(height: headingSpacing),
             Text(event.description),
             SizedBox(height: headingSpacing),
@@ -134,8 +132,7 @@ class _EventDetailsState extends State<EventDetails> {
                               : Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              UserProfile(user: event.creator)))
+                                          builder: (context) => UserProfile(user: event.creator)))
                                   .then((_) async {
                                   await Future.delayed(Duration(milliseconds: 500));
                                   // SystemChrome.setSystemUIOverlayStyle(
@@ -176,8 +173,7 @@ class _EventDetailsState extends State<EventDetails> {
                   endDate: event.time.add(Duration(hours: 1)))),
               child: Row(
                 children: [
-                  ShadedIcon(
-                      icon: Icons.calendar_today_outlined, width: 50, iconSize: 25),
+                  ShadedIcon(icon: Icons.calendar_today_outlined, width: 50, iconSize: 25),
                   SizedBox(width: 10),
                   Text(dateFormat.format(event.time), style: TextStyle(fontSize: 18)),
                 ],
@@ -219,8 +215,7 @@ class _EventDetailsState extends State<EventDetails> {
                                 alignment: Alignment.center,
                                 child: Text("--", style: TextStyle(fontSize: 30)),
                               )
-                            : PictureWaterfall(
-                                radius: 20, loading: false, users: event.invited)),
+                            : PictureWaterfall(radius: 20, loading: false, users: event.invited)),
                   ),
                   Text('Gonnago', style: headingStyle)
                 ],
@@ -232,10 +227,8 @@ class _EventDetailsState extends State<EventDetails> {
                 onTap: wannago.isEmpty
                     ? null
                     : () async {
-                        await Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SelectWannago(event: event)));
+                        await Navigator.push(context,
+                            MaterialPageRoute(builder: (context) => SelectWannago(event: event)));
                       },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -246,8 +239,7 @@ class _EventDetailsState extends State<EventDetails> {
                             alignment: Alignment.center,
                             child: Text("--", style: TextStyle(fontSize: 30)),
                           )
-                        : PictureWaterfall(
-                            radius: 20, loading: false, users: wannagoUsers),
+                        : PictureWaterfall(radius: 20, loading: false, users: wannagoUsers),
                     Text('Wannago', style: headingStyle)
                   ],
                 ),
@@ -257,8 +249,8 @@ class _EventDetailsState extends State<EventDetails> {
                   onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => AddFriends(
-                              eventId: event.id, invitedUsers: event.invited))),
+                          builder: (context) =>
+                              AddFriends(eventId: event.id, invitedUsers: event.invited))),
                   child: Text('add friends', style: TextStyle(color: Color(0xff0073ab)))),
             Divider(),
             SizedBox(height: headingSpacing),
@@ -266,10 +258,8 @@ class _EventDetailsState extends State<EventDetails> {
               RoundedArrowButton(
                   disabled: wannago.isEmpty,
                   onPressed: () async {
-                    await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => SelectWannago(event: event)));
+                    await Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => SelectWannago(event: event)));
                     // event = homeState.myEvents
                     // .firstWhere((e) => e.id == widget.event.id);
                     // setState(() {});
@@ -286,8 +276,7 @@ class _EventDetailsState extends State<EventDetails> {
                               content: Text('Are you sure you want to delete the event?'),
                               actions: [
                                 TextButton(
-                                    child: Text("Cancel"),
-                                    onPressed: () => Navigator.pop(context)),
+                                    child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
                                 TextButton(
                                   child: Text("Delete"),
                                   onPressed: () async {

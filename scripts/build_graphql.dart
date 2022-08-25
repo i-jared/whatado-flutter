@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:http/io_client.dart';
 import 'package:http/http.dart' as http;
+import 'package:whatado/utils/logger.dart';
 
 Future<int> main(List<String> args) async {
   final address = args[0];
@@ -11,7 +12,7 @@ Future<int> main(List<String> args) async {
     await runBuildRunner();
     return 0;
   } catch (e) {
-    print(e.toString());
+    logger.e(e.toString());
     return 1;
   }
 }
@@ -45,8 +46,7 @@ Future<void> fetchSchema(String address) async {
       print('Schemas match; no need to update');
     }
   } else {
-    throw Exception(
-        'Failed to request schema; status code ${response.statusCode}');
+    throw Exception('Failed to request schema; status code ${response.statusCode}');
   }
 }
 

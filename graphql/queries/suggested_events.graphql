@@ -2,7 +2,7 @@ query suggestedEvents {
   suggestedEvents {
     ok
     nodes {
-      ...EventFields
+      ...PublicEventFields
     }
     errors {
       field

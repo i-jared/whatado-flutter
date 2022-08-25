@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:whatado/models/user.dart';
 
-class EventUser {
+class PublicUser {
   int id;
   String name;
   String bio;
   List<String> photoUrls;
   DateTime birthday;
-  EventUser({
+  PublicUser({
     required this.id,
     required this.name,
     required this.photoUrls,
@@ -16,20 +16,18 @@ class EventUser {
     required this.birthday,
   });
 
-  factory EventUser.fromGqlData(Map data) {
-    return EventUser(
+  factory PublicUser.fromGqlData(Map data) {
+    return PublicUser(
       id: data['id'],
       photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
       name: data['name'] ?? '',
       bio: data['bio'] ?? '',
-      birthday: data['birthday'] == null
-          ? DateTime.now()
-          : DateTime.parse(data['birthday']),
+      birthday: data['birthday'] == null ? DateTime.now() : DateTime.parse(data['birthday']),
     );
   }
 
-  factory EventUser.fromUser(User user) {
-    return EventUser(
+  factory PublicUser.fromUser(User user) {
+    return PublicUser(
       id: user.id,
       photoUrls: user.photoUrls,
       name: user.name,
@@ -39,7 +37,7 @@ class EventUser {
   }
 
   @override
-  bool operator ==(o) => o is EventUser && o.id == id;
+  bool operator ==(o) => o is PublicUser && o.id == id;
 
   @override
   int get hashCode => id.hashCode;

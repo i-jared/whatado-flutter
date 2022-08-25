@@ -6,7 +6,7 @@ import 'package:whatado/state/user_state.dart';
 
 class UserProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final EventUser user;
+  final PublicUser user;
   UserProfileAppBar({required this.title, required this.user});
 
   @override

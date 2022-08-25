@@ -1,0 +1,12 @@
+query publicUserPreview($userIds: [Int!]!) {
+  usersById(ids: $userIds) {
+    ok
+    errors {
+      field
+      message
+    }
+    nodes {
+      ...PublicUser
+    }
+  }
+}

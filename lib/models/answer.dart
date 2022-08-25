@@ -2,7 +2,7 @@ import 'package:whatado/models/event_user.dart';
 
 class Answer {
   int id;
-  List<EventUser> votes;
+  List<PublicUser> votes;
   String text;
 
   Answer({required this.id, required this.votes, required this.text});
@@ -11,7 +11,6 @@ class Answer {
     return Answer(
         id: data['id'],
         text: data['text'] ?? '',
-        votes: List<EventUser>.from(
-            data['votes']?.map((v) => EventUser.fromGqlData(v)) ?? []));
+        votes: List<PublicUser>.from(data['votes']?.map((v) => PublicUser.fromGqlData(v)) ?? []));
   }
 }

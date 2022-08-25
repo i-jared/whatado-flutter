@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
+import 'package:whatado/models/public_event.dart';
 import 'package:whatado/models/wannago.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/state/home_state.dart';
@@ -42,7 +43,7 @@ class _SelectWannagoState extends State<SelectWannago> {
         final result = await provider.addInvite(eventId: event.id, userId: w.user.id);
         if (result.ok) {
           final tempEvent = result.data!;
-          homeState.updateEvent(tempEvent);
+          homeState.updateEvent(PublicEvent.fromEvent(tempEvent));
           homeState.updateMyEvent(tempEvent);
         }
       } else {
@@ -52,7 +53,7 @@ class _SelectWannagoState extends State<SelectWannago> {
           final Wannago x = event.wannago[i];
           x.declined = true;
           final Event tempEvent = event..wannago[i] = x;
-          homeState.updateEvent(tempEvent);
+          homeState.updateEvent(PublicEvent.fromEvent(tempEvent));
           homeState.updateMyEvent(tempEvent);
         }
       }
@@ -100,8 +101,8 @@ class _SelectWannagoState extends State<SelectWannago> {
           SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text("Invite People",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
+            child:
+                Text("Invite People", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22)),
           ),
           SizedBox(height: 10),
           Expanded(

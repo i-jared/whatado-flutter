@@ -9,8 +9,8 @@ class Group {
   String name;
   GroupIcon icon;
   bool screened;
-  List<EventUser> users;
-  List<EventUser> requested;
+  List<PublicUser> users;
+  List<PublicUser> requested;
   GeoJsonPoint location;
 
   Group({
@@ -32,10 +32,10 @@ class Group {
       location: Event.parseCoordinates(data['location']),
       name: data['name'],
       icon: GroupIcon.fromGqlData(data['icon']),
-      users: List<EventUser>.from(
-          data['users']?.map((user) => EventUser.fromGqlData(user)).toList() ?? []),
-      requested: List<EventUser>.from(
-          data['requested']?.map((user) => EventUser.fromGqlData(user)).toList() ?? []),
+      users: List<PublicUser>.from(
+          data['users']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? []),
+      requested: List<PublicUser>.from(
+          data['requested']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? []),
     );
   }
 

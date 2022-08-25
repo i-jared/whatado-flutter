@@ -2,7 +2,7 @@ import 'package:whatado/models/event_user.dart';
 
 class Wannago {
   int id;
-  EventUser user;
+  PublicUser user;
   bool declined;
 
   Wannago({
@@ -12,8 +12,6 @@ class Wannago {
   });
   factory Wannago.fromGqlData(Map data) {
     return Wannago(
-        id: data['id'],
-        user: EventUser.fromGqlData(data['user']),
-        declined: data['declined']);
+        id: data['id'], user: PublicUser.fromGqlData(data['user']), declined: data['declined']);
   }
 }

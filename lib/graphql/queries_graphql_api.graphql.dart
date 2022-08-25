@@ -9,7 +9,7 @@ import 'package:whatado/utils/coercers.dart';
 import 'package:geojson/geojson.dart';
 part 'queries_graphql_api.graphql.g.dart';
 
-mixin EventUserMixin {
+mixin PublicUserMixin {
   late int id;
   late String name;
   late String photoUrls;
@@ -18,6 +18,50 @@ mixin EventUserMixin {
       fromJson: fromGraphQLDateTimeToDartDateTime,
       toJson: fromDartDateTimeToGraphQLDateTime)
   late DateTime birthday;
+}
+mixin PublicEventFieldsMixin {
+  late int id;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+  late String title;
+  late String description;
+  late PublicEventFieldsMixin$Creator creator;
+  late List<PublicEventFieldsMixin$Invited> invited;
+  late List<PublicEventFieldsMixin$Wannago> wannago;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime time;
+  String? pictureUrl;
+  late List<PublicEventFieldsMixin$RelatedInterests> relatedInterests;
+  @JsonKey(unknownEnumValue: Privacy.artemisUnknown)
+  late Privacy privacy;
+  late bool screened;
+  late String filterLocation;
+  late double filterRadius;
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender filterGender;
+  late int filterMinAge;
+  late int filterMaxAge;
+}
+mixin GroupFieldsMixin {
+  late int id;
+  late String name;
+  late int owner;
+  late List<GroupFieldsMixin$Users> users;
+  late List<GroupFieldsMixin$Requested> requested;
+  late bool screened;
+  @JsonKey(
+      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
+      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
+  GeoJsonPoint? location;
+  late GroupFieldsMixin$Icon icon;
 }
 mixin EventFieldsMixin {
   late int id;
@@ -54,19 +98,6 @@ mixin EventFieldsMixin {
   late Gender filterGender;
   late int filterMinAge;
   late int filterMaxAge;
-}
-mixin GroupFieldsMixin {
-  late int id;
-  late String name;
-  late int owner;
-  late List<GroupFieldsMixin$Users> users;
-  late List<GroupFieldsMixin$Requested> requested;
-  late bool screened;
-  @JsonKey(
-      fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
-      toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
-  GeoJsonPoint? location;
-  late GroupFieldsMixin$Icon icon;
 }
 mixin UserFieldsMixin {
   late int id;
@@ -109,7 +140,7 @@ mixin ForumFieldsMixin {
 
 @JsonSerializable(explicitToJson: true)
 class FlaggedChats$Query$FlaggedChats$Nodes$Author extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   FlaggedChats$Query$FlaggedChats$Nodes$Author();
 
   factory FlaggedChats$Query$FlaggedChats$Nodes$Author.fromJson(
@@ -208,7 +239,7 @@ class FlaggedChats$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class User$Query$User$Nodes extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   User$Query$User$Nodes();
 
   factory User$Query$User$Nodes.fromJson(Map<String, dynamic> json) =>
@@ -273,7 +304,7 @@ class User$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class Events$Query$Events$Nodes extends JsonSerializable
-    with EquatableMixin, EventFieldsMixin {
+    with EquatableMixin, PublicEventFieldsMixin {
   Events$Query$Events$Nodes();
 
   factory Events$Query$Events$Nodes.fromJson(Map<String, dynamic> json) =>
@@ -290,8 +321,6 @@ class Events$Query$Events$Nodes extends JsonSerializable
         invited,
         wannago,
         time,
-        location,
-        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -358,74 +387,77 @@ class Events$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Creator extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  EventFieldsMixin$Creator();
+class PublicEventFieldsMixin$Creator extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  PublicEventFieldsMixin$Creator();
 
-  factory EventFieldsMixin$Creator.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$CreatorFromJson(json);
-
-  @override
-  List<Object?> get props => [id, name, photoUrls, bio, birthday];
-  @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Invited extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  EventFieldsMixin$Invited();
-
-  factory EventFieldsMixin$Invited.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$InvitedFromJson(json);
+  factory PublicEventFieldsMixin$Creator.fromJson(Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$CreatorFromJson(json);
 
   @override
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
+  Map<String, dynamic> toJson() => _$PublicEventFieldsMixin$CreatorToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Wannago$User extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  EventFieldsMixin$Wannago$User();
+class PublicEventFieldsMixin$Invited extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  PublicEventFieldsMixin$Invited();
 
-  factory EventFieldsMixin$Wannago$User.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$Wannago$UserFromJson(json);
+  factory PublicEventFieldsMixin$Invited.fromJson(Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$InvitedFromJson(json);
 
   @override
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
+  Map<String, dynamic> toJson() => _$PublicEventFieldsMixin$InvitedToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Wannago extends JsonSerializable with EquatableMixin {
-  EventFieldsMixin$Wannago();
+class PublicEventFieldsMixin$Wannago$User extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  PublicEventFieldsMixin$Wannago$User();
 
-  factory EventFieldsMixin$Wannago.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$WannagoFromJson(json);
+  factory PublicEventFieldsMixin$Wannago$User.fromJson(
+          Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$Wannago$UserFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PublicEventFieldsMixin$Wannago$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PublicEventFieldsMixin$Wannago extends JsonSerializable
+    with EquatableMixin {
+  PublicEventFieldsMixin$Wannago();
+
+  factory PublicEventFieldsMixin$Wannago.fromJson(Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$WannagoFromJson(json);
 
   late int id;
 
   late bool declined;
 
-  late EventFieldsMixin$Wannago$User user;
+  late PublicEventFieldsMixin$Wannago$User user;
 
   @override
   List<Object?> get props => [id, declined, user];
   @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$WannagoToJson(this);
+  Map<String, dynamic> toJson() => _$PublicEventFieldsMixin$WannagoToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$RelatedInterests extends JsonSerializable
+class PublicEventFieldsMixin$RelatedInterests extends JsonSerializable
     with EquatableMixin {
-  EventFieldsMixin$RelatedInterests();
+  PublicEventFieldsMixin$RelatedInterests();
 
-  factory EventFieldsMixin$RelatedInterests.fromJson(
+  factory PublicEventFieldsMixin$RelatedInterests.fromJson(
           Map<String, dynamic> json) =>
-      _$EventFieldsMixin$RelatedInterestsFromJson(json);
+      _$PublicEventFieldsMixin$RelatedInterestsFromJson(json);
 
   late int id;
 
@@ -433,7 +465,7 @@ class EventFieldsMixin$RelatedInterests extends JsonSerializable
   List<Object?> get props => [id];
   @override
   Map<String, dynamic> toJson() =>
-      _$EventFieldsMixin$RelatedInterestsToJson(this);
+      _$PublicEventFieldsMixin$RelatedInterestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -534,7 +566,7 @@ class SearchGroups$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class GroupFieldsMixin$Users extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   GroupFieldsMixin$Users();
 
   factory GroupFieldsMixin$Users.fromJson(Map<String, dynamic> json) =>
@@ -548,7 +580,7 @@ class GroupFieldsMixin$Users extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class GroupFieldsMixin$Requested extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   GroupFieldsMixin$Requested();
 
   factory GroupFieldsMixin$Requested.fromJson(Map<String, dynamic> json) =>
@@ -579,7 +611,7 @@ class GroupFieldsMixin$Icon extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class SearchEvents$Query$SearchEvents$Nodes extends JsonSerializable
-    with EquatableMixin, EventFieldsMixin {
+    with EquatableMixin, PublicEventFieldsMixin {
   SearchEvents$Query$SearchEvents$Nodes();
 
   factory SearchEvents$Query$SearchEvents$Nodes.fromJson(
@@ -597,8 +629,6 @@ class SearchEvents$Query$SearchEvents$Nodes extends JsonSerializable
         invited,
         wannago,
         time,
-        location,
-        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -671,81 +701,8 @@ class SearchEvents$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventUserPreview$Query$UsersById$Errors extends JsonSerializable
-    with EquatableMixin {
-  EventUserPreview$Query$UsersById$Errors();
-
-  factory EventUserPreview$Query$UsersById$Errors.fromJson(
-          Map<String, dynamic> json) =>
-      _$EventUserPreview$Query$UsersById$ErrorsFromJson(json);
-
-  String? field;
-
-  late String message;
-
-  @override
-  List<Object?> get props => [field, message];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$EventUserPreview$Query$UsersById$ErrorsToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class EventUserPreview$Query$UsersById$Nodes extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  EventUserPreview$Query$UsersById$Nodes();
-
-  factory EventUserPreview$Query$UsersById$Nodes.fromJson(
-          Map<String, dynamic> json) =>
-      _$EventUserPreview$Query$UsersById$NodesFromJson(json);
-
-  @override
-  List<Object?> get props => [id, name, photoUrls, bio, birthday];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$EventUserPreview$Query$UsersById$NodesToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class EventUserPreview$Query$UsersById extends JsonSerializable
-    with EquatableMixin {
-  EventUserPreview$Query$UsersById();
-
-  factory EventUserPreview$Query$UsersById.fromJson(
-          Map<String, dynamic> json) =>
-      _$EventUserPreview$Query$UsersByIdFromJson(json);
-
-  bool? ok;
-
-  List<EventUserPreview$Query$UsersById$Errors>? errors;
-
-  List<EventUserPreview$Query$UsersById$Nodes>? nodes;
-
-  @override
-  List<Object?> get props => [ok, errors, nodes];
-  @override
-  Map<String, dynamic> toJson() =>
-      _$EventUserPreview$Query$UsersByIdToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class EventUserPreview$Query extends JsonSerializable with EquatableMixin {
-  EventUserPreview$Query();
-
-  factory EventUserPreview$Query.fromJson(Map<String, dynamic> json) =>
-      _$EventUserPreview$QueryFromJson(json);
-
-  late EventUserPreview$Query$UsersById usersById;
-
-  @override
-  List<Object?> get props => [usersById];
-  @override
-  Map<String, dynamic> toJson() => _$EventUserPreview$QueryToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class OtherEvents$Query$OtherEvents$Nodes extends JsonSerializable
-    with EquatableMixin, EventFieldsMixin {
+    with EquatableMixin, PublicEventFieldsMixin {
   OtherEvents$Query$OtherEvents$Nodes();
 
   factory OtherEvents$Query$OtherEvents$Nodes.fromJson(
@@ -763,8 +720,6 @@ class OtherEvents$Query$OtherEvents$Nodes extends JsonSerializable
         invited,
         wannago,
         time,
-        location,
-        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -837,7 +792,7 @@ class OtherEvents$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class UsersFromContacts$Query$UsersFromContacts$Nodes extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UsersFromContacts$Query$UsersFromContacts$Nodes();
 
   factory UsersFromContacts$Query$UsersFromContacts$Nodes.fromJson(
@@ -1052,18 +1007,82 @@ class Event$Query extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class HelloQuery$Query extends JsonSerializable with EquatableMixin {
-  HelloQuery$Query();
+class EventFieldsMixin$Creator extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  EventFieldsMixin$Creator();
 
-  factory HelloQuery$Query.fromJson(Map<String, dynamic> json) =>
-      _$HelloQuery$QueryFromJson(json);
-
-  late String hello;
+  factory EventFieldsMixin$Creator.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$CreatorFromJson(json);
 
   @override
-  List<Object?> get props => [hello];
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
-  Map<String, dynamic> toJson() => _$HelloQuery$QueryToJson(this);
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Invited extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  EventFieldsMixin$Invited();
+
+  factory EventFieldsMixin$Invited.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$InvitedFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Wannago$User extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  EventFieldsMixin$Wannago$User();
+
+  factory EventFieldsMixin$Wannago$User.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$Wannago$UserFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Wannago extends JsonSerializable with EquatableMixin {
+  EventFieldsMixin$Wannago();
+
+  factory EventFieldsMixin$Wannago.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$WannagoFromJson(json);
+
+  late int id;
+
+  late bool declined;
+
+  late EventFieldsMixin$Wannago$User user;
+
+  @override
+  List<Object?> get props => [id, declined, user];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$WannagoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$RelatedInterests extends JsonSerializable
+    with EquatableMixin {
+  EventFieldsMixin$RelatedInterests();
+
+  factory EventFieldsMixin$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$EventFieldsMixin$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$EventFieldsMixin$RelatedInterestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -1152,7 +1171,7 @@ class Me$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$BlockedUsers extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$BlockedUsers();
 
   factory UserFieldsMixin$BlockedUsers.fromJson(Map<String, dynamic> json) =>
@@ -1166,7 +1185,7 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$InverseFriends extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$InverseFriends();
 
   factory UserFieldsMixin$InverseFriends.fromJson(Map<String, dynamic> json) =>
@@ -1180,7 +1199,7 @@ class UserFieldsMixin$InverseFriends extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$Friends extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$Friends();
 
   factory UserFieldsMixin$Friends.fromJson(Map<String, dynamic> json) =>
@@ -1194,7 +1213,7 @@ class UserFieldsMixin$Friends extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$RequestedFriends extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$RequestedFriends();
 
   factory UserFieldsMixin$RequestedFriends.fromJson(
@@ -1210,7 +1229,7 @@ class UserFieldsMixin$RequestedFriends extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$FriendRequests extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$FriendRequests();
 
   factory UserFieldsMixin$FriendRequests.fromJson(Map<String, dynamic> json) =>
@@ -1416,7 +1435,7 @@ class ForumFieldsMixin$UserNotifications extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class ForumFieldsMixin$Moderators extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   ForumFieldsMixin$Moderators();
 
   factory ForumFieldsMixin$Moderators.fromJson(Map<String, dynamic> json) =>
@@ -1467,7 +1486,7 @@ class ForumFieldsMixin$Event extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class GroupEvents$Query$GroupEvents$Nodes extends JsonSerializable
-    with EquatableMixin, EventFieldsMixin {
+    with EquatableMixin, PublicEventFieldsMixin {
   GroupEvents$Query$GroupEvents$Nodes();
 
   factory GroupEvents$Query$GroupEvents$Nodes.fromJson(
@@ -1485,8 +1504,6 @@ class GroupEvents$Query$GroupEvents$Nodes extends JsonSerializable
         invited,
         wannago,
         time,
-        location,
-        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -1559,7 +1576,7 @@ class GroupEvents$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class SearchUsers$Query$SearchUsers$Nodes extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   SearchUsers$Query$SearchUsers$Nodes();
 
   factory SearchUsers$Query$SearchUsers$Nodes.fromJson(
@@ -1952,7 +1969,7 @@ class MyEvents$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class SuggestedEvents$Query$SuggestedEvents$Nodes extends JsonSerializable
-    with EquatableMixin, EventFieldsMixin {
+    with EquatableMixin, PublicEventFieldsMixin {
   SuggestedEvents$Query$SuggestedEvents$Nodes();
 
   factory SuggestedEvents$Query$SuggestedEvents$Nodes.fromJson(
@@ -1970,8 +1987,6 @@ class SuggestedEvents$Query$SuggestedEvents$Nodes extends JsonSerializable
         invited,
         wannago,
         time,
-        location,
-        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -2120,7 +2135,7 @@ class SuggestedGroups$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class SuggestedUsers$Query$SuggestedUsers$Nodes extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   SuggestedUsers$Query$SuggestedUsers$Nodes();
 
   factory SuggestedUsers$Query$SuggestedUsers$Nodes.fromJson(
@@ -2290,7 +2305,7 @@ class FriendsById$Query$FriendsById$Errors extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class FriendsById$Query$FriendsById$Nodes extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   FriendsById$Query$FriendsById$Nodes();
 
   factory FriendsById$Query$FriendsById$Nodes.fromJson(
@@ -2359,7 +2374,7 @@ class LastChat$Query$LastChat$Errors extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class LastChat$Query$LastChat$Nodes$Author extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   LastChat$Query$LastChat$Nodes$Author();
 
   factory LastChat$Query$LastChat$Nodes$Author.fromJson(
@@ -2434,7 +2449,7 @@ class LastChat$Query extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class Chats$Query$Chats$Nodes$Author extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   Chats$Query$Chats$Nodes$Author();
 
   factory Chats$Query$Chats$Nodes$Author.fromJson(Map<String, dynamic> json) =>
@@ -2448,7 +2463,7 @@ class Chats$Query$Chats$Nodes$Author extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class Chats$Query$Chats$Nodes$Survey$Answers$Votes extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   Chats$Query$Chats$Nodes$Survey$Answers$Votes();
 
   factory Chats$Query$Chats$Nodes$Survey$Answers$Votes.fromJson(
@@ -2877,6 +2892,79 @@ class FlaggedUsers$Query extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$FlaggedUsers$QueryToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class PublicUserPreview$Query$UsersById$Errors extends JsonSerializable
+    with EquatableMixin {
+  PublicUserPreview$Query$UsersById$Errors();
+
+  factory PublicUserPreview$Query$UsersById$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$PublicUserPreview$Query$UsersById$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PublicUserPreview$Query$UsersById$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PublicUserPreview$Query$UsersById$Nodes extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  PublicUserPreview$Query$UsersById$Nodes();
+
+  factory PublicUserPreview$Query$UsersById$Nodes.fromJson(
+          Map<String, dynamic> json) =>
+      _$PublicUserPreview$Query$UsersById$NodesFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PublicUserPreview$Query$UsersById$NodesToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PublicUserPreview$Query$UsersById extends JsonSerializable
+    with EquatableMixin {
+  PublicUserPreview$Query$UsersById();
+
+  factory PublicUserPreview$Query$UsersById.fromJson(
+          Map<String, dynamic> json) =>
+      _$PublicUserPreview$Query$UsersByIdFromJson(json);
+
+  bool? ok;
+
+  List<PublicUserPreview$Query$UsersById$Errors>? errors;
+
+  List<PublicUserPreview$Query$UsersById$Nodes>? nodes;
+
+  @override
+  List<Object?> get props => [ok, errors, nodes];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PublicUserPreview$Query$UsersByIdToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PublicUserPreview$Query extends JsonSerializable with EquatableMixin {
+  PublicUserPreview$Query();
+
+  factory PublicUserPreview$Query.fromJson(Map<String, dynamic> json) =>
+      _$PublicUserPreview$QueryFromJson(json);
+
+  late PublicUserPreview$Query$UsersById usersById;
+
+  @override
+  List<Object?> get props => [usersById];
+  @override
+  Map<String, dynamic> toJson() => _$PublicUserPreview$QueryToJson(this);
+}
+
 enum Privacy {
   @JsonValue('GROUP')
   group,
@@ -2959,7 +3047,7 @@ final FLAGGED_CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
                           FragmentSpreadNode(
-                              name: NameNode(value: 'EventUser'),
+                              name: NameNode(value: 'PublicUser'),
                               directives: [])
                         ]))
                   ])),
@@ -2985,7 +3073,7 @@ final FLAGGED_CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -3093,7 +3181,7 @@ final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -3117,7 +3205,7 @@ final USER_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -3263,7 +3351,8 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventFields'), directives: [])
+                        name: NameNode(value: 'PublicEventFields'),
+                        directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -3287,7 +3376,7 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventFields'),
+      name: NameNode(value: 'PublicEventFields'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
       directives: [],
@@ -3329,7 +3418,7 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -3338,7 +3427,7 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -3365,23 +3454,11 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
             name: NameNode(value: 'time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3449,7 +3526,7 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -3613,7 +3690,7 @@ final SEARCH_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -3622,7 +3699,7 @@ final SEARCH_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -3657,7 +3734,7 @@ final SEARCH_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -3769,7 +3846,8 @@ final SEARCH_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventFields'), directives: [])
+                        name: NameNode(value: 'PublicEventFields'),
+                        directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -3793,7 +3871,7 @@ final SEARCH_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventFields'),
+      name: NameNode(value: 'PublicEventFields'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
       directives: [],
@@ -3835,7 +3913,7 @@ final SEARCH_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -3844,7 +3922,7 @@ final SEARCH_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -3871,23 +3949,11 @@ final SEARCH_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
             name: NameNode(value: 'time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3955,7 +4021,7 @@ final SEARCH_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -4011,144 +4077,6 @@ class SearchEventsQuery
   @override
   SearchEvents$Query parse(Map<String, dynamic> json) =>
       SearchEvents$Query.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
-class EventUserPreviewArguments extends JsonSerializable with EquatableMixin {
-  EventUserPreviewArguments({required this.userIds});
-
-  @override
-  factory EventUserPreviewArguments.fromJson(Map<String, dynamic> json) =>
-      _$EventUserPreviewArgumentsFromJson(json);
-
-  late List<int> userIds;
-
-  @override
-  List<Object?> get props => [userIds];
-  @override
-  Map<String, dynamic> toJson() => _$EventUserPreviewArgumentsToJson(this);
-}
-
-final EVENT_USER_PREVIEW_QUERY_DOCUMENT_OPERATION_NAME = 'eventUserPreview';
-final EVENT_USER_PREVIEW_QUERY_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.query,
-      name: NameNode(value: 'eventUserPreview'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'userIds')),
-            type: ListTypeNode(
-                type: NamedTypeNode(
-                    name: NameNode(value: 'Int'), isNonNull: true),
-                isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'usersById'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'ids'),
-                  value: VariableNode(name: NameNode(value: 'userIds')))
-            ],
-            directives: [],
-            selectionSet: SelectionSetNode(selections: [
-              FieldNode(
-                  name: NameNode(value: 'ok'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: null),
-              FieldNode(
-                  name: NameNode(value: 'errors'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FieldNode(
-                        name: NameNode(value: 'field'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null),
-                    FieldNode(
-                        name: NameNode(value: 'message'),
-                        alias: null,
-                        arguments: [],
-                        directives: [],
-                        selectionSet: null)
-                  ])),
-              FieldNode(
-                  name: NameNode(value: 'nodes'),
-                  alias: null,
-                  arguments: [],
-                  directives: [],
-                  selectionSet: SelectionSetNode(selections: [
-                    FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
-                  ]))
-            ]))
-      ])),
-  FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
-      typeCondition: TypeConditionNode(
-          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'id'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'name'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'photoUrls'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'bio'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'birthday'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
-
-class EventUserPreviewQuery
-    extends GraphQLQuery<EventUserPreview$Query, EventUserPreviewArguments> {
-  EventUserPreviewQuery({required this.variables});
-
-  @override
-  final DocumentNode document = EVENT_USER_PREVIEW_QUERY_DOCUMENT;
-
-  @override
-  final String operationName = EVENT_USER_PREVIEW_QUERY_DOCUMENT_OPERATION_NAME;
-
-  @override
-  final EventUserPreviewArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  EventUserPreview$Query parse(Map<String, dynamic> json) =>
-      EventUserPreview$Query.fromJson(json);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -4241,7 +4169,8 @@ final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventFields'), directives: [])
+                        name: NameNode(value: 'PublicEventFields'),
+                        directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -4265,7 +4194,7 @@ final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventFields'),
+      name: NameNode(value: 'PublicEventFields'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
       directives: [],
@@ -4307,7 +4236,7 @@ final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -4316,7 +4245,7 @@ final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -4343,23 +4272,11 @@ final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
             name: NameNode(value: 'time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
             directives: [],
@@ -4427,7 +4344,7 @@ final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -4541,7 +4458,7 @@ final USERS_FROM_CONTACTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -4565,7 +4482,7 @@ final USERS_FROM_CONTACTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -4841,7 +4758,7 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -4850,7 +4767,7 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -4877,7 +4794,7 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
@@ -4961,7 +4878,7 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -5015,39 +4932,6 @@ class EventQuery extends GraphQLQuery<Event$Query, EventArguments> {
   List<Object?> get props => [document, operationName, variables];
   @override
   Event$Query parse(Map<String, dynamic> json) => Event$Query.fromJson(json);
-}
-
-final HELLO_QUERY_QUERY_DOCUMENT_OPERATION_NAME = 'helloQuery';
-final HELLO_QUERY_QUERY_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.query,
-      name: NameNode(value: 'helloQuery'),
-      variableDefinitions: [],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'hello'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
-
-class HelloQueryQuery extends GraphQLQuery<HelloQuery$Query, JsonSerializable> {
-  HelloQueryQuery();
-
-  @override
-  final DocumentNode document = HELLO_QUERY_QUERY_DOCUMENT;
-
-  @override
-  final String operationName = HELLO_QUERY_QUERY_DOCUMENT_OPERATION_NAME;
-
-  @override
-  List<Object?> get props => [document, operationName];
-  @override
-  HelloQuery$Query parse(Map<String, dynamic> json) =>
-      HelloQuery$Query.fromJson(json);
 }
 
 final ME_QUERY_DOCUMENT_OPERATION_NAME = 'me';
@@ -5155,7 +5039,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'inverseFriends'),
@@ -5164,7 +5048,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'friends'),
@@ -5173,7 +5057,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requestedFriends'),
@@ -5182,7 +5066,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'friendRequests'),
@@ -5191,7 +5075,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'groups'),
@@ -5270,7 +5154,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -5337,7 +5221,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -5346,7 +5230,7 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -5532,7 +5416,7 @@ final FORUMS_BY_EVENT_ID_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'chats'),
@@ -5574,7 +5458,7 @@ final FORUMS_BY_EVENT_ID_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -5685,7 +5569,8 @@ final GROUP_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventFields'), directives: [])
+                        name: NameNode(value: 'PublicEventFields'),
+                        directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -5709,7 +5594,7 @@ final GROUP_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventFields'),
+      name: NameNode(value: 'PublicEventFields'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
       directives: [],
@@ -5751,7 +5636,7 @@ final GROUP_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -5760,7 +5645,7 @@ final GROUP_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -5787,23 +5672,11 @@ final GROUP_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
             name: NameNode(value: 'time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
             directives: [],
@@ -5871,7 +5744,7 @@ final GROUP_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -5983,7 +5856,7 @@ final SEARCH_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -6007,7 +5880,7 @@ final SEARCH_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -6158,7 +6031,7 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -6167,7 +6040,7 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -6194,7 +6067,7 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
@@ -6278,7 +6151,7 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -6414,7 +6287,7 @@ final MY_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -6423,7 +6296,7 @@ final MY_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -6458,7 +6331,7 @@ final MY_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -6683,7 +6556,7 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -6692,7 +6565,7 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -6719,7 +6592,7 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
@@ -6803,7 +6676,7 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -6884,7 +6757,8 @@ final SUGGESTED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventFields'), directives: [])
+                        name: NameNode(value: 'PublicEventFields'),
+                        directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -6908,7 +6782,7 @@ final SUGGESTED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventFields'),
+      name: NameNode(value: 'PublicEventFields'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
       directives: [],
@@ -6950,7 +6824,7 @@ final SUGGESTED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -6959,7 +6833,7 @@ final SUGGESTED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -6986,23 +6860,11 @@ final SUGGESTED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
             name: NameNode(value: 'time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
             directives: [],
@@ -7070,7 +6932,7 @@ final SUGGESTED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -7206,7 +7068,7 @@ final SUGGESTED_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -7215,7 +7077,7 @@ final SUGGESTED_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -7250,7 +7112,7 @@ final SUGGESTED_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -7332,7 +7194,7 @@ final SUGGESTED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -7356,7 +7218,7 @@ final SUGGESTED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -7592,12 +7454,12 @@ final FRIENDS_BY_ID_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -7751,14 +7613,14 @@ final LAST_CHAT_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
                           FragmentSpreadNode(
-                              name: NameNode(value: 'EventUser'),
+                              name: NameNode(value: 'PublicUser'),
                               directives: [])
                         ]))
                   ]))
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -7913,7 +7775,7 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
                           FragmentSpreadNode(
-                              name: NameNode(value: 'EventUser'),
+                              name: NameNode(value: 'PublicUser'),
                               directives: [])
                         ])),
                     FieldNode(
@@ -7959,7 +7821,7 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
                                     directives: [],
                                     selectionSet: SelectionSetNode(selections: [
                                       FragmentSpreadNode(
-                                          name: NameNode(value: 'EventUser'),
+                                          name: NameNode(value: 'PublicUser'),
                                           directives: [])
                                     ]))
                               ]))
@@ -7987,7 +7849,7 @@ final CHATS_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -8320,7 +8182,7 @@ final FORUM_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'chats'),
@@ -8362,7 +8224,7 @@ final FORUM_QUERY_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -8523,7 +8385,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'inverseFriends'),
@@ -8532,7 +8394,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'friends'),
@@ -8541,7 +8403,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requestedFriends'),
@@ -8550,7 +8412,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'friendRequests'),
@@ -8559,7 +8421,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'groups'),
@@ -8638,7 +8500,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -8705,7 +8567,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -8714,7 +8576,7 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -8765,4 +8627,143 @@ class FlaggedUsersQuery
   @override
   FlaggedUsers$Query parse(Map<String, dynamic> json) =>
       FlaggedUsers$Query.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PublicUserPreviewArguments extends JsonSerializable with EquatableMixin {
+  PublicUserPreviewArguments({required this.userIds});
+
+  @override
+  factory PublicUserPreviewArguments.fromJson(Map<String, dynamic> json) =>
+      _$PublicUserPreviewArgumentsFromJson(json);
+
+  late List<int> userIds;
+
+  @override
+  List<Object?> get props => [userIds];
+  @override
+  Map<String, dynamic> toJson() => _$PublicUserPreviewArgumentsToJson(this);
+}
+
+final PUBLIC_USER_PREVIEW_QUERY_DOCUMENT_OPERATION_NAME = 'publicUserPreview';
+final PUBLIC_USER_PREVIEW_QUERY_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.query,
+      name: NameNode(value: 'publicUserPreview'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'userIds')),
+            type: ListTypeNode(
+                type: NamedTypeNode(
+                    name: NameNode(value: 'Int'), isNonNull: true),
+                isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'usersById'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'ids'),
+                  value: VariableNode(name: NameNode(value: 'userIds')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'PublicUser'), directives: [])
+                  ]))
+            ]))
+      ])),
+  FragmentDefinitionNode(
+      name: NameNode(value: 'PublicUser'),
+      typeCondition: TypeConditionNode(
+          on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'id'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'name'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'photoUrls'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'bio'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'birthday'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null)
+      ]))
+]);
+
+class PublicUserPreviewQuery
+    extends GraphQLQuery<PublicUserPreview$Query, PublicUserPreviewArguments> {
+  PublicUserPreviewQuery({required this.variables});
+
+  @override
+  final DocumentNode document = PUBLIC_USER_PREVIEW_QUERY_DOCUMENT;
+
+  @override
+  final String operationName =
+      PUBLIC_USER_PREVIEW_QUERY_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final PublicUserPreviewArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  PublicUserPreview$Query parse(Map<String, dynamic> json) =>
+      PublicUserPreview$Query.fromJson(json);
 }

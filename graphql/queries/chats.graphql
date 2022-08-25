@@ -6,7 +6,7 @@ query chats($forumId: Int!, $take: Int!, $skip: Int!) {
       createdAt
       text
       author {
-        ...EventUser
+        ...PublicUser
       }
       survey {
         id
@@ -15,7 +15,7 @@ query chats($forumId: Int!, $take: Int!, $skip: Int!) {
           id
           text
           votes {
-            ...EventUser
+            ...PublicUser
           }
         }
       }

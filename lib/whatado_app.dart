@@ -31,11 +31,11 @@ import 'package:whatado/state/user_state.dart';
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-  //     statusBarBrightness: Brightness.dark,
-  //     systemNavigationBarIconBrightness: Brightness.dark,
-  //     systemNavigationBarColor: Colors.transparent,
-  //     statusBarColor: Colors.transparent));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      //     statusBarBrightness: Brightness.dark,
+      //     systemNavigationBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.transparent,
+      statusBarColor: Colors.transparent));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp();

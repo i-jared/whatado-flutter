@@ -1,0 +1,7 @@
+fragment PublicUser on User {
+    id
+    name
+    photoUrls
+    bio
+    birthday
+}

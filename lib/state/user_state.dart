@@ -10,6 +10,7 @@ import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class UserState extends ChangeNotifier {
   User? _user;
@@ -105,6 +106,7 @@ class UserState extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
+      logger.e(e);
       return false;
     }
   }
@@ -117,7 +119,7 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateFriendRequest(EventUser newUser, {bool add = true}) async {
+  Future<void> updateFriendRequest(PublicUser newUser, {bool add = true}) async {
     if (add) {
       user?.requestedFriends.add(newUser);
     } else {
@@ -135,7 +137,7 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> removeGroupRequests(Group group, EventUser removeUser) async {
+  Future<void> removeGroupRequests(Group group, PublicUser removeUser) async {
     int i = user!.groups.indexWhere((g) => g.id == group.id);
     if (i < 0) return;
     group.requested = group.requested.where((u) => u.id != removeUser.id).toList();
@@ -143,7 +145,7 @@ class UserState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateGroupMembers(Group group, EventUser newuser, {bool add = true}) async {
+  Future<void> updateGroupMembers(Group group, PublicUser newuser, {bool add = true}) async {
     if (add) {
       group.users = [...group.users, newuser];
       int i = user!.groups.indexWhere((g) => g.id == group.id);

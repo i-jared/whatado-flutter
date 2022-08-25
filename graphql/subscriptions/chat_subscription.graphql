@@ -10,12 +10,12 @@ subscription chat($forumId: Int!) {
         id
         text
         votes {
-          ...EventUser
+          ...PublicUser
         }
       }
     }
     author {
-      ...EventUser
+      ...PublicUser
     }
   }
 }

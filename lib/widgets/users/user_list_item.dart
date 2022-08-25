@@ -7,7 +7,7 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/users/user_avatar.dart';
 
 class UserListItem extends StatelessWidget {
-  final EventUser user;
+  final PublicUser user;
   final bool selected;
   UserListItem(this.user, {this.selected = false});
 
@@ -19,11 +19,10 @@ class UserListItem extends StatelessWidget {
       onTap: userState.user?.id == user.id
           ? () {
               homeState.bottomBarPageNo = 3;
-              if (Navigator.canPop(context))
-                Navigator.popUntil(context, (route) => route.isFirst);
+              if (Navigator.canPop(context)) Navigator.popUntil(context, (route) => route.isFirst);
             }
-          : () => Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => UserProfile(user: user)))
+          : () => Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => UserProfile(user: user)))
                   .then((_) async {
                 await Future.delayed(Duration(milliseconds: 500));
                 // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
@@ -47,8 +46,7 @@ class UserListItem extends StatelessWidget {
                     Icons.check,
                     color: Colors.white,
                   ))
-              : UserAvatar(
-                  url: user.photoUrls.isEmpty ? null : user.photoUrls.first, radius: 25),
+              : UserAvatar(url: user.photoUrls.isEmpty ? null : user.photoUrls.first, radius: 25),
           SizedBox(width: 15),
           Flexible(
             child: Text(

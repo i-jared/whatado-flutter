@@ -10,7 +10,7 @@ import 'package:whatado/widgets/general/generic_page.dart';
 
 class AddFriends extends StatefulWidget {
   final int eventId;
-  final List<EventUser> invitedUsers;
+  final List<PublicUser> invitedUsers;
   AddFriends({required this.eventId, required this.invitedUsers});
 
   @override
@@ -18,7 +18,7 @@ class AddFriends extends StatefulWidget {
 }
 
 class _StateAddFriends extends State<AddFriends> {
-  late List<EventUser> selectedUsers;
+  late List<PublicUser> selectedUsers;
   late List<int> invitedUsersIds;
   late bool loading;
 
@@ -51,7 +51,7 @@ class _StateAddFriends extends State<AddFriends> {
             : Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: InviteFriends(
-                  setUsers: (List<EventUser> users) => setState(() {
+                  setUsers: (List<PublicUser> users) => setState(() {
                     selectedUsers = users;
                   }),
                   selectedUsers: selectedUsers,

@@ -3,10 +3,10 @@ fragment GroupFields on Group {
     name
     owner
     users {
-        ...EventUser
+        ...PublicUser
     }
     requested {
-        ...EventUser
+        ...PublicUser
     }
     screened
     location

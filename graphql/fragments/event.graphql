@@ -5,16 +5,16 @@ fragment EventFields on Event {
   title
   description
   creator {
-    ...EventUser
+    ...PublicUser
   }
   invited {
-    ...EventUser
+    ...PublicUser
   }
   wannago {
     id
     declined
     user {
-      ...EventUser
+      ...PublicUser
     }
   }
   time

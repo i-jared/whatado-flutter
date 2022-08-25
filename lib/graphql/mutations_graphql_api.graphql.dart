@@ -9,6 +9,47 @@ import 'package:whatado/utils/coercers.dart';
 import 'package:geojson/geojson.dart';
 part 'mutations_graphql_api.graphql.g.dart';
 
+mixin PublicEventFieldsMixin {
+  late int id;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime createdAt;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime updatedAt;
+  late String title;
+  late String description;
+  late PublicEventFieldsMixin$Creator creator;
+  late List<PublicEventFieldsMixin$Invited> invited;
+  late List<PublicEventFieldsMixin$Wannago> wannago;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime time;
+  String? pictureUrl;
+  late List<PublicEventFieldsMixin$RelatedInterests> relatedInterests;
+  @JsonKey(unknownEnumValue: Privacy.artemisUnknown)
+  late Privacy privacy;
+  late bool screened;
+  late String filterLocation;
+  late double filterRadius;
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender filterGender;
+  late int filterMinAge;
+  late int filterMaxAge;
+}
+mixin PublicUserMixin {
+  late int id;
+  late String name;
+  late String photoUrls;
+  late String bio;
+  @JsonKey(
+      fromJson: fromGraphQLDateTimeToDartDateTime,
+      toJson: fromDartDateTimeToGraphQLDateTime)
+  late DateTime birthday;
+}
 mixin EventFieldsMixin {
   late int id;
   @JsonKey(
@@ -44,16 +85,6 @@ mixin EventFieldsMixin {
   late Gender filterGender;
   late int filterMinAge;
   late int filterMaxAge;
-}
-mixin EventUserMixin {
-  late int id;
-  late String name;
-  late String photoUrls;
-  late String bio;
-  @JsonKey(
-      fromJson: fromGraphQLDateTimeToDartDateTime,
-      toJson: fromDartDateTimeToGraphQLDateTime)
-  late DateTime birthday;
 }
 mixin GroupFieldsMixin {
   late int id;
@@ -222,23 +253,8 @@ class RemoveAccount$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class Hello$Mutation extends JsonSerializable with EquatableMixin {
-  Hello$Mutation();
-
-  factory Hello$Mutation.fromJson(Map<String, dynamic> json) =>
-      _$Hello$MutationFromJson(json);
-
-  late bool helloMutation;
-
-  @override
-  List<Object?> get props => [helloMutation];
-  @override
-  Map<String, dynamic> toJson() => _$Hello$MutationToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
 class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
-    with EquatableMixin, EventFieldsMixin {
+    with EquatableMixin, PublicEventFieldsMixin {
   AddWannago$Mutation$AddWannago$Nodes();
 
   factory AddWannago$Mutation$AddWannago$Nodes.fromJson(
@@ -256,8 +272,6 @@ class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
         invited,
         wannago,
         time,
-        location,
-        coordinates,
         pictureUrl,
         relatedInterests,
         privacy,
@@ -329,74 +343,77 @@ class AddWannago$Mutation extends JsonSerializable with EquatableMixin {
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Creator extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  EventFieldsMixin$Creator();
+class PublicEventFieldsMixin$Creator extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  PublicEventFieldsMixin$Creator();
 
-  factory EventFieldsMixin$Creator.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$CreatorFromJson(json);
-
-  @override
-  List<Object?> get props => [id, name, photoUrls, bio, birthday];
-  @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
-}
-
-@JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Invited extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  EventFieldsMixin$Invited();
-
-  factory EventFieldsMixin$Invited.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$InvitedFromJson(json);
+  factory PublicEventFieldsMixin$Creator.fromJson(Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$CreatorFromJson(json);
 
   @override
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
+  Map<String, dynamic> toJson() => _$PublicEventFieldsMixin$CreatorToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Wannago$User extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
-  EventFieldsMixin$Wannago$User();
+class PublicEventFieldsMixin$Invited extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  PublicEventFieldsMixin$Invited();
 
-  factory EventFieldsMixin$Wannago$User.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$Wannago$UserFromJson(json);
+  factory PublicEventFieldsMixin$Invited.fromJson(Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$InvitedFromJson(json);
 
   @override
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
+  Map<String, dynamic> toJson() => _$PublicEventFieldsMixin$InvitedToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$Wannago extends JsonSerializable with EquatableMixin {
-  EventFieldsMixin$Wannago();
+class PublicEventFieldsMixin$Wannago$User extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  PublicEventFieldsMixin$Wannago$User();
 
-  factory EventFieldsMixin$Wannago.fromJson(Map<String, dynamic> json) =>
-      _$EventFieldsMixin$WannagoFromJson(json);
+  factory PublicEventFieldsMixin$Wannago$User.fromJson(
+          Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$Wannago$UserFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$PublicEventFieldsMixin$Wannago$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class PublicEventFieldsMixin$Wannago extends JsonSerializable
+    with EquatableMixin {
+  PublicEventFieldsMixin$Wannago();
+
+  factory PublicEventFieldsMixin$Wannago.fromJson(Map<String, dynamic> json) =>
+      _$PublicEventFieldsMixin$WannagoFromJson(json);
 
   late int id;
 
   late bool declined;
 
-  late EventFieldsMixin$Wannago$User user;
+  late PublicEventFieldsMixin$Wannago$User user;
 
   @override
   List<Object?> get props => [id, declined, user];
   @override
-  Map<String, dynamic> toJson() => _$EventFieldsMixin$WannagoToJson(this);
+  Map<String, dynamic> toJson() => _$PublicEventFieldsMixin$WannagoToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class EventFieldsMixin$RelatedInterests extends JsonSerializable
+class PublicEventFieldsMixin$RelatedInterests extends JsonSerializable
     with EquatableMixin {
-  EventFieldsMixin$RelatedInterests();
+  PublicEventFieldsMixin$RelatedInterests();
 
-  factory EventFieldsMixin$RelatedInterests.fromJson(
+  factory PublicEventFieldsMixin$RelatedInterests.fromJson(
           Map<String, dynamic> json) =>
-      _$EventFieldsMixin$RelatedInterestsFromJson(json);
+      _$PublicEventFieldsMixin$RelatedInterestsFromJson(json);
 
   late int id;
 
@@ -404,7 +421,7 @@ class EventFieldsMixin$RelatedInterests extends JsonSerializable
   List<Object?> get props => [id];
   @override
   Map<String, dynamic> toJson() =>
-      _$EventFieldsMixin$RelatedInterestsToJson(this);
+      _$PublicEventFieldsMixin$RelatedInterestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -499,6 +516,85 @@ class UpdateEvent$Mutation extends JsonSerializable with EquatableMixin {
   List<Object?> get props => [updateEvent];
   @override
   Map<String, dynamic> toJson() => _$UpdateEvent$MutationToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Creator extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  EventFieldsMixin$Creator();
+
+  factory EventFieldsMixin$Creator.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$CreatorFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$CreatorToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Invited extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  EventFieldsMixin$Invited();
+
+  factory EventFieldsMixin$Invited.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$InvitedFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$InvitedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Wannago$User extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  EventFieldsMixin$Wannago$User();
+
+  factory EventFieldsMixin$Wannago$User.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$Wannago$UserFromJson(json);
+
+  @override
+  List<Object?> get props => [id, name, photoUrls, bio, birthday];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$Wannago$UserToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$Wannago extends JsonSerializable with EquatableMixin {
+  EventFieldsMixin$Wannago();
+
+  factory EventFieldsMixin$Wannago.fromJson(Map<String, dynamic> json) =>
+      _$EventFieldsMixin$WannagoFromJson(json);
+
+  late int id;
+
+  late bool declined;
+
+  late EventFieldsMixin$Wannago$User user;
+
+  @override
+  List<Object?> get props => [id, declined, user];
+  @override
+  Map<String, dynamic> toJson() => _$EventFieldsMixin$WannagoToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class EventFieldsMixin$RelatedInterests extends JsonSerializable
+    with EquatableMixin {
+  EventFieldsMixin$RelatedInterests();
+
+  factory EventFieldsMixin$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$EventFieldsMixin$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$EventFieldsMixin$RelatedInterestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -687,7 +783,7 @@ class UpdateGroup$Mutation extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class GroupFieldsMixin$Users extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   GroupFieldsMixin$Users();
 
   factory GroupFieldsMixin$Users.fromJson(Map<String, dynamic> json) =>
@@ -701,7 +797,7 @@ class GroupFieldsMixin$Users extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class GroupFieldsMixin$Requested extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   GroupFieldsMixin$Requested();
 
   factory GroupFieldsMixin$Requested.fromJson(Map<String, dynamic> json) =>
@@ -879,7 +975,7 @@ class UpdateUser$Mutation extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$BlockedUsers extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$BlockedUsers();
 
   factory UserFieldsMixin$BlockedUsers.fromJson(Map<String, dynamic> json) =>
@@ -893,7 +989,7 @@ class UserFieldsMixin$BlockedUsers extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$InverseFriends extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$InverseFriends();
 
   factory UserFieldsMixin$InverseFriends.fromJson(Map<String, dynamic> json) =>
@@ -907,7 +1003,7 @@ class UserFieldsMixin$InverseFriends extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$Friends extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$Friends();
 
   factory UserFieldsMixin$Friends.fromJson(Map<String, dynamic> json) =>
@@ -921,7 +1017,7 @@ class UserFieldsMixin$Friends extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$RequestedFriends extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$RequestedFriends();
 
   factory UserFieldsMixin$RequestedFriends.fromJson(
@@ -937,7 +1033,7 @@ class UserFieldsMixin$RequestedFriends extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class UserFieldsMixin$FriendRequests extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   UserFieldsMixin$FriendRequests();
 
   factory UserFieldsMixin$FriendRequests.fromJson(Map<String, dynamic> json) =>
@@ -1926,7 +2022,7 @@ class ForumFieldsMixin$UserNotifications extends JsonSerializable
 
 @JsonSerializable(explicitToJson: true)
 class ForumFieldsMixin$Moderators extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   ForumFieldsMixin$Moderators();
 
   factory ForumFieldsMixin$Moderators.fromJson(Map<String, dynamic> json) =>
@@ -2087,7 +2183,7 @@ class BlockUser$Mutation extends JsonSerializable with EquatableMixin {
 
 @JsonSerializable(explicitToJson: true)
 class CreateChat$Mutation$CreateChat$Nodes$Author extends JsonSerializable
-    with EquatableMixin, EventUserMixin {
+    with EquatableMixin, PublicUserMixin {
   CreateChat$Mutation$CreateChat$Nodes$Author();
 
   factory CreateChat$Mutation$CreateChat$Nodes$Author.fromJson(
@@ -3673,69 +3769,6 @@ class RemoveAccountMutation
 }
 
 @JsonSerializable(explicitToJson: true)
-class HelloArguments extends JsonSerializable with EquatableMixin {
-  HelloArguments({required this.message});
-
-  @override
-  factory HelloArguments.fromJson(Map<String, dynamic> json) =>
-      _$HelloArgumentsFromJson(json);
-
-  late String message;
-
-  @override
-  List<Object?> get props => [message];
-  @override
-  Map<String, dynamic> toJson() => _$HelloArgumentsToJson(this);
-}
-
-final HELLO_MUTATION_DOCUMENT_OPERATION_NAME = 'hello';
-final HELLO_MUTATION_DOCUMENT = DocumentNode(definitions: [
-  OperationDefinitionNode(
-      type: OperationType.mutation,
-      name: NameNode(value: 'hello'),
-      variableDefinitions: [
-        VariableDefinitionNode(
-            variable: VariableNode(name: NameNode(value: 'message')),
-            type:
-                NamedTypeNode(name: NameNode(value: 'String'), isNonNull: true),
-            defaultValue: DefaultValueNode(value: null),
-            directives: [])
-      ],
-      directives: [],
-      selectionSet: SelectionSetNode(selections: [
-        FieldNode(
-            name: NameNode(value: 'helloMutation'),
-            alias: null,
-            arguments: [
-              ArgumentNode(
-                  name: NameNode(value: 'message'),
-                  value: VariableNode(name: NameNode(value: 'message')))
-            ],
-            directives: [],
-            selectionSet: null)
-      ]))
-]);
-
-class HelloMutation extends GraphQLQuery<Hello$Mutation, HelloArguments> {
-  HelloMutation({required this.variables});
-
-  @override
-  final DocumentNode document = HELLO_MUTATION_DOCUMENT;
-
-  @override
-  final String operationName = HELLO_MUTATION_DOCUMENT_OPERATION_NAME;
-
-  @override
-  final HelloArguments variables;
-
-  @override
-  List<Object?> get props => [document, operationName, variables];
-  @override
-  Hello$Mutation parse(Map<String, dynamic> json) =>
-      Hello$Mutation.fromJson(json);
-}
-
-@JsonSerializable(explicitToJson: true)
 class AddWannagoArguments extends JsonSerializable with EquatableMixin {
   AddWannagoArguments({required this.eventId, required this.userId});
 
@@ -3798,7 +3831,8 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventFields'), directives: [])
+                        name: NameNode(value: 'PublicEventFields'),
+                        directives: [])
                   ])),
               FieldNode(
                   name: NameNode(value: 'errors'),
@@ -3822,7 +3856,7 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventFields'),
+      name: NameNode(value: 'PublicEventFields'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'Event'), isNonNull: false)),
       directives: [],
@@ -3864,7 +3898,7 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -3873,7 +3907,7 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -3900,23 +3934,11 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
             name: NameNode(value: 'time'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'location'),
-            alias: null,
-            arguments: [],
-            directives: [],
-            selectionSet: null),
-        FieldNode(
-            name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
             directives: [],
@@ -3984,7 +4006,7 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -4162,7 +4184,7 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -4171,7 +4193,7 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -4198,7 +4220,7 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
@@ -4282,7 +4304,7 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -4448,7 +4470,7 @@ final UPDATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -4457,7 +4479,7 @@ final UPDATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -4492,7 +4514,7 @@ final UPDATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -4682,7 +4704,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'inverseFriends'),
@@ -4691,7 +4713,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'friends'),
@@ -4700,7 +4722,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requestedFriends'),
@@ -4709,7 +4731,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'friendRequests'),
@@ -4718,7 +4740,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'groups'),
@@ -4797,7 +4819,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -4864,7 +4886,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -4873,7 +4895,7 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -6158,7 +6180,7 @@ final CREATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'chats'),
@@ -6200,7 +6222,7 @@ final CREATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -6537,7 +6559,7 @@ final CREATE_CHAT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                         directives: [],
                         selectionSet: SelectionSetNode(selections: [
                           FragmentSpreadNode(
-                              name: NameNode(value: 'EventUser'),
+                              name: NameNode(value: 'PublicUser'),
                               directives: [])
                         ]))
                   ])),
@@ -6563,7 +6585,7 @@ final CREATE_CHAT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -6951,7 +6973,7 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -6960,7 +6982,7 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -6987,7 +7009,7 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
@@ -7071,7 +7093,7 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -7262,7 +7284,7 @@ final UPDATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'chats'),
@@ -7304,7 +7326,7 @@ final UPDATE_FORUM_MUTATION_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -8295,7 +8317,7 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -8304,7 +8326,7 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -8331,7 +8353,7 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
@@ -8415,7 +8437,7 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -8688,7 +8710,7 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'invited'),
@@ -8697,7 +8719,7 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'wannago'),
@@ -8724,7 +8746,7 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: SelectionSetNode(selections: [
                     FragmentSpreadNode(
-                        name: NameNode(value: 'EventUser'), directives: [])
+                        name: NameNode(value: 'PublicUser'), directives: [])
                   ]))
             ])),
         FieldNode(
@@ -8808,7 +8830,7 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null)
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],
@@ -9069,7 +9091,7 @@ final CREATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'requested'),
@@ -9078,7 +9100,7 @@ final CREATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: SelectionSetNode(selections: [
               FragmentSpreadNode(
-                  name: NameNode(value: 'EventUser'), directives: [])
+                  name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
             name: NameNode(value: 'screened'),
@@ -9113,7 +9135,7 @@ final CREATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             ]))
       ])),
   FragmentDefinitionNode(
-      name: NameNode(value: 'EventUser'),
+      name: NameNode(value: 'PublicUser'),
       typeCondition: TypeConditionNode(
           on: NamedTypeNode(name: NameNode(value: 'User'), isNonNull: false)),
       directives: [],

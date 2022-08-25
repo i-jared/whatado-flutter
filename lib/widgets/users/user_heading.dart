@@ -8,7 +8,7 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 
 class UserHeading extends StatefulWidget {
-  final EventUser user;
+  final PublicUser user;
   final Widget child;
   final Function() onPressed;
   UserHeading({required this.user, required this.onPressed, required this.child});
@@ -17,7 +17,7 @@ class UserHeading extends StatefulWidget {
 }
 
 class _UserHeadingState extends State<UserHeading> {
-  List<EventUser> friends = [];
+  List<PublicUser> friends = [];
   late bool loading = true;
 
   @override
@@ -48,8 +48,8 @@ class _UserHeadingState extends State<UserHeading> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(
-            child: Text(widget.user.name,
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+            child:
+                Text(widget.user.name, style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
           ),
           TextButton(
             style: ButtonStyle(
@@ -89,9 +89,7 @@ class _UserHeadingState extends State<UserHeading> {
                                 ))),
                 child: Text("${friendRequests.length} friend requests",
                     style: TextStyle(
-                        color: friendRequests.length == 0
-                            ? Colors.grey[400]
-                            : AppColors.primary)))
+                        color: friendRequests.length == 0 ? Colors.grey[400] : AppColors.primary)))
         ],
       ),
       SizedBox(height: headingSpacing),

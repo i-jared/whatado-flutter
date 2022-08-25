@@ -2,7 +2,7 @@ query suggestedUsers {
   suggestedUsers {
     ok
     nodes {
-      ...EventUser
+      ...PublicUser
     }
     errors {
       field

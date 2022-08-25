@@ -25,7 +25,7 @@ class ForumCard extends StatefulWidget {
 }
 
 class _ForumCardState extends State<ForumCard> {
-  List<EventUser>? firstInvited;
+  List<PublicUser>? firstInvited;
   late bool loading;
 
   @override
@@ -41,8 +41,7 @@ class _ForumCardState extends State<ForumCard> {
     final hasImage = widget.event.imageUrl != null;
     final unread = widget.forum.chats.isEmpty
         ? false
-        : widget.forum.userNotification.lastAccessed
-            .isBefore(widget.forum.chats.first.createdAt);
+        : widget.forum.userNotification.lastAccessed.isBefore(widget.forum.chats.first.createdAt);
     final muted = widget.forum.userNotification.muted;
     return InkWell(
       onTap: () async {
@@ -50,10 +49,10 @@ class _ForumCardState extends State<ForumCard> {
         final result = await provider.access(widget.forum.userNotification.id);
         if (result.ok) homeState.accessForum(widget.forum);
         Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    Chats(event: widget.event, forum: widget.forum))).then((_) async {
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Chats(event: widget.event, forum: widget.forum)))
+            .then((_) async {
           await homeState.myEventsRefresh();
         });
       },
@@ -68,8 +67,7 @@ class _ForumCardState extends State<ForumCard> {
                         height: 12,
                         width: 12,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: AppColors.primary),
+                            borderRadius: BorderRadius.circular(10), color: AppColors.primary),
                       )
                     : const SizedBox(width: 24),
                 Expanded(
@@ -90,8 +88,7 @@ class _ForumCardState extends State<ForumCard> {
                           height: 80,
                           width: 80,
                           clipBehavior: Clip.antiAlias,
-                          decoration:
-                              BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
                           child: !hasImage
                               ? Image.asset('assets/Whatado_Transparent.png')
                               : CachedNetworkImage(imageUrl: widget.event.imageUrl!),
@@ -108,9 +105,7 @@ class _ForumCardState extends State<ForumCard> {
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
                                         fontSize: 22,
-                                        fontWeight: unread
-                                            ? FontWeight.bold
-                                            : FontWeight.normal)),
+                                        fontWeight: unread ? FontWeight.bold : FontWeight.normal)),
                               ),
                               SizedBox(height: 4),
                               Row(
@@ -122,8 +117,7 @@ class _ForumCardState extends State<ForumCard> {
                                       child: PictureWaterfall(
                                           loading: loading, users: firstInvited ?? [])),
                                   if (muted)
-                                    Icon(Icons.volume_off_outlined,
-                                        color: AppColors.primary)
+                                    Icon(Icons.volume_off_outlined, color: AppColors.primary)
                                 ],
                               ),
                               SizedBox(height: 4),
@@ -136,8 +130,8 @@ class _ForumCardState extends State<ForumCard> {
                                           child: Shimmer.fromColors(
                                               baseColor: Colors.grey[200] ?? Colors.grey,
                                               highlightColor: Colors.white,
-                                              child: Container(
-                                                  color: Colors.grey[100], height: 15)),
+                                              child:
+                                                  Container(color: Colors.grey[100], height: 15)),
                                         )
                                       : Flexible(
                                           flex: 5,
@@ -155,8 +149,8 @@ class _ForumCardState extends State<ForumCard> {
                                           child: Shimmer.fromColors(
                                               baseColor: Colors.grey[200] ?? Colors.grey,
                                               highlightColor: Colors.white,
-                                              child: Container(
-                                                  color: Colors.grey[100], height: 15)),
+                                              child:
+                                                  Container(color: Colors.grey[100], height: 15)),
                                         )
                                       : Flexible(
                                           flex: 1,
@@ -164,8 +158,7 @@ class _ForumCardState extends State<ForumCard> {
                                             padding: const EdgeInsets.only(right: 10.0),
                                             child: Text(
                                                 widget.lastChat != null
-                                                    ? timeago.format(
-                                                        widget.lastChat!.createdAt,
+                                                    ? timeago.format(widget.lastChat!.createdAt,
                                                         locale: 'en_short')
                                                     : '',
                                                 style: TextStyle(

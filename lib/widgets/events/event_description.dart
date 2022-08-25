@@ -1,9 +1,9 @@
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
-import 'package:whatado/models/event.dart';
+import 'package:whatado/models/public_event.dart';
 
 class EventDescription extends StatelessWidget {
-  final Event event;
+  final PublicEvent event;
   EventDescription({required this.event});
   @override
   Widget build(BuildContext context) {

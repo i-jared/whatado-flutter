@@ -95,14 +95,6 @@ Map<String, dynamic> _$RemoveAccount$MutationToJson(
       'removeAccount': instance.removeAccount.toJson(),
     };
 
-Hello$Mutation _$Hello$MutationFromJson(Map<String, dynamic> json) =>
-    Hello$Mutation()..helloMutation = json['helloMutation'] as bool;
-
-Map<String, dynamic> _$Hello$MutationToJson(Hello$Mutation instance) =>
-    <String, dynamic>{
-      'helloMutation': instance.helloMutation,
-    };
-
 AddWannago$Mutation$AddWannago$Nodes
     _$AddWannago$Mutation$AddWannago$NodesFromJson(Map<String, dynamic> json) =>
         AddWannago$Mutation$AddWannago$Nodes()
@@ -113,23 +105,20 @@ AddWannago$Mutation$AddWannago$Nodes
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
           ..title = json['title'] as String
           ..description = json['description'] as String
-          ..creator = EventFieldsMixin$Creator.fromJson(
+          ..creator = PublicEventFieldsMixin$Creator.fromJson(
               json['creator'] as Map<String, dynamic>)
           ..invited = (json['invited'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
+              .map((e) => PublicEventFieldsMixin$Invited.fromJson(
+                  e as Map<String, dynamic>))
               .toList()
           ..wannago = (json['wannago'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
+              .map((e) => PublicEventFieldsMixin$Wannago.fromJson(
+                  e as Map<String, dynamic>))
               .toList()
           ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
-          ..location = json['location'] as String
-          ..coordinates =
-              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
           ..pictureUrl = json['pictureUrl'] as String?
           ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
-              .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
+              .map((e) => PublicEventFieldsMixin$RelatedInterests.fromJson(
                   e as Map<String, dynamic>))
               .toList()
           ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
@@ -154,8 +143,6 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'invited': instance.invited.map((e) => e.toJson()).toList(),
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
-      'location': instance.location,
-      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
           instance.relatedInterests.map((e) => e.toJson()).toList(),
@@ -228,9 +215,9 @@ Map<String, dynamic> _$AddWannago$MutationToJson(
       'addWannago': instance.addWannago.toJson(),
     };
 
-EventFieldsMixin$Creator _$EventFieldsMixin$CreatorFromJson(
+PublicEventFieldsMixin$Creator _$PublicEventFieldsMixin$CreatorFromJson(
         Map<String, dynamic> json) =>
-    EventFieldsMixin$Creator()
+    PublicEventFieldsMixin$Creator()
       ..id = json['id'] as int
       ..name = json['name'] as String
       ..photoUrls = json['photoUrls'] as String
@@ -238,8 +225,8 @@ EventFieldsMixin$Creator _$EventFieldsMixin$CreatorFromJson(
       ..birthday =
           fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 
-Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
-        EventFieldsMixin$Creator instance) =>
+Map<String, dynamic> _$PublicEventFieldsMixin$CreatorToJson(
+        PublicEventFieldsMixin$Creator instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -248,9 +235,9 @@ Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
-EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
+PublicEventFieldsMixin$Invited _$PublicEventFieldsMixin$InvitedFromJson(
         Map<String, dynamic> json) =>
-    EventFieldsMixin$Invited()
+    PublicEventFieldsMixin$Invited()
       ..id = json['id'] as int
       ..name = json['name'] as String
       ..photoUrls = json['photoUrls'] as String
@@ -258,8 +245,8 @@ EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
       ..birthday =
           fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 
-Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
-        EventFieldsMixin$Invited instance) =>
+Map<String, dynamic> _$PublicEventFieldsMixin$InvitedToJson(
+        PublicEventFieldsMixin$Invited instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -268,18 +255,18 @@ Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
-EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
-        Map<String, dynamic> json) =>
-    EventFieldsMixin$Wannago$User()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+PublicEventFieldsMixin$Wannago$User
+    _$PublicEventFieldsMixin$Wannago$UserFromJson(Map<String, dynamic> json) =>
+        PublicEventFieldsMixin$Wannago$User()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..photoUrls = json['photoUrls'] as String
+          ..bio = json['bio'] as String
+          ..birthday =
+              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 
-Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
-        EventFieldsMixin$Wannago$User instance) =>
+Map<String, dynamic> _$PublicEventFieldsMixin$Wannago$UserToJson(
+        PublicEventFieldsMixin$Wannago$User instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -288,28 +275,29 @@ Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
-EventFieldsMixin$Wannago _$EventFieldsMixin$WannagoFromJson(
+PublicEventFieldsMixin$Wannago _$PublicEventFieldsMixin$WannagoFromJson(
         Map<String, dynamic> json) =>
-    EventFieldsMixin$Wannago()
+    PublicEventFieldsMixin$Wannago()
       ..id = json['id'] as int
       ..declined = json['declined'] as bool
-      ..user = EventFieldsMixin$Wannago$User.fromJson(
+      ..user = PublicEventFieldsMixin$Wannago$User.fromJson(
           json['user'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$EventFieldsMixin$WannagoToJson(
-        EventFieldsMixin$Wannago instance) =>
+Map<String, dynamic> _$PublicEventFieldsMixin$WannagoToJson(
+        PublicEventFieldsMixin$Wannago instance) =>
     <String, dynamic>{
       'id': instance.id,
       'declined': instance.declined,
       'user': instance.user.toJson(),
     };
 
-EventFieldsMixin$RelatedInterests _$EventFieldsMixin$RelatedInterestsFromJson(
-        Map<String, dynamic> json) =>
-    EventFieldsMixin$RelatedInterests()..id = json['id'] as int;
+PublicEventFieldsMixin$RelatedInterests
+    _$PublicEventFieldsMixin$RelatedInterestsFromJson(
+            Map<String, dynamic> json) =>
+        PublicEventFieldsMixin$RelatedInterests()..id = json['id'] as int;
 
-Map<String, dynamic> _$EventFieldsMixin$RelatedInterestsToJson(
-        EventFieldsMixin$RelatedInterests instance) =>
+Map<String, dynamic> _$PublicEventFieldsMixin$RelatedInterestsToJson(
+        PublicEventFieldsMixin$RelatedInterests instance) =>
     <String, dynamic>{
       'id': instance.id,
     };
@@ -425,6 +413,92 @@ Map<String, dynamic> _$UpdateEvent$MutationToJson(
         UpdateEvent$Mutation instance) =>
     <String, dynamic>{
       'updateEvent': instance.updateEvent.toJson(),
+    };
+
+EventFieldsMixin$Creator _$EventFieldsMixin$CreatorFromJson(
+        Map<String, dynamic> json) =>
+    EventFieldsMixin$Creator()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$EventFieldsMixin$CreatorToJson(
+        EventFieldsMixin$Creator instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+EventFieldsMixin$Invited _$EventFieldsMixin$InvitedFromJson(
+        Map<String, dynamic> json) =>
+    EventFieldsMixin$Invited()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$EventFieldsMixin$InvitedToJson(
+        EventFieldsMixin$Invited instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+EventFieldsMixin$Wannago$User _$EventFieldsMixin$Wannago$UserFromJson(
+        Map<String, dynamic> json) =>
+    EventFieldsMixin$Wannago$User()
+      ..id = json['id'] as int
+      ..name = json['name'] as String
+      ..photoUrls = json['photoUrls'] as String
+      ..bio = json['bio'] as String
+      ..birthday =
+          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$EventFieldsMixin$Wannago$UserToJson(
+        EventFieldsMixin$Wannago$User instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'photoUrls': instance.photoUrls,
+      'bio': instance.bio,
+      'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+EventFieldsMixin$Wannago _$EventFieldsMixin$WannagoFromJson(
+        Map<String, dynamic> json) =>
+    EventFieldsMixin$Wannago()
+      ..id = json['id'] as int
+      ..declined = json['declined'] as bool
+      ..user = EventFieldsMixin$Wannago$User.fromJson(
+          json['user'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$EventFieldsMixin$WannagoToJson(
+        EventFieldsMixin$Wannago instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'declined': instance.declined,
+      'user': instance.user.toJson(),
+    };
+
+EventFieldsMixin$RelatedInterests _$EventFieldsMixin$RelatedInterestsFromJson(
+        Map<String, dynamic> json) =>
+    EventFieldsMixin$RelatedInterests()..id = json['id'] as int;
+
+Map<String, dynamic> _$EventFieldsMixin$RelatedInterestsToJson(
+        EventFieldsMixin$RelatedInterests instance) =>
+    <String, dynamic>{
+      'id': instance.id,
     };
 
 EventFilterInput _$EventFilterInputFromJson(Map<String, dynamic> json) =>
@@ -3050,16 +3124,6 @@ Map<String, dynamic> _$AcceptFriendArgumentsToJson(
         AcceptFriendArguments instance) =>
     <String, dynamic>{
       'id': instance.id,
-    };
-
-HelloArguments _$HelloArgumentsFromJson(Map<String, dynamic> json) =>
-    HelloArguments(
-      message: json['message'] as String,
-    );
-
-Map<String, dynamic> _$HelloArgumentsToJson(HelloArguments instance) =>
-    <String, dynamic>{
-      'message': instance.message,
     };
 
 AddWannagoArguments _$AddWannagoArgumentsFromJson(Map<String, dynamic> json) =>

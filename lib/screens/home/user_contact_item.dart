@@ -10,16 +10,13 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/state/user_state.dart';
 
 class UserContactItem extends StatefulWidget {
-  final EventUser user;
+  final PublicUser user;
   final bool accepted;
   final bool requested;
   final bool groupRequest;
   final Group? group;
   UserContactItem(this.user,
-      {this.accepted = false,
-      this.requested = false,
-      this.groupRequest = false,
-      this.group});
+      {this.accepted = false, this.requested = false, this.groupRequest = false, this.group});
 
   @override
   State<StatefulWidget> createState() => _UserContactItemState();
@@ -59,8 +56,7 @@ class _UserContactItemState extends State<UserContactItem> {
                   color: Colors.grey[400],
                 ),
                 child: Center(
-                    child: Text(widget.user.name.substring(0, 2),
-                        style: TextStyle(fontSize: 20)))),
+                    child: Text(widget.user.name.substring(0, 2), style: TextStyle(fontSize: 20)))),
         SizedBox(width: 15),
         Expanded(
           child: Text(
@@ -81,10 +77,7 @@ class _UserContactItemState extends State<UserContactItem> {
                       final provider = GroupGqlProvider();
                       await provider.updateGroup(GroupFilterInput(
                         id: widget.group!.id,
-                        userIds: [
-                          ...widget.group!.users.map((u) => u.id),
-                          widget.user.id
-                        ],
+                        userIds: [...widget.group!.users.map((u) => u.id), widget.user.id],
                       ));
                       await userState.updateGroupMembers(widget.group!, widget.user);
                     } else {

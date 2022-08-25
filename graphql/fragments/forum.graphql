@@ -8,7 +8,7 @@ fragment ForumFields on Forum {
     muted
   }
   moderators {
-    ...EventUser
+    ...PublicUser
   }
   chats {
     id

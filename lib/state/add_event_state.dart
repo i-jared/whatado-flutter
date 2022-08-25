@@ -36,7 +36,7 @@ class AddEventState extends ChangeNotifier {
   TextEditingController textModeController;
   TextEditingController addInterestController;
   Gender _selectedGender;
-  List<EventUser> _selectedUsers;
+  List<PublicUser> _selectedUsers;
   Group? _selectedGroup;
   Privacy _privacy;
   AssetEntity? selectedImage;
@@ -132,9 +132,9 @@ class AddEventState extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<EventUser> get selectedUsers => _selectedUsers;
+  List<PublicUser> get selectedUsers => _selectedUsers;
 
-  set selectedUsers(List<EventUser> selectedUsers) {
+  set selectedUsers(List<PublicUser> selectedUsers) {
     _selectedUsers = selectedUsers;
     notifyListeners();
   }

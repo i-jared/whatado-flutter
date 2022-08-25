@@ -29,7 +29,7 @@ class SelectGroupRequested extends StatefulWidget {
 
 class _SelectGroupRequestedState extends State<SelectGroupRequested> {
   late bool loading;
-  late List<EventUser> requested;
+  late List<PublicUser> requested;
 
   @override
   void initState() {
@@ -70,7 +70,7 @@ class _SelectGroupRequestedState extends State<SelectGroupRequested> {
     );
   }
 
-  List<Widget> getList(List<EventUser> requested) =>
+  List<Widget> getList(List<PublicUser> requested) =>
       List<Widget>.generate(max(0, requested.length * 2 - 1), (i) {
         if (i.isOdd) return Divider();
         final user = requested[i ~/ 2];
@@ -103,7 +103,7 @@ class _SelectGroupRequestedState extends State<SelectGroupRequested> {
         );
       });
 
-  Future<void> decide(EventUser user, bool accepted) async {
+  Future<void> decide(PublicUser user, bool accepted) async {
     final userState = Provider.of<UserState>(context, listen: false);
     setState(() => loading = true);
     final provider = GroupGqlProvider();

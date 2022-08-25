@@ -33,8 +33,7 @@ class _MyProfileState extends State<MyProfile> {
   @override
   void didChangeDependencies() {
     final userState = Provider.of<UserState>(context, listen: false);
-    final images =
-        userState.user?.photoUrls.map((url) => Image.network(url)).toList() ?? [];
+    final images = userState.user?.photoUrls.map((url) => Image.network(url)).toList() ?? [];
     for (Image image in images) {
       precacheImage(image.image, context);
     }
@@ -45,8 +44,7 @@ class _MyProfileState extends State<MyProfile> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     final user = userState.user!;
-    final groupRequests =
-        user.groups.fold<int>(0, (sum, group) => sum + group.requested.length);
+    final groupRequests = user.groups.fold<int>(0, (sum, group) => sum + group.requested.length);
     if (userState.user == null) {
       SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
         await userState.getUser();
@@ -85,8 +83,7 @@ class _MyProfileState extends State<MyProfile> {
                               height: 10,
                               width: 10,
                               decoration: BoxDecoration(
-                                  color:
-                                      i / 2 == selectedIndex ? Colors.black : Colors.grey,
+                                  color: i / 2 == selectedIndex ? Colors.black : Colors.grey,
                                   shape: BoxShape.circle),
                             )
                           : Container(width: 5))),
@@ -100,7 +97,7 @@ class _MyProfileState extends State<MyProfile> {
             children: [
               SizedBox(height: sectionSpacing),
               UserHeading(
-                  user: EventUser.fromUser(user),
+                  user: PublicUser.fromUser(user),
                   child: Row(
                     children: [
                       Text('Edit', style: TextStyle(fontSize: 15, color: Colors.white)),
@@ -109,9 +106,7 @@ class _MyProfileState extends State<MyProfile> {
                     ],
                   ),
                   onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditMyProfile(user: user)))),
+                      context, MaterialPageRoute(builder: (context) => EditMyProfile(user: user)))),
               SizedBox(height: sectionSpacing * 2),
               Row(children: [
                 Text('Groups', style: headingStyle),
@@ -129,9 +124,7 @@ class _MyProfileState extends State<MyProfile> {
                                     ))),
                     child: Text("$groupRequests group requests",
                         style: TextStyle(
-                            color: groupRequests == 0
-                                ? Colors.grey[400]
-                                : AppColors.primary)))
+                            color: groupRequests == 0 ? Colors.grey[400] : AppColors.primary)))
               ]),
               SizedBox(height: headingSpacing),
               InkWell(
@@ -141,9 +134,7 @@ class _MyProfileState extends State<MyProfile> {
                         context,
                         MaterialPageRoute(
                             builder: (BuildContext context) => GroupListPage(
-                                title: "Groups",
-                                groups: user.groups,
-                                leftPadding: false))),
+                                title: "Groups", groups: user.groups, leftPadding: false))),
                 child: Container(
                     height: 40,
                     child: user.groups.isEmpty
@@ -155,9 +146,7 @@ class _MyProfileState extends State<MyProfile> {
                         : Row(
                             children: [
                               PictureWaterfall(
-                                  radius: 20,
-                                  loading: false,
-                                  users: user.groups.first.users),
+                                  radius: 20, loading: false, users: user.groups.first.users),
                               SizedBox(width: 24),
                               user.groups.length > 1
                                   ? Text('+ ${user.groups.length - 1} more')
@@ -171,8 +160,7 @@ class _MyProfileState extends State<MyProfile> {
                   Text('Interests', style: headingStyle),
                   SizedBox(width: 10),
                   // Remove this replace with hint
-                  Text('(only visible to you)',
-                      style: TextStyle(fontSize: 15, color: Colors.grey)),
+                  Text('(only visible to you)', style: TextStyle(fontSize: 15, color: Colors.grey)),
                 ],
               ),
               SizedBox(height: headingSpacing),

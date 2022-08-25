@@ -7,19 +7,19 @@ fragment UserFields on User {
   birthday
   bio
   blockedUsers {
-    ...EventUser
+    ...PublicUser
   }
   inverseFriends {
-    ...EventUser
+    ...PublicUser
   }
   friends {
-    ...EventUser
+    ...PublicUser
   }
   requestedFriends {
-    ...EventUser
+    ...PublicUser
   }
   friendRequests {
-    ...EventUser
+    ...PublicUser
   }
   groups {
     ...GroupFields

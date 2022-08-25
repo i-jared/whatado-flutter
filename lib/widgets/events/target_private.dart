@@ -32,7 +32,7 @@ class TargetPrivate extends StatelessWidget {
       Expanded(
         child: Container(
           child: InviteFriends(
-            setUsers: (List<EventUser> tempList) => eventState.selectedUsers = tempList,
+            setUsers: (List<PublicUser> tempList) => eventState.selectedUsers = tempList,
             selectedUsers: eventState.selectedUsers,
             users: userState.user?.friends,
           ),

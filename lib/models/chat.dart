@@ -5,7 +5,7 @@ class Chat {
   int id;
   DateTime createdAt;
   String text;
-  EventUser author;
+  PublicUser author;
   Survey? survey;
 
   Chat({
@@ -22,7 +22,7 @@ class Chat {
         createdAt: DateTime.parse(data['createdAt']),
         text: data['text'],
         author: data['author'] == null
-            ? EventUser(
+            ? PublicUser(
                 id: 0,
                 name: 'n/a',
                 bio: 'n/a',
@@ -30,8 +30,7 @@ class Chat {
                   'https://styles.redditmedia.com/t5_2ldvug/styles/communityIcon_aq22b2qb50u41.png'
                 ],
                 birthday: DateTime.now())
-            : EventUser.fromGqlData(data['author']),
-        survey:
-            data['survey'] == null ? null : Survey.fromGqlData(data['survey']));
+            : PublicUser.fromGqlData(data['author']),
+        survey: data['survey'] == null ? null : Survey.fromGqlData(data['survey']));
   }
 }

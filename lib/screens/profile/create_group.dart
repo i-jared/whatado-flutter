@@ -23,7 +23,7 @@ class CreateGroup extends StatefulWidget {
 }
 
 class _CreateGroupState extends State<CreateGroup> {
-  late List<EventUser> selectedFriends = [];
+  late List<PublicUser> selectedFriends = [];
   late TextEditingController groupNameController = TextEditingController();
   late TextEditingController groupLocationController = TextEditingController();
   late bool loading = false;
@@ -177,7 +177,7 @@ class _CreateGroupState extends State<CreateGroup> {
                   child: ListView.builder(
                       itemCount: friends.length,
                       itemBuilder: (context, i) {
-                        EventUser friend = friends[i];
+                        PublicUser friend = friends[i];
                         return InkWell(
                           onTap: () {
                             if (selectedFriends.contains(friend)) {

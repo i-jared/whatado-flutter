@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:whatado/models/event.dart';
+import 'package:whatado/models/public_event.dart';
 import 'package:whatado/widgets/events/event_description.dart';
 import 'package:whatado/widgets/events/event_title.dart';
 import 'package:whatado/widgets/events/event_top_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class EventDisplay extends StatelessWidget {
-  final Event event;
+  final PublicEvent event;
   final bool showButton;
   EventDisplay({required this.event, this.showButton = true});
 
@@ -24,10 +24,8 @@ class EventDisplay extends StatelessWidget {
         children: [
           SizedBox(height: sectionSpacing),
           Padding(
-              padding: EdgeInsets.symmetric(horizontal: padding),
-              child: EventTopBar(event: event)),
-          if (event.imageUrl?.isNotEmpty ?? false)
-            SizedBox(height: sectionSpacing),
+              padding: EdgeInsets.symmetric(horizontal: padding), child: EventTopBar(event: event)),
+          if (event.imageUrl?.isNotEmpty ?? false) SizedBox(height: sectionSpacing),
           if (event.imageUrl?.isNotEmpty ?? false)
             Container(
                 width: MediaQuery.of(context).size.width,

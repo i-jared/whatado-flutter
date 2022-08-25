@@ -6,6 +6,7 @@ import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/state/add_event_state.dart';
+import 'package:whatado/utils/logger.dart';
 
 class EventPhotoSelector extends StatefulWidget {
   @override
@@ -31,9 +32,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     thumbdata = [];
     _controller = ScrollController()
       ..addListener(() async {
-        if (!paginationDone &&
-            _controller.position.atEdge &&
-            _controller.position.pixels != 0) {
+        if (!paginationDone && _controller.position.atEdge && _controller.position.pixels != 0) {
           await loadMorePhotos();
         }
       });
@@ -79,8 +78,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
     if (result.isAuth) {
       try {
         eventState.textMode = false;
-        final albums =
-            await PhotoManager.getAssetPathList(onlyAll: true, type: RequestType.image);
+        final albums = await PhotoManager.getAssetPathList(onlyAll: true, type: RequestType.image);
         final album = albums.first;
         final recentAssets = await album.getAssetListPaged(page: page, size: 40);
         List<Map<String, dynamic>> tempLoadedAssets = await Future.wait(recentAssets
@@ -90,14 +88,14 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
                   "valid": asset.type == AssetType.image
                 })
             .toList());
-        await eventState.setImage(
-            tempLoadedAssets.firstWhere((assetMap) => assetMap["valid"])["asset"]);
+        await eventState
+            .setImage(tempLoadedAssets.firstWhere((assetMap) => assetMap["valid"])["asset"]);
         setState(() {
           loadedAssets = tempLoadedAssets;
           page = 1;
         });
       } catch (e) {
-        print(e.toString());
+        logger.e(e.toString());
         setState(() => noImages = true);
       }
     } else {

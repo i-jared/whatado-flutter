@@ -22,7 +22,7 @@ class GroupMembersRow extends StatefulWidget {
 
 class _GroupMembersRowState extends State<GroupMembersRow> {
   bool loading = true;
-  List<EventUser> users = [];
+  List<PublicUser> users = [];
 
   @override
   void initState() {
@@ -34,8 +34,7 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     final homeState = Provider.of<HomeState>(context);
-    final removeUser = (EventUser user) => userState.user?.id ==
-                widget.event.creator.id &&
+    final removeUser = (PublicUser user) => userState.user?.id == widget.event.creator.id &&
             userState.user?.id != user.id
         ? () => showDialog(
             context: context,
@@ -44,8 +43,7 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                     content: Text(
                         'Are you sure you want to remove ${user.name} from the event and chat?'),
                     actions: [
-                      TextButton(
-                          child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
+                      TextButton(child: Text("Cancel"), onPressed: () => Navigator.pop(context)),
                       TextButton(
                         child: Text("Remove"),
                         onPressed: () async {
@@ -80,30 +78,24 @@ class _GroupMembersRowState extends State<GroupMembersRow> {
                                         ? () {
                                             homeState.bottomBarPageNo = 3;
                                             if (Navigator.canPop(context))
-                                              Navigator.popUntil(
-                                                  context, (route) => route.isFirst);
+                                              Navigator.popUntil(context, (route) => route.isFirst);
                                           }
                                         : () => Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            UserProfile(user: user)))
-                                                .then((_) async {
-                                              await Future.delayed(
-                                                  Duration(milliseconds: 500));
-                                              SystemChrome.setSystemUIOverlayStyle(
-                                                  SystemUiOverlayStyle(
-                                                statusBarBrightness: Brightness.dark,
-                                                statusBarIconBrightness: Brightness.dark,
-                                                systemNavigationBarColor:
-                                                    AppColors.background,
-                                                statusBarColor: Colors.transparent,
-                                              ));
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        UserProfile(user: user))).then((_) async {
+                                              await Future.delayed(Duration(milliseconds: 500));
+                                              // SystemChrome.setSystemUIOverlayStyle(
+                                              //     SystemUiOverlayStyle(
+                                              //   statusBarBrightness: Brightness.dark,
+                                              //   statusBarIconBrightness: Brightness.dark,
+                                              //   systemNavigationBarColor: AppColors.background,
+                                              //   statusBarColor: Colors.transparent,
+                                              // ));
                                             }),
                                     child: UserAvatar(
-                                        url: user.photoUrls.isEmpty
-                                            ? null
-                                            : user.photoUrls.first,
+                                        url: user.photoUrls.isEmpty ? null : user.photoUrls.first,
                                         radius: 28),
                                     onLongPress: removeUser(user)),
                               ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:whatado/constants.dart';
-import 'package:whatado/models/event.dart';
+import 'package:whatado/models/public_event.dart';
 
 class LeaveButton extends StatelessWidget {
-  final Event event;
+  final PublicEvent event;
   LeaveButton({required this.event});
   @override
   Widget build(BuildContext context) {

@@ -3,12 +3,10 @@ import 'dart:async';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
-import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -60,6 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // notifications when in foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      if (!mounted) return;
       if (message.data['type'] == 'event') {
         final homeState = Provider.of<HomeState>(context, listen: false);
         await homeState.myEventsRefresh();
@@ -82,6 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
         final homeState = Provider.of<HomeState>(context, listen: false);
         await homeState.getMyForums();
       } else if (message.data['type'] == 'friend') {
+        final userState = Provider.of<UserState>(context, listen: false);
+        await userState.getUser();
+      } else if (message.data['type'] == 'group') {
         final userState = Provider.of<UserState>(context, listen: false);
         await userState.getUser();
       }
@@ -115,17 +117,17 @@ class _HomeScreenState extends State<HomeScreen> {
       final eventResult = await eventProvider.event(int.parse(message.data['eventId']));
       await homeState.myEventsRefresh();
       if (eventResult.ok) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => EventDetails(event: eventResult.data!)));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => EventDetails(event: eventResult.data!)));
       }
     } else if (message.data['type'] == 'friend') {
       final userProvider = UserGqlProvider();
       final result = await userProvider.user(int.parse(message.data['userId']));
       if (result.ok)
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => UserProfile(user: result.data!)));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => UserProfile(user: result.data!)));
+    } else if (message.data['type'] == 'group') {
+      // idk if i should do anything here. groups aren't really something you look at.
     }
   }
 

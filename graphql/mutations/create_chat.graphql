@@ -6,7 +6,7 @@ mutation createChat($chatInput: ChatInput!, $surveyInput: SurveyInput) {
       text
       createdAt
       author {
-      ...EventUser
+      ...PublicUser
       }
     }
     errors {

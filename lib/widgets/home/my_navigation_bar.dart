@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/screens/add_event/add_event.dart';
@@ -22,8 +23,8 @@ class MyNavigationBar extends StatelessWidget {
         padding: EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 5),
         width: MediaQuery.of(context).size.width,
         height: 50,
-        decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: Colors.grey[200] ?? Colors.grey))),
+        decoration:
+            BoxDecoration(border: Border(top: BorderSide(color: Colors.grey[200] ?? Colors.grey))),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -52,16 +53,13 @@ class MyNavigationBar extends StatelessWidget {
               padding: EdgeInsets.zero,
               onPressed: () {
                 eventState.clear();
-                Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => AddEvent()))
+                Navigator.push(context, MaterialPageRoute(builder: (context) => AddEvent()))
                     .then((_) async {
                   await Future.delayed(Duration(milliseconds: 500));
-                  // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-                  //   statusBarBrightness: Brightness.dark,
-                  //   statusBarIconBrightness: Brightness.dark,
-                  //   systemNavigationBarColor: AppColors.background,
-                  //   statusBarColor: Colors.transparent,
-                  // ));
+                  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+                    systemNavigationBarColor: Colors.transparent,
+                    statusBarColor: Colors.transparent,
+                  ));
                 });
               },
               icon: Icon(Icons.add_circle_outline,

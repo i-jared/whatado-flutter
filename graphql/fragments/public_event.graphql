@@ -1,0 +1,32 @@
+fragment PublicEventFields on Event {
+  id
+  createdAt
+  updatedAt
+  title
+  description
+  creator {
+    ...PublicUser
+  }
+  invited {
+    ...PublicUser
+  }
+  wannago {
+    id
+    declined
+    user {
+      ...PublicUser
+    }
+  }
+  time
+  pictureUrl
+  relatedInterests {
+    id
+  }
+  privacy
+  screened
+  filterLocation
+  filterRadius
+  filterGender
+  filterMinAge
+  filterMaxAge
+}

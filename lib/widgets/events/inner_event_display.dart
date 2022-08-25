@@ -85,8 +85,7 @@ class InnerEventDisplay extends StatelessWidget {
                         const SizedBox(width: 5),
                         RichText(
                             text: TextSpan(children: [
-                          TextSpan(
-                              text: "Gonnago ", style: TextStyle(color: Colors.black)),
+                          TextSpan(text: "Gonnago ", style: TextStyle(color: Colors.black)),
                           TextSpan(
                               text: "${event.invited.length}  ",
                               style: TextStyle(color: AppColors.primary)),
@@ -94,17 +93,14 @@ class InnerEventDisplay extends StatelessWidget {
                         Container(
                           height: 20,
                           decoration: BoxDecoration(
-                              border:
-                                  Border(right: BorderSide(color: AppColors.primary))),
+                              border: Border(right: BorderSide(color: AppColors.primary))),
                         ),
                         Flexible(
                           child: RichText(
                               softWrap: false,
                               overflow: TextOverflow.fade,
                               text: TextSpan(children: [
-                                TextSpan(
-                                    text: "  Wannago ",
-                                    style: TextStyle(color: Colors.black)),
+                                TextSpan(text: "  Wannago ", style: TextStyle(color: Colors.black)),
                                 TextSpan(
                                     text: "${filteredWannago.length}",
                                     style: TextStyle(color: AppColors.primary)),

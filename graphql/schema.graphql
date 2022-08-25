@@ -356,7 +356,6 @@ type Mutation {
   flagEvent(eventId: Int!): BoolApiResponse!
   flagUser(userId: Int!): BoolApiResponse!
   forgotPassword(phone: String!): BoolApiResponse!
-  helloMutation(message: String!): Boolean!
   inviteReferral(number: String!): BoolApiResponse!
   login(options: UserInput!): BoolApiResponse!
   mute(id: Int!): BoolApiResponse!
@@ -403,7 +402,6 @@ type Query {
   friendsById(id: Int!): UsersApiResponse!
   groupEvents(groupId: Int!): EventsApiResponse!
   groupIcons: GroupIconsApiResponse!
-  hello: String!
   interest(id: Int!): InterestApiResponse!
   lastChat(forumId: Int!): ChatApiResponse!
   me: UserApiResponse!
@@ -441,7 +439,6 @@ type StringsApiResponse {
 
 type Subscription {
   chatSubscription(forumId: Int!): Chat!
-  helloSubscription: String!
 }
 
 type Survey {

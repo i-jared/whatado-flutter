@@ -2,7 +2,7 @@ query events($dateRange: DateRangeInput!, $take: Int!, $skip: Int!, $sortType: S
   events(dateRange: $dateRange, take: $take, skip: $skip, sortType: $sortType) {
     ok
     nodes {
-      ...EventFields
+      ...PublicEventFields
     }
     errors {
       field

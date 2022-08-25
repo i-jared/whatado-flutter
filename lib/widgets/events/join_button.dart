@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
-import 'package:whatado/models/event.dart';
+import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 
 class JoinButton extends StatefulWidget {
-  final Event event;
+  final PublicEvent event;
   JoinButton({required this.event});
   @override
   State<StatefulWidget> createState() => _JoinButtonState();
@@ -15,7 +16,7 @@ class JoinButton extends StatefulWidget {
 
 class _JoinButtonState extends State<JoinButton> {
   late bool loading;
-  late Event event;
+  late PublicEvent event;
   @override
   void initState() {
     super.initState();
@@ -33,26 +34,15 @@ class _JoinButtonState extends State<JoinButton> {
             if (userState.user == null) return;
             final provider = EventsGqlProvider();
             setState(() => loading = true);
-            if (event.screened) {
-              final result = await provider.addWannago(
-                  eventId: event.id, userId: userState.user!.id);
-              // update the event
-              if (result.ok) {
-                homeState.updateEvent(result.data as Event);
-                setState(() => event = result.data as Event);
-              }
-            } else {
-              final result =
-                  await provider.addInvite(eventId: event.id, userId: userState.user!.id);
-              // update the event
-              if (result.ok) {
-                homeState.updateEvent(result.data as Event);
-                setState(() => event = result.data as Event);
-              }
+            final result = await provider.addWannago(eventId: event.id, userId: userState.user!.id);
+            // update the event
+            if (result.ok) {
+              homeState.updateEvent(result.data as PublicEvent);
+              setState(() => event = result.data as PublicEvent);
             }
             setState(() => loading = false);
           } catch (e) {
-            print(e.toString());
+            logger.e(e.toString());
           }
         },
         style: ButtonStyle(

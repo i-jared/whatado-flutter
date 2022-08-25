@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/group.dart';
+import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/screens/home/invite_group_members_page.dart';
@@ -25,7 +26,7 @@ class GroupDetails extends StatefulWidget {
 
 // TODO create a way to remove people from the group
 class _GroupDetailsState extends State<GroupDetails> {
-  List<Event>? groupEvents;
+  List<PublicEvent>? groupEvents;
   late bool loading;
   @override
   void initState() {
@@ -113,24 +114,19 @@ class _GroupDetailsState extends State<GroupDetails> {
                   child: UserListItem(user),
                 )),
             SizedBox(height: 30),
-            if (group.users.map((u) => u.id).contains(userState.user!.id)) ...[
-              Text('Events', style: headingStyle),
-              if (groupEvents == null) CircularProgressIndicator(),
-              if (groupEvents != null && groupEvents!.isEmpty) Text('no event history'),
-              if (groupEvents != null && groupEvents!.isNotEmpty)
-                ...groupEvents!.map((e) {
-                  final filteredWannago = e.wannago.where((wannago) =>
-                      !wannago.declined && !e.invited.map((eu) => eu.id).contains(wannago.user.id));
-                  return InkWell(
-                    onTap: () => Navigator.push(
-                        context, MaterialPageRoute(builder: (context) => EventDetails(event: e))),
-                    child: Container(
-                        height: 150,
-                        margin: EdgeInsets.symmetric(vertical: 8),
-                        child: InnerEventDisplay(e, filteredWannago)),
-                  );
-                })
-            ],
+            // TODO display past events publicly somehow
+            // Text('Events', style: headingStyle),
+            // if (groupEvents == null) CircularProgressIndicator(),
+            // if (groupEvents != null && groupEvents!.isEmpty) Text('no event history'),
+            // if (groupEvents != null && groupEvents!.isNotEmpty)
+            //   ...groupEvents!.map((e) {
+            //     final filteredWannago = e.wannago.where((wannago) =>
+            //         !wannago.declined && !e.invited.map((eu) => eu.id).contains(wannago.user.id));
+            //     return Container(
+            //         height: 150,
+            //         margin: EdgeInsets.symmetric(vertical: 8),
+            //         child: InnerEventDisplay(e, filteredWannago));
+            //   })
           ]),
         ),
       ),

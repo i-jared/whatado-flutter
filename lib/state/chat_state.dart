@@ -8,6 +8,7 @@ import 'package:whatado/models/forum.dart';
 import 'package:whatado/providers/graphql/chat_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class ChatState extends ChangeNotifier {
   final Event event;
@@ -30,8 +31,7 @@ class ChatState extends ChangeNotifier {
         provider = ForumsGqlProvider() {
     scrollController
       ..addListener(() async {
-        if (scrollController.position.atEdge &&
-            scrollController.position.pixels != 0) {
+        if (scrollController.position.atEdge && scrollController.position.pixels != 0) {
           await getChats();
         }
       });
@@ -65,14 +65,13 @@ class ChatState extends ChangeNotifier {
   }
 
   void subscribe(int forumId) {
-    final subscription =
-        ChatSubscription(variables: ChatArguments(forumId: forumId));
+    final subscription = ChatSubscription(variables: ChatArguments(forumId: forumId));
     final stream = graphqlClientService.subscribe(subscription).map((event) {
       // update last accessed
       provider.access(forum.userNotification.id);
       return Chat.fromGqlData(event.data?['chatSubscription']);
     });
-    stream.handleError((e) => print('stream error $e'));
+    stream.handleError((e) => logger.e('stream error $e'));
     streamSubscription = stream.listen((newChat) {
       final existingId = chats?.indexWhere((c) => c.id == newChat.id) ?? -1;
       if (existingId >= 0) {
@@ -82,11 +81,10 @@ class ChatState extends ChangeNotifier {
       }
       notifyListeners();
     });
-    streamSubscription?.onError((e) => print('sub error $e'));
+    streamSubscription?.onError((e) => logger.e('sub error $e'));
   }
 
-  Future<void> sendMessage(int authorId,
-      [List<String>? answers, String? question]) async {
+  Future<void> sendMessage(int authorId, [List<String>? answers, String? question]) async {
     final tempText = textController.text;
     textController.clear();
     final provider = ChatGqlProvider();

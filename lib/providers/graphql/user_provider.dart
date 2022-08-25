@@ -21,8 +21,7 @@ class UserGqlProvider {
     }
     print(result);
     final root = result.data?['me'];
-    final data =
-        root != null && root['nodes'] != null ? User.fromGqlData(root['nodes']) : null;
+    final data = root != null && root['nodes'] != null ? User.fromGqlData(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -33,7 +32,7 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<EventUser>> user(int id) async {
+  Future<MyQueryResponse<PublicUser>> user(int id) async {
     final query = UserQuery(variables: UserArguments(id: id));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
@@ -44,22 +43,20 @@ class UserGqlProvider {
     }
 
     final root = result.data?['user'];
-    final data = root != null && root['nodes'] != null
-        ? EventUser.fromGqlData(root['nodes'])
-        : null;
+    final data =
+        root != null && root['nodes'] != null ? PublicUser.fromGqlData(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<EventUser>(
+    return MyQueryResponse<PublicUser>(
       ok: ok,
       data: data,
       errors: errors,
     );
   }
 
-  Future<MyQueryResponse<List<EventUser>>> eventUserPreview(List<int> ids) async {
-    final query =
-        EventUserPreviewQuery(variables: EventUserPreviewArguments(userIds: ids));
+  Future<MyQueryResponse<List<PublicUser>>> eventUserPreview(List<int> ids) async {
+    final query = PublicUserPreviewQuery(variables: PublicUserPreviewArguments(userIds: ids));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -70,12 +67,12 @@ class UserGqlProvider {
 
     final root = result.data?['usersById'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
+        ? (root['nodes'] as List).map((val) => PublicUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<List<EventUser>>(
+    return MyQueryResponse<List<PublicUser>>(
       ok: ok,
       data: data,
       errors: errors,
@@ -83,8 +80,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<User>> updateUser(UserFilterInput userInput) async {
-    final mutation =
-        UpdateUserMutation(variables: UpdateUserArguments(userInput: userInput));
+    final mutation = UpdateUserMutation(variables: UpdateUserArguments(userInput: userInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -201,8 +197,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> checkValidation(String code) async {
-    final mutation =
-        CheckValidationMutation(variables: CheckValidationArguments(code: code));
+    final mutation = CheckValidationMutation(variables: CheckValidationArguments(code: code));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -312,8 +307,8 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<bool>> addInterests(List<String> interestsText) async {
-    final mutation = AddInterestsMutation(
-        variables: AddInterestsArguments(interestsText: interestsText));
+    final mutation =
+        AddInterestsMutation(variables: AddInterestsArguments(interestsText: interestsText));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -334,7 +329,7 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<List<EventUser>>> friendsById(int id) async {
+  Future<MyQueryResponse<List<PublicUser>>> friendsById(int id) async {
     final query = FriendsByIdQuery(variables: FriendsByIdArguments(id: id));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
@@ -346,19 +341,19 @@ class UserGqlProvider {
 
     final root = result.data?['friendsById'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
+        ? (root['nodes'] as List).map((val) => PublicUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<List<EventUser>>(
+    return MyQueryResponse<List<PublicUser>>(
       ok: ok,
       data: data,
       errors: errors,
     );
   }
 
-  Future<MyQueryResponse<List<EventUser>>> suggestedUsers() async {
+  Future<MyQueryResponse<List<PublicUser>>> suggestedUsers() async {
     final query = SuggestedUsersQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
@@ -370,19 +365,19 @@ class UserGqlProvider {
 
     final root = result.data?['suggestedUsers'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
+        ? (root['nodes'] as List).map((val) => PublicUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<List<EventUser>>(
+    return MyQueryResponse<List<PublicUser>>(
       ok: ok,
       data: data,
       errors: errors,
     );
   }
 
-  Future<MyQueryResponse<List<EventUser>>> searchUsers(String partial) async {
+  Future<MyQueryResponse<List<PublicUser>>> searchUsers(String partial) async {
     final query = SearchUsersQuery(variables: SearchUsersArguments(partial: partial));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
@@ -394,21 +389,20 @@ class UserGqlProvider {
 
     final root = result.data?['searchUsers'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
+        ? (root['nodes'] as List).map((val) => PublicUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<List<EventUser>>(
+    return MyQueryResponse<List<PublicUser>>(
       ok: ok,
       data: data,
       errors: errors,
     );
   }
 
-  Future<MyQueryResponse<List<EventUser>>> usersFromContacts(List<String> numbers) async {
-    final query =
-        UsersFromContactsQuery(variables: UsersFromContactsArguments(numbers: numbers));
+  Future<MyQueryResponse<List<PublicUser>>> usersFromContacts(List<String> numbers) async {
+    final query = UsersFromContactsQuery(variables: UsersFromContactsArguments(numbers: numbers));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -419,12 +413,12 @@ class UserGqlProvider {
 
     final root = result.data?['usersFromContacts'];
     final data = root != null && root['nodes'] != null
-        ? (root['nodes'] as List).map((val) => EventUser.fromGqlData(val)).toList()
+        ? (root['nodes'] as List).map((val) => PublicUser.fromGqlData(val)).toList()
         : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<List<EventUser>>(
+    return MyQueryResponse<List<PublicUser>>(
       ok: ok,
       data: data,
       errors: errors,
@@ -442,8 +436,7 @@ class UserGqlProvider {
     }
 
     final root = result.data?['myReferrals'];
-    final data =
-        root != null && root['nodes'] != null ? List<String>.from(root['nodes']) : null;
+    final data = root != null && root['nodes'] != null ? List<String>.from(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -454,11 +447,9 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<bool>> createReferral(String phone,
-      {int? eventId, int? groupId}) async {
+  Future<MyQueryResponse<bool>> createReferral(String phone, {int? eventId, int? groupId}) async {
     final mutation = CreateReferralMutation(
-        variables:
-            CreateReferralArguments(phone: phone, eventId: eventId, groupId: groupId));
+        variables: CreateReferralArguments(phone: phone, eventId: eventId, groupId: groupId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');
@@ -480,8 +471,7 @@ class UserGqlProvider {
   }
 
   Future<MyQueryResponse<List<String>>> numbersNotUsers(List<String> numbers) async {
-    final query =
-        NumbersNotUsersQuery(variables: NumbersNotUsersArguments(numbers: numbers));
+    final query = NumbersNotUsersQuery(variables: NumbersNotUsersArguments(numbers: numbers));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print('client error ${result.exception?.linkException}');

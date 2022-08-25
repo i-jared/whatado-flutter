@@ -9,6 +9,7 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart' as g;
 import 'package:whatado/models/event.dart' as e;
 import 'package:whatado/models/my_contact.dart';
+import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/group_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -33,13 +34,13 @@ class SearchState extends ChangeNotifier {
   }
 
   List<MyContact>? _contacts;
-  List<EventUser>? _userContacts;
-  List<EventUser>? _filteredUserContacts;
-  List<EventUser>? _filteredUsers;
+  List<PublicUser>? _userContacts;
+  List<PublicUser>? _filteredUserContacts;
+  List<PublicUser>? _filteredUsers;
   List<g.Group>? _filteredGroups;
   List<MyContact>? _nonUserContacts;
   List<MyContact>? _filteredNonUserContacts;
-  List<e.Event>? _filteredEvents;
+  List<PublicEvent>? _filteredEvents;
   List<String>? _referrals;
   TextEditingController searchController;
   Timer? _contactsDebounceTimer;
@@ -54,11 +55,11 @@ class SearchState extends ChangeNotifier {
 
   List<MyContact>? get nonUserContacts => _nonUserContacts;
   List<MyContact>? get filteredNonUserContacts => _filteredNonUserContacts;
-  List<EventUser>? get filteredUserContacts => _filteredUserContacts;
-  List<EventUser>? get filteredUsers => _filteredUsers;
+  List<PublicUser>? get filteredUserContacts => _filteredUserContacts;
+  List<PublicUser>? get filteredUsers => _filteredUsers;
   List<g.Group>? get filteredGroups => _filteredGroups;
-  List<e.Event>? get filteredEvents => _filteredEvents;
-  List<EventUser>? get userContacts => _userContacts;
+  List<PublicEvent>? get filteredEvents => _filteredEvents;
+  List<PublicUser>? get userContacts => _userContacts;
   bool get contactsLoading => _contactsLoading;
   bool get usersLoading => _usersLoading;
   bool get groupsLoading => _groupsLoading;
@@ -131,8 +132,7 @@ class SearchState extends ChangeNotifier {
       final numbersNotUsers = result.data ?? [];
       final numbersUsers = allNumbers.where((p) => !numbersNotUsers.contains(p)).toList();
       // get list of non user contacts
-      _nonUserContacts =
-          _contacts?.where((c) => numbersNotUsers.contains(c.phone)).toList();
+      _nonUserContacts = _contacts?.where((c) => numbersNotUsers.contains(c.phone)).toList();
       _filteredNonUserContacts = _nonUserContacts;
       // get list of user contacts
       final usersResult = await provider.usersFromContacts(numbersUsers);
@@ -156,8 +156,7 @@ class SearchState extends ChangeNotifier {
     }
     if (_filteredNonUserContacts != null) {
       int i = _filteredNonUserContacts!.indexWhere((c) => c.phone == phone);
-      _filteredNonUserContacts![i] =
-          _filteredNonUserContacts![i].copyWith(referred: true);
+      _filteredNonUserContacts![i] = _filteredNonUserContacts![i].copyWith(referred: true);
     }
     notifyListeners();
   }
@@ -255,7 +254,7 @@ class SearchState extends ChangeNotifier {
           choices: _nonUserContacts ?? [],
           getter: (c) => c.displayName,
           cutoff: 50);
-      List<ExtractedResult<EventUser>> userResult = extractAllSorted<EventUser>(
+      List<ExtractedResult<PublicUser>> userResult = extractAllSorted<PublicUser>(
           query: searchController.text,
           choices: _userContacts ?? [],
           getter: (u) => u.name,

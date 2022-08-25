@@ -24,8 +24,8 @@ class EditGroupDetails extends StatefulWidget {
 }
 
 class _EditGroupDetailsState extends State<EditGroupDetails> {
-  late List<EventUser> selectedFriends = [];
-  late List<EventUser> defaultFriends;
+  late List<PublicUser> selectedFriends = [];
+  late List<PublicUser> defaultFriends;
   late TextEditingController groupNameController;
   late TextEditingController groupLocationController;
   late bool loading = false;
@@ -42,7 +42,7 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
     selectedIcon = widget.group.icon;
     coordinates = widget.group.location;
     screened = widget.group.screened;
-    defaultFriends = List<EventUser>.from(widget.group.users);
+    defaultFriends = List<PublicUser>.from(widget.group.users);
     groupNameController = TextEditingController(text: widget.group.name);
     groupNameController.addListener(() => setState(() {}));
     groupLocationController = TextEditingController();
@@ -64,7 +64,7 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
     final userState = Provider.of<UserState>(context);
     final homeState = Provider.of<HomeState>(context);
     final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-    List<EventUser> groupList = [...defaultFriends, ...homeState.selectedUsers];
+    List<PublicUser> groupList = [...defaultFriends, ...homeState.selectedUsers];
     return GenericPage(
       appBar: SavingAppBar(
           title: 'Edit Group',

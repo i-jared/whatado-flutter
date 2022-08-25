@@ -10,7 +10,7 @@ query lastChat($forumId: Int!) {
       text
       createdAt
       author {
-        ...EventUser
+        ...PublicUser
       }
     }
   }

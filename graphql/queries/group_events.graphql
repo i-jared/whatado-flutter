@@ -2,7 +2,7 @@ query groupEvents ($groupId: Int!) {
   groupEvents (groupId: $groupId) {
     ok
     nodes {
-      ...EventFields
+      ...PublicEventFields
     }
     errors {
       field

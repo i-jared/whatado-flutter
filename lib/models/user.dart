@@ -16,10 +16,10 @@ class User {
   DateTime birthday;
   List<Interest> interests;
   List<String> photoUrls;
-  List<EventUser> blockedUsers;
-  List<EventUser> friends;
-  List<EventUser> requestedFriends;
-  List<EventUser> friendRequests;
+  List<PublicUser> blockedUsers;
+  List<PublicUser> friends;
+  List<PublicUser> requestedFriends;
+  List<PublicUser> friendRequests;
   List<Group> groups;
   List<Group> requestedGroups;
   GeoJsonPoint? location;
@@ -53,26 +53,21 @@ class User {
       photoUrls: List<String>.from(json.decode(data['photoUrls'] ?? '[]')),
       interests: List<Interest>.from(
           data['interests']?.map((val) => Interest.fromGqlData(val)).toList() ?? []),
-      blockedUsers: List<EventUser>.from(
-          data['blockedUsers']?.map((user) => EventUser.fromGqlData(user)).toList() ??
-              []),
-      friends: List<EventUser>.from([
-        ...(data['inverseFriends']?.map((user) => EventUser.fromGqlData(user)) ?? []),
-        ...(data['friends']?.map((user) => EventUser.fromGqlData(user)).toList() ?? [])
+      blockedUsers: List<PublicUser>.from(
+          data['blockedUsers']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? []),
+      friends: List<PublicUser>.from([
+        ...(data['inverseFriends']?.map((user) => PublicUser.fromGqlData(user)) ?? []),
+        ...(data['friends']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? [])
       ]),
-      friendRequests: List<EventUser>.from(
-          data['friendRequests']?.map((user) => EventUser.fromGqlData(user)).toList() ??
-              []),
-      requestedFriends: List<EventUser>.from(
-          data['requestedFriends']?.map((user) => EventUser.fromGqlData(user)).toList() ??
-              []),
-      birthday:
-          data['birthday'] == null ? DateTime.now() : DateTime.parse(data['birthday']),
-      groups: List<Group>.from(
-          data['groups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
+      friendRequests: List<PublicUser>.from(
+          data['friendRequests']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? []),
+      requestedFriends: List<PublicUser>.from(
+          data['requestedFriends']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? []),
+      birthday: data['birthday'] == null ? DateTime.now() : DateTime.parse(data['birthday']),
+      groups:
+          List<Group>.from(data['groups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
       requestedGroups: List<Group>.from(
-          data['requestedGroups']?.map((group) => Group.fromGqlData(group)).toList() ??
-              []),
+          data['requestedGroups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
       location: getLocation(data['location']),
     );
   }
@@ -83,8 +78,7 @@ class User {
     }
     Map<String, dynamic> location = json.decode(data);
     if (location['x'] == null || location['y'] == null) return null;
-    return GeoJsonPoint(
-        geoPoint: GeoPoint(latitude: location['y'], longitude: location['x']));
+    return GeoJsonPoint(geoPoint: GeoPoint(latitude: location['y'], longitude: location['x']));
   }
 
   @override
