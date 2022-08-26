@@ -12,6 +12,7 @@ import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/group_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class SearchState extends ChangeNotifier {
   int _selectedSearchType;
@@ -90,14 +91,15 @@ class SearchState extends ChangeNotifier {
         searchPageController = PageController(keepPage: true),
         searchController = TextEditingController() {
     searchController.addListener(() {
+      logger.wtf('last: $_lastSearchText, current: ${searchController.text}');
       if (searchController.text == _lastSearchText) return;
       _lastSearchText = searchController.text;
       if (_selectedSearchType == 0) {
-        _debounceEvents();
+        _debounceEvents().then((_) => _lastEventSearch = searchController.text);
       } else if (_selectedSearchType == 1) {
-        _debounceUsers();
+        _debounceUsers().then((_) => _lastPersonSearch = searchController.text);
       } else if (_selectedSearchType == 2) {
-        _debounceGroups();
+        _debounceGroups().then((_) => _lastGroupSearch = searchController.text);
       } else if (_selectedSearchType == 3 && _contacts != null) {
         _debounceContacts();
       }
@@ -187,8 +189,9 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _debounceEvents() async {
+  Future<void> _debounceEvents() async {
     if (searchController.text == _lastEventSearch) return;
+    _lastEventSearch = searchController.text;
     _eventsLoading = true;
     _eventsDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
@@ -213,7 +216,7 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _debounceGroups() async {
+  Future<void> _debounceGroups() async {
     if (searchController.text == _lastGroupSearch) return;
     _groupsLoading = true;
     _groupsDebounceTimer?.cancel();
@@ -240,7 +243,7 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void _debounceUsers() async {
+  Future<void> _debounceUsers() async {
     if (searchController.text == _lastPersonSearch) return;
     _usersLoading = true;
     _usersDebounceTimer?.cancel();

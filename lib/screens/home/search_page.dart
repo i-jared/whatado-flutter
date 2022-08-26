@@ -29,13 +29,16 @@ class _StateSearchPage extends State<SearchPage> {
     final searchState = Provider.of<SearchState>(context);
     final spacing = 15.0;
     return Container(
-        child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: searchState.selectedSearchType == 15 ? 0 : 15),
-      child: Column(
-        children: [
-          SearchPageSearch(controller: searchState.searchController),
-          SizedBox(height: spacing),
-          Stack(
+        child: Column(
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: spacing),
+          child: SearchPageSearch(controller: searchState.searchController),
+        ),
+        SizedBox(height: spacing),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: spacing),
+          child: Stack(
             children: [
               Container(
                 width: double.infinity,
@@ -86,14 +89,14 @@ class _StateSearchPage extends State<SearchPage> {
               )
             ],
           ),
-          SizedBox(height: spacing),
-          Expanded(
-              child: PageView(
-                  onPageChanged: (pageNo) => searchState.selectedSearchType = pageNo,
-                  controller: searchState.searchPageController,
-                  children: [SearchEvents(), SearchUsers(), SearchGroups()])),
-        ],
-      ),
+        ),
+        SizedBox(height: spacing),
+        Expanded(
+            child: PageView(
+                onPageChanged: (pageNo) => searchState.selectedSearchType = pageNo,
+                controller: searchState.searchPageController,
+                children: [SearchEvents(), SearchUsers(), SearchGroups()])),
+      ],
     ));
   }
 

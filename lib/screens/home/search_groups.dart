@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/events/shadow_box.dart';
+import 'package:whatado/widgets/general/dark_divider.dart';
 import 'package:whatado/widgets/groups/group_list_item.dart';
 
 class SearchGroups extends StatelessWidget {
@@ -9,38 +11,56 @@ class SearchGroups extends StatelessWidget {
   Widget build(BuildContext context) {
     final searchState = Provider.of<SearchState>(context);
     final userState = Provider.of<UserState>(context);
-    if (searchState.groupsLoading) {
-      return Center(child: CircularProgressIndicator());
-    }
-    if (searchState.filteredGroups == null) {
-      return Center(child: CircularProgressIndicator());
-    }
-    if (searchState.filteredGroups!.isEmpty) {
-      return Center(child: Text('No groups to list'));
-    }
-    int groupsLength = searchState.filteredGroups!.length;
+    int groupsLength = searchState.filteredGroups?.length ?? 0;
 
-    return ListView.builder(
-        itemCount: groupsLength * 2 + (groupsLength > 0 ? 1 : 0),
-        itemBuilder: (context, i) {
-          if (i == 0) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Column(
+        children: [
+          SizedBox(height: 20),
+          Flexible(
+            child: ShadowBox(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Suggested Groups',
+                      style: TextStyle(
+                          fontSize: 16, color: Colors.grey[600], fontWeight: FontWeight.w600)),
+                  DarkDivider(),
+                  getMainWidget(searchState, userState, groupsLength),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
+  }
+
+  Widget getMainWidget(SearchState searchState, UserState userState, groupsLength) {
+    if (searchState.groupsLoading || searchState.filteredGroups == null) {
+      return Container(height: 200, child: Center(child: CircularProgressIndicator()));
+    }
+    if (searchState.filteredUsers!.isEmpty) {
+      return Container(height: 200, child: Center(child: Text('No groups to list')));
+    }
+    return Flexible(
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: groupsLength,
+          itemBuilder: (context, i) {
             return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text('Suggested Groups',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-            );
-          }
-          if (i.isOdd) {
-            return Divider();
-          }
-          int j = i ~/ 2 - 1;
-          return GroupListItem(
-              group: searchState.filteredGroups![j],
-              showButton: true,
-              requested: userState.user!.requestedGroups
-                  .any((g) => g.id == searchState.filteredGroups![j].id),
-              member: userState.user!.groups
-                  .any((g) => g.id == searchState.filteredGroups![j].id));
-        });
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: GroupListItem(
+                    group: searchState.filteredGroups![i],
+                    showButton: true,
+                    requested: userState.user!.requestedGroups
+                        .any((g) => g.id == searchState.filteredGroups![i].id),
+                    member: userState.user!.groups
+                        .any((g) => g.id == searchState.filteredGroups![i].id)));
+          }),
+    );
   }
 }

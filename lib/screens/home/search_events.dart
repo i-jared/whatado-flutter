@@ -19,14 +19,16 @@ class SearchEvents extends StatelessWidget {
     int eventsLength = searchState.filteredEvents!.length;
 
     return ListView.builder(
-        itemCount: eventsLength * 2,
+        itemCount: eventsLength * 2 + (eventsLength > 0 ? 1 : 0),
         itemBuilder: (context, i) {
           if (i == 0) {
-            return Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
-              child: Text('Suggested Events',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
-            );
+            // TODO: put interest selector here
+            return SizedBox.shrink();
+            // return Padding(
+            // padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
+            // child: Text('Suggested Events',
+            // style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+            // );
           }
           if (i.isOdd) {
             return Divider();

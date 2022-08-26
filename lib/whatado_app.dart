@@ -88,55 +88,61 @@ class _MyAppState extends State<MyApp> {
     return KeyboardDismisser(
       child: RefreshConfiguration(
         headerTriggerDistance: 120,
-        child: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
-              ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
-              ChangeNotifierProvider<UserState>(create: (_) => UserState()),
-              ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
-              ChangeNotifierProvider<SearchState>(create: (_) => SearchState()),
-            ],
-            builder: (BuildContext context, _) {
-              final userState = Provider.of<UserState>(context);
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                builder: BotToastInit(),
-                navigatorObservers: [BotToastNavigatorObserver()],
-                title: 'Flutter Demo',
-                theme: ThemeData(
-                    textSelectionTheme: TextSelectionThemeData(selectionColor: AppColors.primary),
-                    primarySwatch: MaterialColor(
-                      0xFF000000,
-                      <int, Color>{
-                        50: Color(0xFF000000),
-                        100: Color(0xFF000000),
-                        200: Color(0xFF000000),
-                        300: Color(0xFF000000),
-                        400: Color(0xFF000000),
-                        500: Color(0xFF000000),
-                        600: Color(0xFF000000),
-                        700: Color(0xFF000000),
-                        800: Color(0xFF000000),
-                        900: Color(0xFF000000),
-                      },
-                    )),
-                home: invalidAuth
-                    ? WelcomeScreen()
-                    : (loginService.loggedIn || loading)
-                        ? (userState.user == null || loading)
-                            ? ShimmerScreen()
-                            : !userState.user!.verified
-                                ? ValidatePhoneScreen()
-                                : userState.user!.interests.isEmpty
-                                    ? ChooseInterestsScreen()
-                                    : userState.user!.bio.isEmpty
-                                        ? WriteBioScreen()
-                                        : userState.user!.photoUrls.isEmpty
-                                            ? SelectPhotosScreen()
-                                            : HomeScreen()
-                        : WelcomeScreen(),
-              );
-            }),
+        child: NotificationListener<OverscrollIndicatorNotification>(
+          onNotification: (overscroll) {
+            overscroll.disallowIndicator();
+            return true;
+          },
+          child: MultiProvider(
+              providers: [
+                ChangeNotifierProvider<HomeState>(create: (_) => HomeState()),
+                ChangeNotifierProvider<AddEventState>(create: (_) => AddEventState()),
+                ChangeNotifierProvider<UserState>(create: (_) => UserState()),
+                ChangeNotifierProvider<SetupState>(create: (_) => SetupState()),
+                ChangeNotifierProvider<SearchState>(create: (_) => SearchState()),
+              ],
+              builder: (BuildContext context, _) {
+                final userState = Provider.of<UserState>(context);
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  builder: BotToastInit(),
+                  navigatorObservers: [BotToastNavigatorObserver()],
+                  title: 'Flutter Demo',
+                  theme: ThemeData(
+                      textSelectionTheme: TextSelectionThemeData(selectionColor: AppColors.primary),
+                      primarySwatch: MaterialColor(
+                        0xFF000000,
+                        <int, Color>{
+                          50: Color(0xFF000000),
+                          100: Color(0xFF000000),
+                          200: Color(0xFF000000),
+                          300: Color(0xFF000000),
+                          400: Color(0xFF000000),
+                          500: Color(0xFF000000),
+                          600: Color(0xFF000000),
+                          700: Color(0xFF000000),
+                          800: Color(0xFF000000),
+                          900: Color(0xFF000000),
+                        },
+                      )),
+                  home: invalidAuth
+                      ? WelcomeScreen()
+                      : (loginService.loggedIn || loading)
+                          ? (userState.user == null || loading)
+                              ? ShimmerScreen()
+                              : !userState.user!.verified
+                                  ? ValidatePhoneScreen()
+                                  : userState.user!.interests.isEmpty
+                                      ? ChooseInterestsScreen()
+                                      : userState.user!.bio.isEmpty
+                                          ? WriteBioScreen()
+                                          : userState.user!.photoUrls.isEmpty
+                                              ? SelectPhotosScreen()
+                                              : HomeScreen()
+                          : WelcomeScreen(),
+                );
+              }),
+        ),
       ),
     );
   }
