@@ -7,7 +7,6 @@ import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 import 'package:fuzzywuzzy/model/extracted_result.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart' as g;
-import 'package:whatado/models/event.dart' as e;
 import 'package:whatado/models/my_contact.dart';
 import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
@@ -16,9 +15,17 @@ import 'package:whatado/providers/graphql/user_provider.dart';
 
 class SearchState extends ChangeNotifier {
   int _selectedSearchType;
+  PageController searchPageController;
   int get selectedSearchType => _selectedSearchType;
   set selectedSearchType(int newVal) {
     if (newVal != selectedSearchType) {
+      if (selectedSearchType == 0) {
+        _lastEventSearch = searchController.text;
+      } else if (selectedSearchType == 1) {
+        _lastPersonSearch = searchController.text;
+      } else if (selectedSearchType == 2) {
+        _lastGroupSearch = searchController.text;
+      }
       _selectedSearchType = newVal;
       if (newVal == 0) {
         _debounceEvents();
@@ -52,6 +59,10 @@ class SearchState extends ChangeNotifier {
   bool _groupsLoading;
   bool _eventsLoading;
   bool? _contactsPermission;
+  String? _lastEventSearch;
+  String? _lastPersonSearch;
+  String? _lastGroupSearch;
+  String? _lastSearchText;
 
   List<MyContact>? get nonUserContacts => _nonUserContacts;
   List<MyContact>? get filteredNonUserContacts => _filteredNonUserContacts;
@@ -76,8 +87,11 @@ class SearchState extends ChangeNotifier {
         _usersLoading = true,
         _groupsLoading = true,
         _eventsLoading = true,
+        searchPageController = PageController(keepPage: true),
         searchController = TextEditingController() {
     searchController.addListener(() {
+      if (searchController.text == _lastSearchText) return;
+      _lastSearchText = searchController.text;
       if (_selectedSearchType == 0) {
         _debounceEvents();
       } else if (_selectedSearchType == 1) {
@@ -94,6 +108,18 @@ class SearchState extends ChangeNotifier {
   Future<void> reset() async {
     searchController.text = '';
 
+    notifyListeners();
+  }
+
+  void turnPage(int newPageNo) {
+    if ((this.selectedSearchType - newPageNo).abs() == 1) {
+      this
+          .searchPageController
+          .animateToPage(newPageNo, duration: Duration(milliseconds: 200), curve: Curves.easeInOut)
+          .then((_) => notifyListeners());
+    } else {
+      searchPageController.jumpToPage(newPageNo);
+    }
     notifyListeners();
   }
 
@@ -162,6 +188,7 @@ class SearchState extends ChangeNotifier {
   }
 
   void _debounceEvents() async {
+    if (searchController.text == _lastEventSearch) return;
     _eventsLoading = true;
     _eventsDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
@@ -187,6 +214,7 @@ class SearchState extends ChangeNotifier {
   }
 
   void _debounceGroups() async {
+    if (searchController.text == _lastGroupSearch) return;
     _groupsLoading = true;
     _groupsDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
@@ -213,6 +241,7 @@ class SearchState extends ChangeNotifier {
   }
 
   void _debounceUsers() async {
+    if (searchController.text == _lastPersonSearch) return;
     _usersLoading = true;
     _usersDebounceTimer?.cancel();
     if (searchController.text.isEmpty) {
@@ -269,6 +298,8 @@ class SearchState extends ChangeNotifier {
 
   @override
   void dispose() {
+    searchPageController.dispose();
+    searchController.dispose();
     super.dispose();
   }
 }

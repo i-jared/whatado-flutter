@@ -62,8 +62,7 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                   ),
                   SizedBox(height: sectionSpacing),
                   TextButton(
-                    style:
-                        ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.zero)),
+                    style: ButtonStyle(padding: MaterialStateProperty.all(EdgeInsets.zero)),
                     child: Text(
                       'Resend Code',
                       style: TextStyle(color: AppColors.primary),
@@ -75,7 +74,7 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                   ),
                   Spacer(),
                   Center(
-                    child: RoundedArrowButton(
+                    child: RoundedArrowButton.text(
                       disabled: otpController.text.length < 5,
                       onPressed: () async {
                         setState(() => errorText = null);
@@ -83,10 +82,8 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
                         final result = await provider.checkValidation(otpController.text);
                         if (result.ok) {
                           await provider.updateUser(UserFilterInput(verified: true));
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChooseInterestsScreen()));
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) => ChooseInterestsScreen()));
                         } else {
                           otpController.clear();
                           setState(() => errorText = 'incorrect code');

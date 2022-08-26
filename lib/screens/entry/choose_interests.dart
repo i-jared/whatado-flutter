@@ -119,9 +119,8 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                       IconButton(
                         padding: EdgeInsets.zero,
                         icon: Icon(Icons.add_circle_outline,
-                            color: textController.text.isEmpty
-                                ? Colors.grey[400]
-                                : AppColors.primary,
+                            color:
+                                textController.text.isEmpty ? Colors.grey[400] : AppColors.primary,
                             size: 35),
                         onPressed: textController.text.isEmpty
                             ? null
@@ -146,12 +145,12 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
                   const SizedBox(height: 50),
                   Spacer(),
                   Center(
-                    child: RoundedArrowButton(
+                    child: RoundedArrowButton.text(
                       onPressed: () async {
                         await setupState.saveInterests();
                         userState.getUser();
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => WriteBioScreen()));
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => WriteBioScreen()));
                       },
                       text: "Continue",
                     ),

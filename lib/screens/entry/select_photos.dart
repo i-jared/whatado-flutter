@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/constants.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/add_friends.dart';
 import 'package:whatado/services/service_provider.dart';
@@ -40,8 +39,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
     final userState = Provider.of<UserState>(context);
     final setupState = Provider.of<SetupState>(context);
     final searchState = Provider.of<SearchState>(context);
-    final imageWidth =
-        (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) / 3.0;
+    final imageWidth = (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) / 3.0;
 
     final theList = [
       ...setupState.photos.map((xfile) => ImageBox(
@@ -115,12 +113,11 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                   Center(
                     child: loading
                         ? Center(child: CircularProgressIndicator())
-                        : RoundedArrowButton(
+                        : RoundedArrowButton.text(
                             disabled: setupState.photos.length == 0,
                             text: "Continue",
-                            onPressed: userState.user == null
-                                ? null
-                                : () => onPressed(userState.user!.id),
+                            onPressed:
+                                userState.user == null ? null : () => onPressed(userState.user!.id),
                           ),
                   ),
                   SizedBox(height: 40)

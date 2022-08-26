@@ -47,8 +47,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 40),
-        Text('Change Password',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
+        Text('Change Password', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
         SizedBox(height: 35),
         MyPasswordField(
             hintText: 'New Password',
@@ -66,12 +65,11 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
             maxLength: 5,
             validator: (val) => val?.length != 5 ? 'please enter 5 digit code' : null),
         SizedBox(height: 50),
-        RoundedArrowButton(
+        RoundedArrowButton.text(
             onPressed: loading
                 ? null
                 : () async {
-                    if (_formKey.currentState?.validate() ?? false)
-                      await resetPassword(context);
+                    if (_formKey.currentState?.validate() ?? false) await resetPassword(context);
                   },
             text: 'Reset Password'),
         SizedBox(height: 30),
@@ -82,8 +80,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(height: 40),
-        Text('Forgot Password',
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
+        Text('Forgot Password', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
         SizedBox(height: 35),
         InternationalPhoneNumberInput(
           initialValue: PhoneNumber(isoCode: 'US'),
@@ -93,8 +90,7 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
           validator: (val) {
             String pattern = r'^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$';
             RegExp regExp = new RegExp(pattern);
-            if (val == null || !regExp.hasMatch(val))
-              return 'please enter a valid phone number';
+            if (val == null || !regExp.hasMatch(val)) return 'please enter a valid phone number';
           },
           onInputChanged: (PhoneNumber value) {
             setState(() {
@@ -103,12 +99,11 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
           },
         ),
         SizedBox(height: 50),
-        RoundedArrowButton(
+        RoundedArrowButton.text(
             onPressed: loading
                 ? null
                 : () async {
-                    if (_formKey.currentState?.validate() ?? false)
-                      await forgotPassword();
+                    if (_formKey.currentState?.validate() ?? false) await forgotPassword();
                   },
             text: 'Send Text'),
         SizedBox(height: 30),
@@ -135,8 +130,8 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
     if (response.ok) {
       setState(() => success = true);
     } else {
-      phoneError = response.errors?.firstWhere((element) => element['field'] == 'phone',
-          orElse: () => {})['message'];
+      phoneError = response.errors
+          ?.firstWhere((element) => element['field'] == 'phone', orElse: () => {})['message'];
     }
   }
 
@@ -147,23 +142,21 @@ class _MyBottomSheetState extends State<MyBottomSheet> {
     final res = await provider.checkValidationLogin(codeController.text, phoneNumber);
     authenticationService.updateTokens(res.accessToken ?? '', res.refreshToken ?? '');
     if (res.ok) {
-      final response = await provider
-          .updateUser(UserFilterInput(password: newPasswordController.text));
+      final response =
+          await provider.updateUser(UserFilterInput(password: newPasswordController.text));
       userState.getUser();
       phoneController.clear();
       setState(() => loading = false);
       if (response.ok) {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()),
-            (_) => false);
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (BuildContext context) => HomeScreen()), (_) => false);
       } else {
-        phoneError = response.errors?.firstWhere((element) => element['field'] == 'phone',
-            orElse: () => {})['message'];
+        phoneError = response.errors
+            ?.firstWhere((element) => element['field'] == 'phone', orElse: () => {})['message'];
       }
     } else {
-      phoneError = res.errors?.firstWhere((element) => element['field'] == 'phone',
-          orElse: () => {})['message'];
+      phoneError = res.errors
+          ?.firstWhere((element) => element['field'] == 'phone', orElse: () => {})['message'];
     }
   }
 }

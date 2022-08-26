@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/state/search_state.dart';
+import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
 class SearchUsers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final inviteButton = RoundedArrowButton(
+        onPressed: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.group_add),
+            SizedBox(width: 10),
+            Text('Contacts', style: TextStyle(fontSize: 20))
+          ],
+        ));
     final searchState = Provider.of<SearchState>(context);
     if (searchState.usersLoading) {
       return Center(child: CircularProgressIndicator());

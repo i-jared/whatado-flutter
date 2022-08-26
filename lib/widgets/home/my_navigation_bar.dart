@@ -40,6 +40,8 @@ class MyNavigationBar extends StatelessWidget {
             IconButton(
               padding: EdgeInsets.zero,
               onPressed: () async {
+                searchState.selectedSearchType = 0;
+                searchState.searchController.text = '';
                 indexSetState(1);
                 if (selectedIndex != 1) await searchState.loadContacts();
               },

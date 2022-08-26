@@ -70,8 +70,7 @@ class _LoginScreenState extends State<StatefulWidget> {
                   });
                 },
               ),
-              if (phoneError != null)
-                Text(phoneError ?? '', style: TextStyle(color: Colors.red)),
+              if (phoneError != null) Text(phoneError ?? '', style: TextStyle(color: Colors.red)),
               const SizedBox(height: 20),
               MyPasswordField(
                 hintText: 'Password',
@@ -100,7 +99,7 @@ class _LoginScreenState extends State<StatefulWidget> {
               ),
               const SizedBox(height: 10),
               if (!loading)
-                RoundedArrowButton(
+                RoundedArrowButton.text(
                   onPressed: loading
                       ? null
                       : () async {
@@ -132,10 +131,8 @@ class _LoginScreenState extends State<StatefulWidget> {
                                                     ? SelectPhotosScreen()
                                                     : HomeScreen();
 
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(builder: (ctx) => route),
-                                    (route) => false);
+                                Navigator.pushAndRemoveUntil(context,
+                                    MaterialPageRoute(builder: (ctx) => route), (route) => false);
                               } else {
                                 setState(() => loading = false);
                                 setState(() {
@@ -150,8 +147,7 @@ class _LoginScreenState extends State<StatefulWidget> {
                               }
                             }
                           } catch (e) {
-                            BotToast.showText(
-                                text: 'Error logging in. Please try again later.');
+                            BotToast.showText(text: 'Error logging in. Please try again later.');
                           }
                         },
                   text: "Sign In",

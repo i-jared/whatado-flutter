@@ -73,7 +73,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             // ),
             // continue arrow button @ bottom
             Spacer(),
-            RoundedArrowButton(
+            RoundedArrowButton.text(
               onPressed: () =>
                   Navigator.push(context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
               text: "Let's Go!",

@@ -49,15 +49,13 @@ class _AddFriendsState extends State<AddFriends> {
         Center(
           child: loading
               ? Center(child: CircularProgressIndicator())
-              : RoundedArrowButton(
+              : RoundedArrowButton.text(
                   disabled: false,
                   text: "Finish",
                   onPressed: userState.user == null
                       ? null
-                      : () => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                          (_) => false),
+                      : () => Navigator.pushAndRemoveUntil(context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()), (_) => false),
                 ),
         ),
         SizedBox(height: 40)
@@ -65,8 +63,7 @@ class _AddFriendsState extends State<AddFriends> {
     ));
   }
 
-  Widget getMainWidget(
-      BuildContext context, SearchState searchState, UserState userState) {
+  Widget getMainWidget(BuildContext context, SearchState searchState, UserState userState) {
     if (searchState.contactsLoading) return Center(child: CircularProgressIndicator());
     if (!searchState.contactsPermission!)
       return Center(
@@ -74,8 +71,7 @@ class _AddFriendsState extends State<AddFriends> {
               'You can add friends you know after granting access to your contacts in settings.'));
     if (searchState.userContacts!.isEmpty)
       return Center(
-          child: Text(
-              'No contacts to add. Find and invite friends through the "search" tab.'));
+          child: Text('No contacts to add. Find and invite friends through the "search" tab.'));
     return ListView.builder(
         itemCount: 2 * searchState.userContacts!.length,
         itemBuilder: (context, i) {
@@ -86,8 +82,7 @@ class _AddFriendsState extends State<AddFriends> {
           final user = searchState.filteredUserContacts![j];
           return UserContactItem(user,
               accepted: userState.user?.friends.any((f) => f.id == user.id) ?? false,
-              requested:
-                  userState.user?.requestedFriends.any((f) => f.id == user.id) ?? false);
+              requested: userState.user?.requestedFriends.any((f) => f.id == user.id) ?? false);
         });
   }
 }

@@ -113,7 +113,7 @@ class _SignupScreenState extends State<StatefulWidget> {
         controller: confirmController,
       ),
       const SizedBox(height: 25),
-      RoundedArrowButton(
+      RoundedArrowButton.text(
         onPressed: () => attemptRegister(context),
         text: "Sign Up",
       ),

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:whatado/constants.dart';
 
-class SimpleOutlinedTextField extends StatelessWidget {
+class SearchPageSearch extends StatelessWidget {
   final TextEditingController controller;
-  final String? hintText;
-  final Widget? suffixIcon;
-  SimpleOutlinedTextField({required this.controller, this.hintText, this.suffixIcon});
+  SearchPageSearch({required this.controller});
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
       decoration: InputDecoration(
-          suffixIcon: suffixIcon,
+          filled: true,
+          fillColor: Colors.grey[200],
+          suffixIcon: Icon(Icons.search, color: AppColors.primary),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadii.button),
-              borderSide: BorderSide(width: 2.0, color: AppColors.unfocused)),
+              borderSide: BorderSide(width: 2.0, color: AppColors.primary)),
           focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadii.button),
               borderSide: BorderSide(width: 2.0, color: AppColors.primary)),
@@ -24,7 +24,7 @@ class SimpleOutlinedTextField extends StatelessWidget {
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(AppRadii.button),
               borderSide: BorderSide(width: 2.0)),
-          hintText: hintText),
+          hintText: 'Search'),
       maxLines: null,
     );
   }

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -65,8 +64,7 @@ class WriteBioScreen extends StatelessWidget {
                   SizedBox(height: sectionSpacing),
                   Text('Gender', style: headingStyle),
                   SizedBox(height: headingSpacing),
-                  Text('These help you choose who sees your events.',
-                      style: paragraphStyle),
+                  Text('These help you choose who sees your events.', style: paragraphStyle),
                   SizedBox(height: headingSpacing),
                   Wrap(
                     runSpacing: 0.0,
@@ -102,7 +100,7 @@ class WriteBioScreen extends StatelessWidget {
                   SizedBox(height: sectionSpacing),
                   Spacer(),
                   Center(
-                    child: RoundedArrowButton(
+                    child: RoundedArrowButton.text(
                       disabled: setupState.bioController.text.isEmpty ||
                           setupState.dateController.text.isEmpty,
                       onPressed: () async {
@@ -114,9 +112,7 @@ class WriteBioScreen extends StatelessWidget {
                             bio: setupState.bioController.text, birthday: finalTime));
                         userState.getUser();
                         Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => SelectPhotosScreen()));
+                            context, MaterialPageRoute(builder: (context) => SelectPhotosScreen()));
                       },
                       text: "Continue",
                     ),

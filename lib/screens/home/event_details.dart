@@ -243,7 +243,7 @@ class _EventDetailsState extends State<EventDetails> {
                     ),
                   if (event.creator.id == userState.user?.id) ...[
                     SizedBox(height: headingSpacing),
-                    RoundedArrowButton(
+                    RoundedArrowButton.text(
                         onPressed: () => Navigator.push(
                             context,
                             MaterialPageRoute(
