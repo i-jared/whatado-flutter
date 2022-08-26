@@ -3,9 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
-import 'package:whatado/providers/graphql/create_event_query.dart';
-import 'package:whatado/providers/graphql/interest_provider.dart';
-import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
@@ -20,7 +17,6 @@ class AddEventDetailsAppBar extends StatelessWidget implements PreferredSizeWidg
     final userState = Provider.of<UserState>(context);
     final homeState = Provider.of<HomeState>(context);
     final ready = eventState.timeController.text.isNotEmpty &&
-        eventState.dateController.text.isNotEmpty &&
         eventState.locationController.text.isNotEmpty &&
         eventState.coordinates != null &&
         (eventState.textMode || eventState.titleController.text.isNotEmpty) &&

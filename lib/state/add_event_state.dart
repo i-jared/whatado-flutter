@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'dart:io';
-import 'dart:isolate';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:exif/exif.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_contacts/properties/note.dart';
 import 'package:geojson/geojson.dart';
-import 'package:geopoint/geopoint.dart';
 import 'package:heic_to_jpg/heic_to_jpg.dart';
+import 'package:intl/intl.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:image/image.dart';
@@ -31,10 +28,10 @@ class AddEventState extends ChangeNotifier {
   TextEditingController titleController;
   TextEditingController descriptionController;
   TextEditingController locationController;
-  TextEditingController dateController;
   TextEditingController timeController;
   TextEditingController textModeController;
   TextEditingController addInterestController;
+  DateTime _selectedDate;
   Gender _selectedGender;
   List<PublicUser> _selectedUsers;
   Group? _selectedGroup;
@@ -54,7 +51,7 @@ class AddEventState extends ChangeNotifier {
   bool _succeeded;
   bool _screened;
   bool _chatDisabled;
-  GeoJsonPoint? coordinates;
+  GeoJsonPoint? _coordinates;
 
   List<Interest> popularInterests = [];
   List<Interest> customInterests = [];
@@ -85,7 +82,7 @@ class AddEventState extends ChangeNotifier {
         titleController = TextEditingController(),
         descriptionController = TextEditingController(),
         locationController = TextEditingController(),
-        dateController = TextEditingController(),
+        _selectedDate = DateTime.now(),
         timeController = TextEditingController(),
         textModeController = TextEditingController(),
         addInterestController = TextEditingController(),
@@ -107,7 +104,6 @@ class AddEventState extends ChangeNotifier {
     textModeController.addListener(() => notifyListeners());
     descriptionController.addListener(() => notifyListeners());
     locationController.addListener(() => notifyListeners());
-    dateController.addListener(() => notifyListeners());
     timeController.addListener(() => notifyListeners());
     init();
   }
@@ -118,7 +114,6 @@ class AddEventState extends ChangeNotifier {
     titleController.dispose();
     descriptionController.dispose();
     locationController.dispose();
-    dateController.dispose();
     timeController.dispose();
     textModeController.dispose();
     addInterestController.dispose();
@@ -129,6 +124,18 @@ class AddEventState extends ChangeNotifier {
     final provider = InterestGqlProvider();
     final result = await provider.popular();
     popularInterests.addAll(result.data ?? []);
+    notifyListeners();
+  }
+
+  DateTime get selectedDate => _selectedDate;
+  set selectedDate(DateTime newDate) {
+    _selectedDate = newDate;
+    notifyListeners();
+  }
+
+  GeoJsonPoint? get coordinates => _coordinates;
+  set coordinates(GeoJsonPoint? newPoint) {
+    _coordinates = newPoint;
     notifyListeners();
   }
 
@@ -251,7 +258,7 @@ class AddEventState extends ChangeNotifier {
     titleController.clear();
     descriptionController.clear();
     locationController.clear();
-    dateController.clear();
+    _selectedDate = DateTime.now();
     timeController.clear();
     textModeController.clear();
     addInterestController.clear();
@@ -351,7 +358,8 @@ class AddEventState extends ChangeNotifier {
       }
 
       // frankenstein the time from user input
-      final finalTime = formatMyTime(dateController.text, timeController.text);
+      final dateFormat = DateFormat('EEE, M-d-y');
+      final finalTime = formatMyTime(dateFormat.format(_selectedDate), timeController.text);
       // create interests
       final interestsProvider = InterestGqlProvider();
       final interests = await interestsProvider.create(interestsText: [

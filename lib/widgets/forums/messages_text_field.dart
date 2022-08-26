@@ -6,6 +6,7 @@ import 'package:whatado/constants.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/state/chat_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
 import 'package:whatado/widgets/input/simple_outline_text.dart';
 
 class MessagesTextField extends StatefulWidget {
@@ -109,27 +110,10 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                         child: Column(
                           children: [
                             SizedBox(height: 10),
-                            Container(
-                              padding: EdgeInsets.only(left: 15, right: 15, top: 15),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 2.0,
-                                    color: AppColors.primary,
-                                  ),
-                                  borderRadius: BorderRadius.circular(AppRadii.button)),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Question', style: TextStyle(color: Colors.grey[700])),
-                                  TextFormField(
-                                    controller: chatState.surveyController,
-                                    decoration: InputDecoration(
-                                        border: InputBorder.none, hintText: 'Ask question here'),
-                                    maxLines: null,
-                                  ),
-                                ],
-                              ),
-                            ),
+                            LabeledOutlineTextField(
+                                label: 'Question',
+                                controller: chatState.surveyController,
+                                hintText: 'Ask question here'),
                             SizedBox(height: 15),
                             Container(
                               padding: EdgeInsets.symmetric(vertical: 10),

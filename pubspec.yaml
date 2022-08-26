@@ -70,6 +70,7 @@ dependencies:
   video_player: ^2.4.6
   flutter_phoenix: ^1.0.0
   google_maps_flutter: ^2.1.12
+  table_calendar: ^3.0.6
 
 dev_dependencies:
   flutter_test:
