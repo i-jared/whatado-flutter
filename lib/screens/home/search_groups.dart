@@ -54,8 +54,9 @@ class SearchGroups extends StatelessWidget {
             return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 child: GroupListItem(
-                    group: searchState.filteredGroups![i],
+                    noPadding: true,
                     showButton: true,
+                    group: searchState.filteredGroups![i],
                     requested: userState.user!.requestedGroups
                         .any((g) => g.id == searchState.filteredGroups![i].id),
                     member: userState.user!.groups

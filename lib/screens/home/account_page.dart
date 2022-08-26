@@ -14,43 +14,47 @@ class AccountPage extends StatelessWidget {
     return GenericPage(
       appBar: DefaultAppBar(title: 'Account'),
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(height: 30),
-            SettingsItem(
-              title: 'Log Out',
-              showIcon: false,
-              onPressed: () => showMyDialog(
-                  context,
-                  ConfirmCancelDialog(
-                      title: 'Log Out?',
-                      body: 'Are you sure you want to Log Out?',
-                      confirmText: 'Log Out',
-                      onConfirm: () async {
-                        authenticationService.forgetTokens();
-                        Phoenix.rebirth(context);
-                      })),
-            ),
-            SettingsItem(
-              title: 'Remove Account',
-              showIcon: false,
-              color: Colors.red,
-              onPressed: () => showMyDialog(
-                  context,
-                  ConfirmCancelDialog(
-                      title: 'Remove Account?',
-                      body:
-                          'Are you sure you want to remove your account? All events you created will be deleted',
-                      confirmText: 'Delete',
-                      onConfirm: () async {
-                        final provider = UserGqlProvider();
-                        await provider.removeAccount().then((_) {
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            children: [
+              SizedBox(height: 30),
+              SettingsItem(
+                title: 'Log Out',
+                leading: Icon(Icons.logout_rounded, size: 30),
+                onPressed: () => showMyDialog(
+                    context,
+                    ConfirmCancelDialog(
+                        title: 'Log Out?',
+                        body: 'Are you sure you want to Log Out?',
+                        confirmText: 'Log Out',
+                        onConfirm: () async {
                           authenticationService.forgetTokens();
                           Phoenix.rebirth(context);
-                        });
-                      })),
-            ),
-          ],
+                        })),
+              ),
+              SettingsItem(
+                title: 'Remove Account',
+                leading: Icon(Icons.delete_rounded, size: 30),
+                color: Colors.red,
+                iconColor: Colors.red,
+                onPressed: () => showMyDialog(
+                    context,
+                    ConfirmCancelDialog(
+                        title: 'Remove Account?',
+                        body:
+                            'Are you sure you want to remove your account? All events you created will be deleted',
+                        confirmText: 'Delete',
+                        onConfirm: () async {
+                          final provider = UserGqlProvider();
+                          await provider.removeAccount().then((_) {
+                            authenticationService.forgetTokens();
+                            Phoenix.rebirth(context);
+                          });
+                        })),
+              ),
+            ],
+          ),
         ),
       ),
     );

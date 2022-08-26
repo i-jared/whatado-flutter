@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
+import 'package:whatado/widgets/events/shadow_box.dart';
 
 class SettingsItem extends StatelessWidget {
   final String title;
+  final Widget? leading;
   final Function() onPressed;
-  final bool showIcon;
   final Color? color;
+  final Color? iconColor;
   SettingsItem(
-      {required this.title,
-      required this.onPressed,
-      this.showIcon = true,
-      this.color});
+      {required this.title, required this.onPressed, this.color, this.iconColor, this.leading});
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
-      title: Text(title, style: TextStyle(fontSize: 18, color: color)),
-      onTap: onPressed,
-      trailing: showIcon ? Icon(Icons.arrow_forward_ios) : null,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: ShadowBox(
+        child: ListTile(
+          leading: leading,
+          iconColor: iconColor ?? AppColors.primary,
+          contentPadding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          title: Text(title,
+              style: TextStyle(fontSize: 18, color: color, fontWeight: FontWeight.w600)),
+          onTap: onPressed,
+        ),
+      ),
     );
   }
 }

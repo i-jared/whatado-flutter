@@ -13,32 +13,40 @@ class Settings extends StatelessWidget {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 30),
-          SettingsItem(
-              title: 'Personal Information',
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => ChangePersonalInfo(user: userState.user!)))),
-          SettingsItem(
-              title: 'Change Password',
-              onPressed: () => Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => ChangePassword()))),
-          SettingsItem(
-              title: 'Blocked Users',
-              onPressed: () =>
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => BlockedUsers()))),
-          SettingsItem(
-              title: 'Legal',
-              onPressed: () =>
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Eula()))),
-          SettingsItem(
-              title: 'Account',
-              onPressed: () =>
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => AccountPage()))),
-        ],
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: Column(
+          children: [
+            SizedBox(height: 30),
+            SettingsItem(
+                title: 'Personal Information',
+                leading: Icon(Icons.person_rounded, size: 30),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ChangePersonalInfo(user: userState.user!)))),
+            SettingsItem(
+                title: 'Change Password',
+                leading: Icon(Icons.lock_rounded, size: 30),
+                onPressed: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => ChangePassword()))),
+            SettingsItem(
+                title: 'Blocked Users',
+                leading: Icon(Icons.shield_rounded, size: 30),
+                onPressed: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => BlockedUsers()))),
+            SettingsItem(
+                title: 'Legal',
+                leading: Icon(Icons.history_edu_rounded, size: 30),
+                onPressed: () =>
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Eula()))),
+            SettingsItem(
+                title: 'Account',
+                leading: Icon(Icons.badge_rounded, size: 30),
+                onPressed: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => AccountPage()))),
+          ],
+        ),
       ),
     );
   }
