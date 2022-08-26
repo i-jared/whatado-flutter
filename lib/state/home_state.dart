@@ -325,7 +325,7 @@ class HomeState extends ChangeNotifier {
   }
 
   void updateMyEvent(Event event) {
-    final int myindex = myEvents!.indexWhere((val) => val.id == event.id);
+    final int myindex = myEvents?.indexWhere((val) => val.id == event.id) ?? -1;
     if (myindex == -1) {
       return;
     }
@@ -334,7 +334,7 @@ class HomeState extends ChangeNotifier {
   }
 
   void accessForum(Forum forum) {
-    final int myindex = myForums!.indexWhere((val) => val.id == forum.id);
+    final int myindex = myForums?.indexWhere((val) => val.id == forum.id) ?? -1;
     if (myindex == -1) {
       return;
     }
@@ -344,7 +344,7 @@ class HomeState extends ChangeNotifier {
   }
 
   void updateForum(Forum forum) {
-    final int i = myForums!.indexWhere((val) => val.id == forum.id);
+    final int i = myForums?.indexWhere((val) => val.id == forum.id) ?? -1;
     if (i == -1) {
       return;
     }

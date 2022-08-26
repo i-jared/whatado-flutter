@@ -1,33 +1,34 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-66:12
-INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-66:12
-INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-66:12
-INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-66:12
-MERGED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-66:12
+ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-71:12
+INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-71:12
+INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-71:12
+INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-71:12
+MERGED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-71:12
+MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-46:12
 MERGED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
 MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
-MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-46:12
 MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-15:12
-MERGED from [:maps_launcher] /Users/jared/Code/whatado-flutter/build/maps_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-29:12
+MERGED from [:path_provider_android] /Users/jared/Code/whatado-flutter/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
+MERGED from [:flutter_keyboard_visibility] /Users/jared/Code/whatado-flutter/build/flutter_keyboard_visibility/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-19:12
+MERGED from [:video_player_android] /Users/jared/Code/whatado-flutter/build/video_player_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:libphonenumber_plugin] /Users/jared/Code/whatado-flutter/build/libphonenumber_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:libphonenumber] /Users/jared/Code/whatado-flutter/build/libphonenumber/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:add_2_calendar] /Users/jared/Code/whatado-flutter/build/add_2_calendar/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:maps_launcher] /Users/jared/Code/whatado-flutter/build/maps_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
+MERGED from [:google_maps_flutter_android] /Users/jared/Code/whatado-flutter/build/google_maps_flutter_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_plugin_android_lifecycle] /Users/jared/Code/whatado-flutter/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:sqflite] /Users/jared/Code/whatado-flutter/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-29:12
 MERGED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-14:12
-MERGED from [:path_provider_android] /Users/jared/Code/whatado-flutter/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:connectivity_plus] /Users/jared/Code/whatado-flutter/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:image_cropper] /Users/jared/Code/whatado-flutter/build/image_cropper/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:permission_handler_android] /Users/jared/Code/whatado-flutter/build/permission_handler_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-9:12
 MERGED from [:heic_to_jpg] /Users/jared/Code/whatado-flutter/build/heic_to_jpg/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:libphonenumber_plugin] /Users/jared/Code/whatado-flutter/build/libphonenumber_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:flutter_keyboard_visibility] /Users/jared/Code/whatado-flutter/build/flutter_keyboard_visibility/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:location] /Users/jared/Code/whatado-flutter/build/location/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-18:12
-MERGED from [:video_player_android] /Users/jared/Code/whatado-flutter/build/video_player_android/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:libphonenumber] /Users/jared/Code/whatado-flutter/build/libphonenumber/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [:flutter_contacts] /Users/jared/Code/whatado-flutter/build/flutter_contacts/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
-MERGED from [:add_2_calendar] /Users/jared/Code/whatado-flutter/build/add_2_calendar/intermediates/library_manifest/debug/AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/jared/.gradle/caches/transforms-3/c723bffcb82b1e5557bccdd963cb110d/transformed/multidex-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/jared/.gradle/caches/transforms-3/335b9a443faa9dfc2704d2f0020e32cc/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:17:1-23:12
 MERGED from [androidx.window:window:1.0.0-beta04] /Users/jared/.gradle/caches/transforms-3/977706b8e05bcfea25dcce6f2858da0d/transformed/jetified-window-1.0.0-beta04/AndroidManifest.xml:17:1-33:12
@@ -39,17 +40,16 @@ MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gr
 MERGED from [com.google.firebase:firebase-appcheck-interop:16.0.0-beta02] /Users/jared/.gradle/caches/transforms-3/34977477489387a35a652f3a1a477862/transformed/jetified-firebase-appcheck-interop-16.0.0-beta02/AndroidManifest.xml:15:1-26:12
 MERGED from [com.google.firebase:firebase-auth-interop:18.0.0] /Users/jared/.gradle/caches/transforms-3/34b1f69f1abd90905e1162246a0abf5d/transformed/jetified-firebase-auth-interop-18.0.0/AndroidManifest.xml:2:1-10:12
 MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:15:1-40:12
-MERGED from [com.github.yalantis:ucrop:2.2.8] /Users/jared/.gradle/caches/transforms-3/39ad08f3e2c54223e1c59de917d76a2e/transformed/jetified-ucrop-2.2.8/AndroidManifest.xml:2:1-11:12
 MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/jared/.gradle/caches/transforms-3/4db1baaf3464c737b61b1df4365a813f/transformed/jetified-glide-4.11.0/AndroidManifest.xml:2:1-12:12
+MERGED from [com.github.yalantis:ucrop:2.2.8] /Users/jared/.gradle/caches/transforms-3/39ad08f3e2c54223e1c59de917d76a2e/transformed/jetified-ucrop-2.2.8/AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/jared/.gradle/caches/transforms-3/ccda4b6b7e87748122412be87479e9b9/transformed/exifinterface-1.3.3/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.core:core-ktx:1.3.2] /Users/jared/.gradle/caches/transforms-3/b97dbbb1eca3e4b076b2d4784974a2f6/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:2:1-9:12
 MERGED from [androidx.media:media:1.1.0] /Users/jared/.gradle/caches/transforms-3/a52363080c2db305454007e841605616/transformed/media-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer-hls:2.18.1] /Users/jared/.gradle/caches/transforms-3/73f70bc4b8becea80ca4d140b8b89108/transformed/jetified-exoplayer-hls-2.18.1/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer-dash:2.18.1] /Users/jared/.gradle/caches/transforms-3/6e08ef6965edbf3c23a5f93a5907a53f/transformed/jetified-exoplayer-dash-2.18.1/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.18.1] /Users/jared/.gradle/caches/transforms-3/b1d79f08549f4b073d2c901f071defc2/transformed/jetified-exoplayer-smoothstreaming-2.18.1/AndroidManifest.xml:17:1-24:12
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.1] /Users/jared/.gradle/caches/transforms-3/993fc9abbdae92c3f22e173eb9efd948/transformed/jetified-exoplayer-core-2.18.1/AndroidManifest.xml:17:1-26:12
-MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/jared/.gradle/caches/transforms-3/6d4c6c8f2e2d6e5f8191d7617edebac3/transformed/appcompat-1.3.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.transition:transition:1.4.1] /Users/jared/.gradle/caches/transforms-3/c57fa738e378ee5274e769c4df18caf5/transformed/transition-1.4.1/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core-ktx:1.3.2] /Users/jared/.gradle/caches/transforms-3/b97dbbb1eca3e4b076b2d4784974a2f6/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:17:1-44:12
 MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/jared/.gradle/caches/transforms-3/ab3a5cdede552c3ebd2d16a4e35c4aee/transformed/jetified-play-services-location-16.0.0/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/jared/.gradle/caches/transforms-3/7caeccbbc159a82913a232cbd9ea1823/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:16:1-24:12
 MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/jared/.gradle/caches/transforms-3/baa1cfaba4626cc6dcf0106243aa7d8e/transformed/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml:17:1-24:12
@@ -60,16 +60,18 @@ MERGED from [com.google.android.gms:play-services-tasks:18.0.1] /Users/jared/.gr
 MERGED from [com.google.android.gms:play-services-stats:17.0.2] /Users/jared/.gradle/caches/transforms-3/34cf7f965a158acce6e743d9e75635f5/transformed/jetified-play-services-stats-17.0.2/AndroidManifest.xml:2:1-9:12
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/jared/.gradle/caches/transforms-3/6776a189b78bd63f3bb9fddd2b2cec6f/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:17:1-25:12
 MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/jared/.gradle/caches/transforms-3/043f0f58c59fa4ff22574c94c616e98d/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:16:1-26:12
+MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/jared/.gradle/caches/transforms-3/6d4c6c8f2e2d6e5f8191d7617edebac3/transformed/appcompat-1.3.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.4.1] /Users/jared/.gradle/caches/transforms-3/c57fa738e378ee5274e769c4df18caf5/transformed/transition-1.4.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.fragment:fragment:1.3.4] /Users/jared/.gradle/caches/transforms-3/a7be12c0a6034d0abc169245c1f4a821/transformed/fragment-1.3.4/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.activity:activity:1.2.3] /Users/jared/.gradle/caches/transforms-3/88753a8f1d0d7a84a29cdd79f822b855/transformed/jetified-activity-1.2.3/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat-resources:1.3.0] /Users/jared/.gradle/caches/transforms-3/d7af651ea02d11f3c7e3eb79bbc56ec7/transformed/jetified-appcompat-resources-1.3.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/jared/.gradle/caches/transforms-3/135b889a02429c1e79a93b3d6b94a74a/transformed/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/jared/.gradle/caches/transforms-3/2d38040de0d7bcb1ca341ba7ea30159a/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/jared/.gradle/caches/transforms-3/83382f5b5b69bc388b4bf7361a367ac5/transformed/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/jared/.gradle/caches/transforms-3/2ed4c80b7220bf9f2c6c17d3654bfae0/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.loader:loader:1.0.0] /Users/jared/.gradle/caches/transforms-3/434b6dd23f093d0fe6e1bd2346967c4d/transformed/loader-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/jared/.gradle/caches/transforms-3/f5ae47b41324e7bebbd962a8243430d9/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/jared/.gradle/caches/transforms-3/9079f5381071078e216f9f45197a695a/transformed/vectordrawable-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.customview:customview:1.0.0] /Users/jared/.gradle/caches/transforms-3/2ed4c80b7220bf9f2c6c17d3654bfae0/transformed/customview-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.core:core:1.8.0] /Users/jared/.gradle/caches/transforms-3/dca8c9b3955838e83e0c61394610f3fb/transformed/core-1.8.0/AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/jared/.gradle/caches/transforms-3/26aa36d06647ee6fd0c19b67963e2d3d/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.tracing:tracing:1.0.0] /Users/jared/.gradle/caches/transforms-3/20ec84e4ddf620227eeb82498692fec1/transformed/jetified-tracing-1.0.0/AndroidManifest.xml:17:1-24:12
@@ -86,13 +88,13 @@ MERGED from [com.google.android.datatransport:transport-runtime:3.1.6] /Users/ja
 MERGED from [com.google.android.datatransport:transport-api:3.0.0] /Users/jared/.gradle/caches/transforms-3/696fbf0dc3518ccdaa06c68c4c3f828f/transformed/jetified-transport-api-3.0.0/AndroidManifest.xml:15:1-22:12
 MERGED from [com.google.firebase:firebase-components:17.0.0] /Users/jared/.gradle/caches/transforms-3/9ad284ae305a4e3eee0d07160807f41a/transformed/jetified-firebase-components-17.0.0/AndroidManifest.xml:15:1-23:12
 MERGED from [com.google.firebase:firebase-encoders-json:18.0.0] /Users/jared/.gradle/caches/transforms-3/c80304d3a85bf0743120e130154099e4/transformed/jetified-firebase-encoders-json-18.0.0/AndroidManifest.xml:15:1-23:12
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/jared/.gradle/caches/transforms-3/f0e003ee11393f98f6e068b87be89070/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /Users/jared/.gradle/caches/transforms-3/88cef183532db1a029a2fef807d35d1e/transformed/jetified-lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.savedstate:savedstate:1.1.0] /Users/jared/.gradle/caches/transforms-3/8d9fac72bf57a59f2a915652c728a488/transformed/jetified-savedstate-1.1.0/AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/jared/.gradle/caches/transforms-3/06fc7ed7d16911f5f40719d5ebf581f1/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/jared/.gradle/caches/transforms-3/1dd9c21a82c64e390500b5e58df6eb00/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /Users/jared/.gradle/caches/transforms-3/0b3c3fba930d6ce98aff62e968f45698/transformed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/jared/.gradle/caches/transforms-3/54df65dc21d4713fe341d21e08447749/transformed/core-runtime-2.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/jared/.gradle/caches/transforms-3/f0e003ee11393f98f6e068b87be89070/transformed/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/jared/.gradle/caches/transforms-3/06fc7ed7d16911f5f40719d5ebf581f1/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/jared/.gradle/caches/transforms-3/6ff55d90763e73a87adfc614620716cb/transformed/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] /Users/jared/.gradle/caches/transforms-3/6cda035c362591391d739e7d571768c5/transformed/print-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/jared/.gradle/caches/transforms-3/d387cd8e8b48e0bac3242e25a328370c/transformed/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
@@ -107,11 +109,11 @@ INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/debug/AndroidMan
 		INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/debug/AndroidManifest.xml
 	android:versionName
 		INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-66:12
+		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-71:12
 		INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/debug/AndroidManifest.xml
 	android:versionCode
 		INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-66:12
+		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:1:1-71:12
 		INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/debug/AndroidManifest.xml
 	xmlns:android
 		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:2:3-61
@@ -133,6 +135,8 @@ ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifes
 		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:8:19-71
 queries
 ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:10:1-15:11
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:30:5-34:15
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:30:5-34:15
 intent#action:name:android.intent.action.INSERT+data:mimeType:vnd.android.cursor.item/event
 ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:11:3-14:12
 action#android.intent.action.INSERT
@@ -144,19 +148,19 @@ ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifes
 	android:mimeType
 		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:13:11-59
 application
-ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:16:3-65:17
+ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:16:3-70:17
+MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-44:19
+MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-44:19
 MERGED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
-MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-44:19
-MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:11:5-44:19
 MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
 MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-13:19
-MERGED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-17:19
-MERGED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-17:19
 MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-27:19
 MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:13:5-27:19
+MERGED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-17:19
+MERGED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-17:19
 MERGED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
 MERGED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-12:19
 MERGED from [:location] /Users/jared/Code/whatado-flutter/build/location/intermediates/library_manifest/debug/AndroidManifest.xml:10:5-16:19
@@ -181,6 +185,8 @@ MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/ca
 MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:25:5-38:19
 MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/jared/.gradle/caches/transforms-3/4db1baaf3464c737b61b1df4365a813f/transformed/jetified-glide-4.11.0/AndroidManifest.xml:10:5-20
 MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/jared/.gradle/caches/transforms-3/4db1baaf3464c737b61b1df4365a813f/transformed/jetified-glide-4.11.0/AndroidManifest.xml:10:5-20
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:36:5-42:19
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:36:5-42:19
 MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/jared/.gradle/caches/transforms-3/ab3a5cdede552c3ebd2d16a4e35c4aee/transformed/jetified-play-services-location-16.0.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/jared/.gradle/caches/transforms-3/ab3a5cdede552c3ebd2d16a4e35c4aee/transformed/jetified-play-services-location-16.0.0/AndroidManifest.xml:7:5-20
 MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/jared/.gradle/caches/transforms-3/7caeccbbc159a82913a232cbd9ea1823/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:19:5-23:19
@@ -275,62 +281,70 @@ ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifes
 		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:60:7-63
 	android:name
 		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:58:7-54
-meta-data#flutterEmbedding
-ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:64:5-68
+meta-data#com.google.android.geo.API_KEY
+ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:63:7-66:7
 	android:value
-		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:64:48-65
+		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:65:7-62
 	android:name
-		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:64:16-47
+		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:64:7-52
+meta-data#flutterEmbedding
+ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:69:5-68
+	android:value
+		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:69:48-65
+	android:name
+		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml:69:16-47
 uses-sdk
 INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml
 INJECTED from /Users/jared/Code/whatado-flutter/android/app/src/main/AndroidManifest.xml
+MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:maps_launcher] /Users/jared/Code/whatado-flutter/build/maps_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:maps_launcher] /Users/jared/Code/whatado-flutter/build/maps_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] /Users/jared/Code/whatado-flutter/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:path_provider_android] /Users/jared/Code/whatado-flutter/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_keyboard_visibility] /Users/jared/Code/whatado-flutter/build/flutter_keyboard_visibility/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_keyboard_visibility] /Users/jared/Code/whatado-flutter/build/flutter_keyboard_visibility/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:video_player_android] /Users/jared/Code/whatado-flutter/build/video_player_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:video_player_android] /Users/jared/Code/whatado-flutter/build/video_player_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:libphonenumber_plugin] /Users/jared/Code/whatado-flutter/build/libphonenumber_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:libphonenumber_plugin] /Users/jared/Code/whatado-flutter/build/libphonenumber_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:libphonenumber] /Users/jared/Code/whatado-flutter/build/libphonenumber/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:libphonenumber] /Users/jared/Code/whatado-flutter/build/libphonenumber/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:add_2_calendar] /Users/jared/Code/whatado-flutter/build/add_2_calendar/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:add_2_calendar] /Users/jared/Code/whatado-flutter/build/add_2_calendar/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:maps_launcher] /Users/jared/Code/whatado-flutter/build/maps_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:maps_launcher] /Users/jared/Code/whatado-flutter/build/maps_launcher/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:google_maps_flutter_android] /Users/jared/Code/whatado-flutter/build/google_maps_flutter_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
+MERGED from [:google_maps_flutter_android] /Users/jared/Code/whatado-flutter/build/google_maps_flutter_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] /Users/jared/Code/whatado-flutter/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_plugin_android_lifecycle] /Users/jared/Code/whatado-flutter/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] /Users/jared/Code/whatado-flutter/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:sqflite] /Users/jared/Code/whatado-flutter/build/sqflite/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:path_provider_android] /Users/jared/Code/whatado-flutter/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:path_provider_android] /Users/jared/Code/whatado-flutter/build/path_provider_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity_plus] /Users/jared/Code/whatado-flutter/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:connectivity_plus] /Users/jared/Code/whatado-flutter/build/connectivity_plus/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:image_cropper] /Users/jared/Code/whatado-flutter/build/image_cropper/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:image_cropper] /Users/jared/Code/whatado-flutter/build/image_cropper/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:permission_handler_android] /Users/jared/Code/whatado-flutter/build/permission_handler_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:permission_handler_android] /Users/jared/Code/whatado-flutter/build/permission_handler_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:heic_to_jpg] /Users/jared/Code/whatado-flutter/build/heic_to_jpg/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:heic_to_jpg] /Users/jared/Code/whatado-flutter/build/heic_to_jpg/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:libphonenumber_plugin] /Users/jared/Code/whatado-flutter/build/libphonenumber_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:libphonenumber_plugin] /Users/jared/Code/whatado-flutter/build/libphonenumber_plugin/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:flutter_keyboard_visibility] /Users/jared/Code/whatado-flutter/build/flutter_keyboard_visibility/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:flutter_keyboard_visibility] /Users/jared/Code/whatado-flutter/build/flutter_keyboard_visibility/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:location] /Users/jared/Code/whatado-flutter/build/location/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:location] /Users/jared/Code/whatado-flutter/build/location/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:video_player_android] /Users/jared/Code/whatado-flutter/build/video_player_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:video_player_android] /Users/jared/Code/whatado-flutter/build/video_player_android/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:libphonenumber] /Users/jared/Code/whatado-flutter/build/libphonenumber/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:libphonenumber] /Users/jared/Code/whatado-flutter/build/libphonenumber/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_contacts] /Users/jared/Code/whatado-flutter/build/flutter_contacts/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [:flutter_contacts] /Users/jared/Code/whatado-flutter/build/flutter_contacts/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:add_2_calendar] /Users/jared/Code/whatado-flutter/build/add_2_calendar/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
-MERGED from [:add_2_calendar] /Users/jared/Code/whatado-flutter/build/add_2_calendar/intermediates/library_manifest/debug/AndroidManifest.xml:5:5-44
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/jared/.gradle/caches/transforms-3/c723bffcb82b1e5557bccdd963cb110d/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [androidx.multidex:multidex:2.0.0] /Users/jared/.gradle/caches/transforms-3/c723bffcb82b1e5557bccdd963cb110d/transformed/multidex-2.0.0/AndroidManifest.xml:20:5-43
 MERGED from [androidx.window:window-java:1.0.0-beta04] /Users/jared/.gradle/caches/transforms-3/335b9a443faa9dfc2704d2f0020e32cc/transformed/jetified-window-java-1.0.0-beta04/AndroidManifest.xml:19:5-21:41
@@ -353,14 +367,12 @@ MERGED from [com.google.firebase:firebase-auth-interop:18.0.0] /Users/jared/.gra
 MERGED from [com.google.firebase:firebase-auth-interop:18.0.0] /Users/jared/.gradle/caches/transforms-3/34b1f69f1abd90905e1162246a0abf5d/transformed/jetified-firebase-auth-interop-18.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:20:5-22:41
-MERGED from [com.github.yalantis:ucrop:2.2.8] /Users/jared/.gradle/caches/transforms-3/39ad08f3e2c54223e1c59de917d76a2e/transformed/jetified-ucrop-2.2.8/AndroidManifest.xml:7:5-9:41
-MERGED from [com.github.yalantis:ucrop:2.2.8] /Users/jared/.gradle/caches/transforms-3/39ad08f3e2c54223e1c59de917d76a2e/transformed/jetified-ucrop-2.2.8/AndroidManifest.xml:7:5-9:41
 MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/jared/.gradle/caches/transforms-3/4db1baaf3464c737b61b1df4365a813f/transformed/jetified-glide-4.11.0/AndroidManifest.xml:6:5-8:41
 MERGED from [com.github.bumptech.glide:glide:4.11.0] /Users/jared/.gradle/caches/transforms-3/4db1baaf3464c737b61b1df4365a813f/transformed/jetified-glide-4.11.0/AndroidManifest.xml:6:5-8:41
+MERGED from [com.github.yalantis:ucrop:2.2.8] /Users/jared/.gradle/caches/transforms-3/39ad08f3e2c54223e1c59de917d76a2e/transformed/jetified-ucrop-2.2.8/AndroidManifest.xml:7:5-9:41
+MERGED from [com.github.yalantis:ucrop:2.2.8] /Users/jared/.gradle/caches/transforms-3/39ad08f3e2c54223e1c59de917d76a2e/transformed/jetified-ucrop-2.2.8/AndroidManifest.xml:7:5-9:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/jared/.gradle/caches/transforms-3/ccda4b6b7e87748122412be87479e9b9/transformed/exifinterface-1.3.3/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.exifinterface:exifinterface:1.3.3] /Users/jared/.gradle/caches/transforms-3/ccda4b6b7e87748122412be87479e9b9/transformed/exifinterface-1.3.3/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.core:core-ktx:1.3.2] /Users/jared/.gradle/caches/transforms-3/b97dbbb1eca3e4b076b2d4784974a2f6/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
-MERGED from [androidx.core:core-ktx:1.3.2] /Users/jared/.gradle/caches/transforms-3/b97dbbb1eca3e4b076b2d4784974a2f6/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
 MERGED from [androidx.media:media:1.1.0] /Users/jared/.gradle/caches/transforms-3/a52363080c2db305454007e841605616/transformed/media-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.media:media:1.1.0] /Users/jared/.gradle/caches/transforms-3/a52363080c2db305454007e841605616/transformed/media-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.exoplayer:exoplayer-hls:2.18.1] /Users/jared/.gradle/caches/transforms-3/73f70bc4b8becea80ca4d140b8b89108/transformed/jetified-exoplayer-hls-2.18.1/AndroidManifest.xml:20:5-22:41
@@ -371,10 +383,10 @@ MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.18.1] /Use
 MERGED from [com.google.android.exoplayer:exoplayer-smoothstreaming:2.18.1] /Users/jared/.gradle/caches/transforms-3/b1d79f08549f4b073d2c901f071defc2/transformed/jetified-exoplayer-smoothstreaming-2.18.1/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.1] /Users/jared/.gradle/caches/transforms-3/993fc9abbdae92c3f22e173eb9efd948/transformed/jetified-exoplayer-core-2.18.1/AndroidManifest.xml:20:5-22:41
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.1] /Users/jared/.gradle/caches/transforms-3/993fc9abbdae92c3f22e173eb9efd948/transformed/jetified-exoplayer-core-2.18.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/jared/.gradle/caches/transforms-3/6d4c6c8f2e2d6e5f8191d7617edebac3/transformed/appcompat-1.3.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/jared/.gradle/caches/transforms-3/6d4c6c8f2e2d6e5f8191d7617edebac3/transformed/appcompat-1.3.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.transition:transition:1.4.1] /Users/jared/.gradle/caches/transforms-3/c57fa738e378ee5274e769c4df18caf5/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.transition:transition:1.4.1] /Users/jared/.gradle/caches/transforms-3/c57fa738e378ee5274e769c4df18caf5/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core-ktx:1.3.2] /Users/jared/.gradle/caches/transforms-3/b97dbbb1eca3e4b076b2d4784974a2f6/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.3.2] /Users/jared/.gradle/caches/transforms-3/b97dbbb1eca3e4b076b2d4784974a2f6/transformed/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/jared/.gradle/caches/transforms-3/ab3a5cdede552c3ebd2d16a4e35c4aee/transformed/jetified-play-services-location-16.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/jared/.gradle/caches/transforms-3/ab3a5cdede552c3ebd2d16a4e35c4aee/transformed/jetified-play-services-location-16.0.0/AndroidManifest.xml:5:5-44
 MERGED from [com.google.android.gms:play-services-base:18.0.1] /Users/jared/.gradle/caches/transforms-3/7caeccbbc159a82913a232cbd9ea1823/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:18:5-43
@@ -395,6 +407,10 @@ MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/j
 MERGED from [com.google.firebase:firebase-measurement-connector:19.0.0] /Users/jared/.gradle/caches/transforms-3/6776a189b78bd63f3bb9fddd2b2cec6f/transformed/jetified-firebase-measurement-connector-19.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/jared/.gradle/caches/transforms-3/043f0f58c59fa4ff22574c94c616e98d/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
 MERGED from [com.google.android.gms:play-services-basement:18.0.0] /Users/jared/.gradle/caches/transforms-3/043f0f58c59fa4ff22574c94c616e98d/transformed/jetified-play-services-basement-18.0.0/AndroidManifest.xml:18:5-43
+MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/jared/.gradle/caches/transforms-3/6d4c6c8f2e2d6e5f8191d7617edebac3/transformed/appcompat-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.appcompat:appcompat:1.3.0] /Users/jared/.gradle/caches/transforms-3/6d4c6c8f2e2d6e5f8191d7617edebac3/transformed/appcompat-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] /Users/jared/.gradle/caches/transforms-3/c57fa738e378ee5274e769c4df18caf5/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.4.1] /Users/jared/.gradle/caches/transforms-3/c57fa738e378ee5274e769c4df18caf5/transformed/transition-1.4.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.3.4] /Users/jared/.gradle/caches/transforms-3/a7be12c0a6034d0abc169245c1f4a821/transformed/fragment-1.3.4/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.fragment:fragment:1.3.4] /Users/jared/.gradle/caches/transforms-3/a7be12c0a6034d0abc169245c1f4a821/transformed/fragment-1.3.4/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.activity:activity:1.2.3] /Users/jared/.gradle/caches/transforms-3/88753a8f1d0d7a84a29cdd79f822b855/transformed/jetified-activity-1.2.3/AndroidManifest.xml:20:5-22:41
@@ -407,14 +423,14 @@ MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/jared/.grad
 MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/jared/.gradle/caches/transforms-3/2d38040de0d7bcb1ca341ba7ea30159a/transformed/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/jared/.gradle/caches/transforms-3/83382f5b5b69bc388b4bf7361a367ac5/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/jared/.gradle/caches/transforms-3/83382f5b5b69bc388b4bf7361a367ac5/transformed/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/jared/.gradle/caches/transforms-3/2ed4c80b7220bf9f2c6c17d3654bfae0/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/jared/.gradle/caches/transforms-3/2ed4c80b7220bf9f2c6c17d3654bfae0/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/jared/.gradle/caches/transforms-3/434b6dd23f093d0fe6e1bd2346967c4d/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.loader:loader:1.0.0] /Users/jared/.gradle/caches/transforms-3/434b6dd23f093d0fe6e1bd2346967c4d/transformed/loader-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/jared/.gradle/caches/transforms-3/f5ae47b41324e7bebbd962a8243430d9/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] /Users/jared/.gradle/caches/transforms-3/f5ae47b41324e7bebbd962a8243430d9/transformed/vectordrawable-animated-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/jared/.gradle/caches/transforms-3/9079f5381071078e216f9f45197a695a/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] /Users/jared/.gradle/caches/transforms-3/9079f5381071078e216f9f45197a695a/transformed/vectordrawable-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.customview:customview:1.0.0] /Users/jared/.gradle/caches/transforms-3/2ed4c80b7220bf9f2c6c17d3654bfae0/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.customview:customview:1.0.0] /Users/jared/.gradle/caches/transforms-3/2ed4c80b7220bf9f2c6c17d3654bfae0/transformed/customview-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.core:core:1.8.0] /Users/jared/.gradle/caches/transforms-3/dca8c9b3955838e83e0c61394610f3fb/transformed/core-1.8.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.core:core:1.8.0] /Users/jared/.gradle/caches/transforms-3/dca8c9b3955838e83e0c61394610f3fb/transformed/core-1.8.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/jared/.gradle/caches/transforms-3/26aa36d06647ee6fd0c19b67963e2d3d/transformed/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
@@ -447,20 +463,20 @@ MERGED from [com.google.firebase:firebase-components:17.0.0] /Users/jared/.gradl
 MERGED from [com.google.firebase:firebase-components:17.0.0] /Users/jared/.gradle/caches/transforms-3/9ad284ae305a4e3eee0d07160807f41a/transformed/jetified-firebase-components-17.0.0/AndroidManifest.xml:19:5-21:41
 MERGED from [com.google.firebase:firebase-encoders-json:18.0.0] /Users/jared/.gradle/caches/transforms-3/c80304d3a85bf0743120e130154099e4/transformed/jetified-firebase-encoders-json-18.0.0/AndroidManifest.xml:19:5-21:41
 MERGED from [com.google.firebase:firebase-encoders-json:18.0.0] /Users/jared/.gradle/caches/transforms-3/c80304d3a85bf0743120e130154099e4/transformed/jetified-firebase-encoders-json-18.0.0/AndroidManifest.xml:19:5-21:41
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/jared/.gradle/caches/transforms-3/f0e003ee11393f98f6e068b87be89070/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
-MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/jared/.gradle/caches/transforms-3/f0e003ee11393f98f6e068b87be89070/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /Users/jared/.gradle/caches/transforms-3/88cef183532db1a029a2fef807d35d1e/transformed/jetified-lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.1] /Users/jared/.gradle/caches/transforms-3/88cef183532db1a029a2fef807d35d1e/transformed/jetified-lifecycle-viewmodel-savedstate-2.3.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.savedstate:savedstate:1.1.0] /Users/jared/.gradle/caches/transforms-3/8d9fac72bf57a59f2a915652c728a488/transformed/jetified-savedstate-1.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.savedstate:savedstate:1.1.0] /Users/jared/.gradle/caches/transforms-3/8d9fac72bf57a59f2a915652c728a488/transformed/jetified-savedstate-1.1.0/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/jared/.gradle/caches/transforms-3/06fc7ed7d16911f5f40719d5ebf581f1/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/jared/.gradle/caches/transforms-3/06fc7ed7d16911f5f40719d5ebf581f1/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/jared/.gradle/caches/transforms-3/1dd9c21a82c64e390500b5e58df6eb00/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/jared/.gradle/caches/transforms-3/1dd9c21a82c64e390500b5e58df6eb00/transformed/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /Users/jared/.gradle/caches/transforms-3/0b3c3fba930d6ce98aff62e968f45698/transformed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.3.1] /Users/jared/.gradle/caches/transforms-3/0b3c3fba930d6ce98aff62e968f45698/transformed/lifecycle-livedata-core-2.3.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/jared/.gradle/caches/transforms-3/54df65dc21d4713fe341d21e08447749/transformed/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.arch.core:core-runtime:2.1.0] /Users/jared/.gradle/caches/transforms-3/54df65dc21d4713fe341d21e08447749/transformed/core-runtime-2.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/jared/.gradle/caches/transforms-3/f0e003ee11393f98f6e068b87be89070/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/jared/.gradle/caches/transforms-3/f0e003ee11393f98f6e068b87be89070/transformed/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/jared/.gradle/caches/transforms-3/06fc7ed7d16911f5f40719d5ebf581f1/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.3.1] /Users/jared/.gradle/caches/transforms-3/06fc7ed7d16911f5f40719d5ebf581f1/transformed/lifecycle-viewmodel-2.3.1/AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/jared/.gradle/caches/transforms-3/6ff55d90763e73a87adfc614620716cb/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/jared/.gradle/caches/transforms-3/6ff55d90763e73a87adfc614620716cb/transformed/documentfile-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /Users/jared/.gradle/caches/transforms-3/6cda035c362591391d739e7d571768c5/transformed/print-1.0.0/AndroidManifest.xml:20:5-44
@@ -489,52 +505,14 @@ MERGED from [com.google.firebase:firebase-storage:20.0.1] /Users/jared/.gradle/c
 MERGED from [com.google.firebase:firebase-storage:20.0.1] /Users/jared/.gradle/caches/transforms-3/8e9fc3c873b66760a064bed78684e93b/transformed/jetified-firebase-storage-20.0.1/AndroidManifest.xml:27:5-67
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gradle/caches/transforms-3/3cfc5eb987916359bedebd739559da57/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:11:5-67
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gradle/caches/transforms-3/3cfc5eb987916359bedebd739559da57/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:11:5-67
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:24:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] /Users/jared/.gradle/caches/transforms-3/96d3d1a0e671108b284f78162c90af6e/transformed/jetified-play-services-cloud-messaging-17.0.1/AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] /Users/jared/.gradle/caches/transforms-3/96d3d1a0e671108b284f78162c90af6e/transformed/jetified-play-services-cloud-messaging-17.0.1/AndroidManifest.xml:8:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.6] /Users/jared/.gradle/caches/transforms-3/97e60751d30056cb000cc34ef4b12829/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:26:5-67
 MERGED from [com.google.android.datatransport:transport-backend-cct:3.1.6] /Users/jared/.gradle/caches/transforms-3/97e60751d30056cb000cc34ef4b12829/transformed/jetified-transport-backend-cct-3.1.6/AndroidManifest.xml:26:5-67
 	android:name
 		ADDED from /Users/jared/Code/whatado-flutter/android/app/src/debug/AndroidManifest.xml:6:22-64
-service#com.google.firebase.components.ComponentDiscoveryService
-ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
-MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
-MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
-MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:33:9-37:19
-MERGED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:33:9-37:19
-MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
-MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
-MERGED from [com.google.firebase:firebase-messaging:23.0.6] /Users/jared/.gradle/caches/transforms-3/338f507b10e8d298b7e3f80f221d6b56/transformed/jetified-firebase-messaging-23.0.6/AndroidManifest.xml:53:9-59:19
-MERGED from [com.google.firebase:firebase-messaging:23.0.6] /Users/jared/.gradle/caches/transforms-3/338f507b10e8d298b7e3f80f221d6b56/transformed/jetified-firebase-messaging-23.0.6/AndroidManifest.xml:53:9-59:19
-MERGED from [com.google.firebase:firebase-crashlytics:18.2.11] /Users/jared/.gradle/caches/transforms-3/26225204a51def483ebdf43a3aa63e56/transformed/jetified-firebase-crashlytics-18.2.11/AndroidManifest.xml:15:9-21:19
-MERGED from [com.google.firebase:firebase-crashlytics:18.2.11] /Users/jared/.gradle/caches/transforms-3/26225204a51def483ebdf43a3aa63e56/transformed/jetified-firebase-crashlytics-18.2.11/AndroidManifest.xml:15:9-21:19
-MERGED from [com.google.firebase:firebase-storage:20.0.1] /Users/jared/.gradle/caches/transforms-3/8e9fc3c873b66760a064bed78684e93b/transformed/jetified-firebase-storage-20.0.1/AndroidManifest.xml:30:9-36:19
-MERGED from [com.google.firebase:firebase-storage:20.0.1] /Users/jared/.gradle/caches/transforms-3/8e9fc3c873b66760a064bed78684e93b/transformed/jetified-firebase-storage-20.0.1/AndroidManifest.xml:30:9-36:19
-MERGED from [com.google.firebase:firebase-datatransport:18.1.5] /Users/jared/.gradle/caches/transforms-3/81a8e82d1263927f5ed53e3bfaf98bb4/transformed/jetified-firebase-datatransport-18.1.5/AndroidManifest.xml:25:9-31:19
-MERGED from [com.google.firebase:firebase-datatransport:18.1.5] /Users/jared/.gradle/caches/transforms-3/81a8e82d1263927f5ed53e3bfaf98bb4/transformed/jetified-firebase-datatransport-18.1.5/AndroidManifest.xml:25:9-31:19
-MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gradle/caches/transforms-3/3cfc5eb987916359bedebd739559da57/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:15:9-21:19
-MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gradle/caches/transforms-3/3cfc5eb987916359bedebd739559da57/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:15:9-21:19
-MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:33:9-37:35
-MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:33:9-37:35
-	android:exported
-		ADDED from [com.google.firebase:firebase-messaging:23.0.6] /Users/jared/.gradle/caches/transforms-3/338f507b10e8d298b7e3f80f221d6b56/transformed/jetified-firebase-messaging-23.0.6/AndroidManifest.xml:55:13-37
-	tools:targetApi
-		ADDED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:37:13-32
-	android:directBootAware
-		ADDED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:35:13-43
-	android:name
-		ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:18-89
-meta-data#com.google.firebase.components:io.flutter.plugins.firebase.crashlytics.FlutterFirebaseAppRegistrar
-ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:85
-	android:value
-		ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:11:17-82
-	android:name
-		ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-130
-meta-data#com.google.firebase.components:io.flutter.plugins.firebase.storage.FlutterFirebaseAppRegistrar
-ADDED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:85
-	android:value
-		ADDED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:11:17-82
-	android:name
-		ADDED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-126
 uses-permission#android.permission.WAKE_LOCK
 ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:8:5-68
 MERGED from [com.google.firebase:firebase-messaging:23.0.6] /Users/jared/.gradle/caches/transforms-3/338f507b10e8d298b7e3f80f221d6b56/transformed/jetified-firebase-messaging-23.0.6/AndroidManifest.xml:27:5-68
@@ -555,6 +533,8 @@ MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gr
 MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gradle/caches/transforms-3/3cfc5eb987916359bedebd739559da57/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:10:5-79
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.1] /Users/jared/.gradle/caches/transforms-3/993fc9abbdae92c3f22e173eb9efd948/transformed/jetified-exoplayer-core-2.18.1/AndroidManifest.xml:24:5-79
 MERGED from [com.google.android.exoplayer:exoplayer-core:2.18.1] /Users/jared/.gradle/caches/transforms-3/993fc9abbdae92c3f22e173eb9efd948/transformed/jetified-exoplayer-core-2.18.1/AndroidManifest.xml:24:5-79
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
+MERGED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:23:5-79
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] /Users/jared/.gradle/caches/transforms-3/96d3d1a0e671108b284f78162c90af6e/transformed/jetified-play-services-cloud-messaging-17.0.1/AndroidManifest.xml:7:5-79
 MERGED from [com.google.android.gms:play-services-cloud-messaging:17.0.1] /Users/jared/.gradle/caches/transforms-3/96d3d1a0e671108b284f78162c90af6e/transformed/jetified-play-services-cloud-messaging-17.0.1/AndroidManifest.xml:7:5-79
 MERGED from [com.google.android.exoplayer:exoplayer-common:2.18.1] /Users/jared/.gradle/caches/transforms-3/67aaed51133622813ede9928b6f0d3d7/transformed/jetified-exoplayer-common-2.18.1/AndroidManifest.xml:24:5-79
@@ -599,6 +579,34 @@ action#com.google.android.c2dm.intent.RECEIVE
 ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:29:17-81
 	android:name
 		ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:29:25-78
+service#com.google.firebase.components.ComponentDiscoveryService
+ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:33:9-37:19
+MERGED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-12:19
+MERGED from [com.google.firebase:firebase-messaging:23.0.6] /Users/jared/.gradle/caches/transforms-3/338f507b10e8d298b7e3f80f221d6b56/transformed/jetified-firebase-messaging-23.0.6/AndroidManifest.xml:53:9-59:19
+MERGED from [com.google.firebase:firebase-messaging:23.0.6] /Users/jared/.gradle/caches/transforms-3/338f507b10e8d298b7e3f80f221d6b56/transformed/jetified-firebase-messaging-23.0.6/AndroidManifest.xml:53:9-59:19
+MERGED from [com.google.firebase:firebase-crashlytics:18.2.11] /Users/jared/.gradle/caches/transforms-3/26225204a51def483ebdf43a3aa63e56/transformed/jetified-firebase-crashlytics-18.2.11/AndroidManifest.xml:15:9-21:19
+MERGED from [com.google.firebase:firebase-crashlytics:18.2.11] /Users/jared/.gradle/caches/transforms-3/26225204a51def483ebdf43a3aa63e56/transformed/jetified-firebase-crashlytics-18.2.11/AndroidManifest.xml:15:9-21:19
+MERGED from [com.google.firebase:firebase-storage:20.0.1] /Users/jared/.gradle/caches/transforms-3/8e9fc3c873b66760a064bed78684e93b/transformed/jetified-firebase-storage-20.0.1/AndroidManifest.xml:30:9-36:19
+MERGED from [com.google.firebase:firebase-storage:20.0.1] /Users/jared/.gradle/caches/transforms-3/8e9fc3c873b66760a064bed78684e93b/transformed/jetified-firebase-storage-20.0.1/AndroidManifest.xml:30:9-36:19
+MERGED from [com.google.firebase:firebase-datatransport:18.1.5] /Users/jared/.gradle/caches/transforms-3/81a8e82d1263927f5ed53e3bfaf98bb4/transformed/jetified-firebase-datatransport-18.1.5/AndroidManifest.xml:25:9-31:19
+MERGED from [com.google.firebase:firebase-datatransport:18.1.5] /Users/jared/.gradle/caches/transforms-3/81a8e82d1263927f5ed53e3bfaf98bb4/transformed/jetified-firebase-datatransport-18.1.5/AndroidManifest.xml:25:9-31:19
+MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gradle/caches/transforms-3/3cfc5eb987916359bedebd739559da57/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:15:9-21:19
+MERGED from [com.google.firebase:firebase-installations:17.0.1] /Users/jared/.gradle/caches/transforms-3/3cfc5eb987916359bedebd739559da57/transformed/jetified-firebase-installations-17.0.1/AndroidManifest.xml:15:9-21:19
+MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:33:9-37:35
+MERGED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:33:9-37:35
+	android:exported
+		ADDED from [com.google.firebase:firebase-messaging:23.0.6] /Users/jared/.gradle/caches/transforms-3/338f507b10e8d298b7e3f80f221d6b56/transformed/jetified-firebase-messaging-23.0.6/AndroidManifest.xml:55:13-37
+	tools:targetApi
+		ADDED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:37:13-32
+	android:directBootAware
+		ADDED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:35:13-43
+	android:name
+		ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:33:18-89
 meta-data#com.google.firebase.components:io.flutter.plugins.firebase.messaging.FlutterFirebaseAppRegistrar
 ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:34:13-36:85
 	android:value
@@ -615,28 +623,24 @@ ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebas
 		ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:43:13-35
 	android:name
 		ADDED from [:firebase_messaging] /Users/jared/Code/whatado-flutter/build/firebase_messaging/intermediates/library_manifest/debug/AndroidManifest.xml:40:13-102
+meta-data#com.google.firebase.components:io.flutter.plugins.firebase.crashlytics.FlutterFirebaseAppRegistrar
+ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:85
+	android:value
+		ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:11:17-82
+	android:name
+		ADDED from [:firebase_crashlytics] /Users/jared/Code/whatado-flutter/build/firebase_crashlytics/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-130
+meta-data#com.google.firebase.components:io.flutter.plugins.firebase.storage.FlutterFirebaseAppRegistrar
+ADDED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:85
+	android:value
+		ADDED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:11:17-82
+	android:name
+		ADDED from [:firebase_storage] /Users/jared/Code/whatado-flutter/build/firebase_storage/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-126
 meta-data#com.google.firebase.components:io.flutter.plugins.firebase.core.FlutterFirebaseCoreRegistrar
 ADDED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-11:85
 	android:value
 		ADDED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:11:17-82
 	android:name
 		ADDED from [:firebase_core] /Users/jared/Code/whatado-flutter/build/firebase_core/intermediates/library_manifest/debug/AndroidManifest.xml:10:17-124
-provider#io.flutter.plugins.imagepicker.ImagePickerFileProvider
-ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-16:20
-	android:grantUriPermissions
-		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-47
-	android:authorities
-		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-74
-	android:exported
-		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-37
-	android:name
-		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-82
-meta-data#android.support.FILE_PROVIDER_PATHS
-ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-15:75
-	android:resource
-		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-72
-	android:name
-		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:14:17-67
 uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
 ADDED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-81
 	android:name
@@ -689,6 +693,26 @@ action#com.htc.intent.action.QUICKBOOT_POWERON
 ADDED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:24:17-82
 	android:name
 		ADDED from [:flutter_local_notifications] /Users/jared/Code/whatado-flutter/build/flutter_local_notifications/intermediates/library_manifest/debug/AndroidManifest.xml:24:25-79
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-80
+	android:name
+		ADDED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-77
+provider#io.flutter.plugins.imagepicker.ImagePickerFileProvider
+ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-16:20
+	android:grantUriPermissions
+		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:12:13-47
+	android:authorities
+		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:10:13-74
+	android:exported
+		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-37
+	android:name
+		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-82
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:13:13-15:75
+	android:resource
+		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:15:17-72
+	android:name
+		ADDED from [:image_picker_android] /Users/jared/Code/whatado-flutter/build/image_picker_android/intermediates/library_manifest/debug/AndroidManifest.xml:14:17-67
 activity#io.flutter.plugins.urllauncher.WebViewActivity
 ADDED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:8:9-11:74
 	android:exported
@@ -697,10 +721,6 @@ ADDED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_l
 		ADDED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:11:13-71
 	android:name
 		ADDED from [:url_launcher_android] /Users/jared/Code/whatado-flutter/build/url_launcher_android/intermediates/library_manifest/debug/AndroidManifest.xml:9:13-74
-uses-permission#android.permission.READ_EXTERNAL_STORAGE
-ADDED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-80
-	android:name
-		ADDED from [:photo_manager] /Users/jared/Code/whatado-flutter/build/photo_manager/intermediates/library_manifest/debug/AndroidManifest.xml:7:22-77
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
 ADDED from [:location] /Users/jared/Code/whatado-flutter/build/location/intermediates/library_manifest/debug/AndroidManifest.xml:7:5-81
 	android:name
@@ -795,6 +815,22 @@ ADDED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/cac
 		ADDED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:31:13-36
 	android:name
 		ADDED from [com.google.firebase:firebase-common:20.1.1] /Users/jared/.gradle/caches/transforms-3/a5b1644f7d2fc9e1f40560ec2016c176/transformed/jetified-firebase-common-20.1.1/AndroidManifest.xml:27:13-77
+uses-feature#0x00020000
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:26:5-28:35
+	android:glEsVersion
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:27:9-41
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:28:9-32
+package#com.google.android.apps.maps
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:9-64
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:33:18-61
+uses-library#org.apache.http.legacy
+ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:39:9-41:40
+	android:required
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:41:13-37
+	android:name
+		ADDED from [com.google.android.gms:play-services-maps:18.0.2] /Users/jared/.gradle/caches/transforms-3/e2a492f107ccb6faf8494b548b5a71a6/transformed/jetified-play-services-maps-18.0.2/AndroidManifest.xml:40:13-50
 activity#com.google.android.gms.common.api.GoogleApiActivity
 ADDED from [com.google.android.gms:play-services-base:18.0.1] /Users/jared/.gradle/caches/transforms-3/7caeccbbc159a82913a232cbd9ea1823/transformed/jetified-play-services-base-18.0.1/AndroidManifest.xml:20:9-22:45
 	android:exported

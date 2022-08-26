@@ -10,7 +10,7 @@ class ShadedIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: Color(0xfffff2e2), borderRadius: BorderRadius.circular(15)),
+            color: Color(0xfffff2e2), borderRadius: BorderRadius.circular(AppRadii.button)),
         width: width,
         height: width,
         child: Icon(icon, size: iconSize, color: AppColors.primary));

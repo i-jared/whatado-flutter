@@ -12,6 +12,7 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/dialogs.dart';
 import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/dialog/confirm_cancel_dialog.dart';
+import 'package:whatado/widgets/general/app_bar_action.dart';
 import 'package:whatado/widgets/users/user_avatar.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -29,6 +30,14 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     final homeState = Provider.of<HomeState>(context);
     final userState = Provider.of<UserState>(context);
     return AppBar(
+      leading: Container(
+        margin: EdgeInsets.all(3.0),
+        child: AppBarAction(
+          child: IconButton(
+              onPressed: () => Navigator.pop(context),
+              icon: Icon(Icons.arrow_back, color: AppColors.primary)),
+        ),
+      ),
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: AppColors.background,
       title: InkWell(
