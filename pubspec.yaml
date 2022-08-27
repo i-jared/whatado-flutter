@@ -71,6 +71,9 @@ dependencies:
   flutter_phoenix: ^1.0.0
   google_maps_flutter: ^2.1.12
   table_calendar: ^3.0.6
+  syncfusion_flutter_sliders: ^20.2.45
+  syncfusion_flutter_core: ^20.2.45
+  flutter_otp_text_field: ^1.1.0
 
 dev_dependencies:
   flutter_test:

@@ -268,7 +268,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
     return GenericPage(
         appBar: SavingAppBar(
           title: 'Add Event',
-          buttonTitle: 'NEXT',
+          buttonTitle: 'Next',
           disabled: !ready,
           onSave: () =>
               Navigator.push(context, MaterialPageRoute(builder: (context) => TargetAudience())),

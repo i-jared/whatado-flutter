@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:whatado/screens/entry/login.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
@@ -13,6 +14,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+        SystemUiOverlayStyle(systemNavigationBarColor: Colors.transparent));
     _controller = VideoPlayerController.asset('assets/welcome_video.mp4')
       ..initialize().then((_) {
         _controller.setLooping(true);

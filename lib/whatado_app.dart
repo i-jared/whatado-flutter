@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
@@ -35,8 +34,8 @@ Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-      systemNavigationBarIconBrightness: Brightness.dark,
+      // statusBarBrightness: Brightness.light,
+      // systemNavigationBarIconBrightness: Brightness.light,
       systemNavigationBarColor: Colors.transparent,
       statusBarColor: Colors.transparent));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -127,6 +126,7 @@ class _MyAppState extends State<MyApp> {
                       )),
                   home: invalidAuth
                       ? WelcomeScreen()
+                      // ? ValidatePhoneScreen()
                       : (loginService.loggedIn || loading)
                           ? (userState.user == null || loading)
                               ? ShimmerScreen()

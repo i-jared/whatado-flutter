@@ -10,13 +10,16 @@ class InputInterestBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InputChip(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), side: BorderSide(color: AppColors.primary)),
         deleteIcon: Icon(Icons.clear),
-        deleteIconColor: Colors.white,
-        backgroundColor: AppColors.background,
-        selectedColor: Colors.grey[850],
+        deleteIconColor: AppColors.primary,
+        backgroundColor: Color(0xfffff2e2),
+        selectedColor: Color(0xfffff2e2),
         showCheckmark: false,
-        labelPadding: EdgeInsets.fromLTRB(20, 3, 10, 3),
-        label: Text(interest.title, style: TextStyle(color: Colors.white)),
+        labelPadding: EdgeInsets.fromLTRB(15, 8, 5, 8),
+        label: Text(interest.title,
+            style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
         selected: true,
         onDeleted: onDeleted);
   }

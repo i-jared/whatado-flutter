@@ -8,10 +8,11 @@ import 'package:whatado/screens/entry/validate.dart';
 import 'package:whatado/screens/profile/eula.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
-import 'package:whatado/widgets/general/generic_page.dart';
+import 'package:whatado/widgets/entry/decorated_entry_page.dart';
+import 'package:whatado/widgets/input/auto_label_field.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
-import 'package:whatado/widgets/input/my_text_field.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -42,109 +43,117 @@ class _SignupScreenState extends State<StatefulWidget> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return GenericPage(
-        body: Form(
-            key: _formKey,
-            child: LayoutBuilder(
-              builder: (context, constraints) => SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                    minWidth: constraints.maxWidth,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: buildColumn(),
-                    ),
-                  ),
-                ),
-              ),
-            )));
+  void dispose() {
+    passwordController.dispose();
+    confirmController.dispose();
+    phoneController.dispose();
+    nameController.dispose();
+    super.dispose();
   }
 
-  Widget buildColumn() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(height: 50),
-      Center(
-        child: Image.asset('assets/Whatado_FullColor.png', height: 100),
-      ),
-      SizedBox(height: 40),
-      Text('Sign Up', style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600)),
-      SizedBox(height: 35),
-      MyTextField(
-        hintText: 'Full Name',
-        controller: nameController,
-        errorText: nameError,
-        validator: (val) => val == null || val.length == 0 ? 'please enter your full name' : null,
-      ),
-      const SizedBox(height: 20),
-      InternationalPhoneNumberInput(
-        initialValue: PhoneNumber(isoCode: 'US'),
-        locale: 'US',
-        autoValidateMode: AutovalidateMode.onUserInteraction,
-        onInputChanged: (PhoneNumber value) {
-          setState(() => phoneNumber = value.toString());
-        },
-        textFieldController: phoneController,
-        errorMessage: phoneError,
-        validator: (val) {
-          String pattern = r'^(\+0?1\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$';
-          RegExp regExp = new RegExp(pattern);
-          if (val == null || !regExp.hasMatch(val)) return 'please enter a valid phone number';
-        },
-      ),
-      if (phoneError != null) Text(phoneError ?? '', style: TextStyle(color: Colors.red)),
-      const SizedBox(height: 20),
-      MyPasswordField(
-        hintText: 'Password',
-        controller: passwordController,
-        errorText: passwordError,
-        validator: (val) => val == null || val.length < 6
-            ? 'password must be at least 6 characters'
-            : val != confirmController.text
-                ? "passwords don't match"
-                : null,
-      ),
-      const SizedBox(height: 20),
-      MyPasswordField(
-        hintText: 'Confirm Password',
-        controller: confirmController,
-      ),
-      const SizedBox(height: 25),
-      RoundedArrowButton.text(
-        onPressed: () => attemptRegister(context),
-        text: "Sign Up",
-      ),
-      SizedBox(height: 30),
-      if (loading) Center(child: CircularProgressIndicator(value: null)),
-      Spacer(),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Already have an account?'),
-          TextButton(
-            child: Text(
-              'Sign in.',
-              style: TextStyle(color: AppColors.primary),
+  @override
+  Widget build(BuildContext context) {
+    return DecoratedEntryPage(
+      child: Form(
+        key: _formKey,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(height: 40),
+          Text('Let\'s Get Started').reallybold().title(),
+          SizedBox(height: 10),
+          Text('It won\'t take more than a minute.').subtitle().semibold(),
+          SizedBox(height: 30),
+          Container(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2.0,
+                    color: AppColors.primary,
+                  ),
+                  borderRadius: BorderRadius.circular(AppRadii.button)),
+              child: AutoLabelField(
+                controller: nameController,
+                label: 'Full Name',
+                icon: Icons.person_outline_rounded,
+                validator: (val) =>
+                    val == null || val.length == 0 ? 'please enter your full name' : null,
+              )),
+          SizedBox(height: 20),
+          Container(
+            padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+            decoration: BoxDecoration(
+                border: Border.all(
+                  width: 2.0,
+                  color: AppColors.primary,
+                ),
+                borderRadius: BorderRadius.circular(AppRadii.button)),
+            child: InternationalPhoneNumberInput(
+              ignoreBlank: true,
+              inputDecoration: InputDecoration(
+                labelText: 'Phone Number',
+                border: InputBorder.none,
+                // hintText: 'Phone number',
+              ),
+              initialValue: PhoneNumber(isoCode: 'US'),
+              locale: 'US',
+              autoValidateMode: AutovalidateMode.onUserInteraction,
+              onInputChanged: (PhoneNumber value) {
+                setState(() {
+                  phoneNumber = value.toString();
+                });
+              },
             ),
-            onPressed: () => Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
           ),
-        ],
-      ),
-      Center(
-        child: TextButton(
-          child: Text(
-            'Terms of Service',
-            style: TextStyle(color: AppColors.primary),
+          const SizedBox(height: 20),
+          Container(
+              padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+              decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2.0,
+                    color: AppColors.primary,
+                  ),
+                  borderRadius: BorderRadius.circular(AppRadii.button)),
+              child: MyPasswordField(
+                hintText: 'Password',
+                controller: passwordController,
+                errorText: passwordError,
+                validator: (val) => val == null || val.length < 6
+                    ? 'password must be at least 6 characters'
+                    : val != passwordController.text
+                        ? "passwords don't match"
+                        : null,
+              )),
+          if (phoneError != null) Text(phoneError ?? '', style: TextStyle(color: Colors.red)),
+          const SizedBox(height: 20),
+          loading
+              ? Center(child: CircularProgressIndicator())
+              : RoundedArrowButton.text(
+                  onPressed: () => attemptRegister(context),
+                  text: "Sign Up",
+                ),
+          Spacer(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Already have an account?').semibold(),
+              TextButton(
+                child: Text('Sign in.').primary().bold(),
+                onPressed: () => Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (ctx) => LoginScreen())),
+              ),
+            ],
           ),
-          onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (ctx) => Eula())),
-        ),
+          Center(
+            child: TextButton(
+              child: Text(
+                'Terms of Service',
+                style: TextStyle(color: AppColors.primary),
+              ),
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (ctx) => Eula())),
+            ),
+          ),
+        ]),
       ),
-      SizedBox(height: 40)
-    ]);
+    );
   }
 
   void attemptRegister(BuildContext context) async {

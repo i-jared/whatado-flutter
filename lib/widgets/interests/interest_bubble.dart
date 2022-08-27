@@ -5,17 +5,22 @@ class InterestBubble extends StatelessWidget {
   final String text;
   final bool selected;
   final Function(bool)? onSelected;
-  final Color? selectedColor;
-  InterestBubble(
-      {required this.text, required this.selected, this.onSelected, this.selectedColor});
+  InterestBubble({
+    required this.text,
+    required this.selected,
+    this.onSelected,
+  });
   @override
   Widget build(BuildContext context) {
     return FilterChip(
         backgroundColor: AppColors.background,
-        selectedColor: selectedColor ?? Colors.grey[850],
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+            side: selected ? BorderSide(color: AppColors.primary) : BorderSide()),
+        selectedColor: Color(0xfffff2e2),
         showCheckmark: false,
-        labelPadding: EdgeInsets.symmetric(vertical: 3, horizontal: 12),
-        labelStyle: TextStyle(color: selected ? Colors.white : Colors.black),
+        labelPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 15),
+        labelStyle: TextStyle(color: selected ? AppColors.primary : Colors.black),
         label: Text(text),
         selected: selected,
         onSelected: onSelected);

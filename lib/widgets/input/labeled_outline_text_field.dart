@@ -7,8 +7,17 @@ class LabeledOutlineTextField extends StatelessWidget {
   final String? hintText;
   final int? maxLength;
   final int? maxLines;
-  LabeledOutlineTextField(
-      {required this.label, this.controller, this.hintText, this.maxLength, this.maxLines});
+  final Widget? suffixIcon;
+  final BoxConstraints? suffixIconConstraints;
+  LabeledOutlineTextField({
+    required this.label,
+    this.controller,
+    this.hintText,
+    this.maxLength,
+    this.maxLines,
+    this.suffixIcon,
+    this.suffixIconConstraints,
+  });
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,7 +35,12 @@ class LabeledOutlineTextField extends StatelessWidget {
           TextFormField(
             maxLength: maxLength,
             controller: controller,
-            decoration: InputDecoration(border: InputBorder.none, hintText: hintText),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              suffixIconConstraints: suffixIconConstraints,
+              hintText: hintText,
+              suffixIcon: suffixIcon,
+            ),
             maxLines: maxLines,
           ),
         ],

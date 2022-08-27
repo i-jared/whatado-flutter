@@ -30,14 +30,9 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
     final homeState = Provider.of<HomeState>(context);
     final userState = Provider.of<UserState>(context);
     return AppBar(
-      leading: Container(
-        margin: EdgeInsets.all(3.0),
-        child: AppBarAction(
-          child: IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: Icon(Icons.arrow_back, color: AppColors.primary)),
-        ),
-      ),
+      leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(Icons.arrow_back, color: AppColors.primary)),
       iconTheme: IconThemeData(color: Colors.black),
       backgroundColor: AppColors.background,
       title: InkWell(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class MyPasswordField extends StatefulWidget {
   final String hintText;
@@ -25,15 +26,22 @@ class _MyPasswordFieldState extends State<MyPasswordField> {
       controller: widget.controller,
       obscureText: passwordHidden,
       decoration: InputDecoration(
+        border: InputBorder.none,
         errorText: widget.errorText,
         suffixIcon: IconButton(
-          icon: Icon(!passwordHidden ? Icons.visibility : Icons.visibility_off,
-              size: 20),
+          icon: Icon(!passwordHidden ? Icons.visibility : Icons.visibility_off, size: 20),
           onPressed: () => setState(() => passwordHidden = !passwordHidden),
         ),
         isDense: true,
-        hintText: widget.hintText,
-        hintStyle: TextStyle(fontSize: 13),
+        // hintText: widget.hintText,
+        // labelText: 'Password',
+        label: Row(
+          children: [
+            Icon(Icons.lock_outline_rounded, color: AppColors.primary, size: 16),
+            SizedBox(width: 5),
+            Text('Password'),
+          ],
+        ),
         contentPadding: EdgeInsets.symmetric(vertical: 12),
       ),
     );

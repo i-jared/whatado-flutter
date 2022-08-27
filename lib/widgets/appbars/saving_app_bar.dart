@@ -17,7 +17,7 @@ class SavingAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      iconTheme: IconThemeData(color: Colors.black),
+      iconTheme: IconThemeData(color: AppColors.primary),
       backgroundColor: AppColors.background,
       title: Text(title, style: TextStyle(fontSize: 23, color: Colors.grey[850])),
       centerTitle: true,
@@ -25,11 +25,22 @@ class SavingAppBar extends StatelessWidget implements PreferredSizeWidget {
       actions: [
         Padding(
           padding: const EdgeInsets.only(right: 15.0),
-          child: TextButton(
-              child: Text(buttonTitle,
-                  style:
-                      TextStyle(color: disabled ? Colors.grey[400] : AppColors.primary)),
-              onPressed: disabled ? null : onSave),
+          child: Center(
+            child: InkWell(
+              onTap: disabled ? null : onSave,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                alignment: Alignment.center,
+                height: 36,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: disabled ? AppColors.disabled : AppColors.primary,
+                ),
+                child: Text(buttonTitle,
+                    style: TextStyle(color: disabled ? Colors.grey[400] : Colors.white)),
+              ),
+            ),
+          ),
         ),
       ],
     );
