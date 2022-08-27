@@ -7,6 +7,7 @@ import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/entry/choose_interests.dart';
+import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/entry/decorated_entry_page.dart';
@@ -19,7 +20,6 @@ class ValidatePhoneScreen extends StatefulWidget {
 }
 
 class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
-  late TextEditingController otpController;
   List<TextEditingController?>? otpControllers;
   String? errorText;
   Timer? resendTimer;
@@ -29,8 +29,6 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
   @override
   void initState() {
     super.initState();
-    otpController = TextEditingController();
-
     resendCountdown = 30;
     allowResend = false;
     initTimer();
@@ -89,6 +87,7 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
           fieldWidth: itemWidth,
           textStyle: TextStyle(fontSize: 25),
         ),
+        if (errorText != null) Text(errorText!, style: TextStyle(color: Colors.red)),
         SizedBox(height: 20),
         RichText(
             text: TextSpan(
@@ -123,13 +122,13 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
             onPressed: () async {
               setState(() => errorText = null);
               final provider = UserGqlProvider();
-              final result = await provider.checkValidation(otpController.text);
+              final result =
+                  await provider.checkValidation(otpControllers!.map((c) => c!.text).join(''));
               if (result.ok) {
                 await provider.updateUser(UserFilterInput(verified: true));
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => ChooseInterestsScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
               } else {
-                otpController.clear();
+                otpControllers?.forEach((c) => c?.clear());
                 setState(() => errorText = 'incorrect code');
               }
             },

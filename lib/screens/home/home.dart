@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -23,6 +24,7 @@ import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/default_app_bar.dart';
 import 'package:whatado/widgets/appbars/home_app_bar.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
@@ -45,7 +47,6 @@ class HomeScreen extends StatefulWidget {
     // return MyProfileAppBar();
   }
 
-//TODO: show contacts prompt in setup
   @override
   State<StatefulWidget> createState() => _HomeScreenState();
 }
@@ -151,10 +152,24 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> setupPermissions() async {
-    // request permissions
+    // request location permissions
+    final location = await locationService.getLocation();
+    if (location == null) {
+      logger.e('location is null');
+      // TODO location wasn't enabled. prompt user to go to settings on home screen.
+    } else {
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+        final homeState = context.read<HomeState>();
+        final updateResult = await homeState.loadLocation();
+        logger.wtf('updateResult: $updateResult');
+        if (updateResult) {
+          await homeState.load();
+        }
+      });
+    }
+    // messaging permissions
     final messaging = FirebaseMessaging.instance;
     final settings = await messaging.requestPermission();
-    await FlutterContacts.requestPermission(readonly: true);
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       print('permission granted');
     } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
@@ -162,6 +177,8 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       print('permission declined');
     }
+    // contacts permission TODO: delay this until actually trying to access contacts
+    // await FlutterContacts.requestPermission(readonly: true);
   }
 
   @override

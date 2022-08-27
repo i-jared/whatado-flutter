@@ -144,13 +144,13 @@ class _LoginScreenState extends State<StatefulWidget> {
                               ? LoginScreen()
                               : !userState.user!.verified
                                   ? ValidatePhoneScreen()
-                                  : userState.user!.interests.isEmpty
-                                      ? ChooseInterestsScreen()
-                                      : userState.user!.bio.isEmpty
-                                          ? WriteBioScreen()
-                                          : userState.user!.photoUrls.isEmpty
-                                              ? SelectPhotosScreen()
-                                              : HomeScreen();
+                                  // : userState.user!.interests.isEmpty
+                                  //     ? ChooseInterestsScreen()
+                                  //     : userState.user!.bio.isEmpty
+                                  //         ? WriteBioScreen()
+                                  //         : userState.user!.photoUrls.isEmpty
+                                  //             ? SelectPhotosScreen()
+                                  : HomeScreen();
 
                           Navigator.pushAndRemoveUntil(context,
                               MaterialPageRoute(builder: (ctx) => route), (route) => false);

@@ -34,10 +34,7 @@ Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      // statusBarBrightness: Brightness.light,
-      // systemNavigationBarIconBrightness: Brightness.light,
-      systemNavigationBarColor: Colors.transparent,
-      statusBarColor: Colors.transparent));
+      systemNavigationBarColor: Colors.transparent, statusBarColor: Colors.transparent));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp();
@@ -126,19 +123,18 @@ class _MyAppState extends State<MyApp> {
                       )),
                   home: invalidAuth
                       ? WelcomeScreen()
-                      // ? ValidatePhoneScreen()
                       : (loginService.loggedIn || loading)
                           ? (userState.user == null || loading)
                               ? ShimmerScreen()
                               : !userState.user!.verified
                                   ? ValidatePhoneScreen()
-                                  : userState.user!.interests.isEmpty
-                                      ? ChooseInterestsScreen()
-                                      : userState.user!.bio.isEmpty
-                                          ? WriteBioScreen()
-                                          : userState.user!.photoUrls.isEmpty
-                                              ? SelectPhotosScreen()
-                                              : HomeScreen()
+                                  // : userState.user!.interests.isEmpty
+                                  // ? ChooseInterestsScreen()
+                                  // : userState.user!.bio.isEmpty
+                                  // ? WriteBioScreen()
+                                  // : userState.user!.photoUrls.isEmpty
+                                  // ? SelectPhotosScreen()
+                                  : HomeScreen()
                           : WelcomeScreen(),
                 );
               }),

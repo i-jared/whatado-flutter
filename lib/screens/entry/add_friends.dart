@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/screens/home/home.dart';
@@ -19,6 +20,10 @@ class _AddFriendsState extends State<AddFriends> {
   @override
   void initState() {
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+      final searchState = context.read<SearchState>();
+      searchState.loadContacts();
+    });
     loading = false;
   }
 

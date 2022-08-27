@@ -81,7 +81,6 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
       setState(() => loading = false);
       // reload user object
       userState.getUser();
-      searchState.loadContacts();
       Navigator.pushAndRemoveUntil(
           context, MaterialPageRoute(builder: (context) => AddFriends()), (_) => false);
     }

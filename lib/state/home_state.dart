@@ -82,19 +82,6 @@ class HomeState extends ChangeNotifier {
         await getNewEvents();
       }
     });
-    // get initial events
-    loadLocation().then((_) {
-      getNewEvents();
-    });
-    getMyEvents().then((myEvents) {
-      if (myEvents == null || myEvents.isEmpty) {
-        myForums = [];
-        lastMessages = [];
-      } else {
-        getMyForums();
-      }
-    });
-    // set up listener on _bottomBarPageNo and change _appBarPageNo to zero on changes
     appBarResetController = StreamController<int>();
     appBarResetSub = appBarResetController?.stream.listen((val) {
       _appBarPageNo = 0;
@@ -105,18 +92,37 @@ class HomeState extends ChangeNotifier {
     });
   }
 
-  Future<void> loadLocation() async {
-    await locationService.getLocation();
-    UserGqlProvider provider = UserGqlProvider();
+  Future<void> load() async {
+    logger.wtf('1');
+    await getNewEvents();
+    logger.wtf('2');
+    final myEvents = await getMyEvents();
+    logger.wtf('3');
+    if (myEvents == null || myEvents.isEmpty) {
+      myForums = [];
+      lastMessages = [];
+    } else {
+      await getMyForums();
+    }
+    logger.wtf(
+        'allEvents: ${allEvents?.length}, otherEvents: ${otherEvents?.length}, myEvents ${myEvents?.length}');
+  }
+
+  Future<bool> loadLocation() async {
+    logger.wtf('location before update: ${locationService.locationData}');
     if (locationService.locationData != null &&
         locationService.locationData!.latitude != null &&
         locationService.locationData!.longitude != null) {
-      await provider.updateUser(UserFilterInput(
+      UserGqlProvider provider = UserGqlProvider();
+      final result = await provider.updateUser(UserFilterInput(
           location: GeoJsonPoint(
               geoPoint: GeoPoint(
                   latitude: locationService.locationData!.latitude!,
                   longitude: locationService.locationData!.longitude!))));
+      logger.wtf('update result: $result');
+      return result.ok;
     }
+    return false;
   }
 
   @override
