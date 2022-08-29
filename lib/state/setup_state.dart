@@ -13,9 +13,9 @@ class SetupState extends ChangeNotifier {
   List<Interest> customInterests;
   List<Interest> popularInterests;
   TextEditingController bioController;
-  TextEditingController dateController;
+  DateTime? _birthdate;
 
-  Gender _gender;
+  Gender? _gender;
 
   List<File?> _photos;
   List<Uint8List?> _photosImageData;
@@ -26,18 +26,21 @@ class SetupState extends ChangeNotifier {
         customInterests = [],
         _photosImageData = [],
         _photos = [],
-        _gender = Gender.both,
-        bioController = TextEditingController(),
-        dateController = TextEditingController() {
+        bioController = TextEditingController() {
     bioController.addListener(notifyListeners);
-    dateController.addListener(notifyListeners);
     init();
   }
 
-  Gender get gender => _gender;
+  Gender? get gender => _gender;
 
-  set gender(Gender gender) {
+  set gender(Gender? gender) {
     _gender = gender;
+    notifyListeners();
+  }
+
+  DateTime? get birthdate => _birthdate;
+  set birthdate(DateTime? newDate) {
+    _birthdate = newDate;
     notifyListeners();
   }
 
@@ -69,12 +72,12 @@ class SetupState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> saveInterests() async {
+  Future<bool> saveInterests() async {
     final provider = UserGqlProvider();
-    final strings = [...selectedInterests, ...customInterests]
-        .map((interest) => interest.title)
-        .toList();
-    await provider.addInterests(strings);
+    final strings =
+        [...selectedInterests, ...customInterests].map((interest) => interest.title).toList();
+    final result = await provider.addInterests(strings);
+    return result.ok;
   }
 
   void selectInterest(Interest interest) {

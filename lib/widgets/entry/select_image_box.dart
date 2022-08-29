@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 
 class SelectImageBox extends StatefulWidget {
   final Function() onSelect;
@@ -21,8 +22,8 @@ class _SelectImageBoxState extends State<SelectImageBox> {
   Widget build(BuildContext context) {
     return Container(
         clipBehavior: Clip.antiAlias,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10), color: Colors.grey[400]),
+        decoration:
+            BoxDecoration(borderRadius: BorderRadius.circular(10), color: AppColors.disabled),
         width: widget.imageWidth,
         height: widget.imageWidth,
         child: loading

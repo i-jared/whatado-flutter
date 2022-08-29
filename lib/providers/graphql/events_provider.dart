@@ -278,7 +278,6 @@ class EventsGqlProvider {
         logger.e(element.message);
       });
     }
-    logger.wtf('add wannago $result');
     final root = result.data?['addWannago'];
     final data =
         root != null && root['nodes'] != null ? PublicEvent.fromGqlData(root?['nodes']) : null;

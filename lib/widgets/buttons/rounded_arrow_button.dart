@@ -8,13 +8,15 @@ class RoundedArrowButton extends StatelessWidget {
   final double? height;
   final Color? color;
   final Color? textColor;
+  final bool? loading;
   RoundedArrowButton.text(
       {required this.onPressed,
       required text,
       this.disabled = false,
       this.height,
       this.color,
-      this.textColor})
+      this.textColor,
+      this.loading})
       : child = Center(child: Text(text, style: TextStyle(fontSize: 20)));
 
   RoundedArrowButton(
@@ -23,7 +25,8 @@ class RoundedArrowButton extends StatelessWidget {
       this.disabled = false,
       this.height,
       this.color,
-      this.textColor});
+      this.textColor,
+      this.loading});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class RoundedArrowButton extends StatelessWidget {
           fixedSize: MaterialStateProperty.all(Size(double.infinity, height ?? 50.0)),
           backgroundColor: MaterialStateProperty.resolveWith((states) =>
               color ?? (onPressed == null || disabled ? Colors.grey[300] : AppColors.primary))),
-      child: child,
+      child: loading ?? false ? Center(child: CircularProgressIndicator()) : child,
       onPressed: onPressed == null || disabled ? null : () => onPressed!(),
     );
   }

@@ -1,17 +1,17 @@
 import 'dart:typed_data';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
-import 'package:whatado/screens/entry/add_friends.dart';
 import 'package:whatado/services/service_provider.dart';
-import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/extensions/text.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
-import 'package:whatado/widgets/general/generic_page.dart';
 
 class SelectPhotosScreen extends StatefulWidget {
   @override
@@ -38,7 +38,6 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     final setupState = Provider.of<SetupState>(context);
-    final searchState = Provider.of<SearchState>(context);
     final imageWidth = (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) / 3.0;
 
     final theList = [
@@ -61,6 +60,8 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                   //update
                   setupState.photos = updatedPhotos;
                   setupState.photosImageData = updatedPhotosData;
+                } else {
+                  logger.e('image is null');
                 }
               }))
     ];
@@ -77,55 +78,39 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
       // save urls to user profile
       final provider = UserGqlProvider();
       if (photoUrls.contains(null)) return;
-      await provider.updatePhotos(List<String>.from(photoUrls));
-      setState(() => loading = false);
-      // reload user object
-      userState.getUser();
-      Navigator.pushAndRemoveUntil(
-          context, MaterialPageRoute(builder: (context) => AddFriends()), (_) => false);
+      final result = await provider.updatePhotos(List<String>.from(photoUrls));
+      if (result.ok) {
+        // reload user object
+        userState.getUser();
+        Navigator.pop(context, true);
+      } else {
+        BotToast.showText(text: 'Error uploading images. Please try again later.');
+        setState(() => loading = false);
+      }
     }
 
-    return GenericPage(
-        body: Form(
-      child: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-              minWidth: constraints.maxWidth,
-            ),
-            child: IntrinsicHeight(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  SizedBox(height: 50),
-                  Center(
-                    child: Image.asset("assets/Whatado_FullColor.png", height: 100),
-                  ),
-                  SizedBox(height: sectionSpacing),
-                  Text('Profile Pictures', style: headingStyle),
-                  SizedBox(height: headingSpacing),
-                  Text('Great!  Now add a few pictures.', style: paragraphStyle),
-                  SizedBox(height: headingSpacing),
-                  Wrap(spacing: imageSpacing, runSpacing: 10.0, children: theList),
-                  Spacer(),
-                  Center(
-                    child: loading
-                        ? Center(child: CircularProgressIndicator())
-                        : RoundedArrowButton.text(
-                            disabled: setupState.photos.length == 0,
-                            text: "Continue",
-                            onPressed:
-                                userState.user == null ? null : () => onPressed(userState.user!.id),
-                          ),
-                  ),
-                  SizedBox(height: 40)
-                ]),
-              ),
-            ),
-          ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: padding),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SizedBox(height: 50),
+        Text('Profile Pictures').title().reallybold(),
+        SizedBox(height: headingSpacing),
+        Text('Great!  Now add a few pictures.').subtitle().semibold(),
+        SizedBox(height: headingSpacing),
+        Wrap(spacing: imageSpacing, runSpacing: 10.0, children: theList),
+        Spacer(),
+        Center(
+          child: loading
+              ? Center(child: CircularProgressIndicator())
+              : RoundedArrowButton.text(
+                  loading: loading,
+                  disabled: loading || setupState.photos.length == 0,
+                  text: "Continue",
+                  onPressed: userState.user == null ? null : () => onPressed(userState.user!.id),
+                ),
         ),
-      ),
-    ));
+        SizedBox(height: 40)
+      ]),
+    );
   }
 }

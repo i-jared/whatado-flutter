@@ -74,6 +74,7 @@ dependencies:
   syncfusion_flutter_sliders: ^20.2.45
   syncfusion_flutter_core: ^20.2.45
   flutter_otp_text_field: ^1.1.0
+  flutter_holo_date_picker: ^1.0.6
 
 dev_dependencies:
   flutter_test:

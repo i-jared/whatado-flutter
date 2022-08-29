@@ -108,6 +108,7 @@ class _LoginScreenState extends State<StatefulWidget> {
             onPressed: () async {
               showModalBottomSheet<dynamic>(
                   isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
                   context: context,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(

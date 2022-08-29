@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
+import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/dialogs.dart';
 import 'package:whatado/utils/logger.dart';
 
 class JoinButton extends StatefulWidget {
@@ -32,6 +34,11 @@ class _JoinButtonState extends State<JoinButton> {
         onPressed: () async {
           try {
             if (userState.user == null) return;
+            if (!userState.setupComplete()) {
+              if (!await runOnboarding(context, userState.setupStep())) {
+                return;
+              }
+            }
             final provider = EventsGqlProvider();
             setState(() => loading = true);
             final result = await provider.addWannago(eventId: event.id, userId: userState.user!.id);

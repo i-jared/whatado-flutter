@@ -3,7 +3,8 @@ import 'package:whatado/constants.dart';
 
 class ShadowBox extends StatelessWidget {
   final Widget? child;
-  ShadowBox({this.child});
+  final Color? color;
+  ShadowBox({this.child, this.color});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -11,7 +12,7 @@ class ShadowBox extends StatelessWidget {
       child: child,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadii.button),
-          color: AppColors.background,
+          color: color ?? AppColors.background,
           boxShadow: [
             BoxShadow(
                 color: Color.fromARGB(255, 216, 216, 216),

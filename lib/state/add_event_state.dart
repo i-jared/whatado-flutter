@@ -191,7 +191,6 @@ class AddEventState extends ChangeNotifier {
 
   set postLoading(bool loading) {
     _postLoading = loading;
-    logger.wtf('notify post loading: $postLoading');
     notifyListeners();
   }
 
@@ -273,7 +272,6 @@ class AddEventState extends ChangeNotifier {
   }
 
   Future<Uint8List> cropResizeImage(double deviceWidth) async {
-    logger.wtf('upload image');
     if (selectedImageBytes == null) return Uint8List.fromList([]);
     // convert if heic
     final isHeic = selectedImageFile!.path.toLowerCase().endsWith('heic');
@@ -330,7 +328,6 @@ class AddEventState extends ChangeNotifier {
           'width': 1080,
           'interpolation': Interpolation.cubic
         });
-    logger.wtf('finish uploading');
     return Uint8List.fromList(encodePng(resizedFace));
   }
 

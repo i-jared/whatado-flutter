@@ -32,8 +32,10 @@ class CloudStorageService {
   }
 
   Future<File?> pickImage() async {
+    logger.wtf('in pick image');
     final ImagePicker picker = ImagePicker();
     final xFile = await picker.pickImage(source: ImageSource.gallery);
+    logger.wtf(xFile);
     if (xFile == null) return null;
     return await ImageCropper()
         .cropImage(sourcePath: xFile.path, aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0));

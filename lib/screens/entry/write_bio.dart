@@ -1,129 +1,70 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/graphql/mutations_graphql_api.dart';
-import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
-import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/time_tools.dart';
+import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
-import 'package:whatado/widgets/general/generic_page.dart';
-import 'package:whatado/widgets/input/my_text_field.dart';
-import 'package:whatado/widgets/interests/interest_bubble.dart';
+import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
 
-class WriteBioScreen extends StatelessWidget {
+import '../../graphql/mutations_graphql_api.graphql.dart';
+
+class WriteBioScreen extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() => _WriteBioScreenState();
+}
+
+class _WriteBioScreenState extends State<WriteBioScreen> {
+  late bool loading = false;
+
   @override
   Widget build(BuildContext context) {
-    final userState = Provider.of<UserState>(context);
-    final setupState = Provider.of<SetupState>(context);
-    final headingStyle = TextStyle(fontSize: 25, fontWeight: FontWeight.bold);
+    final setupState = context.watch<SetupState>();
+    final userState = context.watch<UserState>();
     final headingSpacing = 10.0;
     final padding = 30.0;
     final sectionSpacing = 35.0;
-    final dateFormat = DateFormat('EEE, M-d-y');
-    final paragraphStyle = TextStyle(fontSize: 20);
 
-    final genders = [
-      {'gender': Gender.female, 'text': 'Female'},
-      {'gender': Gender.male, 'text': 'Male'},
-      {'gender': Gender.both, 'text': "Other"},
-    ];
-
-    return GenericPage(
-        body: Form(
-      child: LayoutBuilder(
-        builder: (context, constraints) => SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: constraints.maxHeight,
-              minWidth: constraints.maxWidth,
-            ),
-            child: IntrinsicHeight(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: padding),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  SizedBox(height: 50),
-                  Center(
-                    child: Image.asset("assets/Whatado_FullColor.png", height: 100),
-                  ),
-                  SizedBox(height: sectionSpacing),
-                  Text('Bio', style: headingStyle),
-                  SizedBox(height: headingSpacing),
-                  Text(
-                      'Next, tell us a little about yourself. People will see your bio when you create or attend an event.',
-                      style: paragraphStyle),
-                  SizedBox(height: headingSpacing),
-                  MyTextField(
-                    hintText: 'Write bio here',
-                    maxLines: null,
-                    controller: setupState.bioController,
-                  ),
-                  SizedBox(height: sectionSpacing),
-                  Text('Gender', style: headingStyle),
-                  SizedBox(height: headingSpacing),
-                  Text('These help you choose who sees your events.', style: paragraphStyle),
-                  SizedBox(height: headingSpacing),
-                  Wrap(
-                    runSpacing: 0.0,
-                    spacing: 10.0,
-                    children: genders
-                        .map((gender) => InterestBubble(
-                            text: gender['text'] as String,
-                            selected: setupState.gender == gender['gender'],
-                            onSelected: (notSelected) {
-                              setupState.gender = gender['gender'] as Gender;
-                            }))
-                        .toList(),
-                  ),
-                  SizedBox(height: sectionSpacing),
-                  Text('Birthday', style: headingStyle),
-                  SizedBox(height: headingSpacing),
-                  TextFormField(
-                    readOnly: true,
-                    controller: setupState.dateController,
-                    onTap: () => DatePicker.showDatePicker(context,
-                        onConfirm: (time) =>
-                            setupState.dateController.text = dateFormat.format(time),
-                        currentTime: DateTime(2000, 1, 1),
-                        minTime: DateTime(1950, 1, 1),
-                        maxTime: DateTime.now()),
-                    decoration: InputDecoration(
-                      isDense: true,
-                      hintText: 'Date',
-                      hintStyle: TextStyle(fontSize: 13),
-                      contentPadding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                  ),
-                  SizedBox(height: sectionSpacing),
-                  Spacer(),
-                  Center(
-                    child: RoundedArrowButton.text(
-                      disabled: setupState.bioController.text.isEmpty ||
-                          setupState.dateController.text.isEmpty,
-                      onPressed: () async {
-                        // frankenstein the time from user input
-                        final finalTime = formatMyDate(setupState.dateController.text);
-                        // send the update
-                        final provider = UserGqlProvider();
-                        await provider.updateUser(UserFilterInput(
-                            bio: setupState.bioController.text, birthday: finalTime));
-                        userState.getUser();
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => SelectPhotosScreen()));
-                      },
-                      text: "Continue",
-                    ),
-                  ),
-                  SizedBox(height: sectionSpacing)
-                ]),
-              ),
-            ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: padding),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        SizedBox(height: 50),
+        Text('Tell Us More').title().reallybold(),
+        SizedBox(height: headingSpacing),
+        Text('First, add some of your interests to help connect you with like-minded people.')
+            .subtitle()
+            .semibold(),
+        SizedBox(height: sectionSpacing),
+        LabeledOutlineTextField(
+          label: 'Bio',
+          controller: setupState.bioController,
+          hintText: 'A brief introduction',
+          maxLines: 7,
+        ),
+        Spacer(),
+        Center(
+          child: RoundedArrowButton.text(
+            loading: loading,
+            disabled: setupState.bioController.text.isEmpty || loading,
+            onPressed: () async {
+              setState(() => loading = true);
+              final provider = UserGqlProvider();
+              final result =
+                  await provider.updateUser(UserFilterInput(bio: setupState.bioController.text));
+              if (result.ok) {
+                userState.getUser();
+                Navigator.pop(context, true);
+              } else {
+                setState(() => loading = false);
+                BotToast.showText(text: 'Problem updating bio. Please try again later.');
+              }
+            },
+            text: "Continue",
           ),
         ),
-      ),
-    ));
+        SizedBox(height: sectionSpacing)
+      ]),
+    );
   }
 }

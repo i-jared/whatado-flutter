@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/screens/add_event/add_event.dart';
+import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/dialogs.dart';
 
 class MyNavigationBar extends StatelessWidget {
   final Function indexSetState;
@@ -40,6 +42,11 @@ class MyNavigationBar extends StatelessWidget {
             IconButton(
               padding: EdgeInsets.zero,
               onPressed: () async {
+                if (!userState.setupComplete()) {
+                  if (!await runOnboarding(context, userState.setupStep())) {
+                    return;
+                  }
+                }
                 searchState.selectedSearchType = 0;
                 searchState.searchController.text = '';
                 indexSetState(1);
@@ -53,7 +60,12 @@ class MyNavigationBar extends StatelessWidget {
             ),
             IconButton(
               padding: EdgeInsets.zero,
-              onPressed: () {
+              onPressed: () async {
+                if (!userState.setupComplete()) {
+                  if (!await runOnboarding(context, userState.setupStep())) {
+                    return;
+                  }
+                }
                 eventState.clear();
                 Navigator.push(context, MaterialPageRoute(builder: (context) => AddEvent()))
                     .then((_) async {
@@ -69,7 +81,14 @@ class MyNavigationBar extends StatelessWidget {
             ),
             IconButton(
               padding: EdgeInsets.zero,
-              onPressed: () => indexSetState(2),
+              onPressed: () async {
+                if (!userState.setupComplete()) {
+                  if (!await runOnboarding(context, userState.setupStep())) {
+                    return;
+                  }
+                }
+                indexSetState(2);
+              },
               icon: Icon(
                 Icons.settings_outlined,
                 size: 32,
@@ -79,7 +98,14 @@ class MyNavigationBar extends StatelessWidget {
             Stack(children: [
               IconButton(
                 padding: EdgeInsets.zero,
-                onPressed: () => indexSetState(3),
+                onPressed: () async {
+                  if (!userState.setupComplete()) {
+                    if (!await runOnboarding(context, userState.setupStep())) {
+                      return;
+                    }
+                  }
+                  indexSetState(3);
+                },
                 icon: Icon(
                   Icons.person_outline,
                   size: 35,

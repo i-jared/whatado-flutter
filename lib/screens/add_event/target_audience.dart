@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
-import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/screens/add_event/post_failed.dart';
 import 'package:whatado/screens/add_event/post_loading.dart';
 import 'package:whatado/screens/add_event/post_succeeded.dart';

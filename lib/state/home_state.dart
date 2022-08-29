@@ -93,23 +93,17 @@ class HomeState extends ChangeNotifier {
   }
 
   Future<void> load() async {
-    logger.wtf('1');
     await getNewEvents();
-    logger.wtf('2');
     final myEvents = await getMyEvents();
-    logger.wtf('3');
     if (myEvents == null || myEvents.isEmpty) {
       myForums = [];
       lastMessages = [];
     } else {
       await getMyForums();
     }
-    logger.wtf(
-        'allEvents: ${allEvents?.length}, otherEvents: ${otherEvents?.length}, myEvents ${myEvents?.length}');
   }
 
   Future<bool> loadLocation() async {
-    logger.wtf('location before update: ${locationService.locationData}');
     if (locationService.locationData != null &&
         locationService.locationData!.latitude != null &&
         locationService.locationData!.longitude != null) {
@@ -119,7 +113,6 @@ class HomeState extends ChangeNotifier {
               geoPoint: GeoPoint(
                   latitude: locationService.locationData!.latitude!,
                   longitude: locationService.locationData!.longitude!))));
-      logger.wtf('update result: $result');
       return result.ok;
     }
     return false;
@@ -212,10 +205,11 @@ class HomeState extends ChangeNotifier {
       // get events related to interests
       final response = await query.events(start, end, 20, _skip, _sortType);
       _skip += response.data?.length ?? 0;
-      if (allEvents == null)
+      if (allEvents == null) {
         allEvents = response.data ?? [];
-      else
+      } else {
         allEvents!.addAll(response.data ?? []);
+      }
       if ((response.data?.length ?? 0) < 20) {
         _favoritesEmpty = true;
         _skip = 0;

@@ -1,17 +1,16 @@
 import 'dart:async';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
-import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -156,12 +155,12 @@ class _HomeScreenState extends State<HomeScreen> {
     final location = await locationService.getLocation();
     if (location == null) {
       logger.e('location is null');
+      BotToast.showText(text: 'location not enabled');
       // TODO location wasn't enabled. prompt user to go to settings on home screen.
     } else {
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
         final homeState = context.read<HomeState>();
         final updateResult = await homeState.loadLocation();
-        logger.wtf('updateResult: $updateResult');
         if (updateResult) {
           await homeState.load();
         }

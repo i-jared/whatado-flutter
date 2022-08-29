@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -162,5 +161,25 @@ class UserState extends ChangeNotifier {
   set user(User? user) {
     _user = user;
     notifyListeners();
+  }
+
+  bool setupComplete() {
+    if (user == null) {
+      getUser();
+      return false;
+    }
+    return user!.bio != '' &&
+        user!.photoUrls.isNotEmpty &&
+        user!.interests.isNotEmpty &&
+        (DateTime.now().year - user!.birthday.year > 16);
+  }
+
+  int setupStep() {
+    if (user == null) return 0;
+    if (user!.interests.isEmpty) return 0;
+    if (user!.bio.isEmpty) return 1;
+    if (DateTime.now().year - user!.birthday.year <= 16) return 2;
+    if (user!.photoUrls.isEmpty) return 4;
+    return 5;
   }
 }

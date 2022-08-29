@@ -91,7 +91,6 @@ class SearchState extends ChangeNotifier {
         searchPageController = PageController(keepPage: true),
         searchController = TextEditingController() {
     searchController.addListener(() {
-      logger.wtf('last: $_lastSearchText, current: ${searchController.text}');
       if (searchController.text == _lastSearchText) return;
       _lastSearchText = searchController.text;
       if (_selectedSearchType == 0) {
