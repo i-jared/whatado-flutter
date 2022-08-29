@@ -156,7 +156,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (location == null) {
       logger.e('location is null');
       BotToast.showText(text: 'location not enabled');
-      // TODO location wasn't enabled. prompt user to go to settings on home screen.
+      SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+        final homeState = context.read<HomeState>();
+        homeState.locationPermission = false;
+      });
     } else {
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
         final homeState = context.read<HomeState>();

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/screens/home/search_contacts.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/events/shadow_box.dart';
@@ -19,7 +20,8 @@ class SearchUsers extends StatelessWidget {
       child: Column(
         children: [
           RoundedArrowButton(
-              onPressed: () {},
+              onPressed: () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => SearchContacts())),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

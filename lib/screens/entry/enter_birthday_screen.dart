@@ -39,12 +39,15 @@ class _EnterBirthdayScreenState extends State<StatefulWidget> {
     final userState = context.watch<UserState>();
     final padding = 30.0;
     final sectionSpacing = 35.0;
+    final headingSpacing = 10.0;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(height: 50),
         Text('Select Your Birthdate').title().reallybold(),
+        SizedBox(height: headingSpacing),
+        Text('Find events with people your age.').subtitle().semibold(),
         SizedBox(height: sectionSpacing),
         ShadowBox(
             child: DatePickerWidget(

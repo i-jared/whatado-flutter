@@ -6,32 +6,31 @@ class DecoratedEntryPage extends StatelessWidget {
   DecoratedEntryPage({this.child});
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Column(children: [
-        Expanded(
-          child: Container(
-            color: AppColors.primary,
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      child: Stack(children: [
+        Column(children: [
+          Expanded(
+            child: Container(
+              color: AppColors.primary,
+            ),
           ),
-        ),
-        Expanded(child: Container(color: AppColors.background))
-      ]),
-      SafeArea(
-          top: false,
-          child: Scaffold(
-              resizeToAvoidBottomInset: false,
-              body: LayoutBuilder(builder: (context, constraints) {
-                return Container(
-                  color: AppColors.primary,
-                  child: SingleChildScrollView(
-                      physics: ClampingScrollPhysics(),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: constraints.maxHeight,
-                          maxWidth: constraints.maxWidth,
-                        ),
-                        child: Column(children: [
-                          Flexible(
-                            flex: 3,
+          Expanded(child: Container(color: AppColors.background))
+        ]),
+        SafeArea(
+            top: false,
+            child: LayoutBuilder(builder: (context, constraints) {
+              return Scaffold(
+                  resizeToAvoidBottomInset: true,
+                  body: SingleChildScrollView(
+                    child: Container(
+                      color: AppColors.primary,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ConstrainedBox(
+                            constraints: BoxConstraints.tight(
+                                Size(constraints.maxWidth, constraints.maxHeight * 3 / 13)),
                             child: Stack(
                               children: [
                                 Container(
@@ -49,8 +48,9 @@ class DecoratedEntryPage extends StatelessWidget {
                               ],
                             ),
                           ),
-                          Flexible(
-                              flex: 10,
+                          ConstrainedBox(
+                              constraints: BoxConstraints.tight(
+                                  Size(constraints.maxWidth, constraints.maxHeight * 10 / 13)),
                               child: Container(
                                   decoration: BoxDecoration(
                                       color: AppColors.background,
@@ -61,10 +61,12 @@ class DecoratedEntryPage extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                                     child: child,
                                   )))
-                        ]),
-                      )),
-                );
-              })))
-    ]);
+                        ],
+                      ),
+                    ),
+                  ));
+            }))
+      ]),
+    );
   }
 }

@@ -95,7 +95,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
         SizedBox(height: 50),
         Text('Profile Pictures').title().reallybold(),
         SizedBox(height: headingSpacing),
-        Text('Great!  Now add a few pictures.').subtitle().semibold(),
+        Text('Great! Now add a few pictures.').subtitle().semibold(),
         SizedBox(height: headingSpacing),
         Wrap(spacing: imageSpacing, runSpacing: 10.0, children: theList),
         Spacer(),

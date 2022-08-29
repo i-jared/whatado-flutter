@@ -43,7 +43,7 @@ class SearchGroups extends StatelessWidget {
     if (searchState.groupsLoading || searchState.filteredGroups == null) {
       return Container(height: 200, child: Center(child: CircularProgressIndicator()));
     }
-    if (searchState.filteredUsers!.isEmpty) {
+    if (searchState.filteredGroups!.isEmpty) {
       return Container(height: 200, child: Center(child: Text('No groups to list')));
     }
     return Flexible(

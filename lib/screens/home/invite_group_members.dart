@@ -45,8 +45,9 @@ class _InviteGroupMembersState extends State<InviteGroupMembers> {
                 child: Text('open settings'),
                 onPressed: () async {
                   await openAppSettings();
+                  final permissionResult = await Permission.contacts.request();
                   searchState.contactsPermission =
-                      await FlutterContacts.requestPermission(readonly: true);
+                      permissionResult.isGranted || permissionResult.isLimited;
                 })
           ],
         ),
@@ -60,9 +61,8 @@ class _InviteGroupMembersState extends State<InviteGroupMembers> {
     }
     int nonUserLength = searchState.filteredNonUserContacts!.length;
     int userLength = nonMemberFriends.length;
-    int listLength = 2 * (nonUserLength) +
-        2 * (userLength) +
-        (userLength > 0 && nonUserLength > 0 ? 4 : 2);
+    int listLength =
+        2 * (nonUserLength) + 2 * (userLength) + (userLength > 0 && nonUserLength > 0 ? 4 : 2);
 
     return ListView.builder(
         itemCount: listLength,
@@ -73,12 +73,11 @@ class _InviteGroupMembersState extends State<InviteGroupMembers> {
           if (i == 0 && userLength > 0) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
-              child: Text('Add Members',
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
+              child:
+                  Text('Add Members', style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold)),
             );
           }
-          if ((i == 0 && userLength == 0) ||
-              (i == 2 * userLength + 2 && userLength > 0)) {
+          if ((i == 0 && userLength == 0) || (i == 2 * userLength + 2 && userLength > 0)) {
             return Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Text('Invite Contacts',

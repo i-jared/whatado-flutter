@@ -36,12 +36,17 @@ class _ChooseGenderScreenState extends State<StatefulWidget> {
     final setupState = Provider.of<SetupState>(context);
     final padding = 30.0;
     final sectionSpacing = 35.0;
+    final headingSpacing = 10.0;
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(height: 50),
         Text('Choose your Gender').title().reallybold(),
+        SizedBox(height: headingSpacing),
+        Text('Trying to avoid cooties? You can have events for either gender.')
+            .subtitle()
+            .semibold(),
         SizedBox(height: sectionSpacing),
         Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

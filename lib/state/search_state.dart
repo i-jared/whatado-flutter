@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:fuzzywuzzy/fuzzywuzzy.dart';
 import 'package:fuzzywuzzy/model/extracted_result.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart' as g;
 import 'package:whatado/models/my_contact.dart';
@@ -126,8 +127,9 @@ class SearchState extends ChangeNotifier {
 
   Future<void> loadContacts() async {
     // get permissin to load contacts
-    _contactsPermission = await FlutterContacts.requestPermission(readonly: true);
-    if (_contactsPermission!) {
+    final permissionResult = await Permission.contacts.request();
+    _contactsPermission = permissionResult.isGranted || permissionResult.isLimited;
+    if (_contactsPermission ?? false) {
       final provider = UserGqlProvider();
       // get your referrals
       final referralsResult = await provider.myReferrals();
@@ -171,7 +173,7 @@ class SearchState extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateReferrals(String phone) async {
+  void updateReferrals(String phone) {
     if (_referrals == null) {
       _referrals = [phone];
     } else {

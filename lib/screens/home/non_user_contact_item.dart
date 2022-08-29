@@ -1,9 +1,11 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/my_contact.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/state/search_state.dart';
+import 'package:whatado/utils/logger.dart';
 
 class NonUserContactItem extends StatefulWidget {
   final MyContact contact;
@@ -37,8 +39,7 @@ class _NonUserContactItemState extends State<NonUserContactItem> {
                 width: 50,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    image:
-                        DecorationImage(image: MemoryImage(widget.contact.thumbnail!))),
+                    image: DecorationImage(image: MemoryImage(widget.contact.thumbnail!))),
               )
             : Container(
                 height: 50,
@@ -69,7 +70,11 @@ class _NonUserContactItemState extends State<NonUserContactItem> {
                     final provider = UserGqlProvider();
                     final result = await provider.createReferral(widget.contact.phone!,
                         eventId: widget.eventId, groupId: widget.groupId);
-                    await searchState.updateReferrals(widget.contact.phone!);
+                    if (result.ok) {
+                      searchState.updateReferrals(widget.contact.phone!);
+                    } else {
+                      BotToast.showText(text: 'Problem inviting contact. Please try again later.');
+                    }
                     setState(() {
                       loading = false;
                       sent = result.ok;

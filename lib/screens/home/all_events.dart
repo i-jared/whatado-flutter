@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/events/all_events_sort_bar.dart';
 import 'package:whatado/widgets/events/event_display.dart';
 import 'package:whatado/widgets/home/calendar_selector.dart';
@@ -27,6 +27,27 @@ class AllEvents extends StatelessWidget {
               key: PageStorageKey(0),
               controller: homeState.allEventsScrollController,
               children: [
+                if (userState.user?.location == null && !(homeState.locationPermission ?? true))
+                  Container(
+                    height: MediaQuery.of(context).size.height - 200,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Please allow permission to access location.'),
+                        TextButton(
+                            child: Text('access location'),
+                            onPressed: () async {
+                              final permissionResult = await Permission.location.request();
+                              if (permissionResult.isGranted || permissionResult.isLimited) {
+                                final updateResult = await homeState.loadLocation();
+                                if (updateResult) {
+                                  await homeState.load();
+                                }
+                              }
+                            }),
+                      ],
+                    ),
+                  ),
                 if (homeState.allEvents == null || homeState.otherEvents == null)
                   Container(
                       height: MediaQuery.of(context).size.height - 200,

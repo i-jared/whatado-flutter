@@ -31,6 +31,7 @@ class HomeState extends ChangeNotifier {
   int _skip;
   bool _favoritesEmpty;
   bool _othersEmpty;
+  bool? _locationPermission;
   DateTime? _selectedDate;
   SortType _sortType;
   MySortType _mySortType;
@@ -107,6 +108,8 @@ class HomeState extends ChangeNotifier {
     if (locationService.locationData != null &&
         locationService.locationData!.latitude != null &&
         locationService.locationData!.longitude != null) {
+      _locationPermission = true;
+      notifyListeners();
       UserGqlProvider provider = UserGqlProvider();
       final result = await provider.updateUser(UserFilterInput(
           location: GeoJsonPoint(
@@ -115,6 +118,8 @@ class HomeState extends ChangeNotifier {
                   longitude: locationService.locationData!.longitude!))));
       return result.ok;
     }
+    _locationPermission = false;
+    notifyListeners();
     return false;
   }
 
@@ -127,6 +132,12 @@ class HomeState extends ChangeNotifier {
     appBarResetController?.close();
     appBarResetSub?.cancel();
     super.dispose();
+  }
+
+  bool? get locationPermission => _locationPermission;
+  set locationPermission(bool? newStatus) {
+    _locationPermission = newStatus;
+    notifyListeners();
   }
 
   MySortType get mySortType => _mySortType;

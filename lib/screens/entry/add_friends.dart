@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/screens/home/home.dart';
+import 'package:whatado/screens/home/search_contacts.dart';
 import 'package:whatado/screens/home/user_contact_item.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';
@@ -22,7 +23,7 @@ class _AddFriendsState extends State<AddFriends> {
     super.initState();
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
       final searchState = context.read<SearchState>();
-      searchState.loadContacts();
+      await searchState.loadContacts();
     });
     loading = false;
   }
@@ -45,6 +46,23 @@ class _AddFriendsState extends State<AddFriends> {
         SizedBox(height: 50),
         Text('Add Friends').title().reallybold(),
         SizedBox(height: headingSpacing),
+        Text('Find friends on Whatado or invite your contacts to join you!').subtitle().semibold(),
+        SizedBox(height: sectionSpacing),
+        RoundedArrowButton(
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SearchContacts(),
+                )),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.group_add),
+                SizedBox(width: 10),
+                Text('Contacts', style: TextStyle(fontSize: 20))
+              ],
+            )),
+        SizedBox(height: sectionSpacing),
         Flexible(child: getMainWidget(context, searchState, userState)),
         Center(
           child: loading

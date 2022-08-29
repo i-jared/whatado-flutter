@@ -32,9 +32,7 @@ class _WriteBioScreenState extends State<WriteBioScreen> {
         SizedBox(height: 50),
         Text('Tell Us More').title().reallybold(),
         SizedBox(height: headingSpacing),
-        Text('First, add some of your interests to help connect you with like-minded people.')
-            .subtitle()
-            .semibold(),
+        Text('Give everyone an intro to who you are!').subtitle().semibold(),
         SizedBox(height: sectionSpacing),
         LabeledOutlineTextField(
           label: 'Bio',
