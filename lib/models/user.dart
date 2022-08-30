@@ -5,6 +5,7 @@ import 'package:geopoint/geopoint.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
+import 'package:whatado/utils/logger.dart';
 
 class User {
   int id;

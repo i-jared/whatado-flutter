@@ -92,16 +92,13 @@ class _TargetAudienceState extends State<TargetAudience> {
                               : AppColors.disabled,
                           onPressed: () =>
                               eventState.privacy = privacies[i ~/ 2]['privacy'] as Privacy,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(privacies[i ~/ 2]['text'] as String,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: eventState.privacy ==
-                                            (privacies[i ~/ 2]['privacy'] as Privacy)
-                                        ? Colors.white
-                                        : Colors.black)),
-                          )),
+                          child: Text(privacies[i ~/ 2]['text'] as String,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: eventState.privacy ==
+                                          (privacies[i ~/ 2]['privacy'] as Privacy)
+                                      ? Colors.white
+                                      : Colors.black))),
                     )),
         ),
         if (eventState.privacy == Privacy.private) Expanded(child: TargetPrivate()),

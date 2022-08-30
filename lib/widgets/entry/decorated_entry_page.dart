@@ -23,6 +23,7 @@ class DecoratedEntryPage extends StatelessWidget {
               return Scaffold(
                   resizeToAvoidBottomInset: true,
                   body: SingleChildScrollView(
+                    physics: ClampingScrollPhysics(),
                     child: Container(
                       color: AppColors.primary,
                       child: Column(
@@ -38,9 +39,9 @@ class DecoratedEntryPage extends StatelessWidget {
                                     child: Center(
                                         child: Opacity(
                                       opacity: 0.7,
-                                      child: Image.asset("assets/party_pattern.png",
-                                          width: MediaQuery.of(context).size.width,
-                                          fit: BoxFit.cover),
+                                      // child: Image.asset("assets/party_pattern.png",
+                                      //     width: MediaQuery.of(context).size.width,
+                                      //     fit: BoxFit.cover),
                                     ))),
                                 Center(
                                   child: Image.asset('assets/Whatado_White.png', height: 175),

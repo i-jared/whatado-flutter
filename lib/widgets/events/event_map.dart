@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:geojson/geojson.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:whatado/constants.dart';
-import 'package:whatado/models/event.dart';
 
 class EventMap extends StatefulWidget {
-  final Event event;
-  EventMap({required this.event});
+  final GeoJsonPoint coordinates;
+  final bool? scrollGesturesEnabled;
+  final bool? zoomGesturesEnabled;
+
+  EventMap({required this.coordinates, this.zoomGesturesEnabled, this.scrollGesturesEnabled});
   @override
   State<StatefulWidget> createState() => _EventMapState();
 }
@@ -17,7 +20,7 @@ class _EventMapState extends State<EventMap> {
   @override
   void initState() {
     super.initState();
-    final coordinates = widget.event.coordinates.geoPoint;
+    final coordinates = widget.coordinates.geoPoint;
     _location = CameraPosition(
       target: LatLng(coordinates.latitude, coordinates.longitude),
       zoom: 13.5,
@@ -41,9 +44,9 @@ class _EventMapState extends State<EventMap> {
         markers: {Marker(markerId: MarkerId("Event Location"), position: _location.target)},
         buildingsEnabled: false,
         rotateGesturesEnabled: false,
-        scrollGesturesEnabled: false,
+        scrollGesturesEnabled: widget.scrollGesturesEnabled ?? false,
         zoomControlsEnabled: false,
-        zoomGesturesEnabled: false,
+        zoomGesturesEnabled: widget.zoomGesturesEnabled ?? false,
         tiltGesturesEnabled: false,
         mapToolbarEnabled: false,
         compassEnabled: false,

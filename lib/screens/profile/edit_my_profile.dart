@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -10,6 +11,7 @@ import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
@@ -73,8 +75,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
   final sectionSpacing = 30.0;
   @override
   Widget build(BuildContext context) {
-    final imageWidth =
-        (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) / 3.0;
+    final imageWidth = (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) / 3.0;
     final userState = Provider.of<UserState>(context);
     final theList = userState.photos == null
         ? [Center(child: CircularProgressIndicator())]
@@ -96,13 +97,12 @@ class _EditMyProfileState extends State<EditMyProfile> {
                       final image = await cloudStorageService.pickImage();
                       if (image != null) {
                         final temp = userState.photos;
-                        temp?.add(cloudStorageService.resize(file: image));
+                        temp?.add(cloudStorageService.resize(file: File(image.path)));
                         //update
                         userState.photos = temp;
                       }
                     }))
           ];
-
     return GenericPage(
       appBar: SavingAppBar(
           title: 'Edit Profile',
@@ -121,9 +121,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
               (bioController.text == widget.user!.bio &&
                       listsEqual<Interest>(interests, widget.user!.interests) &&
                       listsEqual<Uint8List>(userState.photos, userState.ogphotos) ||
-                  (userState.photos!.isEmpty ||
-                      bioController.text.isEmpty ||
-                      interests.isEmpty))),
+                  (userState.photos!.isEmpty || bioController.text.isEmpty || interests.isEmpty))),
       body: widget.user == null
           ? Container()
           : userState.loading
@@ -198,9 +196,8 @@ class _EditMyProfileState extends State<EditMyProfile> {
                               direction: AxisDirection.up,
                               noItemsFoundBuilder: (context) => SizedBox.shrink(),
                               onSuggestionSelected: (Interest interest) {
-                                if (interests
-                                    .map((val) => val.title)
-                                    .contains(interest.title)) return;
+                                if (interests.map((val) => val.title).contains(interest.title))
+                                  return;
                                 interests.add(interest);
                                 setState(() {
                                   interests = interests;
@@ -240,8 +237,8 @@ class _EditMyProfileState extends State<EditMyProfile> {
                                     if (interests
                                         .map((val) => val.title)
                                         .contains(textController.text.trim())) return;
-                                    final Interest newInterest = Interest(
-                                        id: 1, title: textController.text.trim());
+                                    final Interest newInterest =
+                                        Interest(id: 1, title: textController.text.trim());
                                     interests.add(newInterest);
                                     allInterests.add(newInterest);
                                     setState(() {

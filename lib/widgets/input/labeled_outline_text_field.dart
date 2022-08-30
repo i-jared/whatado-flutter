@@ -9,6 +9,7 @@ class LabeledOutlineTextField extends StatelessWidget {
   final int? maxLines;
   final Widget? suffixIcon;
   final BoxConstraints? suffixIconConstraints;
+  final TextCapitalization? textCapitalization;
   LabeledOutlineTextField({
     required this.label,
     this.controller,
@@ -17,6 +18,7 @@ class LabeledOutlineTextField extends StatelessWidget {
     this.maxLines,
     this.suffixIcon,
     this.suffixIconConstraints,
+    this.textCapitalization,
   });
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class LabeledOutlineTextField extends StatelessWidget {
         children: [
           Text(label, style: TextStyle(color: Colors.grey[700])),
           TextFormField(
+            textCapitalization: textCapitalization ?? TextCapitalization.none,
             maxLength: maxLength,
             controller: controller,
             decoration: InputDecoration(

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/screens/add_event/add_event.dart';
-import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';

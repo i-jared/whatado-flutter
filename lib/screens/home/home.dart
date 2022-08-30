@@ -187,8 +187,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarBrightness: Brightness.dark,
-      statusBarIconBrightness: Brightness.dark,
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
       systemNavigationBarColor: AppColors.background,
       statusBarColor: Colors.transparent,
     ));

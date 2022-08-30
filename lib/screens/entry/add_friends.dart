@@ -47,22 +47,7 @@ class _AddFriendsState extends State<AddFriends> {
         Text('Add Friends').title().reallybold(),
         SizedBox(height: headingSpacing),
         Text('Find friends on Whatado or invite your contacts to join you!').subtitle().semibold(),
-        SizedBox(height: sectionSpacing),
-        RoundedArrowButton(
-            onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => SearchContacts(),
-                )),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.group_add),
-                SizedBox(width: 10),
-                Text('Contacts', style: TextStyle(fontSize: 20))
-              ],
-            )),
-        SizedBox(height: sectionSpacing),
+        SizedBox(height: headingSpacing),
         Flexible(child: getMainWidget(context, searchState, userState)),
         Center(
           child: loading
@@ -77,7 +62,7 @@ class _AddFriendsState extends State<AddFriends> {
                     Navigator.pop(context, true);
                   }),
         ),
-        SizedBox(height: 40)
+        SizedBox(height: sectionSpacing)
       ]),
     );
   }
@@ -92,16 +77,33 @@ class _AddFriendsState extends State<AddFriends> {
       return Center(
           child: Text('No contacts to add. Find and invite friends through the "search" tab.'));
     return ListView.builder(
-        itemCount: 2 * searchState.userContacts!.length,
+        itemCount: searchState.filteredUserContacts!.length + 1,
         itemBuilder: (context, i) {
-          if (i.isOdd) {
-            return Divider();
-          }
-          int j = i ~/ 2;
-          final user = searchState.filteredUserContacts![j];
-          return UserContactItem(user,
-              accepted: userState.user?.friends.any((f) => f.id == user.id) ?? false,
-              requested: userState.user?.requestedFriends.any((f) => f.id == user.id) ?? false);
+          if (i == 0)
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: RoundedArrowButton(
+                  onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SearchContacts(),
+                      )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.group_add),
+                      SizedBox(width: 10),
+                      Text('Contacts', style: TextStyle(fontSize: 20))
+                    ],
+                  )),
+            );
+          final user = searchState.filteredUserContacts![i - 1];
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: UserContactItem(user,
+                accepted: userState.user?.friends.any((f) => f.id == user.id) ?? false,
+                requested: userState.user?.requestedFriends.any((f) => f.id == user.id) ?? false),
+          );
         });
   }
 }

@@ -48,6 +48,7 @@ class CombinedInterestSearch extends StatelessWidget {
                   Text('Interests', style: TextStyle(color: Colors.grey[700])),
                   SizedBox(width: 5),
                   Tooltip(
+                    showDuration: Duration(seconds: 3),
                     preferBelow: false,
                     triggerMode: TooltipTriggerMode.tap,
                     margin: EdgeInsets.symmetric(horizontal: 50),

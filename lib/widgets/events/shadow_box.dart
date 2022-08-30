@@ -4,11 +4,12 @@ import 'package:whatado/constants.dart';
 class ShadowBox extends StatelessWidget {
   final Widget? child;
   final Color? color;
-  ShadowBox({this.child, this.color});
+  final double? padding;
+  ShadowBox({this.child, this.color, this.padding});
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(15.0),
+      padding: EdgeInsets.all(padding ?? 15.0),
       child: child,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(AppRadii.button),

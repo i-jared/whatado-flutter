@@ -5,10 +5,8 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/providers/graphql/login_query.dart';
-import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/signup.dart';
 import 'package:whatado/screens/entry/validate.dart';
-import 'package:whatado/screens/entry/write_bio.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
@@ -17,8 +15,6 @@ import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/entry/decorated_entry_page.dart';
 import 'package:whatado/widgets/input/bottom_sheet.dart';
 import 'package:whatado/widgets/input/my_password_field.dart';
-
-import 'choose_interests.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -54,11 +50,11 @@ class _LoginScreenState extends State<StatefulWidget> {
         child: Form(
       key: _formKey,
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(height: 40),
+        SizedBox(height: 35),
         Text('Welcome Back').reallybold().title(),
-        SizedBox(height: 10),
+        SizedBox(height: 5),
         Text('Please sign in to continue.').semibold().subtitle(),
-        SizedBox(height: 30),
+        SizedBox(height: 20),
         Container(
           padding: EdgeInsets.only(left: 15, right: 15, top: 5),
           decoration: BoxDecoration(
@@ -108,7 +104,7 @@ class _LoginScreenState extends State<StatefulWidget> {
             onPressed: () async {
               showModalBottomSheet<dynamic>(
                   isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
+                  backgroundColor: AppColors.background,
                   context: context,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
@@ -174,7 +170,7 @@ class _LoginScreenState extends State<StatefulWidget> {
                   },
             text: "Sign In",
           ),
-        SizedBox(height: 30),
+        SizedBox(height: 20),
         if (loading) Center(child: CircularProgressIndicator(value: null)),
         Spacer(),
         Row(
@@ -187,7 +183,7 @@ class _LoginScreenState extends State<StatefulWidget> {
                     context, MaterialPageRoute(builder: (ctx) => SignupScreen()))),
           ],
         ),
-        SizedBox(height: 40)
+        SizedBox(height: 30)
       ]),
     ));
   }

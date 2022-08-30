@@ -65,9 +65,9 @@ class _ValidatePhoneScreenState extends State<ValidatePhoneScreen> {
 
     return DecoratedEntryPage(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(height: 40),
+        SizedBox(height: 35),
         Text('Verify Your Phone Number').title().reallybold(),
-        SizedBox(height: headingSpacing),
+        SizedBox(height: 5),
         Text('Enter the 5-digit code we texted to you.').subtitle().semibold(),
         SizedBox(height: sectionSpacing),
         OtpTextField(

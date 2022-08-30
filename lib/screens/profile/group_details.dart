@@ -2,17 +2,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
-import 'package:whatado/models/event.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
-import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/screens/home/invite_group_members_page.dart';
 import 'package:whatado/screens/home/select_group_requested.dart';
 import 'package:whatado/screens/profile/edit_group_details.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
-import 'package:whatado/widgets/events/inner_event_display.dart';
+import 'package:whatado/widgets/events/event_map.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
@@ -90,7 +88,11 @@ class _GroupDetailsState extends State<GroupDetails> {
             SizedBox(height: 30),
             Text('Location', style: headingStyle),
             SizedBox(height: 30),
-            Text(group.location.toString()),
+            EventMap(
+              coordinates: group.location,
+              zoomGesturesEnabled: true,
+              scrollGesturesEnabled: true,
+            ),
             SizedBox(height: 30),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -22,6 +22,7 @@ class TargetGroup extends StatelessWidget {
           Text('GROUP INVITATIONS', style: headingStyle),
           SizedBox(width: 10),
           Tooltip(
+            showDuration: Duration(seconds: 3),
             preferBelow: false,
             triggerMode: TooltipTriggerMode.tap,
             margin: EdgeInsets.symmetric(horizontal: 50),
@@ -32,10 +33,9 @@ class TargetGroup extends StatelessWidget {
         ],
       ),
       TextButton(
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CreateGroup())),
-          child: Text("Create Group +",
-              style: TextStyle(color: AppColors.primary, fontSize: 18))),
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroup())),
+          child: Text("Create Group +", style: TextStyle(color: AppColors.primary, fontSize: 18))),
       Expanded(
         child: Container(
           child: InviteGroups(

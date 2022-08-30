@@ -14,11 +14,8 @@ import 'package:keyboard_dismisser/keyboard_dismisser.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/constants.dart';
-import 'package:whatado/screens/entry/choose_interests.dart';
-import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/validate.dart';
 import 'package:whatado/screens/entry/welcome.dart';
-import 'package:whatado/screens/entry/write_bio.dart';
 import 'package:whatado/screens/home/home.dart';
 import 'package:whatado/screens/home/shimmer_screen.dart';
 import 'package:whatado/services/environment_config.dart';
@@ -105,6 +102,7 @@ class _MyAppState extends State<MyApp> {
                   navigatorObservers: [BotToastNavigatorObserver()],
                   title: 'Flutter Demo',
                   theme: ThemeData(
+                      appBarTheme: AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
                       textSelectionTheme: TextSelectionThemeData(selectionColor: AppColors.primary),
                       primarySwatch: MaterialColor(
                         0xFF000000,

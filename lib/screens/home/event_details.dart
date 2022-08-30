@@ -45,7 +45,7 @@ class _EventDetailsState extends State<EventDetails> {
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
     final userState = Provider.of<UserState>(context);
-    final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.w600);
+    final headingStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
     final headingSpacing = 10.0;
     final padding = 30.0;
     final sectionSpacing = 20.0;
@@ -132,7 +132,7 @@ class _EventDetailsState extends State<EventDetails> {
                             Flexible(
                               child: Text(event.creator.name,
                                   overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500)),
                             )
                           ],
                         ),
@@ -157,8 +157,10 @@ class _EventDetailsState extends State<EventDetails> {
                       children: [
                         ShadedIcon(icon: Icons.calendar_month_rounded, width: 50, iconSize: 35),
                         SizedBox(width: 10),
-                        Text(dateFormat.format(event.time),
-                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                        Flexible(
+                          child: Text(dateFormat.format(event.time),
+                              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600)),
+                        ),
                       ],
                     ),
                   ),
@@ -179,7 +181,7 @@ class _EventDetailsState extends State<EventDetails> {
               ),
             ),
             SizedBox(height: sectionSpacing),
-            EventMap(event: event),
+            EventMap(coordinates: event.coordinates),
             SizedBox(height: sectionSpacing),
             ShadowBox(
               child: Column(

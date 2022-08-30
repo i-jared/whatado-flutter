@@ -45,6 +45,7 @@ class _AddEventState extends State<AddEvent> {
                     child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 30.0),
                     child: TextFormField(
+                      // textCapitalization: TextCapitalization.words,
                       controller: eventState.textModeController,
                       textAlign: TextAlign.center,
                       maxLines: null,

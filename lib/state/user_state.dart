@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -39,6 +41,7 @@ class UserState extends ChangeNotifier {
         .map((url) async =>
             (await NetworkAssetBundle(Uri.parse(url)).load(url)).buffer.asUint8List())
         .toList());
+    _urls = user!.photoUrls;
     photos = initialPhotoData;
     ogphotos = List.from(initialPhotoData);
   }
@@ -79,12 +82,21 @@ class UserState extends ChangeNotifier {
       if (photos != ogphotos && photos != null) {
         // get new photos
         final newPhotos = photos!.where((p) => !(ogphotos?.contains(p) ?? false));
-        // create url list with spaces for new photos
-        final missingIndices =
-            photos!.mapIndexed((i, p) => !ogphotos!.contains(p) ? i : null).whereNotNull().toList();
-        final spacedUrls =
-            photoUrls.mapIndexed((i, url) => missingIndices.contains(i) ? null : url).toList();
+        // you added at least one photo
         if (newPhotos.isNotEmpty) {
+          // create url list with spaces for new photos
+          int firstNewIndex = photos!.indexWhere((p) => !ogphotos!.contains(p));
+          final newIndices =
+              List<int>.generate(photos!.length - firstNewIndex, (i) => i + firstNewIndex);
+          // it's not gauranteed that the photourls are mapped with the photos. need to compare somehow.
+          // get list of not missing ogphotos indices (indices of where the photo item is in ogphotos)
+          // then it will match up with photourls
+          final spacedUrls = List<String?>.generate(
+              photos!.length,
+              (i) => newIndices.contains(i)
+                  ? null
+                  : photoUrls[ogphotos!.indexWhere((p) => p == photos![i])]);
+
           // upload photos that don't exist already
           // TODO upload securely using url from server
           List<String?> uploadedUrls = await Future.wait(newPhotos.map<Future<String?>>((data) {
@@ -93,29 +105,37 @@ class UserState extends ChangeNotifier {
           // replace missing urls with new uploaded urls
           uploadedUrls.forEach((url) => spacedUrls[spacedUrls.indexOf(null)] = url);
           photoUrls = spacedUrls;
+          input.photoUrls = json.encode(photoUrls);
+        } else {
+          // you only took away photos
+          List<int> missingIndices = ogphotos!
+              .mapIndexed<int?>((i, p) => !photos!.contains(p) ? i : null)
+              .whereNotNull()
+              .toList();
+          List<String?> uploadedUrls = photoUrls
+              .whereIndexed((i, p) => !missingIndices.contains(i))
+              .toList(); // remove the missing urls
+          photoUrls = uploadedUrls;
+          input.photoUrls = json.encode(uploadedUrls);
         }
       }
 
       final result = await provider.updateUser(input);
-      if (!result.ok) {
-        return false;
-      }
-      _user!.bio = bio;
-      _user!.photoUrls = List<String>.from(photoUrls);
-      notifyListeners();
-      return true;
-    } catch (e) {
-      logger.e(e);
+      if (result.ok) return await getUser();
+      return false;
+    } catch (e, stack) {
+      logger.e(e, null, stack);
       return false;
     }
   }
 
-  Future<void> getUser() async {
+  Future<bool> getUser() async {
     final query = UserGqlProvider();
     final response = await query.me();
     _user = response.data;
     await updatePhotos();
     notifyListeners();
+    return response.ok;
   }
 
   Future<void> updateFriendRequest(PublicUser newUser, {bool add = true}) async {

@@ -172,90 +172,95 @@ class _MessagesTextFieldState extends State<MessagesTextField> {
                                         ),
                                       )),
                             SizedBox(height: 10),
-                            if (selectedSurvey == 1)
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        customTextControllers.add(TextEditingController()
-                                          ..addListener(() => setState(() {})));
-                                        setState(() => customTextFields = customTextFields + 1);
+                            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                              Row(
+                                children: [
+                                  selectedSurvey == 0
+                                      ? SizedBox.shrink()
+                                      : InkWell(
+                                          onTap: () {
+                                            customTextControllers.add(TextEditingController()
+                                              ..addListener(() => setState(() {})));
+                                            setState(() => customTextFields = customTextFields + 1);
+                                          },
+                                          child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.primary,
+                                                  borderRadius:
+                                                      BorderRadius.circular(AppRadii.button)),
+                                              child: Icon(Icons.add,
+                                                  size: 30, color: AppColors.background)),
+                                        ),
+                                  selectedSurvey == 0 ? SizedBox.shrink() : SizedBox(width: 10),
+                                  selectedSurvey == 0
+                                      ? SizedBox.shrink()
+                                      : InkWell(
+                                          onTap: customTextFields <= 2
+                                              ? null
+                                              : () {
+                                                  customTextControllers.last.dispose();
+                                                  customTextControllers.removeLast();
+                                                  setState(() =>
+                                                      customTextFields = customTextFields - 1);
+                                                },
+                                          child: Container(
+                                              height: 50,
+                                              width: 50,
+                                              decoration: BoxDecoration(
+                                                  color: customTextFields <= 2
+                                                      ? AppColors.disabled
+                                                      : AppColors.primary,
+                                                  borderRadius:
+                                                      BorderRadius.circular(AppRadii.button)),
+                                              child: Icon(Icons.remove,
+                                                  size: 30, color: AppColors.background)),
+                                        ),
+                                ],
+                              ),
+                              InkWell(
+                                onTap: (selectedSurvey == 1 &&
+                                            customTextControllers.any((c) => c.text.isEmpty)) ||
+                                        chatState.surveyController.text.isEmpty
+                                    ? null
+                                    : () async {
+                                        await chatState.sendMessage(
+                                            userState.user!.id,
+                                            selectedSurvey == 0
+                                                ? ["Yes", "No", "Maybe"]
+                                                : customTextControllers.map((v) => v.text).toList(),
+                                            chatState.surveyController.text);
+                                        chatState.surveyController.clear();
+                                        customTextControllers.forEachIndexed((i, c) => c.dispose());
+                                        setState(() {
+                                          selectedSurvey = 0;
+                                          createSurvey = false;
+                                          customTextControllers =
+                                              List<TextEditingController>.generate(
+                                                  2,
+                                                  (index) => TextEditingController()
+                                                    ..addListener(() => setState(() {})));
+                                          customTextFields = 2;
+                                        });
                                       },
-                                      child: Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                              color: AppColors.primary,
-                                              borderRadius: BorderRadius.circular(AppRadii.button)),
-                                          child: Icon(Icons.add,
-                                              size: 30, color: AppColors.background)),
-                                    ),
-                                    SizedBox(width: 10),
-                                    InkWell(
-                                      onTap: customTextFields <= 2
-                                          ? null
-                                          : () {
-                                              customTextControllers.last.dispose();
-                                              customTextControllers.removeLast();
-                                              setState(
-                                                  () => customTextFields = customTextFields - 1);
-                                            },
-                                      child: Container(
-                                          height: 50,
-                                          width: 50,
-                                          decoration: BoxDecoration(
-                                              color: customTextFields <= 2
-                                                  ? AppColors.disabled
-                                                  : AppColors.primary,
-                                              borderRadius: BorderRadius.circular(AppRadii.button)),
-                                          child: Icon(Icons.remove,
-                                              size: 30, color: AppColors.background)),
-                                    ),
-                                  ],
-                                ),
-                                InkWell(
-                                  onTap: customTextControllers.any((c) => c.text.isEmpty) ||
-                                          chatState.surveyController.text.isEmpty
-                                      ? null
-                                      : () async {
-                                          await chatState.sendMessage(
-                                              userState.user!.id,
-                                              selectedSurvey == 0
-                                                  ? ["Yes", "No", "Maybe"]
-                                                  : customTextControllers
-                                                      .map((v) => v.text)
-                                                      .toList(),
-                                              chatState.surveyController.text);
-                                          chatState.surveyController.clear();
-                                          customTextControllers
-                                              .forEachIndexed((i, c) => c.dispose());
-                                          setState(() {
-                                            selectedSurvey = 0;
-                                            createSurvey = false;
-                                            customTextControllers =
-                                                List<TextEditingController>.generate(
-                                                    2,
-                                                    (index) => TextEditingController()
-                                                      ..addListener(() => setState(() {})));
-                                            customTextFields = 2;
-                                          });
-                                        },
-                                  child: Container(
-                                      padding: EdgeInsets.symmetric(horizontal: 25),
-                                      height: 50,
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(
-                                          color: customTextControllers.any((c) => c.text.isEmpty) ||
-                                                  chatState.surveyController.text.isEmpty
-                                              ? AppColors.disabled
-                                              : AppColors.primary,
-                                          borderRadius: BorderRadius.circular(AppRadii.button)),
-                                      child: Text('Create',
-                                          style: TextStyle(
-                                              fontSize: 16, color: AppColors.background))),
-                                ),
-                              ]),
+                                child: Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 25),
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                        color: (selectedSurvey == 1 &&
+                                                    customTextControllers
+                                                        .any((c) => c.text.isEmpty)) ||
+                                                chatState.surveyController.text.isEmpty
+                                            ? AppColors.disabled
+                                            : AppColors.primary,
+                                        borderRadius: BorderRadius.circular(AppRadii.button)),
+                                    child: Text('Create',
+                                        style:
+                                            TextStyle(fontSize: 16, color: AppColors.background))),
+                              ),
+                            ]),
                           ],
                         ),
                       )),

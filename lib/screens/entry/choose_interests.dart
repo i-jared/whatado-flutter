@@ -40,49 +40,52 @@ class _ChooseInterestsScreenState extends State<StatefulWidget> {
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        SizedBox(height: 50),
-        Text('Add Your Interests').title().reallybold(),
-        SizedBox(height: headingSpacing),
-        Text('First, add some of your interests to help connect you with like-minded people.')
-            .subtitle()
-            .semibold(),
-        SizedBox(height: sectionSpacing),
-        CombinedInterestSearch(
-          textController: textController,
-          interests: setupState.popularInterests,
-          customInterests: setupState.customInterests,
-          selectedInterests: setupState.selectedInterests,
-          addCustomInterest: setupState.addCustomInterest,
-          addInterest: setupState.selectInterest,
-          removeCustomInterest: setupState.removeCustomInterest,
-          removeInterest: setupState.unselectInterest,
-          tooltipMessage: 'What kind of events do you want to see?',
-        ),
-        Spacer(),
-        Center(
-          child: RoundedArrowButton.text(
-            disabled:
-                (setupState.selectedInterests.isEmpty && setupState.customInterests.isEmpty) ||
-                    loading,
-            loading: loading,
-            onPressed: () async {
-              setState(() => loading = true);
-              if (await setupState.saveInterests()) {
-                userState.getUser();
-                Navigator.pop(context, true);
-              } else {
-                setState(() {
-                  loading = false;
-                  BotToast.showText(text: 'Error updating interests. Please try again later.');
-                });
-              }
-            },
-            text: "Continue",
+      child: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          SizedBox(height: 50),
+          Text('Add Your Interests').title().reallybold(),
+          SizedBox(height: headingSpacing),
+          Text('First, add some of your interests to help connect you with like-minded people.')
+              .subtitle()
+              .semibold(),
+          SizedBox(height: sectionSpacing),
+          CombinedInterestSearch(
+            textController: textController,
+            interests: setupState.popularInterests,
+            customInterests: setupState.customInterests,
+            selectedInterests: setupState.selectedInterests,
+            addCustomInterest: setupState.addCustomInterest,
+            addInterest: setupState.selectInterest,
+            removeCustomInterest: setupState.removeCustomInterest,
+            removeInterest: setupState.unselectInterest,
+            tooltipMessage: 'What kind of events do you want to see?',
           ),
-        ),
-        SizedBox(height: sectionSpacing),
-      ]),
+          // Spacer(),
+          SizedBox(height: sectionSpacing),
+          Center(
+            child: RoundedArrowButton.text(
+              disabled:
+                  (setupState.selectedInterests.isEmpty && setupState.customInterests.isEmpty) ||
+                      loading,
+              loading: loading,
+              onPressed: () async {
+                setState(() => loading = true);
+                if (await setupState.saveInterests()) {
+                  userState.getUser();
+                  Navigator.pop(context, true);
+                } else {
+                  setState(() {
+                    loading = false;
+                    BotToast.showText(text: 'Error updating interests. Please try again later.');
+                  });
+                }
+              },
+              text: "Continue",
+            ),
+          ),
+          SizedBox(height: sectionSpacing),
+        ]),
+      ),
     );
   }
 }

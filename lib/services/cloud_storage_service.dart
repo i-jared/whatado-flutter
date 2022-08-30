@@ -31,11 +31,14 @@ class CloudStorageService {
     return Uint8List.fromList(fi.encodePng(resizedFace));
   }
 
-  Future<File?> pickImage() async {
+  Future<CroppedFile?> pickImage() async {
     final ImagePicker picker = ImagePicker();
-    final xFile = await picker.pickImage(source: ImageSource.gallery);
+    final xFile =
+        await picker.pickImage(source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1080);
     if (xFile == null) return null;
-    return await ImageCropper()
+    final croppedFile = await ImageCropper()
         .cropImage(sourcePath: xFile.path, aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0));
+
+    return croppedFile;
   }
 }

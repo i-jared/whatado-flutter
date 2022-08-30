@@ -36,30 +36,32 @@ class TargetPublic extends StatelessWidget {
       children: [
         SizedBox(height: headingSpacing),
         ShadowBox(
-          child: Row(
+          padding: 10,
+          child: Column(
             children: [
-              CupertinoSwitch(
-                onChanged: (newVal) => eventState.screened = newVal,
-                value: eventState.screened,
-                activeColor: AppColors.primary,
+              Row(
+                children: [
+                  CupertinoSwitch(
+                    onChanged: (newVal) => eventState.screened = newVal,
+                    value: eventState.screened,
+                    activeColor: AppColors.primary,
+                  ),
+                  SizedBox(width: 20),
+                  Text('Screen Event Members',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                ],
               ),
-              SizedBox(width: 20),
-              Text('Screen Event Members',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-            ],
-          ),
-        ),
-        SizedBox(height: headingSpacing),
-        ShadowBox(
-          child: Row(
-            children: [
-              CupertinoSwitch(
-                onChanged: (newVal) => eventState.chatDisabled = !newVal,
-                value: !eventState.chatDisabled,
-                activeColor: AppColors.primary,
+              Row(
+                children: [
+                  CupertinoSwitch(
+                    onChanged: (newVal) => eventState.chatDisabled = !newVal,
+                    value: !eventState.chatDisabled,
+                    activeColor: AppColors.primary,
+                  ),
+                  SizedBox(width: 20),
+                  Text('Chat Open', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                ],
               ),
-              SizedBox(width: 20),
-              Text('Chat Open', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
             ],
           ),
         ),
@@ -79,16 +81,13 @@ class TargetPublic extends StatelessWidget {
                               : AppColors.disabled,
                           onPressed: () =>
                               eventState.selectedGender = genders[i ~/ 2]['gender'] as Gender,
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(genders[i ~/ 2]['text'] as String,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    color: eventState.selectedGender ==
-                                            (genders[i ~/ 2]['gender'] as Gender)
-                                        ? Colors.white
-                                        : Colors.black)),
-                          )),
+                          child: Text(genders[i ~/ 2]['text'] as String,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: eventState.selectedGender ==
+                                          (genders[i ~/ 2]['gender'] as Gender)
+                                      ? Colors.white
+                                      : Colors.black))),
                     )),
         ),
         SizedBox(height: headingSpacing),

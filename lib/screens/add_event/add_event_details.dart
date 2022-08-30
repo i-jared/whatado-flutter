@@ -70,11 +70,13 @@ class _AddEventDetailsState extends State<AddEventDetails> {
             if (!eventState.textMode)
               LabeledOutlineTextField(
                 label: 'Title',
+                textCapitalization: TextCapitalization.sentences,
                 controller: eventState.titleController,
                 hintText: 'Event Title',
               ),
             SizedBox(height: headingSpacing),
             LabeledOutlineTextField(
+              textCapitalization: TextCapitalization.sentences,
               label: 'Description',
               controller: eventState.descriptionController,
               hintText: 'Event Description',
@@ -117,6 +119,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                       Text('Location', style: TextStyle(color: Colors.grey[700])),
                       SizedBox(width: 5),
                       Tooltip(
+                        showDuration: Duration(seconds: 3),
                         preferBelow: false,
                         triggerMode: TooltipTriggerMode.tap,
                         margin: EdgeInsets.symmetric(horizontal: 50),

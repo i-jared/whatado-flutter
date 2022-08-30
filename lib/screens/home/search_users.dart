@@ -25,7 +25,7 @@ class SearchUsers extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.group_add),
+                  Icon(Icons.person_add),
                   SizedBox(width: 10),
                   Text('Contacts', style: TextStyle(fontSize: 20))
                 ],

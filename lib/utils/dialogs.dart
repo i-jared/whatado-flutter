@@ -8,9 +8,10 @@ import 'package:whatado/screens/entry/choose_interests.dart';
 import 'package:whatado/screens/entry/enter_birthday_screen.dart';
 import 'package:whatado/screens/entry/select_photos.dart';
 import 'package:whatado/screens/entry/write_bio.dart';
+import 'package:whatado/widgets/dialog/confirm_cancel_dialog.dart';
 
-showMyDialog(BuildContext context, Widget dialog) {
-  return showDialog(context: context, builder: (BuildContext context) => dialog);
+Future<T?> showMyDialog<T>(BuildContext context, Widget dialog) async {
+  return await showDialog<T>(context: context, builder: (BuildContext context) => dialog);
 }
 
 Future<bool> runOnboarding(BuildContext context, int startingPage) async {
@@ -24,6 +25,14 @@ Future<bool> runOnboarding(BuildContext context, int startingPage) async {
   ];
 
   bool returnVal = false;
+  final bool? beginOnboard = await showMyDialog(
+      context,
+      ConfirmCancelDialog(
+          title: 'Wait!',
+          body: 'To use all features, you\'ll have to finish setting up your account.',
+          confirmText: 'OK!',
+          onConfirm: () => Navigator.pop(context, true)));
+  if (beginOnboard == null || !beginOnboard) return false;
   for (int i = startingPage; i < onboardingWidgets.length; i++) {
     returnVal = await showEntryBottomSheet(context, onboardingWidgets[i]);
     if (!returnVal) break;

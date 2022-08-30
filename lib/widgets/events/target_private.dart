@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/models/event_user.dart';
+import 'package:whatado/screens/home/search_contacts.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/events/invite_friends.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 
@@ -15,11 +17,17 @@ class TargetPrivate extends StatelessWidget {
     final sectionSpacing = 35.0;
     return Column(children: [
       SizedBox(height: sectionSpacing),
+      RoundedArrowButton.text(
+          onPressed: () =>
+              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchContacts())),
+          text: 'Invite Contacts'),
+      SizedBox(height: sectionSpacing),
       Row(
         children: [
           Text('PRIVATE INVITATIONS', style: headingStyle),
           SizedBox(width: 10),
           Tooltip(
+            showDuration: Duration(seconds: 3),
             preferBelow: false,
             triggerMode: TooltipTriggerMode.tap,
             margin: EdgeInsets.symmetric(horizontal: 50),

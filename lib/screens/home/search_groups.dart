@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/screens/profile/create_group.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/events/shadow_box.dart';
 import 'package:whatado/widgets/general/dark_divider.dart';
 import 'package:whatado/widgets/groups/group_list_item.dart';
@@ -17,6 +19,17 @@ class SearchGroups extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
         children: [
+          RoundedArrowButton(
+              onPressed: () =>
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => CreateGroup())),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.group_add),
+                  SizedBox(width: 10),
+                  Text('Create Group', style: TextStyle(fontSize: 20))
+                ],
+              )),
           SizedBox(height: 20),
           Flexible(
             child: ShadowBox(

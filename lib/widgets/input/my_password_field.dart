@@ -6,11 +6,13 @@ class MyPasswordField extends StatefulWidget {
   final TextEditingController? controller;
   final String? errorText;
   final String? Function(String?)? validator;
+  final String label;
   MyPasswordField({
     required this.hintText,
     this.controller,
     this.errorText,
     this.validator,
+    this.label = 'Password',
   });
   @override
   State<StatefulWidget> createState() => _MyPasswordFieldState();
@@ -39,7 +41,7 @@ class _MyPasswordFieldState extends State<MyPasswordField> {
           children: [
             Icon(Icons.lock_outline_rounded, color: AppColors.primary, size: 16),
             SizedBox(width: 5),
-            Text('Password'),
+            Text(widget.label),
           ],
         ),
         contentPadding: EdgeInsets.symmetric(vertical: 12),

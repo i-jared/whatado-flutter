@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -54,9 +55,10 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
                 final image = await cloudStorageService.pickImage();
                 if (image != null) {
                   final updatedPhotos = setupState.photos;
-                  updatedPhotos.add(image);
+                  final _fileFromCropped = File(image.path);
+                  updatedPhotos.add(_fileFromCropped);
                   final updatedPhotosData = setupState.photosImageData;
-                  updatedPhotosData.add(cloudStorageService.resize(file: image));
+                  updatedPhotosData.add(cloudStorageService.resize(file: _fileFromCropped));
                   //update
                   setupState.photos = updatedPhotos;
                   setupState.photosImageData = updatedPhotosData;
@@ -82,6 +84,7 @@ class _SelectPhotosScreenState extends State<SelectPhotosScreen> {
       if (result.ok) {
         // reload user object
         userState.getUser();
+
         Navigator.pop(context, true);
       } else {
         BotToast.showText(text: 'Error uploading images. Please try again later.');
