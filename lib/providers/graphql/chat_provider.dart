@@ -6,21 +6,21 @@ import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class ChatGqlProvider {
   Future<MyQueryResponse<Chat>> lastChat(int forumId) async {
     final query = LastChatQuery(variables: LastChatArguments(forumId: forumId));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
     final root = result.data?['lastChat'];
-    final data =
-        root?['nodes'] != null ? Chat.fromGqlData(root?['nodes']) : null;
+    final data = root?['nodes'] != null ? Chat.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -40,24 +40,21 @@ class ChatGqlProvider {
       List<String>? answers}) async {
     final mutation = CreateChatMutation(
       variables: CreateChatArguments(
-          chatInput: ChatInput(
-              authorId: userId, forumId: forumId, eventId: eventId, text: text),
+          chatInput: ChatInput(authorId: userId, forumId: forumId, eventId: eventId, text: text),
           surveyInput: question == null || answers == null
               ? null
               : SurveyInput(question: question, answers: answers)),
     );
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
     final root = result.data?['createChat'];
-    final data = root != null && root['nodes'] != null
-        ? Chat.fromGqlData(root['nodes'])
-        : null;
+    final data = root != null && root['nodes'] != null ? Chat.fromGqlData(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -72,9 +69,9 @@ class ChatGqlProvider {
     final query = FlaggedChatsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -94,15 +91,13 @@ class ChatGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<List<Chat>>> chats(
-      int forumId, int take, int skip) async {
-    final query = ChatsQuery(
-        variables: ChatsArguments(forumId: forumId, take: take, skip: skip));
+  Future<MyQueryResponse<List<Chat>>> chats(int forumId, int take, int skip) async {
+    final query = ChatsQuery(variables: ChatsArguments(forumId: forumId, take: take, skip: skip));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -122,16 +117,14 @@ class ChatGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<bool>> vote(
-      int chatId, int answerId, int forumId) async {
+  Future<MyQueryResponse<bool>> vote(int chatId, int answerId, int forumId) async {
     final query = VoteMutation(
-        variables: VoteArguments(
-            chatId: chatId, answerId: answerId, forumId: forumId));
+        variables: VoteArguments(chatId: chatId, answerId: answerId, forumId: forumId));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 

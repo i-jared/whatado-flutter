@@ -120,6 +120,8 @@ mixin UserFieldsMixin {
   late List<UserFieldsMixin$Interests> interests;
   late List<UserFieldsMixin$MyEvents> myEvents;
   late List<UserFieldsMixin$ChatNotifications> chatNotifications;
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender gender;
   @JsonKey(
       fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
       toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
@@ -1112,6 +1114,7 @@ class Me$Query$Me$Nodes extends JsonSerializable
         interests,
         myEvents,
         chatNotifications,
+        gender,
         location
       ];
   @override
@@ -2829,6 +2832,7 @@ class FlaggedUsers$Query$FlaggedUsers$Nodes extends JsonSerializable
         interests,
         myEvents,
         chatNotifications,
+        gender,
         location
       ];
   @override
@@ -5146,6 +5150,12 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: null)
             ])),
+        FieldNode(
+            name: NameNode(value: 'gender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
         FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
@@ -8492,6 +8502,12 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: null)
             ])),
+        FieldNode(
+            name: NameNode(value: 'gender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
         FieldNode(
             name: NameNode(value: 'location'),
             alias: null,

@@ -4,21 +4,21 @@ import 'package:whatado/models/group.dart';
 import 'package:whatado/models/group_icon.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class GroupGqlProvider {
   Future<MyQueryResponse<Group>> myGroups() async {
     final query = MyGroupsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
     final root = result.data?['myGroups'];
-    final data =
-        root != null && root['nodes'] != null ? Group.fromGqlData(root['nodes']) : null;
+    final data = root != null && root['nodes'] != null ? Group.fromGqlData(root['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -33,9 +33,9 @@ class GroupGqlProvider {
     final query = GroupIconsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -57,9 +57,9 @@ class GroupGqlProvider {
     final query = SuggestedGroupsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -81,9 +81,9 @@ class GroupGqlProvider {
     final query = SearchGroupsQuery(variables: SearchGroupsArguments(partial: partial));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -102,13 +102,12 @@ class GroupGqlProvider {
   }
 
   Future<MyQueryResponse<Group>> updateGroup(GroupFilterInput groupInput) async {
-    final mutation =
-        UpdateGroupMutation(variables: UpdateGroupArguments(groupInput: groupInput));
+    final mutation = UpdateGroupMutation(variables: UpdateGroupArguments(groupInput: groupInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -128,9 +127,9 @@ class GroupGqlProvider {
     final mutation = RequestGroupMutation(variables: RequestGroupArguments(id: id));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
     final root = result.data?['requestGroup'];
@@ -146,16 +145,14 @@ class GroupGqlProvider {
   }
 
   Future<MyQueryResponse<Group>> createGroup(GroupInput groupInput) async {
-    final mutation =
-        CreateGroupMutation(variables: CreateGroupArguments(groupInput: groupInput));
+    final mutation = CreateGroupMutation(variables: CreateGroupArguments(groupInput: groupInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
-    print(result);
     final root = result.data?['createGroup'];
     final data = root?['nodes'] == null ? null : Group.fromGqlData(root?['nodes']);
     final ok = root?['ok'] ?? false;

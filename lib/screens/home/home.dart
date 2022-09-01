@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
+import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
@@ -143,11 +145,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final token = await FirebaseMessaging.instance.getToken();
     await saveDeviceToken(token);
     FirebaseMessaging.instance.onTokenRefresh.listen(saveDeviceToken);
-    // set firebase crashlytics id
-    final userState = Provider.of<UserState>(context, listen: false);
-    if (userState.user != null) {
-      FirebaseCrashlytics.instance.setUserIdentifier(userState.user!.id.toString());
-    }
   }
 
   Future<void> setupPermissions() async {

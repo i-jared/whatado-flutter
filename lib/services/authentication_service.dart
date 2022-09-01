@@ -34,7 +34,7 @@ class AuthenticationService {
     final response = await httpClientService.postAuthenticated(
         whatadoRefreshUrl, localStorageService.refreshToken ?? '');
     final responseJson = jsonDecode(response.body);
-    if (responseJson['ok'] == false) {
+    if (!responseJson['ok']) {
       return null;
     }
     final refreshToken = responseJson['refreshToken'];

@@ -4,10 +4,10 @@ import 'package:whatado/graphql/mutations_graphql_api.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class LoginGqlQuery {
-  Future<MyQueryResponse<bool>> login(
-      {required String phone, required String password}) async {
+  Future<MyQueryResponse<bool>> login({required String phone, required String password}) async {
     final mutation = LoginMutation(
       variables: LoginArguments(
         userInput: UserInput(password: password, phone: phone),
@@ -15,9 +15,9 @@ class LoginGqlQuery {
     );
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 

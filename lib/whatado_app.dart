@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -26,6 +27,7 @@ import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +50,7 @@ Future<void> run(String flavor) async {
 
   await Hive.initFlutter();
   await Hive.openBox<Map<dynamic, dynamic>>('whatado');
+
   Startup.initDependencies();
 
   EnvironmentConfig.initFlavor(flavor);
@@ -71,6 +74,7 @@ class _MyAppState extends State<MyApp> {
     if (!invalidAuth) {
       SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
         await loginService.attemptAutoLogin();
+        logger.wtf('loading = false');
         setState(() => loading = false);
       });
     }

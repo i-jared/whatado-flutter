@@ -1070,6 +1070,8 @@ Me$Query$Me$Nodes _$Me$Query$Me$NodesFromJson(Map<String, dynamic> json) =>
           .map((e) => UserFieldsMixin$ChatNotifications.fromJson(
               e as Map<String, dynamic>))
           .toList()
+      ..gender = $enumDecode(_$GenderEnumMap, json['gender'],
+          unknownValue: Gender.artemisUnknown)
       ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
           json['location'] as String?);
 
@@ -1095,6 +1097,7 @@ Map<String, dynamic> _$Me$Query$Me$NodesToJson(Me$Query$Me$Nodes instance) =>
       'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
       'chatNotifications':
           instance.chatNotifications.map((e) => e.toJson()).toList(),
+      'gender': _$GenderEnumMap[instance.gender]!,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
     };
@@ -2856,6 +2859,8 @@ FlaggedUsers$Query$FlaggedUsers$Nodes
               .map((e) => UserFieldsMixin$ChatNotifications.fromJson(
                   e as Map<String, dynamic>))
               .toList()
+          ..gender = $enumDecode(_$GenderEnumMap, json['gender'],
+              unknownValue: Gender.artemisUnknown)
           ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
               json['location'] as String?);
 
@@ -2882,6 +2887,7 @@ Map<String, dynamic> _$FlaggedUsers$Query$FlaggedUsers$NodesToJson(
       'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
       'chatNotifications':
           instance.chatNotifications.map((e) => e.toJson()).toList(),
+      'gender': _$GenderEnumMap[instance.gender]!,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
     };

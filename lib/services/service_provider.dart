@@ -1,4 +1,5 @@
 import 'package:injector/injector.dart';
+import 'package:whatado/services/analytics_service.dart';
 import 'package:whatado/services/authentication_service.dart';
 import 'package:whatado/services/cloud_storage_service.dart';
 import 'package:whatado/services/graphql_client_service.dart';
@@ -45,6 +46,10 @@ LocalNotificationService get localNotificationService {
 
 LocationService get locationService {
   return _injector.get<LocationService>();
+}
+
+AnalyticsService get analyticsService {
+  return _injector.get<AnalyticsService>();
 }
 // T _getInitialized<T>() {
   // if (!_injector.exists<T>()) {

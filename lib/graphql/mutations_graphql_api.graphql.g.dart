@@ -781,6 +781,8 @@ UpdateUser$Mutation$UpdateUser$Nodes
               .map((e) => UserFieldsMixin$ChatNotifications.fromJson(
                   e as Map<String, dynamic>))
               .toList()
+          ..gender = $enumDecode(_$GenderEnumMap, json['gender'],
+              unknownValue: Gender.artemisUnknown)
           ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
               json['location'] as String?);
 
@@ -807,6 +809,7 @@ Map<String, dynamic> _$UpdateUser$Mutation$UpdateUser$NodesToJson(
       'myEvents': instance.myEvents.map((e) => e.toJson()).toList(),
       'chatNotifications':
           instance.chatNotifications.map((e) => e.toJson()).toList(),
+      'gender': _$GenderEnumMap[instance.gender]!,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
     };

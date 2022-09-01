@@ -134,7 +134,8 @@ class _LoginScreenState extends State<StatefulWidget> {
                         if (res.ok) {
                           authenticationService.updateTokens(
                               res.accessToken ?? '', res.refreshToken ?? '');
-                          await userState.getUser();
+                          final user = await userState.getUserUser();
+                          if (user != null) analyticsService.init(user);
                           userState.loggedIn = true;
 
                           final route = userState.user == null

@@ -5,6 +5,7 @@ import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class ForgotPasswordGqlQuery {
   Future<MyQueryResponse<User?>> forgotPassword({required String phone}) async {
@@ -15,9 +16,9 @@ class ForgotPasswordGqlQuery {
     );
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 

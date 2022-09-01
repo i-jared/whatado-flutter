@@ -7,6 +7,7 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/models/user.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class UserGqlProvider {
   Future<MyQueryResponse<User>> me() async {
@@ -14,9 +15,9 @@ class UserGqlProvider {
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
       print(result);
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
     print(result);
@@ -36,9 +37,9 @@ class UserGqlProvider {
     final query = UserQuery(variables: UserArguments(id: id));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -59,9 +60,9 @@ class UserGqlProvider {
     final query = PublicUserPreviewQuery(variables: PublicUserPreviewArguments(userIds: ids));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -83,9 +84,9 @@ class UserGqlProvider {
     final mutation = UpdateUserMutation(variables: UpdateUserArguments(userInput: userInput));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -105,9 +106,9 @@ class UserGqlProvider {
     final mutation = RemoveAccountMutation();
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -127,9 +128,9 @@ class UserGqlProvider {
     final query = FlaggedUsersQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -151,9 +152,9 @@ class UserGqlProvider {
     final mutation = UpdatePhotosMutation(variables: UpdatePhotosArguments(urls: urls));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -174,9 +175,9 @@ class UserGqlProvider {
         variables: CheckValidationLoginArguments(code: code, phone: phone));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -200,9 +201,9 @@ class UserGqlProvider {
     final mutation = CheckValidationMutation(variables: CheckValidationArguments(code: code));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -222,9 +223,9 @@ class UserGqlProvider {
     final mutation = SendCodeMutation();
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -244,9 +245,9 @@ class UserGqlProvider {
     final mutation = FlagUserMutation(variables: FlagUserArguments(userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -266,9 +267,9 @@ class UserGqlProvider {
     final mutation = BlockUserMutation(variables: BlockUserArguments(userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -288,9 +289,9 @@ class UserGqlProvider {
     final mutation = UnblockUserMutation(variables: UnblockUserArguments(userId: userId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -311,9 +312,9 @@ class UserGqlProvider {
         AddInterestsMutation(variables: AddInterestsArguments(interestsText: interestsText));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -333,9 +334,9 @@ class UserGqlProvider {
     final query = FriendsByIdQuery(variables: FriendsByIdArguments(id: id));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -357,9 +358,9 @@ class UserGqlProvider {
     final query = SuggestedUsersQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -381,9 +382,9 @@ class UserGqlProvider {
     final query = SearchUsersQuery(variables: SearchUsersArguments(partial: partial));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -405,9 +406,9 @@ class UserGqlProvider {
     final query = UsersFromContactsQuery(variables: UsersFromContactsArguments(numbers: numbers));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -429,9 +430,9 @@ class UserGqlProvider {
     final query = MyReferralsQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -452,9 +453,9 @@ class UserGqlProvider {
         variables: CreateReferralArguments(phone: phone, eventId: eventId, groupId: groupId));
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -474,9 +475,9 @@ class UserGqlProvider {
     final query = NumbersNotUsersQuery(variables: NumbersNotUsersArguments(numbers: numbers));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -496,9 +497,9 @@ class UserGqlProvider {
     final query = AcceptFriendMutation(variables: AcceptFriendArguments(id: id));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -518,9 +519,9 @@ class UserGqlProvider {
     final query = UnrequestFriendMutation(variables: UnrequestFriendArguments(id: id));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -540,9 +541,9 @@ class UserGqlProvider {
     final query = RequestFriendMutation(variables: RequestFriendArguments(id: id));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -562,9 +563,9 @@ class UserGqlProvider {
     final query = UnfriendMutation(variables: UnfriendArguments(id: id));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 

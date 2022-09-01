@@ -49,7 +49,12 @@ class UserState extends ChangeNotifier {
   UserState()
       : _loading = false,
         _loggedIn = false {
-    getUser();
+    init();
+  }
+
+  Future<void> init() async {
+    final user = await getUserUser();
+    if (user != null) await analyticsService.init(user);
   }
 
   List<String>? get urls => _urls;
@@ -129,12 +134,26 @@ class UserState extends ChangeNotifier {
     }
   }
 
+  Future<User?> getUserUser() async {
+    final query = UserGqlProvider();
+    final response = await query.me();
+    if (response.data != null) {
+      _user = response.data;
+      await updatePhotos();
+      notifyListeners();
+    }
+    return _user;
+  }
+
   Future<bool> getUser() async {
     final query = UserGqlProvider();
     final response = await query.me();
-    _user = response.data;
-    await updatePhotos();
-    notifyListeners();
+    // don't ever get a null user.
+    if (response.data != null) {
+      _user = response.data;
+      await updatePhotos();
+      notifyListeners();
+    }
     return response.ok;
   }
 

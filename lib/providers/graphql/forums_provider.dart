@@ -6,6 +6,7 @@ import 'package:whatado/graphql/queries_graphql_api.dart';
 import 'package:whatado/models/forum.dart';
 import 'package:whatado/models/query_response.dart';
 import 'package:whatado/services/service_provider.dart';
+import 'package:whatado/utils/logger.dart';
 
 class ForumsGqlProvider {
   Future<MyQueryResponse<Forum?>> create({required int eventId}) async {
@@ -14,9 +15,9 @@ class ForumsGqlProvider {
     );
     final result = await graphqlClientService.mutate(mutation);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -33,13 +34,12 @@ class ForumsGqlProvider {
   }
 
   Future<MyQueryResponse<List<Forum>>> myForums(List<int> eventIds) async {
-    final query =
-        ForumsByEventIdQuery(variables: ForumsByEventIdArguments(eventIds: eventIds));
+    final query = ForumsByEventIdQuery(variables: ForumsByEventIdArguments(eventIds: eventIds));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -63,15 +63,14 @@ class ForumsGqlProvider {
     final query = ForumQuery(variables: ForumArguments(forumId: forumId));
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
     final root = result.data?['forum'];
-    final data =
-        root != null && root['nodes'] != null ? Forum.fromGqlData(root?['nodes']) : null;
+    final data = root != null && root['nodes'] != null ? Forum.fromGqlData(root?['nodes']) : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
@@ -86,9 +85,9 @@ class ForumsGqlProvider {
     final query = UpdateForumMutation(variables: UpdateForumArguments(options: options));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -112,9 +111,9 @@ class ForumsGqlProvider {
     final query = AccessMutation(variables: AccessArguments(id: forumId));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -134,9 +133,9 @@ class ForumsGqlProvider {
     final query = UnmuteMutation(variables: UnmuteArguments(id: cnId));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 
@@ -156,9 +155,9 @@ class ForumsGqlProvider {
     final query = MuteMutation(variables: MuteArguments(id: cnId));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
-      print('client error ${result.exception?.linkException}');
+      logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
-        print(element.message);
+        logger.e(element.message);
       });
     }
 

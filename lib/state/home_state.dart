@@ -5,6 +5,7 @@ import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
+import 'package:whatado/models/ad.dart';
 import 'package:whatado/models/chat.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
@@ -51,6 +52,7 @@ class HomeState extends ChangeNotifier {
   StreamController? appBarResetController;
   List<PublicEvent>? allEvents;
   List<PublicEvent>? otherEvents;
+  List<Ad>? allAds;
   List<Event>? myEvents;
   List<Forum>? myForums;
   List<Map<String, dynamic>>? lastMessages;
@@ -95,6 +97,7 @@ class HomeState extends ChangeNotifier {
 
   Future<void> load() async {
     await getNewEvents();
+    await getAds();
     final myEvents = await getMyEvents();
     if (myEvents == null || myEvents.isEmpty) {
       myForums = [];
@@ -102,6 +105,12 @@ class HomeState extends ChangeNotifier {
     } else {
       await getMyForums();
     }
+  }
+
+  Future<void> getAds() async {
+    // final adGqlProvider();
+    // final result = adGqlProvider.getAds();
+    allAds = [];
   }
 
   Future<bool> loadLocation() async {

@@ -5,7 +5,8 @@ import 'package:geopoint/geopoint.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
-import 'package:whatado/utils/logger.dart';
+
+import '../graphql/mutations_graphql_api.graphql.dart';
 
 class User {
   int id;
@@ -23,6 +24,7 @@ class User {
   List<PublicUser> friendRequests;
   List<Group> groups;
   List<Group> requestedGroups;
+  Gender gender;
   GeoJsonPoint? location;
   User({
     required this.id,
@@ -40,6 +42,7 @@ class User {
     required this.requestedFriends,
     required this.groups,
     required this.requestedGroups,
+    required this.gender,
     this.location,
   });
 
@@ -69,6 +72,7 @@ class User {
           List<Group>.from(data['groups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
       requestedGroups: List<Group>.from(
           data['requestedGroups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),
+      gender: getGender(data['gender']),
       location: getLocation(data['location']),
     );
   }
@@ -85,5 +89,29 @@ class User {
   @override
   String toString() {
     return '{id: $id, phone: $phone, name: $name}';
+  }
+
+  static Gender getGender(String data) {
+    if (data == 'MALE') {
+      return Gender.male;
+    }
+    if (data == 'FEMALE') {
+      return Gender.female;
+    }
+    return Gender.both;
+  }
+
+  static String genderToString(Gender data) {
+    if (data == Gender.male) {
+      return 'Male';
+    }
+    if (data == Gender.female) {
+      return 'Female';
+    }
+    return 'Other';
+  }
+
+  static String interestsToString(List<Interest> interests) {
+    return json.encode(interests.map((i) => i.title).toList());
   }
 }

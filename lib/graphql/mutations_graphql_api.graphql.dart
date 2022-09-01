@@ -120,6 +120,8 @@ mixin UserFieldsMixin {
   late List<UserFieldsMixin$Interests> interests;
   late List<UserFieldsMixin$MyEvents> myEvents;
   late List<UserFieldsMixin$ChatNotifications> chatNotifications;
+  @JsonKey(unknownEnumValue: Gender.artemisUnknown)
+  late Gender gender;
   @JsonKey(
       fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
       toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
@@ -911,6 +913,7 @@ class UpdateUser$Mutation$UpdateUser$Nodes extends JsonSerializable
         interests,
         myEvents,
         chatNotifications,
+        gender,
         location
       ];
   @override
@@ -4811,6 +4814,12 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
                   directives: [],
                   selectionSet: null)
             ])),
+        FieldNode(
+            name: NameNode(value: 'gender'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
         FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
