@@ -19,7 +19,7 @@ class SavingAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       iconTheme: IconThemeData(color: AppColors.primary),
       backgroundColor: AppColors.background,
-      title: Text(title, style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+      title: Text(title, style: TextStyle(fontSize: 18, color: Colors.grey[850])),
       centerTitle: true,
       elevation: 1.0,
       actions: [

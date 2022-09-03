@@ -4,8 +4,8 @@ import 'package:whatado/models/user.dart';
 import 'package:whatado/utils/logger.dart';
 
 class AnalyticsService {
-  final analytics;
-  final crashlytics;
+  final FirebaseAnalytics analytics;
+  final FirebaseCrashlytics crashlytics;
   AnalyticsService()
       : analytics = FirebaseAnalytics.instance,
         crashlytics = FirebaseCrashlytics.instance {
@@ -26,10 +26,14 @@ class AnalyticsService {
           name: 'Location', value: user.location!.geoPoint.toGeoJsonCoordinatesString());
     }
     await analytics.logLogin();
-    logger.wtf(user.location!.geoPoint.toGeoJsonCoordinatesString());
+    logger.wtf(user.location?.geoPoint.toGeoJsonCoordinatesString());
   }
 
   Future<void> logAd() async {
     await analytics.logAdImpression();
+  }
+
+  Future<void> logTextInvite() async {
+    await analytics.logEvent(name: 'text_invite');
   }
 }

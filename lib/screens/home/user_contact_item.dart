@@ -113,7 +113,7 @@ class _UserContactItemState extends State<UserContactItem> {
                   ? Colors.grey[400]
                   : requested
                       ? Colors.grey[400]
-                      : AppColors.secondary,
+                      : AppColors.primary,
             )),
           ),
         )

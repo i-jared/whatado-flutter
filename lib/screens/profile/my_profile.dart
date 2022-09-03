@@ -7,7 +7,10 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/home/group_list_page.dart';
 import 'package:whatado/screens/profile/edit_my_profile.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
+import 'package:whatado/widgets/events/shadow_box.dart';
+import 'package:whatado/widgets/general/dark_divider.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:whatado/widgets/users/user_heading.dart';
 
@@ -20,9 +23,9 @@ class _MyProfileState extends State<MyProfile> {
   late int selectedIndex;
   final headingStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
   final headingSpacing = 10.0;
-  final padding = 30.0;
+  final padding = 20.0;
   final imageSpacing = 10.0;
-  final sectionSpacing = 17.0;
+  final sectionSpacing = 20.0;
 
   @override
   void initState() {
@@ -107,73 +110,100 @@ class _MyProfileState extends State<MyProfile> {
                   ),
                   onPressed: () => Navigator.push(
                       context, MaterialPageRoute(builder: (context) => EditMyProfile(user: user)))),
-              SizedBox(height: sectionSpacing * 2),
-              Row(children: [
-                Text('Groups', style: headingStyle),
-                Spacer(),
-                TextButton(
-                    onPressed: groupRequests == 0
-                        ? null
-                        : () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => GroupListPage(
-                                      title: 'Groups',
-                                      groups: user.groups,
-                                      leftPadding: false,
-                                    ))),
-                    child: Text("$groupRequests group requests",
-                        style: TextStyle(
-                            color: groupRequests == 0 ? Colors.grey[400] : AppColors.primary)))
-              ]),
-              SizedBox(height: headingSpacing),
-              InkWell(
-                onTap: user.groups.isEmpty
-                    ? null
-                    : () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (BuildContext context) => GroupListPage(
-                                title: "Groups", groups: user.groups, leftPadding: false))),
-                child: Container(
-                    height: 40,
-                    child: user.groups.isEmpty
-                        ? Container(
-                            width: 40,
-                            alignment: Alignment.center,
-                            child: Text("--", style: TextStyle(fontSize: 30)),
-                          )
-                        : Row(
-                            children: [
-                              PictureWaterfall(
-                                  radius: 20, loading: false, users: user.groups.first.users),
-                              SizedBox(width: 24),
-                              user.groups.length > 1
-                                  ? Text('+ ${user.groups.length - 1} more')
-                                  : SizedBox.shrink(),
-                            ],
-                          )),
+              SizedBox(height: sectionSpacing),
+              ShadowBox(
+                child: Column(
+                  children: [
+                    Row(children: [
+                      Text('Groups').semibold().subtitle(),
+                      Spacer(),
+                      TextButton(
+                          style: ButtonStyle(
+                              padding: MaterialStateProperty.all(EdgeInsets.zero),
+                              visualDensity: VisualDensity(
+                                  horizontal: VisualDensity.minimumDensity,
+                                  vertical: VisualDensity.minimumDensity)),
+                          onPressed: groupRequests == 0
+                              ? null
+                              : () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => GroupListPage(
+                                            title: 'Groups',
+                                            groups: user.groups,
+                                            leftPadding: false,
+                                          ))),
+                          child: Text("$groupRequests group requests",
+                              style: TextStyle(
+                                  color:
+                                      groupRequests == 0 ? Colors.grey[400] : AppColors.primary)))
+                    ]),
+                    DarkDivider(),
+                    InkWell(
+                      onTap: user.groups.isEmpty
+                          ? null
+                          : () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => GroupListPage(
+                                      title: "Groups", groups: user.groups, leftPadding: false))),
+                      child: Container(
+                          height: 40,
+                          child: user.groups.isEmpty
+                              ? Container(
+                                  width: 40,
+                                  alignment: Alignment.center,
+                                  child: Text("--", style: TextStyle(fontSize: 30)),
+                                )
+                              : Row(
+                                  children: [
+                                    PictureWaterfall(
+                                        radius: 20, loading: false, users: user.groups.first.users),
+                                    SizedBox(width: 24),
+                                    user.groups.length > 1
+                                        ? Text('+ ${user.groups.length - 1} more')
+                                        : SizedBox.shrink(),
+                                  ],
+                                )),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: sectionSpacing * 2),
-              Row(
-                children: [
-                  Text('Interests', style: headingStyle),
-                  SizedBox(width: 10),
-                  // Remove this replace with hint
-                  Text('(only visible to you)', style: TextStyle(fontSize: 15, color: Colors.grey)),
-                ],
-              ),
-              SizedBox(height: headingSpacing),
-              Wrap(
-                spacing: 10.0,
-                runSpacing: 0.0,
-                children: userState.user!.interests
-                    .map((interest) => InterestBubble(
-                          selected: true,
-                          text: interest.title,
-                          onSelected: (_) => true,
-                        ))
-                    .toList(),
+              SizedBox(height: sectionSpacing),
+              ShadowBox(
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Text('Interests').subtitle().semibold(),
+                        SizedBox(width: 10),
+                        // Remove this replace with hint
+                        Tooltip(
+                          showDuration: Duration(seconds: 3),
+                          preferBelow: false,
+                          triggerMode: TooltipTriggerMode.tap,
+                          margin: EdgeInsets.symmetric(horizontal: 50),
+                          padding: EdgeInsets.all(8),
+                          message: 'Interests are only visible to you.',
+                          child: Icon(Icons.help_outline, size: 15, color: Colors.grey[700]),
+                        ),
+                      ],
+                    ),
+                    DarkDivider(),
+                    Wrap(
+                      // alignment: WrapAlignment.center,
+                      spacing: 10.0,
+                      runSpacing: 5.0,
+                      children: userState.user!.interests
+                          .map((interest) => InterestBubble(
+                                selected: true,
+                                text: interest.title,
+                                onSelected: (_) => true,
+                              ))
+                          .toList(),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

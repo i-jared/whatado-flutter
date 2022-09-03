@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/my_contact.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
+import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/search_state.dart';
-import 'package:whatado/utils/logger.dart';
 
 class NonUserContactItem extends StatefulWidget {
   final MyContact contact;
@@ -72,6 +72,7 @@ class _NonUserContactItemState extends State<NonUserContactItem> {
                         eventId: widget.eventId, groupId: widget.groupId);
                     if (result.ok) {
                       searchState.updateReferrals(widget.contact.phone!);
+                      await analyticsService.logTextInvite();
                     } else {
                       BotToast.showText(text: 'Problem inviting contact. Please try again later.');
                     }

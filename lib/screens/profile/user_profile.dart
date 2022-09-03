@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/state/user_state.dart';
@@ -39,7 +38,7 @@ class _StateUserProfile extends State<UserProfile> {
 
   final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
   final headingSpacing = 10.0;
-  final padding = 30.0;
+  final padding = 20.0;
   final imageSpacing = 10.0;
   final sectionSpacing = 30.0;
 

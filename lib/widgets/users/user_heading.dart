@@ -5,7 +5,10 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/user_list_page.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
+import 'package:whatado/widgets/events/shadow_box.dart';
+import 'package:whatado/widgets/general/dark_divider.dart';
 
 class UserHeading extends StatefulWidget {
   final PublicUser user;
@@ -42,7 +45,7 @@ class _UserHeadingState extends State<UserHeading> {
     final friendRequests = userState.user!.friendRequests;
     final headingStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
     final headingSpacing = 10.0;
-    final sectionSpacing = 17.0;
+    final sectionSpacing = 20.0;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,50 +69,68 @@ class _UserHeadingState extends State<UserHeading> {
       Text('${(DateTime.now().difference(widget.user.birthday).inDays ~/ 365)}',
           style: TextStyle(fontSize: 18, color: Colors.grey)),
       SizedBox(height: sectionSpacing),
-      Divider(),
-      SizedBox(height: sectionSpacing),
-      Text("Bio", style: headingStyle),
-      SizedBox(height: headingSpacing),
-      Text(widget.user.bio, style: TextStyle(fontSize: 18)),
-      SizedBox(height: sectionSpacing),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text("Friends", style: headingStyle),
-          if (userState.user?.id == widget.user.id)
-            TextButton(
-                onPressed: friendRequests.length == 0
-                    ? null
-                    : () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => UserListPage(
-                                  title: 'Friend Requests',
-                                  users: friendRequests,
-                                ))),
-                child: Text("${friendRequests.length} friend requests",
-                    style: TextStyle(
-                        color: friendRequests.length == 0 ? Colors.grey[400] : AppColors.primary)))
-        ],
+      ShadowBox(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text("Bio").subtitle().semibold(),
+            DarkDivider(),
+            Text(widget.user.bio, style: TextStyle(fontSize: 18)).semibold(),
+          ],
+        ),
       ),
-      SizedBox(height: headingSpacing),
-      InkWell(
-        onTap: friends.isEmpty
-            ? null
-            : () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (BuildContext context) =>
-                        UserListPage(title: "Friends", users: friends))),
-        child: Container(
-            height: 40,
-            child: !loading && friends.isEmpty
-                ? Container(
-                    width: 40,
-                    alignment: Alignment.center,
-                    child: Text("--", style: TextStyle(fontSize: 30)),
-                  )
-                : PictureWaterfall(radius: 20, loading: loading, users: friends)),
+      SizedBox(height: sectionSpacing),
+      ShadowBox(
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Friends").semibold().subtitle(),
+                if (userState.user?.id == widget.user.id)
+                  TextButton(
+                      style: ButtonStyle(
+                          padding: MaterialStateProperty.all(EdgeInsets.zero),
+                          visualDensity: VisualDensity(
+                              horizontal: VisualDensity.minimumDensity,
+                              vertical: VisualDensity.minimumDensity)),
+                      onPressed: friendRequests.length == 0
+                          ? null
+                          : () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UserListPage(
+                                        title: 'Friend Requests',
+                                        users: friendRequests,
+                                      ))),
+                      child: Text("${friendRequests.length} friend requests",
+                          style: TextStyle(
+                              color: friendRequests.length == 0
+                                  ? Colors.grey[400]
+                                  : AppColors.primary)))
+              ],
+            ),
+            DarkDivider(),
+            InkWell(
+              onTap: friends.isEmpty
+                  ? null
+                  : () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              UserListPage(title: "Friends", users: friends))),
+              child: Container(
+                  height: 40,
+                  child: !loading && friends.isEmpty
+                      ? Container(
+                          width: 40,
+                          alignment: Alignment.center,
+                          child: Text("--", style: TextStyle(fontSize: 30)),
+                        )
+                      : PictureWaterfall(radius: 20, loading: loading, users: friends)),
+            ),
+          ],
+        ),
       ),
     ]);
   }

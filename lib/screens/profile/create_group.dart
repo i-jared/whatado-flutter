@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:geojson/geojson.dart';
@@ -12,10 +13,13 @@ import 'package:whatado/models/group_icon.dart';
 import 'package:whatado/providers/graphql/group_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
+import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
+import 'package:whatado/widgets/input/simple_outline_text.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
 class CreateGroup extends StatefulWidget {
@@ -77,6 +81,9 @@ class _CreateGroupState extends State<CreateGroup> {
                 userIds: [userState.user!.id, ...selectedFriends.map((u) => u.id)]));
             if (response.ok) {
               await userState.getUser();
+              BotToast.showText(text: 'Successfully created group.');
+            } else {
+              BotToast.showText(text: 'Failed to create group. Please try again later.');
             }
             setState(() => loading = false);
             Navigator.pop(context);
@@ -87,21 +94,22 @@ class _CreateGroupState extends State<CreateGroup> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 20),
-              MyTextField(
-                hintText: 'Group Name',
+              LabeledOutlineTextField(
+                label: 'Group Name',
+                hintText: 'Enter Group Name',
                 controller: groupNameController,
                 validator: (val) => (val?.isEmpty ?? true) ? 'please enter a name' : null,
               ),
               SizedBox(height: 20),
               Row(
                 children: [
-                  Switch(
+                  CupertinoSwitch(
                     onChanged: (newVal) => setState(() => screened = newVal),
                     value: screened,
                     activeColor: AppColors.primary,
                   ),
                   SizedBox(width: 20),
-                  Text(screened ? 'Screen Group Members' : 'Anyone Can Join'),
+                  Text(screened ? 'Screen Group Members' : 'Anyone Can Join').semibold(),
                 ],
               ),
               SizedBox(height: 20),
@@ -115,7 +123,7 @@ class _CreateGroupState extends State<CreateGroup> {
                     SizedBox(width: 20),
                     TextButton(
                         onPressed: () => setState(() => changeIcon = !changeIcon),
-                        child: Text(changeIcon ? 'Hide Icons' : 'Change Icon'))
+                        child: Text(changeIcon ? 'Hide Icons' : 'Change Icon').semibold())
                   ],
                 ),
                 SizedBox(height: 20)
@@ -141,33 +149,69 @@ class _CreateGroupState extends State<CreateGroup> {
                           [Text('no icons available')],
                     )),
               SizedBox(height: 20),
-              TypeAheadFormField(
-                direction: AxisDirection.up,
-                noItemsFoundBuilder: (context) => SizedBox.shrink(),
-                onSuggestionSelected: (Map<String, dynamic> place) async {
-                  groupLocationController.text = place['description'];
-                  final location = await placesService.placeDetails(place['place_id']);
-                  if (location['lat'] == null || location['lng'] == null) {
-                    BotToast.showText(text: 'Invalid location; please make another selection.');
-                    groupNameController.text = '';
-                  }
-                  setState(() => coordinates = GeoJsonPoint(
-                      geoPoint: GeoPoint(latitude: location['lat'], longitude: location['lng'])));
-                },
-                suggestionsCallback: (String pattern) async {
-                  final result = await placesService.findPlace(pattern, userState.user?.location);
-                  return result;
-                },
-                itemBuilder: (context, Map<String, dynamic> place) =>
-                    ListTile(title: Text(place['description'])),
-                textFieldConfiguration: TextFieldConfiguration(
-                  decoration: InputDecoration(
-                    isDense: true,
-                    hintText: 'Enter location',
-                    hintStyle: TextStyle(fontSize: 13),
-                    contentPadding: EdgeInsets.symmetric(vertical: 12),
-                  ),
-                  controller: groupLocationController,
+              Container(
+                padding: EdgeInsets.only(left: 15, right: 15, top: 15),
+                decoration: BoxDecoration(
+                    border: Border.all(
+                      width: 2.0,
+                      color: coordinates == null ? AppColors.unfocused : AppColors.primary,
+                    ),
+                    borderRadius: BorderRadius.circular(AppRadii.button)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Location', style: TextStyle(color: Colors.grey[700])),
+                        //   SizedBox(width: 5),
+                        //   Tooltip(
+                        //     showDuration: Duration(seconds: 3),
+                        //     preferBelow: false,
+                        //     triggerMode: TooltipTriggerMode.tap,
+                        //     margin: EdgeInsets.symmetric(horizontal: 50),
+                        //     padding: EdgeInsets.all(8),
+                        //     message: "Location is only visible for invited event members.",
+                        //     child: Icon(Icons.help_outline, size: 15, color: Colors.grey[700]),
+                        //   ),
+                      ],
+                    ),
+                    TypeAheadFormField(
+                      direction: AxisDirection.up,
+                      suggestionsBoxDecoration: SuggestionsBoxDecoration(
+                          borderRadius: BorderRadius.circular(AppRadii.button), offsetX: 30),
+                      noItemsFoundBuilder: (context) => SizedBox.shrink(),
+                      loadingBuilder: (context) => SizedBox.shrink(),
+                      suggestionsBoxVerticalOffset: 40,
+                      onSuggestionSelected: (Map<String, dynamic> place) async {
+                        groupLocationController.text = place['description'];
+                        final location = await placesService.placeDetails(place['place_id']);
+                        if (location['lat'] == null || location['lng'] == null) {
+                          BotToast.showText(
+                              text: 'Invalid location; please make another selection.');
+                          groupLocationController.text = '';
+                        }
+                        coordinates = GeoJsonPoint(
+                            geoPoint:
+                                GeoPoint(latitude: location['lat'], longitude: location['lng']));
+                      },
+                      suggestionsCallback: (String pattern) async {
+                        final result =
+                            await placesService.findPlace(pattern, userState.user?.location);
+                        return result;
+                      },
+                      itemBuilder: (context, Map<String, dynamic> place) =>
+                          ListTile(title: Text(place['description'])),
+                      textFieldConfiguration: TextFieldConfiguration(
+                        maxLines: null,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: 'Enter location',
+                          contentPadding: EdgeInsets.symmetric(vertical: 12),
+                        ),
+                        controller: groupLocationController,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 20),

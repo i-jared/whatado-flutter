@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
@@ -65,20 +66,38 @@ class _ChangePasswordState extends State<ChangePassword> {
                 SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: MyPasswordField(
-                      label: 'Current Password',
-                      hintText: '',
-                      controller: currentPasswordController),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2.0,
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(AppRadii.button)),
+                    child: MyPasswordField(
+                        label: 'Current Password',
+                        hintText: '',
+                        controller: currentPasswordController),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: MyPasswordField(
-                      validator: (val) => val == null || val.length < 6
-                          ? 'password must be at least 6 characters'
-                          : null,
-                      label: 'New Password',
-                      hintText: 'New Password',
-                      controller: newPasswordController),
+                  child: Container(
+                    padding: EdgeInsets.only(left: 15, right: 15, top: 5),
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 2.0,
+                          color: AppColors.primary,
+                        ),
+                        borderRadius: BorderRadius.circular(AppRadii.button)),
+                    child: MyPasswordField(
+                        validator: (val) => val == null || val.length < 6
+                            ? 'password must be at least 6 characters'
+                            : null,
+                        label: 'New Password',
+                        hintText: 'New Password',
+                        controller: newPasswordController),
+                  ),
                 ),
               ],
             ),

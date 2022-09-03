@@ -97,7 +97,6 @@ class HomeState extends ChangeNotifier {
 
   Future<void> load() async {
     await getNewEvents();
-    await getAds();
     final myEvents = await getMyEvents();
     if (myEvents == null || myEvents.isEmpty) {
       myForums = [];
@@ -105,12 +104,6 @@ class HomeState extends ChangeNotifier {
     } else {
       await getMyForums();
     }
-  }
-
-  Future<void> getAds() async {
-    // final adGqlProvider();
-    // final result = adGqlProvider.getAds();
-    allAds = [];
   }
 
   Future<bool> loadLocation() async {
@@ -236,6 +229,7 @@ class HomeState extends ChangeNotifier {
         await otherEventsRequest();
       }
     }
+    allAds = [];
     notifyListeners();
   }
 

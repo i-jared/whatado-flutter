@@ -15,7 +15,7 @@ class EditEventState extends ChangeNotifier {
   TextEditingController titleController;
   TextEditingController descriptionController;
   TextEditingController locationController;
-  TextEditingController dateController;
+  DateTime _selectedDate;
   TextEditingController timeController;
   GeoJsonPoint coordinates;
 
@@ -28,15 +28,19 @@ class EditEventState extends ChangeNotifier {
         titleController = TextEditingController(text: event.title),
         descriptionController = TextEditingController(text: event.description),
         locationController = TextEditingController(text: event.location),
-        dateController = TextEditingController(),
+        _selectedDate = DateTime(event.time.year, event.time.month, event.time.day),
         timeController = TextEditingController() {
-    dateController.text = dateFormat.format(event.time);
     timeController.text = timeFormat.format(event.time);
     titleController.addListener(() => notifyListeners());
     descriptionController.addListener(() => notifyListeners());
     locationController.addListener(() => notifyListeners());
-    dateController.addListener(() => notifyListeners());
     timeController.addListener(() => notifyListeners());
+  }
+
+  DateTime get selectedDate => _selectedDate;
+  set selectedDate(DateTime newDate) {
+    _selectedDate = newDate;
+    notifyListeners();
   }
 
   bool get loading => _loading;

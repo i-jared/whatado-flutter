@@ -12,7 +12,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       iconTheme: IconThemeData(color: Colors.grey[850]),
       backgroundColor: AppColors.background,
-      title: Text(title, style: TextStyle(fontSize: 23, color: Colors.grey[850])),
+      title: Text(title, style: TextStyle(fontSize: 18, color: Colors.grey[850])),
       centerTitle: true,
       elevation: 0.0,
     );

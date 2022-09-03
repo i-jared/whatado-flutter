@@ -74,7 +74,6 @@ class _MyAppState extends State<MyApp> {
     if (!invalidAuth) {
       SchedulerBinding.instance.scheduleFrameCallback((timeStamp) async {
         await loginService.attemptAutoLogin();
-        logger.wtf('loading = false');
         setState(() => loading = false);
       });
     }

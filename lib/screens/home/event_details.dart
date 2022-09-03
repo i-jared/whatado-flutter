@@ -47,7 +47,7 @@ class _EventDetailsState extends State<EventDetails> {
     final userState = Provider.of<UserState>(context);
     final headingStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w600);
     final headingSpacing = 10.0;
-    final padding = 30.0;
+    final padding = 20.0;
     final sectionSpacing = 20.0;
     final dateFormat = DateFormat('dd MMMM, yyyy h:mm a');
     final event = homeState.myEvents

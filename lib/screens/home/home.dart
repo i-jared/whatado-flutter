@@ -158,7 +158,9 @@ class _HomeScreenState extends State<HomeScreen> {
         homeState.locationPermission = false;
       });
     } else {
+      logger.wtf('schedule loading location');
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
+        logger.wtf('runngin loading location');
         final homeState = context.read<HomeState>();
         final updateResult = await homeState.loadLocation();
         if (updateResult) {
