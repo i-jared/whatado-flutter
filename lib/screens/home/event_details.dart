@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/event.dart';
-import 'package:whatado/models/event_user.dart';
-import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/screens/add_event/add_friends.dart';
 import 'package:whatado/screens/home/select_wannago.dart';
 import 'package:whatado/screens/home/user_list_page.dart';

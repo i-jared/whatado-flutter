@@ -9,9 +9,12 @@ import 'package:whatado/screens/home/invite_group_members_page.dart';
 import 'package:whatado/screens/home/select_group_requested.dart';
 import 'package:whatado/screens/profile/edit_group_details.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/events/event_map.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
+import 'package:whatado/widgets/events/shadow_box.dart';
+import 'package:whatado/widgets/general/dark_divider.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
@@ -26,6 +29,7 @@ class GroupDetails extends StatefulWidget {
 class _GroupDetailsState extends State<GroupDetails> {
   List<PublicEvent>? groupEvents;
   late bool loading;
+  final double sectionSpacing = 20;
   @override
   void initState() {
     super.initState();
@@ -50,21 +54,45 @@ class _GroupDetailsState extends State<GroupDetails> {
     final bool isOwner = userState.user?.id == widget.group.owner;
     return GenericPage(
       appBar: SavingAppBar(
-        title: group.name,
-        buttonTitle: isOwner ? "EDIT" : "LEAVE",
+        title: 'Details',
+        buttonTitle: isOwner ? "Edit" : "Leave",
         onSave: () => isOwner
             ? Navigator.push(
                 context, MaterialPageRoute(builder: (context) => EditGroupDetails(group: group)))
             : null, //TODO add function for user to leave group. delete group if last member
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24),
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 24),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: 30),
-            Container(height: 75, width: 75, child: CachedNetworkImage(imageUrl: group.icon.url)),
+            SizedBox(height: sectionSpacing),
+            Center(
+              child: Container(
+                  height: 75,
+                  width: 75,
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(75 / 2), boxShadow: [
+                    BoxShadow(
+                        color: Color.fromARGB(255, 216, 216, 216),
+                        offset: Offset(0.0, 0.0),
+                        blurRadius: 12,
+                        spreadRadius: 1.0,
+                        blurStyle: BlurStyle.normal),
+                  ]),
+                  child: CachedNetworkImage(imageUrl: group.icon.url)),
+            ),
+            SizedBox(height: sectionSpacing),
+            ShadowBox(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Group Name').subtitle().semibold(),
+                DarkDivider(),
+                Text(widget.group.name).title().bold(),
+              ],
+            )),
             if (group.requested.isNotEmpty) ...[
-              SizedBox(height: 30),
+              SizedBox(height: sectionSpacing),
               InkWell(
                 onTap: group.requested.isEmpty
                     ? null
@@ -85,37 +113,44 @@ class _GroupDetailsState extends State<GroupDetails> {
                 ),
               ),
             ],
-            SizedBox(height: 30),
-            Text('Location', style: headingStyle),
-            SizedBox(height: 30),
+            SizedBox(height: sectionSpacing),
             EventMap(
               coordinates: group.location,
               zoomGesturesEnabled: true,
               scrollGesturesEnabled: true,
             ),
-            SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Members', style: headingStyle),
-                if (group.users.map((u) => u.id).contains(userState.user!.id))
-                  TextButton(
-                      onPressed: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => InviteGroupMembersPage(
-                                  title: 'Invite Group Members', group: group))),
-                      child: Text("+Add Members",
-                          style: TextStyle(
-                            color: AppColors.primary,
-                          ))),
-              ],
+            SizedBox(height: sectionSpacing),
+            ShadowBox(
+              child: Column(children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text('Members').subtitle().semibold(),
+                    if (group.users.map((u) => u.id).contains(userState.user!.id))
+                      TextButton(
+                          style: ButtonStyle(
+                              visualDensity: VisualDensity(
+                                  horizontal: VisualDensity.minimumDensity,
+                                  vertical: VisualDensity.minimumDensity)),
+                          onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => InviteGroupMembersPage(
+                                      title: 'Invite Group Members', group: group))),
+                          child: Text("+Add Members",
+                              style: TextStyle(
+                                color: AppColors.primary,
+                              ))),
+                  ],
+                ),
+                DarkDivider(),
+                ...group.users.map((user) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0),
+                      child: UserListItem(user),
+                    )),
+              ]),
             ),
-            ...group.users.map((user) => Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: UserListItem(user),
-                )),
-            SizedBox(height: 30),
+            SizedBox(height: sectionSpacing),
             // TODO display past events publicly somehow
             // Text('Events', style: headingStyle),
             // if (groupEvents == null) CircularProgressIndicator(),

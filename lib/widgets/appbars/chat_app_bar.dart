@@ -12,7 +12,6 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/dialogs.dart';
 import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/dialog/confirm_cancel_dialog.dart';
-import 'package:whatado/widgets/general/app_bar_action.dart';
 import 'package:whatado/widgets/users/user_avatar.dart';
 
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {

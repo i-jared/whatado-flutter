@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geojson/geojson.dart';
 import 'package:provider/provider.dart';
@@ -11,9 +12,11 @@ import 'package:whatado/models/group_icon.dart';
 import 'package:whatado/providers/graphql/group_provider.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/list_tools.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
+import 'package:whatado/widgets/events/shadow_box.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
+import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
 import 'package:whatado/widgets/input/my_text_field.dart';
 
 class EditGroupDetails extends StatefulWidget {
@@ -35,6 +38,7 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
   List<GroupIcon>? groupIcons;
   GroupIcon? selectedIcon;
   late bool iconsLoading = true;
+  final double sectionSpacing = 20.0;
 
   @override
   initState() {
@@ -64,6 +68,7 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
     final userState = Provider.of<UserState>(context);
     final homeState = Provider.of<HomeState>(context);
     final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
+
     List<PublicUser> groupList = [...defaultFriends, ...homeState.selectedUsers];
     return GenericPage(
       appBar: SavingAppBar(
@@ -88,7 +93,8 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
               await userState.getUser();
               BotToast.showText(text: 'Successfully edited group');
             } else {
-              BotToast.showText(text: 'Error editing group');
+              logger.e(response.errors);
+              BotToast.showText(text: 'Error editing group. Please try again later.');
             }
             setState(() => loading = false);
             Navigator.popUntil(context, (route) => route.isFirst);
@@ -98,15 +104,7 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 20),
-              Text('Name', style: headingStyle),
-              SizedBox(height: 20),
-              MyTextField(
-                hintText: 'Group Name',
-                controller: groupNameController,
-                validator: (val) => (val?.isEmpty ?? true) ? 'please enter a name' : null,
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: sectionSpacing),
               if (selectedIcon != null) ...[
                 Row(
                   children: [
@@ -114,13 +112,13 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
                         height: 75,
                         width: 75,
                         child: CachedNetworkImage(imageUrl: selectedIcon!.url)),
-                    SizedBox(width: 20),
+                    SizedBox(width: sectionSpacing),
                     TextButton(
                         onPressed: () => setState(() => changeIcon = !changeIcon),
                         child: Text(changeIcon ? 'Hide Icons' : 'Change Icon'))
                   ],
                 ),
-                SizedBox(height: 20)
+                SizedBox(height: sectionSpacing)
               ],
               if (iconsLoading) Center(child: CircularProgressIndicator()),
               if (!iconsLoading && (selectedIcon == null || changeIcon))
@@ -142,16 +140,25 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
                               .toList() ??
                           [Text('no icons available')],
                     )),
-              Row(
-                children: [
-                  Switch(
-                    onChanged: (newVal) => setState(() => screened = newVal),
-                    value: screened,
-                    activeColor: AppColors.primary,
-                  ),
-                  SizedBox(width: 20),
-                  Text(screened ? 'Screen Group Members' : 'Anyone Can Join'),
-                ],
+              LabeledOutlineTextField(
+                label: 'Group Name',
+                hintText: 'Enter Group Name',
+                controller: groupNameController,
+                validator: (val) => (val?.isEmpty ?? true) ? 'please enter a name' : null,
+              ),
+              SizedBox(height: sectionSpacing),
+              ShadowBox(
+                child: Row(
+                  children: [
+                    CupertinoSwitch(
+                      onChanged: (newVal) => setState(() => screened = newVal),
+                      value: screened,
+                      activeColor: AppColors.primary,
+                    ),
+                    SizedBox(width: sectionSpacing),
+                    Text(screened ? 'Screen Group Members' : 'Anyone Can Join'),
+                  ],
+                ),
               ),
             ],
           )),
