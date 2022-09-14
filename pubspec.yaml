@@ -77,6 +77,8 @@ dependencies:
   flutter_holo_date_picker: ^1.0.6
   firebase_analytics: ^9.3.3
   visibility_detector: ^0.3.3
+  facebook_app_events: ^0.17.0
+  firebase_dynamic_links: ^4.3.7
 
 dev_dependencies:
   flutter_test:

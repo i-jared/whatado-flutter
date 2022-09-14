@@ -11,6 +11,7 @@ import 'package:whatado/screens/add_event/target_audience.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/add_event_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/buttons/rounded_arrow_button.dart';
 import 'package:whatado/widgets/events/shadow_box.dart';
@@ -139,6 +140,7 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                     onSuggestionSelected: (Map<String, dynamic> place) async {
                       eventState.locationController.text = place['description'];
                       final location = await placesService.placeDetails(place['place_id']);
+                      // TODO: get the city and state here and add it to the event for public location display
                       if (location['lat'] == null || location['lng'] == null) {
                         BotToast.showText(text: 'Invalid location; please make another selection.');
                         eventState.locationController.text = '';
