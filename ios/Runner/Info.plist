@@ -20,23 +20,8 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>fb817541809681968</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>FacebookAppID</key>
-	<string>817541809681968</string>
-	<key>FacebookClientToken</key>
-	<string>8cd7d5dd88a6b54c99bd7a5e690f6c6e</string>
-	<key>FacebookDisplayName</key>
-	<string>Whatado</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBonjourServices</key>
@@ -75,5 +60,21 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-</dict>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<true/>
+    <key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb817541809681968</string>
+			</array>
+		</dict>
+	</array>
+	<key>FacebookAppID</key>
+	<string>817541809681968</string>
+	<key>FacebookDisplayName</key>
+	<string>Whatado</string>
+	<key>FacebookClientToken</key>
+	<string>8cd7d5dd88a6b54c99bd7a5e690f6c6e</string></dict>
 </plist>
