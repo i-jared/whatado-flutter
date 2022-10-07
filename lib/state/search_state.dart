@@ -126,51 +126,58 @@ class SearchState extends ChangeNotifier {
   }
 
   Future<void> loadContacts() async {
-    // get permissin to load contacts
-    final permissionResult = await Permission.contacts.request();
-    _contactsPermission = permissionResult.isGranted || permissionResult.isLimited;
-    if (_contactsPermission ?? false) {
-      final provider = UserGqlProvider();
-      // get your referrals
-      final referralsResult = await provider.myReferrals();
-      _referrals = referralsResult.data;
-      // load contacts then get list of all contacts not already users
-      List<Contact> rawContacts =
-          await FlutterContacts.getContacts(withThumbnail: true, withProperties: true);
-      // get list of non null contacts' primary phones
-      _contacts = rawContacts.map((c) {
-        String? formattedPhone;
-        if (c.phones.isNotEmpty) {
-          String rawPhone = c.phones.first.number;
-          String strippedPhone = rawPhone.replaceAll(RegExp(r'[\(\)-\s]'), '');
-          formattedPhone = strippedPhone.startsWith('+')
-              ? strippedPhone
-              : strippedPhone.length == 10
-                  ? "+1" + strippedPhone
-                  : null;
-        }
-        return MyContact(
-          displayName: c.displayName,
-          thumbnail: c.thumbnail,
-          phone: formattedPhone,
-          referred: _referrals?.contains(formattedPhone) ?? false,
-        );
-      }).toList();
-      final allNumbers = _contacts?.map((c) => c.phone).whereNotNull().toList() ?? [];
-      final result = await provider.numbersNotUsers(allNumbers);
-      final numbersNotUsers = result.data ?? [];
-      final numbersUsers = allNumbers.where((p) => !numbersNotUsers.contains(p)).toList();
-      // get list of non user contacts
-      _nonUserContacts = _contacts?.where((c) => numbersNotUsers.contains(c.phone)).toList();
-      _filteredNonUserContacts = _nonUserContacts;
-      // get list of user contacts
-      final usersResult = await provider.usersFromContacts(numbersUsers);
-      _userContacts = usersResult.data ?? [];
-      _filteredUserContacts = _userContacts;
+    try {
+      // get permissin to load contacts
+      final permissionResult = await Permission.contacts.request();
+      _contactsPermission = permissionResult.isGranted || permissionResult.isLimited;
+      if (_contactsPermission ?? false) {
+        final provider = UserGqlProvider();
+        // get your referrals
+        final referralsResult = await provider.myReferrals();
+        _referrals = referralsResult.data;
+        // load contacts then get list of all contacts not already users
+        List<Contact> rawContacts =
+            await FlutterContacts.getContacts(withThumbnail: true, withProperties: true);
+        // get list of non null contacts' primary phones
+        _contacts = rawContacts.map((c) {
+          String? formattedPhone;
+          if (c.phones.isNotEmpty) {
+            String rawPhone = c.phones.first.number;
+            String strippedPhone = rawPhone.replaceAll(RegExp(r'[\(\)-\s]'), '');
+            formattedPhone = strippedPhone.startsWith('+')
+                ? strippedPhone
+                : strippedPhone.length == 10
+                    ? "+1" + strippedPhone
+                    : null;
+          }
+          return MyContact(
+            displayName: c.displayName,
+            thumbnail: c.thumbnail,
+            phone: formattedPhone,
+            referred: _referrals?.contains(formattedPhone) ?? false,
+          );
+        }).toList();
+        final allNumbers = _contacts?.map((c) => c.phone).whereNotNull().toList() ?? [];
+        final result = await provider.numbersNotUsers(allNumbers);
+        final numbersNotUsers = result.data ?? [];
+        final numbersUsers = allNumbers.where((p) => !numbersNotUsers.contains(p)).toList();
+        // get list of non user contacts
+        _nonUserContacts = _contacts?.where((c) => numbersNotUsers.contains(c.phone)).toList();
+        _filteredNonUserContacts = _nonUserContacts;
+        // get list of user contacts
+        final usersResult = await provider.usersFromContacts(numbersUsers);
+        _userContacts = usersResult.data ?? [];
+        _filteredUserContacts = _userContacts;
+      }
+      _contactsLoading = false;
+      _usersLoading = false;
+      notifyListeners();
+    } catch (e, s) {
+      logger.e('failed loading contacts', e, s);
+      _contactsLoading = false;
+      _usersLoading = false;
+      notifyListeners();
     }
-    _contactsLoading = false;
-    _usersLoading = false;
-    notifyListeners();
   }
 
   void updateReferrals(String phone) {

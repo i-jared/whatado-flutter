@@ -89,7 +89,7 @@ class MyNavigationBar extends StatelessWidget {
                 indexSetState(2);
               },
               icon: Icon(
-                Icons.settings_outlined,
+                Icons.groups_outlined,
                 size: 32,
                 color: selectedIndex == 2 ? AppColors.primary : Colors.grey[850],
               ),

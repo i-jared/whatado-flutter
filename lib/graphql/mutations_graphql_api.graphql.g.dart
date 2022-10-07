@@ -3117,6 +3117,49 @@ Map<String, dynamic> _$GroupInputToJson(GroupInput instance) =>
       'userIds': instance.userIds,
     };
 
+LeaveGroup$Mutation$LeaveGroup$Errors
+    _$LeaveGroup$Mutation$LeaveGroup$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        LeaveGroup$Mutation$LeaveGroup$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$LeaveGroup$Mutation$LeaveGroup$ErrorsToJson(
+        LeaveGroup$Mutation$LeaveGroup$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+LeaveGroup$Mutation$LeaveGroup _$LeaveGroup$Mutation$LeaveGroupFromJson(
+        Map<String, dynamic> json) =>
+    LeaveGroup$Mutation$LeaveGroup()
+      ..nodes = json['nodes'] as bool?
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => LeaveGroup$Mutation$LeaveGroup$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
+      ..ok = json['ok'] as bool?;
+
+Map<String, dynamic> _$LeaveGroup$Mutation$LeaveGroupToJson(
+        LeaveGroup$Mutation$LeaveGroup instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'ok': instance.ok,
+    };
+
+LeaveGroup$Mutation _$LeaveGroup$MutationFromJson(Map<String, dynamic> json) =>
+    LeaveGroup$Mutation()
+      ..leaveGroup = LeaveGroup$Mutation$LeaveGroup.fromJson(
+          json['leaveGroup'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$LeaveGroup$MutationToJson(
+        LeaveGroup$Mutation instance) =>
+    <String, dynamic>{
+      'leaveGroup': instance.leaveGroup.toJson(),
+    };
+
 AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
         Map<String, dynamic> json) =>
     AcceptFriendArguments(
@@ -3554,4 +3597,15 @@ Map<String, dynamic> _$CreateGroupArgumentsToJson(
         CreateGroupArguments instance) =>
     <String, dynamic>{
       'groupInput': instance.groupInput.toJson(),
+    };
+
+LeaveGroupArguments _$LeaveGroupArgumentsFromJson(Map<String, dynamic> json) =>
+    LeaveGroupArguments(
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$LeaveGroupArgumentsToJson(
+        LeaveGroupArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
     };

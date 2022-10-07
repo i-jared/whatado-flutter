@@ -357,6 +357,7 @@ type Mutation {
   flagUser(userId: Int!): BoolApiResponse!
   forgotPassword(phone: String!): BoolApiResponse!
   inviteReferral(number: String!): BoolApiResponse!
+  leaveGroup(id: Int!): BoolApiResponse!
   login(options: UserInput!): BoolApiResponse!
   mute(id: Int!): BoolApiResponse!
   register(options: UserInput!): UserApiResponse!

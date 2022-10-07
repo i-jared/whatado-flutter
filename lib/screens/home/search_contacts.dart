@@ -17,7 +17,7 @@ class SearchContacts extends StatelessWidget {
     if (searchState.contactsLoading) {
       return Center(child: CircularProgressIndicator());
     }
-    if (searchState.contactsPermission == false) {
+    if (searchState.contactsPermission == null || searchState.contactsPermission == false) {
       return Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -36,7 +36,7 @@ class SearchContacts extends StatelessWidget {
       );
     }
     if (searchState.filteredUserContacts == null || searchState.filteredNonUserContacts == null) {
-      return Center(child: CircularProgressIndicator());
+      return Center(child: Text('Error retrieving contact list'));
     }
     if (searchState.filteredUserContacts!.isEmpty && searchState.filteredNonUserContacts!.isEmpty) {
       return Center(child: Text('No contacts to list'));

@@ -25,7 +25,6 @@ import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/search_state.dart';
 import 'package:whatado/state/setup_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/logger.dart';
 
 Future<void> run(String flavor) async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -35,8 +34,8 @@ Future<void> run(String flavor) async {
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
   await Firebase.initializeApp();
+  // TODO: use initial link in future for deep links
   final PendingDynamicLinkData? initialLink = await FirebaseDynamicLinks.instance.getInitialLink();
-  logger.wtf(initialLink);
 
   if (kDebugMode) {
     // Force disable Crashlytics collection while doing every day development.

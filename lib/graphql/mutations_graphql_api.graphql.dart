@@ -3588,6 +3588,61 @@ class GroupInput extends JsonSerializable with EquatableMixin {
   Map<String, dynamic> toJson() => _$GroupInputToJson(this);
 }
 
+@JsonSerializable(explicitToJson: true)
+class LeaveGroup$Mutation$LeaveGroup$Errors extends JsonSerializable
+    with EquatableMixin {
+  LeaveGroup$Mutation$LeaveGroup$Errors();
+
+  factory LeaveGroup$Mutation$LeaveGroup$Errors.fromJson(
+          Map<String, dynamic> json) =>
+      _$LeaveGroup$Mutation$LeaveGroup$ErrorsFromJson(json);
+
+  String? field;
+
+  late String message;
+
+  @override
+  List<Object?> get props => [field, message];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$LeaveGroup$Mutation$LeaveGroup$ErrorsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LeaveGroup$Mutation$LeaveGroup extends JsonSerializable
+    with EquatableMixin {
+  LeaveGroup$Mutation$LeaveGroup();
+
+  factory LeaveGroup$Mutation$LeaveGroup.fromJson(Map<String, dynamic> json) =>
+      _$LeaveGroup$Mutation$LeaveGroupFromJson(json);
+
+  bool? nodes;
+
+  List<LeaveGroup$Mutation$LeaveGroup$Errors>? errors;
+
+  bool? ok;
+
+  @override
+  List<Object?> get props => [nodes, errors, ok];
+  @override
+  Map<String, dynamic> toJson() => _$LeaveGroup$Mutation$LeaveGroupToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LeaveGroup$Mutation extends JsonSerializable with EquatableMixin {
+  LeaveGroup$Mutation();
+
+  factory LeaveGroup$Mutation.fromJson(Map<String, dynamic> json) =>
+      _$LeaveGroup$MutationFromJson(json);
+
+  late LeaveGroup$Mutation$LeaveGroup leaveGroup;
+
+  @override
+  List<Object?> get props => [leaveGroup];
+  @override
+  Map<String, dynamic> toJson() => _$LeaveGroup$MutationToJson(this);
+}
+
 enum Privacy {
   @JsonValue('GROUP')
   group,
@@ -9200,4 +9255,99 @@ class CreateGroupMutation
   @override
   CreateGroup$Mutation parse(Map<String, dynamic> json) =>
       CreateGroup$Mutation.fromJson(json);
+}
+
+@JsonSerializable(explicitToJson: true)
+class LeaveGroupArguments extends JsonSerializable with EquatableMixin {
+  LeaveGroupArguments({required this.id});
+
+  @override
+  factory LeaveGroupArguments.fromJson(Map<String, dynamic> json) =>
+      _$LeaveGroupArgumentsFromJson(json);
+
+  late int id;
+
+  @override
+  List<Object?> get props => [id];
+  @override
+  Map<String, dynamic> toJson() => _$LeaveGroupArgumentsToJson(this);
+}
+
+final LEAVE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME = 'leaveGroup';
+final LEAVE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
+  OperationDefinitionNode(
+      type: OperationType.mutation,
+      name: NameNode(value: 'leaveGroup'),
+      variableDefinitions: [
+        VariableDefinitionNode(
+            variable: VariableNode(name: NameNode(value: 'id')),
+            type: NamedTypeNode(name: NameNode(value: 'Int'), isNonNull: true),
+            defaultValue: DefaultValueNode(value: null),
+            directives: [])
+      ],
+      directives: [],
+      selectionSet: SelectionSetNode(selections: [
+        FieldNode(
+            name: NameNode(value: 'leaveGroup'),
+            alias: null,
+            arguments: [
+              ArgumentNode(
+                  name: NameNode(value: 'id'),
+                  value: VariableNode(name: NameNode(value: 'id')))
+            ],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'nodes'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'errors'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FieldNode(
+                        name: NameNode(value: 'field'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null),
+                    FieldNode(
+                        name: NameNode(value: 'message'),
+                        alias: null,
+                        arguments: [],
+                        directives: [],
+                        selectionSet: null)
+                  ])),
+              FieldNode(
+                  name: NameNode(value: 'ok'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ]))
+      ]))
+]);
+
+class LeaveGroupMutation
+    extends GraphQLQuery<LeaveGroup$Mutation, LeaveGroupArguments> {
+  LeaveGroupMutation({required this.variables});
+
+  @override
+  final DocumentNode document = LEAVE_GROUP_MUTATION_DOCUMENT;
+
+  @override
+  final String operationName = LEAVE_GROUP_MUTATION_DOCUMENT_OPERATION_NAME;
+
+  @override
+  final LeaveGroupArguments variables;
+
+  @override
+  List<Object?> get props => [document, operationName, variables];
+  @override
+  LeaveGroup$Mutation parse(Map<String, dynamic> json) =>
+      LeaveGroup$Mutation.fromJson(json);
 }

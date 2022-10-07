@@ -1,0 +1,10 @@
+mutation leaveGroup($id: Int!) {
+    leaveGroup(id: $id) {
+        nodes
+        errors {
+            field
+            message
+        }
+        ok
+    }
+}

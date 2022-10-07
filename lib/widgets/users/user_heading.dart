@@ -43,8 +43,6 @@ class _UserHeadingState extends State<UserHeading> {
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
     final friendRequests = userState.user!.friendRequests;
-    final headingStyle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
-    final headingSpacing = 10.0;
     final sectionSpacing = 20.0;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(

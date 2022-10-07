@@ -11,12 +11,15 @@ import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/logger.dart';
+import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
+import 'package:whatado/widgets/events/shadow_box.dart';
+import 'package:whatado/widgets/general/dark_divider.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
-import 'package:whatado/widgets/interests/input_interest_bubble.dart';
+import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
+import 'package:whatado/widgets/interests/combined_interest_search.dart';
 import 'package:whatado/widgets/interests/interest_wrap.dart';
 
 class EditMyProfile extends StatefulWidget {
@@ -30,6 +33,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
   late TextEditingController bioController;
   late TextEditingController textController;
   late List<Interest> interests;
+  late List<Interest> customInterests;
   late List<Interest> allInterests;
   late bool loading = true;
 
@@ -50,6 +54,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
     textController = TextEditingController();
     textController.addListener(() => setState(() {}));
     interests = List<Interest>.from(widget.user!.interests);
+    customInterests = [];
     init();
   }
 
@@ -69,13 +74,14 @@ class _EditMyProfileState extends State<EditMyProfile> {
   }
 
   final headingStyle = TextStyle(fontSize: 18, fontWeight: FontWeight.bold);
-  final padding = 30.0;
-  final imageSpacing = 10.0;
+  final padding = 20.0;
+  final imageSpacing = 5.0;
   final headingSpacing = 10.0;
   final sectionSpacing = 30.0;
   @override
   Widget build(BuildContext context) {
-    final imageWidth = (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2) / 3.0;
+    final imageWidth =
+        (MediaQuery.of(context).size.width - (padding + imageSpacing) * 2 - 30) / 3.0;
     final userState = Provider.of<UserState>(context);
     final theList = userState.photos == null
         ? [Center(child: CircularProgressIndicator())]
@@ -133,49 +139,73 @@ class _EditMyProfileState extends State<EditMyProfile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(height: headingSpacing),
-                      Text('BIO', style: headingStyle),
-                      SizedBox(height: headingSpacing),
-                      TextFormField(
-                          maxLines: null,
-                          controller: bioController,
-                          style: TextStyle(fontSize: 18)),
+                      LabeledOutlineTextField(
+                          label: 'Bio', controller: bioController, maxLines: null),
                       SizedBox(height: sectionSpacing),
-                      Text('PHOTOS', style: headingStyle),
-                      SizedBox(height: headingSpacing),
-                      Wrap(
-                        spacing: imageSpacing,
-                        runSpacing: 10.0,
-                        children: theList,
+                      ShadowBox(
+                        child: Container(
+                          width: double.infinity,
+                          child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                            Text('Photos').subtitle().semibold(),
+                            DarkDivider(),
+                            Wrap(
+                              spacing: imageSpacing,
+                              runSpacing: 10.0,
+                              children: theList,
+                            ),
+                          ]),
+                        ),
                       ),
                       SizedBox(height: sectionSpacing),
-                      Row(
-                        children: [
-                          Text('INTERESTS', style: headingStyle),
-                          SizedBox(width: 10),
-                          // Remove this replace with hint
-                          Text('(ONLY VISIBLE TO YOU)',
-                              style: TextStyle(fontSize: 15, color: Colors.grey)),
-                        ],
+                      ShadowBox(
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Text('Interests').semibold().subtitle(),
+                                SizedBox(width: 10),
+                                // Remove this replace with hint
+                                Tooltip(
+                                  showDuration: Duration(seconds: 3),
+                                  preferBelow: false,
+                                  triggerMode: TooltipTriggerMode.tap,
+                                  margin: EdgeInsets.symmetric(horizontal: 50),
+                                  padding: EdgeInsets.all(8),
+                                  message: "Your interests are not publicly visible.",
+                                  child:
+                                      Icon(Icons.help_outline, size: 15, color: Colors.grey[700]),
+                                ),
+                              ],
+                            ),
+                            DarkDivider(),
+                            loading
+                                ? Center(child: CircularProgressIndicator())
+                                : CombinedInterestSearch(
+                                    textController: textController,
+                                    interests: allInterests,
+                                    customInterests: customInterests,
+                                    selectedInterests: interests,
+                                    addCustomInterest: (Interest i) {
+                                      customInterests.add(i);
+                                      setState(() => customInterests = customInterests);
+                                    },
+                                    addInterest: (Interest i) {
+                                      interests.add(i);
+                                      setState(() => interests = interests);
+                                    },
+                                    removeCustomInterest: (Interest i) {
+                                      customInterests.remove(i);
+                                      setState(() => customInterests = customInterests);
+                                    },
+                                    removeInterest: (Interest i) {
+                                      interests.remove(i);
+                                      setState(() => interests = interests);
+                                    },
+                                    tooltipMessage: 'What kind of events do you want to see?',
+                                  ),
+                          ],
+                        ),
                       ),
-                      SizedBox(height: headingSpacing),
-                      loading
-                          ? Center(child: CircularProgressIndicator())
-                          : InterestWrap(
-                              interests: allInterests,
-                              selectedInterests: interests,
-                              onSelected: (bool notSelected, Interest interest) {
-                                if (notSelected) {
-                                  interests.add(interest);
-                                  setState(() {
-                                    interests = interests;
-                                  });
-                                } else {
-                                  interests.remove(interest);
-                                  setState(() {
-                                    interests = interests;
-                                  });
-                                }
-                              }),
                       // Wrap(
                       //   spacing: 10.0,
                       //   runSpacing: 0.0,
@@ -189,68 +219,7 @@ class _EditMyProfileState extends State<EditMyProfile> {
                       //           ))
                       //       .toList(),
                       // ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: TypeAheadFormField(
-                              direction: AxisDirection.up,
-                              noItemsFoundBuilder: (context) => SizedBox.shrink(),
-                              onSuggestionSelected: (Interest interest) {
-                                if (interests.map((val) => val.title).contains(interest.title))
-                                  return;
-                                interests.add(interest);
-                                setState(() {
-                                  interests = interests;
-                                });
-                                textController.clear();
-                              },
-                              suggestionsCallback: (String pattern) {
-                                final provider = InterestGqlProvider();
-                                final result = provider.search(pattern);
-                                return result;
-                              },
-                              itemBuilder: (context, Interest interest) =>
-                                  ListTile(title: Text(interest.title)),
-                              textFieldConfiguration: TextFieldConfiguration(
-                                decoration: InputDecoration(
-                                  isDense: true,
-                                  hintText: 'Add your interest here...',
-                                  hintStyle: TextStyle(fontSize: 13),
-                                  contentPadding: EdgeInsets.symmetric(vertical: 12),
-                                ),
-                                textCapitalization: TextCapitalization.words,
-                                controller: textController,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          IconButton(
-                            padding: EdgeInsets.zero,
-                            icon: Icon(Icons.add_circle_outline,
-                                color: textController.text.isEmpty
-                                    ? Colors.grey[400]
-                                    : AppColors.primary,
-                                size: 35),
-                            onPressed: textController.text.isEmpty
-                                ? null
-                                : () {
-                                    if (interests
-                                        .map((val) => val.title)
-                                        .contains(textController.text.trim())) return;
-                                    final Interest newInterest =
-                                        Interest(id: 1, title: textController.text.trim());
-                                    interests.add(newInterest);
-                                    allInterests.add(newInterest);
-                                    setState(() {
-                                      interests = interests;
-                                      allInterests = allInterests;
-                                    });
-                                    textController.clear();
-                                  },
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 150),
+                      SizedBox(height: sectionSpacing),
                     ],
                   ),
                 )),

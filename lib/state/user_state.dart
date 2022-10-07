@@ -135,6 +135,7 @@ class UserState extends ChangeNotifier {
   }
 
   Future<User?> getUserUser() async {
+    // get user but return user
     final query = UserGqlProvider();
     final response = await query.me();
     if (response.data != null) {
@@ -146,6 +147,7 @@ class UserState extends ChangeNotifier {
   }
 
   Future<bool> getUser() async {
+    // get user return a success bool
     final query = UserGqlProvider();
     final response = await query.me();
     // don't ever get a null user.

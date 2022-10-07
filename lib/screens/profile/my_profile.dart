@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/screens/home/group_list_page.dart';
+import 'package:whatado/screens/home/settings.dart';
 import 'package:whatado/screens/profile/edit_my_profile.dart';
+import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
@@ -46,6 +48,7 @@ class _MyProfileState extends State<MyProfile> {
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
+    final homeState = Provider.of<HomeState>(context);
     final user = userState.user!;
     final groupRequests = user.groups.fold<int>(0, (sum, group) => sum + group.requested.length);
     if (userState.user == null) {
@@ -101,15 +104,9 @@ class _MyProfileState extends State<MyProfile> {
               SizedBox(height: sectionSpacing),
               UserHeading(
                   user: PublicUser.fromUser(user),
-                  child: Row(
-                    children: [
-                      Text('Edit', style: TextStyle(fontSize: 15, color: Colors.white)),
-                      SizedBox(width: 10),
-                      Icon(Icons.edit_outlined, color: Colors.white, size: 15)
-                    ],
-                  ),
-                  onPressed: () => Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => EditMyProfile(user: user)))),
+                  child: Icon(Icons.settings, color: Colors.white, size: 25),
+                  onPressed: () =>
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()))),
               SizedBox(height: sectionSpacing),
               ShadowBox(
                 child: Column(
@@ -123,16 +120,8 @@ class _MyProfileState extends State<MyProfile> {
                               visualDensity: VisualDensity(
                                   horizontal: VisualDensity.minimumDensity,
                                   vertical: VisualDensity.minimumDensity)),
-                          onPressed: groupRequests == 0
-                              ? null
-                              : () => Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => GroupListPage(
-                                            title: 'Groups',
-                                            groups: user.groups,
-                                            leftPadding: false,
-                                          ))),
+                          onPressed:
+                              groupRequests == 0 ? null : () => homeState.bottomBarPageNo = 2,
                           child: Text("$groupRequests group requests",
                               style: TextStyle(
                                   color:
@@ -140,13 +129,7 @@ class _MyProfileState extends State<MyProfile> {
                     ]),
                     DarkDivider(),
                     InkWell(
-                      onTap: user.groups.isEmpty
-                          ? null
-                          : () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext context) => GroupListPage(
-                                      title: "Groups", groups: user.groups, leftPadding: false))),
+                      onTap: user.groups.isEmpty ? null : () => homeState.bottomBarPageNo = 2,
                       child: Container(
                           height: 40,
                           child: user.groups.isEmpty

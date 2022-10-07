@@ -14,12 +14,9 @@ import 'package:whatado/providers/graphql/group_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/extensions/text.dart';
-import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
-import 'package:whatado/widgets/input/my_text_field.dart';
-import 'package:whatado/widgets/input/simple_outline_text.dart';
 import 'package:whatado/widgets/users/user_list_item.dart';
 
 class CreateGroup extends StatefulWidget {

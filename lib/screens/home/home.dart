@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -12,15 +10,14 @@ import 'package:provider/provider.dart';
 import 'package:showcaseview/showcaseview.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/graphql/mutations_graphql_api.dart';
-import 'package:whatado/models/user.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
 import 'package:whatado/providers/graphql/forums_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/screens/home/all_events.dart';
 import 'package:whatado/screens/home/chats.dart';
+import 'package:whatado/screens/home/inner_group_list_page.dart';
 import 'package:whatado/screens/home/search_page.dart';
 import 'package:whatado/screens/profile/my_profile.dart';
-import 'package:whatado/screens/home/settings.dart';
 import 'package:whatado/screens/profile/user_profile.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/services/service_provider.dart';
@@ -42,7 +39,7 @@ class HomeScreen extends StatefulWidget {
     else if (pageNo == 1)
       return null;
     else if (pageNo == 2)
-      return DefaultAppBar(title: "Settings");
+      return DefaultAppBar(title: "Groups");
     else
       return null;
     // return MyProfileAppBar();
@@ -158,9 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
         homeState.locationPermission = false;
       });
     } else {
-      logger.wtf('schedule loading location');
       SchedulerBinding.instance.addPostFrameCallback((timeStamp) async {
-        logger.wtf('runngin loading location');
         final homeState = context.read<HomeState>();
         final updateResult = await homeState.loadLocation();
         if (updateResult) {
@@ -199,6 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final homeState = Provider.of<HomeState>(context);
+    final userState = Provider.of<UserState>(context);
     return ShowCaseWidget(
       onFinish: () => localStorageService.initialized = true,
       builder: Builder(builder: (context) {
@@ -213,7 +209,11 @@ class _HomeScreenState extends State<HomeScreen> {
               : homeState.bottomBarPageNo == 1
                   ? SearchPage()
                   : homeState.bottomBarPageNo == 2
-                      ? Settings()
+                      ? InnerGroupListPage(
+                          title: 'Groups',
+                          groups: userState.user!.groups,
+                          leftPadding: false,
+                        )
                       : MyProfile(),
           bottomNavigationBar: MyNavigationBar(
             indexSetState: (pageNo) => homeState.bottomBarPageNo = pageNo,

@@ -1,10 +1,13 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
+import 'package:whatado/graphql/mutations_graphql_api.graphql.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/public_event.dart';
 import 'package:whatado/providers/graphql/events_provider.dart';
+import 'package:whatado/providers/graphql/group_provider.dart';
 import 'package:whatado/screens/home/invite_group_members_page.dart';
 import 'package:whatado/screens/home/select_group_requested.dart';
 import 'package:whatado/screens/profile/edit_group_details.dart';
@@ -54,33 +57,30 @@ class _GroupDetailsState extends State<GroupDetails> {
     final bool isOwner = userState.user?.id == widget.group.owner;
     return GenericPage(
       appBar: SavingAppBar(
-        title: 'Details',
-        buttonTitle: isOwner ? "Edit" : "Leave",
-        onSave: () => isOwner
-            ? Navigator.push(
-                context, MaterialPageRoute(builder: (context) => EditGroupDetails(group: group)))
-            : null, //TODO add function for user to leave group. delete group if last member
-      ),
+          title: 'Details',
+          buttonTitle: isOwner ? "Edit" : "Leave",
+          disabled: loading,
+          onSave: isOwner
+              ? () => Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => EditGroupDetails(group: group)))
+              : () async {
+                  setState(() => loading = true);
+                  final provider = GroupGqlProvider();
+                  final result = await provider.leaveGroup(widget.group.id);
+                  if (result.ok) {
+                    BotToast.showText(text: 'Successfully left group');
+                    await userState.getUser();
+                    setState(() => loading = false);
+                    Navigator.pop(context);
+                  } else {
+                    BotToast.showText(text: 'Failed to leave group.');
+                    setState(() => loading = false);
+                  }
+                }),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 24),
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: sectionSpacing),
-            Center(
-              child: Container(
-                  height: 75,
-                  width: 75,
-                  decoration:
-                      BoxDecoration(borderRadius: BorderRadius.circular(75 / 2), boxShadow: [
-                    BoxShadow(
-                        color: Color.fromARGB(255, 216, 216, 216),
-                        offset: Offset(0.0, 0.0),
-                        blurRadius: 12,
-                        spreadRadius: 1.0,
-                        blurStyle: BlurStyle.normal),
-                  ]),
-                  child: CachedNetworkImage(imageUrl: group.icon.url)),
-            ),
             SizedBox(height: sectionSpacing),
             ShadowBox(
                 child: Column(
@@ -88,7 +88,25 @@ class _GroupDetailsState extends State<GroupDetails> {
               children: [
                 Text('Group Name').subtitle().semibold(),
                 DarkDivider(),
-                Text(widget.group.name).title().bold(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(child: Text(widget.group.name).title().bold()),
+                    Container(
+                        height: 40,
+                        width: 40,
+                        decoration:
+                            BoxDecoration(borderRadius: BorderRadius.circular(40 / 2), boxShadow: [
+                          BoxShadow(
+                              color: Color.fromARGB(255, 216, 216, 216),
+                              offset: Offset(0.0, 0.0),
+                              blurRadius: 12,
+                              spreadRadius: 1.0,
+                              blurStyle: BlurStyle.normal),
+                        ]),
+                        child: CachedNetworkImage(imageUrl: group.icon.url)),
+                  ],
+                ),
               ],
             )),
             if (group.requested.isNotEmpty) ...[

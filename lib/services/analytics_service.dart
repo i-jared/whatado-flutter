@@ -26,7 +26,6 @@ class AnalyticsService {
           name: 'Location', value: user.location!.geoPoint.toGeoJsonCoordinatesString());
     }
     await analytics.logLogin();
-    logger.wtf(user.location?.geoPoint.toGeoJsonCoordinatesString());
   }
 
   Future<void> logAd() async {

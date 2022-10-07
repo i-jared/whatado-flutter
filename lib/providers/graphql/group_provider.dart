@@ -123,6 +123,27 @@ class GroupGqlProvider {
     );
   }
 
+  Future<MyQueryResponse<bool>> leaveGroup(int id) async {
+    final mutation = LeaveGroupMutation(variables: LeaveGroupArguments(id: id));
+    final result = await graphqlClientService.mutate(mutation);
+    if (result.hasException) {
+      logger.e('client error ${result.exception?.linkException}');
+      result.exception?.graphqlErrors.forEach((element) {
+        logger.e(element.message);
+      });
+    }
+    final root = result.data?['leaveGroup'];
+    final data = root?['nodes'];
+    final ok = root?['ok'] ?? false;
+    final errors = root?['errors'];
+
+    return MyQueryResponse<bool>(
+      ok: ok,
+      data: data,
+      errors: errors,
+    );
+  }
+
   Future<MyQueryResponse<bool>> requestGroup(int id) async {
     final mutation = RequestGroupMutation(variables: RequestGroupArguments(id: id));
     final result = await graphqlClientService.mutate(mutation);
