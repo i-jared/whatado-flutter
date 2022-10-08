@@ -12,6 +12,7 @@ import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/extensions/text.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
 import 'package:whatado/widgets/entry/image_box.dart';
 import 'package:whatado/widgets/entry/select_image_box.dart';
@@ -20,7 +21,6 @@ import 'package:whatado/widgets/general/dark_divider.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
 import 'package:whatado/widgets/interests/combined_interest_search.dart';
-import 'package:whatado/widgets/interests/interest_wrap.dart';
 
 class EditMyProfile extends StatefulWidget {
   final User? user;
@@ -114,7 +114,8 @@ class _EditMyProfileState extends State<EditMyProfile> {
           title: 'Edit Profile',
           onSave: () async {
             userState.loading = true;
-            final success = await userState.save(interests, bioController.text);
+            final success =
+                await userState.save([...customInterests, ...interests], bioController.text);
             if (success) {
               BotToast.showText(text: 'Successfully edited user');
             } else {
@@ -125,7 +126,8 @@ class _EditMyProfileState extends State<EditMyProfile> {
           },
           disabled: userState.loading ||
               (bioController.text == widget.user!.bio &&
-                      listsEqual<Interest>(interests, widget.user!.interests) &&
+                      listsEqual<Interest>(
+                          [...customInterests, ...interests], widget.user!.interests) &&
                       listsEqual<Uint8List>(userState.photos, userState.ogphotos) ||
                   (userState.photos!.isEmpty || bioController.text.isEmpty || interests.isEmpty))),
       body: widget.user == null

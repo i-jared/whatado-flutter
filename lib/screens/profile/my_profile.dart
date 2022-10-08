@@ -4,7 +4,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/event_user.dart';
-import 'package:whatado/screens/home/group_list_page.dart';
 import 'package:whatado/screens/home/settings.dart';
 import 'package:whatado/screens/profile/edit_my_profile.dart';
 import 'package:whatado/state/home_state.dart';
@@ -12,6 +11,7 @@ import 'package:whatado/state/user_state.dart';
 import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/widgets/events/picture_waterfall.dart';
 import 'package:whatado/widgets/events/shadow_box.dart';
+import 'package:whatado/widgets/general/app_bar_action.dart';
 import 'package:whatado/widgets/general/dark_divider.dart';
 import 'package:whatado/widgets/interests/interest_bubble.dart';
 import 'package:whatado/widgets/users/user_heading.dart';
@@ -94,6 +94,15 @@ class _MyProfileState extends State<MyProfile> {
                             )
                           : Container(width: 5))),
             ),
+            Positioned(
+                top: 0,
+                right: 0,
+                child: AppBarAction(
+                  child: IconButton(
+                      icon: Icon(Icons.settings, color: AppColors.primary, size: 25),
+                      onPressed: () => Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => Settings()))),
+                ))
           ],
         ),
         Padding(
@@ -104,9 +113,9 @@ class _MyProfileState extends State<MyProfile> {
               SizedBox(height: sectionSpacing),
               UserHeading(
                   user: PublicUser.fromUser(user),
-                  child: Icon(Icons.settings, color: Colors.white, size: 25),
-                  onPressed: () =>
-                      Navigator.push(context, MaterialPageRoute(builder: (context) => Settings()))),
+                  child: Icon(Icons.edit, color: Colors.white, size: 25),
+                  onPressed: () => Navigator.push(
+                      context, MaterialPageRoute(builder: (context) => EditMyProfile(user: user)))),
               SizedBox(height: sectionSpacing),
               ShadowBox(
                 child: Column(

@@ -9,7 +9,13 @@ fragment GroupFields on Group {
         ...PublicUser
     }
     screened
+    private
     location
+    displayLocation
+    relatedInterests {
+        id
+        title
+    }
     icon {
         id
         url 

@@ -9,6 +9,7 @@ import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/models/user.dart';
+import 'package:whatado/providers/graphql/interest_provider.dart';
 import 'package:whatado/providers/graphql/user_provider.dart';
 import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/utils/logger.dart';
@@ -153,6 +154,7 @@ class UserState extends ChangeNotifier {
     // don't ever get a null user.
     if (response.data != null) {
       _user = response.data;
+      _user!.groups.sort((a, b) => b.id.compareTo(a.id));
       await updatePhotos();
       notifyListeners();
     }

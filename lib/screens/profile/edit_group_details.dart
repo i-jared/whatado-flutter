@@ -34,6 +34,7 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
   late bool loading = false;
   late bool changeIcon = false;
   late bool screened;
+  late bool private;
   GeoJsonPoint? coordinates;
   List<GroupIcon>? groupIcons;
   GroupIcon? selectedIcon;
@@ -46,6 +47,7 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
     selectedIcon = widget.group.icon;
     coordinates = widget.group.location;
     screened = widget.group.screened;
+    private = widget.group.private;
     defaultFriends = List<PublicUser>.from(widget.group.users);
     groupNameController = TextEditingController(text: widget.group.name);
     groupNameController.addListener(() => setState(() {}));
@@ -157,6 +159,20 @@ class _EditGroupDetailsState extends State<EditGroupDetails> {
                     ),
                     SizedBox(width: sectionSpacing),
                     Text(screened ? 'Screen Group Members' : 'Anyone Can Join'),
+                  ],
+                ),
+              ),
+              SizedBox(height: sectionSpacing),
+              ShadowBox(
+                child: Row(
+                  children: [
+                    CupertinoSwitch(
+                      onChanged: (newVal) => setState(() => screened = newVal),
+                      value: screened,
+                      activeColor: AppColors.primary,
+                    ),
+                    SizedBox(width: sectionSpacing),
+                    Text(private ? 'Keep Group Private' : 'Public'),
                   ],
                 ),
               ),

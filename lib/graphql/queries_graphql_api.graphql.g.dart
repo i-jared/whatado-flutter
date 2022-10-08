@@ -384,8 +384,14 @@ SearchGroups$Query$SearchGroups$Nodes
                   e as Map<String, dynamic>))
               .toList()
           ..screened = json['screened'] as bool
+          ..private = json['private'] as bool
           ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
               json['location'] as String?)
+          ..displayLocation = json['displayLocation'] as String
+          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+              .map((e) => GroupFieldsMixin$RelatedInterests.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
           ..icon = GroupFieldsMixin$Icon.fromJson(
               json['icon'] as Map<String, dynamic>);
 
@@ -398,8 +404,12 @@ Map<String, dynamic> _$SearchGroups$Query$SearchGroups$NodesToJson(
       'users': instance.users.map((e) => e.toJson()).toList(),
       'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
+      'private': instance.private,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'displayLocation': instance.displayLocation,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
       'icon': instance.icon.toJson(),
     };
 
@@ -486,6 +496,19 @@ Map<String, dynamic> _$GroupFieldsMixin$RequestedToJson(
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+GroupFieldsMixin$RelatedInterests _$GroupFieldsMixin$RelatedInterestsFromJson(
+        Map<String, dynamic> json) =>
+    GroupFieldsMixin$RelatedInterests()
+      ..id = json['id'] as int
+      ..title = json['title'] as String;
+
+Map<String, dynamic> _$GroupFieldsMixin$RelatedInterestsToJson(
+        GroupFieldsMixin$RelatedInterests instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
     };
 
 GroupFieldsMixin$Icon _$GroupFieldsMixin$IconFromJson(
@@ -852,6 +875,7 @@ Event$Query$Event$Nodes _$Event$Query$Event$NodesFromJson(
           .toList()
       ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
       ..location = json['location'] as String
+      ..displayLocation = json['displayLocation'] as String
       ..coordinates =
           fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
       ..pictureUrl = json['pictureUrl'] as String?
@@ -882,6 +906,7 @@ Map<String, dynamic> _$Event$Query$Event$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'displayLocation': instance.displayLocation,
       'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
@@ -1251,8 +1276,14 @@ UserFieldsMixin$Groups _$UserFieldsMixin$GroupsFromJson(
               GroupFieldsMixin$Requested.fromJson(e as Map<String, dynamic>))
           .toList()
       ..screened = json['screened'] as bool
+      ..private = json['private'] as bool
       ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
           json['location'] as String?)
+      ..displayLocation = json['displayLocation'] as String
+      ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+          .map((e) => GroupFieldsMixin$RelatedInterests.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
       ..icon =
           GroupFieldsMixin$Icon.fromJson(json['icon'] as Map<String, dynamic>);
 
@@ -1265,8 +1296,12 @@ Map<String, dynamic> _$UserFieldsMixin$GroupsToJson(
       'users': instance.users.map((e) => e.toJson()).toList(),
       'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
+      'private': instance.private,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'displayLocation': instance.displayLocation,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
       'icon': instance.icon.toJson(),
     };
 
@@ -1285,8 +1320,14 @@ UserFieldsMixin$RequestedGroups _$UserFieldsMixin$RequestedGroupsFromJson(
               GroupFieldsMixin$Requested.fromJson(e as Map<String, dynamic>))
           .toList()
       ..screened = json['screened'] as bool
+      ..private = json['private'] as bool
       ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
           json['location'] as String?)
+      ..displayLocation = json['displayLocation'] as String
+      ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+          .map((e) => GroupFieldsMixin$RelatedInterests.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
       ..icon =
           GroupFieldsMixin$Icon.fromJson(json['icon'] as Map<String, dynamic>);
 
@@ -1299,8 +1340,12 @@ Map<String, dynamic> _$UserFieldsMixin$RequestedGroupsToJson(
       'users': instance.users.map((e) => e.toJson()).toList(),
       'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
+      'private': instance.private,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'displayLocation': instance.displayLocation,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
       'icon': instance.icon.toJson(),
     };
 
@@ -1679,6 +1724,7 @@ FlaggedEvents$Query$FlaggedEvents$Nodes
               .toList()
           ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
           ..location = json['location'] as String
+          ..displayLocation = json['displayLocation'] as String
           ..coordinates =
               fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
           ..pictureUrl = json['pictureUrl'] as String?
@@ -1709,6 +1755,7 @@ Map<String, dynamic> _$FlaggedEvents$Query$FlaggedEvents$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'displayLocation': instance.displayLocation,
       'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
@@ -1783,8 +1830,14 @@ MyGroups$Query$MyGroups$Nodes _$MyGroups$Query$MyGroups$NodesFromJson(
               GroupFieldsMixin$Requested.fromJson(e as Map<String, dynamic>))
           .toList()
       ..screened = json['screened'] as bool
+      ..private = json['private'] as bool
       ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
           json['location'] as String?)
+      ..displayLocation = json['displayLocation'] as String
+      ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+          .map((e) => GroupFieldsMixin$RelatedInterests.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
       ..icon =
           GroupFieldsMixin$Icon.fromJson(json['icon'] as Map<String, dynamic>);
 
@@ -1797,8 +1850,12 @@ Map<String, dynamic> _$MyGroups$Query$MyGroups$NodesToJson(
       'users': instance.users.map((e) => e.toJson()).toList(),
       'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
+      'private': instance.private,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'displayLocation': instance.displayLocation,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
       'icon': instance.icon.toJson(),
     };
 
@@ -1925,6 +1982,7 @@ MyEvents$Query$MyEvents$Nodes _$MyEvents$Query$MyEvents$NodesFromJson(
           .toList()
       ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
       ..location = json['location'] as String
+      ..displayLocation = json['displayLocation'] as String
       ..coordinates =
           fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
       ..pictureUrl = json['pictureUrl'] as String?
@@ -1955,6 +2013,7 @@ Map<String, dynamic> _$MyEvents$Query$MyEvents$NodesToJson(
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
       'time': fromDartDateTimeToGraphQLDateTime(instance.time),
       'location': instance.location,
+      'displayLocation': instance.displayLocation,
       'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
       'pictureUrl': instance.pictureUrl,
       'relatedInterests':
@@ -2138,8 +2197,14 @@ SuggestedGroups$Query$SuggestedGroups$Nodes
                   e as Map<String, dynamic>))
               .toList()
           ..screened = json['screened'] as bool
+          ..private = json['private'] as bool
           ..location = fromGraphQLPointNullableToDartGeoJsonPointNullable(
               json['location'] as String?)
+          ..displayLocation = json['displayLocation'] as String
+          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
+              .map((e) => GroupFieldsMixin$RelatedInterests.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
           ..icon = GroupFieldsMixin$Icon.fromJson(
               json['icon'] as Map<String, dynamic>);
 
@@ -2152,8 +2217,12 @@ Map<String, dynamic> _$SuggestedGroups$Query$SuggestedGroups$NodesToJson(
       'users': instance.users.map((e) => e.toJson()).toList(),
       'requested': instance.requested.map((e) => e.toJson()).toList(),
       'screened': instance.screened,
+      'private': instance.private,
       'location':
           fromDartGeoJsonPointNullableToGraphQLPointNullable(instance.location),
+      'displayLocation': instance.displayLocation,
+      'relatedInterests':
+          instance.relatedInterests.map((e) => e.toJson()).toList(),
       'icon': instance.icon.toJson(),
     };
 

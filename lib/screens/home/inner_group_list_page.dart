@@ -11,39 +11,36 @@ class InnerGroupListPage extends StatelessWidget {
   InnerGroupListPage({required this.title, required this.groups, this.leftPadding = true});
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(right: 24, left: leftPadding ? 24 : 0),
-        child: groups.isEmpty
-            ? Center(child: Text("No Users to Display"))
-            : ListView.builder(
-                itemCount: 2 * (groups.length) + 1,
-                itemBuilder: (BuildContext context, int i) {
-                  if (i == 0) {
-                    return Padding(
-                      padding: EdgeInsets.only(left: leftPadding ? 0.0 : 24.0, top: 30),
-                      child: RoundedArrowButton(
-                          onPressed: () => Navigator.push(
-                              context, MaterialPageRoute(builder: (context) => CreateGroup())),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.group_add),
-                              SizedBox(width: 10),
-                              Text('Create Group', style: TextStyle(fontSize: 20))
-                            ],
-                          )),
-                    );
-                  }
-                  if (i.isOdd) {
-                    return Divider();
-                  } else {
-                    i = i ~/ 2 - 1;
-                    return GroupListItem(
-                      group: groups[i],
-                      showRequest: !leftPadding,
-                    );
-                  }
-                },
-              ));
+    return groups.isEmpty
+        ? Center(child: Text("No Users to Display"))
+        : ListView.builder(
+            itemCount: groups.length + 1,
+            itemBuilder: (BuildContext context, int i) {
+              if (i == 0) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                      left: leftPadding ? 0.0 : 24.0, top: 10, right: 24, bottom: 10),
+                  child: RoundedArrowButton(
+                      onPressed: () => Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => CreateGroup())),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.group_add),
+                          SizedBox(width: 10),
+                          Text('Create Group', style: TextStyle(fontSize: 20))
+                        ],
+                      )),
+                );
+              }
+              return Padding(
+                padding:
+                    EdgeInsets.only(right: 24, left: leftPadding ? 24 : 0, top: 10, bottom: 10),
+                child: GroupListItem(
+                  group: groups[i - 1],
+                  showRequest: !leftPadding,
+                ),
+              );
+            });
   }
 }

@@ -20,8 +20,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
     final homeState = Provider.of<HomeState>(context, listen: false);
     if (!(localStorageService.initialized ?? false))
       WidgetsBinding.instance.addPostFrameCallback((_) => ShowCaseWidget.of(context)
-          .startShowCase(
-              [homeState.showcase_1, homeState.showcase_2, homeState.showcase_3]));
+          .startShowCase([homeState.showcase_1, homeState.showcase_2, homeState.showcase_3]));
   }
 
   @override
@@ -29,7 +28,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
     final homeState = Provider.of<HomeState>(context);
     final userState = Provider.of<UserState>(context);
     Color? iconColor(int pageNo) =>
-        homeState.appBarPageNo == pageNo ? Colors.white : Colors.grey[350];
+        homeState.appBarPageNo == pageNo ? Colors.white : Colors.grey[500];
     void turnPage(int newPageNo) {
       homeState.turnPage(newPageNo);
     }
@@ -45,8 +44,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
           final invitedIds = event.invited.map((e) => e.id);
           return event.creator.id == userState.user?.id &&
               event.time.isAfter(DateTime.now()) &&
-              event.wannago.any((wannago) =>
-                  !wannago.declined && !invitedIds.contains(wannago.user.id));
+              event.wannago
+                  .any((wannago) => !wannago.declined && !invitedIds.contains(wannago.user.id));
         }) ??
         false;
 
@@ -71,6 +70,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
               bottom: switcherMargin,
             ),
             decoration: BoxDecoration(
+              color: Colors.grey[300],
               borderRadius: BorderRadius.circular(50),
             ),
             child: Stack(
@@ -82,8 +82,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                   child: Showcase(
                     key: homeState.showcase_1,
                     title: 'Home',
-                    description:
-                        'Click here to see a feed of events going on around you.',
+                    description: 'Click here to see a feed of events going on around you.',
                     titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                     descTextStyle: TextStyle(fontSize: 18),
                     child: Container(
@@ -106,10 +105,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       child: Showcase(
                         key: homeState.showcase_4,
                         title: 'Home',
-                        description:
-                            'Click here to see a feed of events going on around you.',
-                        titleTextStyle:
-                            TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                        description: 'Click here to see a feed of events going on around you.',
+                        titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                         descTextStyle: TextStyle(fontSize: 18),
                         child: Center(
                           child: IconButton(
@@ -128,10 +125,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
                         Showcase(
                           key: homeState.showcase_2,
                           title: 'My Events',
-                          description:
-                              'This screen shows events you\'ve been invited to.',
-                          titleTextStyle:
-                              TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                          description: 'This screen shows events you\'ve been invited to.',
+                          titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                           descTextStyle: TextStyle(fontSize: 18),
                           child: Container(
                             child: IconButton(
@@ -169,8 +164,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
                             key: homeState.showcase_3,
                             title: 'Forums',
                             description: 'Chat with your event groups in forums!',
-                            titleTextStyle:
-                                TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                            titleTextStyle: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                             descTextStyle: TextStyle(fontSize: 18),
                             child: IconButton(
                                 padding: EdgeInsets.zero,

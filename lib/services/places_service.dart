@@ -20,12 +20,10 @@ class PlacesService {
     Response response = await httpClientService.getAuthenticated(
         whatadoPlaceDetailsUrl + '?placeId=$placeId', localStorageService.accessToken ?? '');
     final data = jsonDecode(response.body);
-    if (data['data'] == null ||
-        data['data']['result'] == null ||
-        data['data']['result']['geometry'] == null) {
+    if (data['data'] == null || data['data']['result'] == null) {
       return {};
     }
     // TODO also return the adr_address data so i can set the public address for the event
-    return Map<String, dynamic>.from(data['data']['result']['geometry']['location']);
+    return Map<String, dynamic>.from(data['data']['result']);
   }
 }

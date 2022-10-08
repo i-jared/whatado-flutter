@@ -57,10 +57,13 @@ mixin GroupFieldsMixin {
   late List<GroupFieldsMixin$Users> users;
   late List<GroupFieldsMixin$Requested> requested;
   late bool screened;
+  late bool private;
   @JsonKey(
       fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
       toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
   GeoJsonPoint? location;
+  late String displayLocation;
+  late List<GroupFieldsMixin$RelatedInterests> relatedInterests;
   late GroupFieldsMixin$Icon icon;
 }
 mixin EventFieldsMixin {
@@ -83,6 +86,7 @@ mixin EventFieldsMixin {
       toJson: fromDartDateTimeToGraphQLDateTime)
   late DateTime time;
   late String location;
+  late String displayLocation;
   @JsonKey(
       fromJson: fromGraphQLPointToDartGeoJsonPoint,
       toJson: fromDartGeoJsonPointToGraphQLPoint)
@@ -503,8 +507,19 @@ class SearchGroups$Query$SearchGroups$Nodes extends JsonSerializable
       _$SearchGroups$Query$SearchGroups$NodesFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() =>
       _$SearchGroups$Query$SearchGroups$NodesToJson(this);
@@ -592,6 +607,26 @@ class GroupFieldsMixin$Requested extends JsonSerializable
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() => _$GroupFieldsMixin$RequestedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class GroupFieldsMixin$RelatedInterests extends JsonSerializable
+    with EquatableMixin {
+  GroupFieldsMixin$RelatedInterests();
+
+  factory GroupFieldsMixin$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$GroupFieldsMixin$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [id, title];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$GroupFieldsMixin$RelatedInterestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -942,6 +977,7 @@ class Event$Query$Event$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        displayLocation,
         coordinates,
         pictureUrl,
         relatedInterests,
@@ -1253,8 +1289,19 @@ class UserFieldsMixin$Groups extends JsonSerializable
       _$UserFieldsMixin$GroupsFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$GroupsToJson(this);
 }
@@ -1268,8 +1315,19 @@ class UserFieldsMixin$RequestedGroups extends JsonSerializable
       _$UserFieldsMixin$RequestedGroupsFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() =>
       _$UserFieldsMixin$RequestedGroupsToJson(this);
@@ -1669,6 +1727,7 @@ class FlaggedEvents$Query$FlaggedEvents$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        displayLocation,
         coordinates,
         pictureUrl,
         relatedInterests,
@@ -1751,8 +1810,19 @@ class MyGroups$Query$MyGroups$Nodes extends JsonSerializable
       _$MyGroups$Query$MyGroups$NodesFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() => _$MyGroups$Query$MyGroups$NodesToJson(this);
 }
@@ -1903,6 +1973,7 @@ class MyEvents$Query$MyEvents$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        displayLocation,
         coordinates,
         pictureUrl,
         relatedInterests,
@@ -2072,8 +2143,19 @@ class SuggestedGroups$Query$SuggestedGroups$Nodes extends JsonSerializable
       _$SuggestedGroups$Query$SuggestedGroups$NodesFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() =>
       _$SuggestedGroups$Query$SuggestedGroups$NodesToJson(this);
@@ -3712,11 +3794,42 @@ final SEARCH_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,
@@ -4814,6 +4927,12 @@ final EVENT_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
@@ -5249,11 +5368,42 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,
@@ -6093,6 +6243,12 @@ final FLAGGED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
@@ -6315,11 +6471,42 @@ final MY_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,
@@ -6613,6 +6800,12 @@ final MY_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'location'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
             alias: null,
             arguments: [],
             directives: [],
@@ -7096,11 +7289,42 @@ final SUGGESTED_GROUPS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,
@@ -8601,11 +8825,42 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,

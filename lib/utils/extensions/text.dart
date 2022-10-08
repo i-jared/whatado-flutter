@@ -31,6 +31,11 @@ extension Styles on Text {
         style: this.style?.copyWith(fontSize: 27) ?? TextStyle(fontSize: 27));
   }
 
+  Text heading() {
+    return Text(this.data ?? '',
+        style: this.style?.copyWith(fontSize: 20) ?? TextStyle(fontSize: 20));
+  }
+
   Text subtitle() {
     return Text(this.data ?? '',
         style: this.style?.copyWith(fontSize: 16, color: Colors.grey) ??

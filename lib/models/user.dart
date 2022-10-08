@@ -88,7 +88,7 @@ class User {
 
   @override
   String toString() {
-    return '{id: $id, phone: $phone, name: $name}';
+    return '{id: $id, phone: $phone, name: $name, group: $groups}';
   }
 
   static Gender getGender(String data) {

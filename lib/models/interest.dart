@@ -9,7 +9,8 @@ class Interest {
   }
   @override
   bool operator ==(other) {
-    return other.hashCode == this.hashCode;
+    if (!(other is Interest)) return false;
+    return other.title.toLowerCase().trim() == title.toLowerCase().trim();
   }
 
   @override

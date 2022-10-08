@@ -20,7 +20,6 @@ class UserGqlProvider {
         logger.e(element.message);
       });
     }
-    print(result);
     final root = result.data?['me'];
     final data = root != null && root['nodes'] != null ? User.fromGqlData(root['nodes']) : null;
     final ok = root?['ok'] ?? false;

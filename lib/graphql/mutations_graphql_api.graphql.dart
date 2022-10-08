@@ -70,6 +70,7 @@ mixin EventFieldsMixin {
       toJson: fromDartDateTimeToGraphQLDateTime)
   late DateTime time;
   late String location;
+  late String displayLocation;
   @JsonKey(
       fromJson: fromGraphQLPointToDartGeoJsonPoint,
       toJson: fromDartGeoJsonPointToGraphQLPoint)
@@ -93,10 +94,13 @@ mixin GroupFieldsMixin {
   late List<GroupFieldsMixin$Users> users;
   late List<GroupFieldsMixin$Requested> requested;
   late bool screened;
+  late bool private;
   @JsonKey(
       fromJson: fromGraphQLPointNullableToDartGeoJsonPointNullable,
       toJson: fromDartGeoJsonPointNullableToGraphQLPointNullable)
   GeoJsonPoint? location;
+  late String displayLocation;
+  late List<GroupFieldsMixin$RelatedInterests> relatedInterests;
   late GroupFieldsMixin$Icon icon;
 }
 mixin UserFieldsMixin {
@@ -447,6 +451,7 @@ class UpdateEvent$Mutation$UpdateEvent$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        displayLocation,
         coordinates,
         pictureUrl,
         relatedInterests,
@@ -606,6 +611,7 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
       this.createdAt,
       this.creatorId,
       this.description,
+      this.displayLocation,
       this.filterGender,
       this.filterLocation,
       this.filterMaxAge,
@@ -638,6 +644,8 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
   int? creatorId;
 
   String? description;
+
+  String? displayLocation;
 
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
   Gender? filterGender;
@@ -686,6 +694,7 @@ class EventFilterInput extends JsonSerializable with EquatableMixin {
         createdAt,
         creatorId,
         description,
+        displayLocation,
         filterGender,
         filterLocation,
         filterMaxAge,
@@ -719,8 +728,19 @@ class UpdateGroup$Mutation$UpdateGroup$Nodes extends JsonSerializable
       _$UpdateGroup$Mutation$UpdateGroup$NodesFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() =>
       _$UpdateGroup$Mutation$UpdateGroup$NodesToJson(this);
@@ -812,6 +832,26 @@ class GroupFieldsMixin$Requested extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
+class GroupFieldsMixin$RelatedInterests extends JsonSerializable
+    with EquatableMixin {
+  GroupFieldsMixin$RelatedInterests();
+
+  factory GroupFieldsMixin$RelatedInterests.fromJson(
+          Map<String, dynamic> json) =>
+      _$GroupFieldsMixin$RelatedInterestsFromJson(json);
+
+  late int id;
+
+  late String title;
+
+  @override
+  List<Object?> get props => [id, title];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$GroupFieldsMixin$RelatedInterestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
 class GroupFieldsMixin$Icon extends JsonSerializable with EquatableMixin {
   GroupFieldsMixin$Icon();
 
@@ -832,11 +872,14 @@ class GroupFieldsMixin$Icon extends JsonSerializable with EquatableMixin {
 class GroupFilterInput extends JsonSerializable with EquatableMixin {
   GroupFilterInput(
       {this.createdAt,
+      this.displayLocation,
       this.groupIconId,
       this.id,
       this.location,
       this.name,
       this.owner,
+      this.private,
+      this.relatedInterestIds,
       this.requestedIds,
       this.screened,
       this.updatedAt,
@@ -846,6 +889,8 @@ class GroupFilterInput extends JsonSerializable with EquatableMixin {
       _$GroupFilterInputFromJson(json);
 
   String? createdAt;
+
+  String? displayLocation;
 
   int? groupIconId;
 
@@ -860,6 +905,10 @@ class GroupFilterInput extends JsonSerializable with EquatableMixin {
 
   int? owner;
 
+  bool? private;
+
+  List<int>? relatedInterestIds;
+
   List<int>? requestedIds;
 
   bool? screened;
@@ -871,11 +920,14 @@ class GroupFilterInput extends JsonSerializable with EquatableMixin {
   @override
   List<Object?> get props => [
         createdAt,
+        displayLocation,
         groupIconId,
         id,
         location,
         name,
         owner,
+        private,
+        relatedInterestIds,
         requestedIds,
         screened,
         updatedAt,
@@ -1057,8 +1109,19 @@ class UserFieldsMixin$Groups extends JsonSerializable
       _$UserFieldsMixin$GroupsFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() => _$UserFieldsMixin$GroupsToJson(this);
 }
@@ -1072,8 +1135,19 @@ class UserFieldsMixin$RequestedGroups extends JsonSerializable
       _$UserFieldsMixin$RequestedGroupsFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() =>
       _$UserFieldsMixin$RequestedGroupsToJson(this);
@@ -2459,6 +2533,7 @@ class RemoveInvite$Mutation$RemoveInvite$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        displayLocation,
         coordinates,
         pictureUrl,
         relatedInterests,
@@ -3098,6 +3173,7 @@ class AddInvite$Mutation$AddInvite$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        displayLocation,
         coordinates,
         pictureUrl,
         relatedInterests,
@@ -3244,6 +3320,7 @@ class CreateEvent$Mutation$CreateEvent$Nodes extends JsonSerializable
         wannago,
         time,
         location,
+        displayLocation,
         coordinates,
         pictureUrl,
         relatedInterests,
@@ -3324,6 +3401,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
       required this.coordinates,
       required this.creatorId,
       required this.description,
+      required this.displayLocation,
       required this.filterGender,
       required this.filterLocation,
       required this.filterMaxAge,
@@ -3354,6 +3432,8 @@ class EventInput extends JsonSerializable with EquatableMixin {
   late int creatorId;
 
   late String description;
+
+  late String displayLocation;
 
   @JsonKey(unknownEnumValue: Gender.artemisUnknown)
   late Gender filterGender;
@@ -3398,6 +3478,7 @@ class EventInput extends JsonSerializable with EquatableMixin {
         coordinates,
         creatorId,
         description,
+        displayLocation,
         filterGender,
         filterLocation,
         filterMaxAge,
@@ -3486,8 +3567,19 @@ class CreateGroup$Mutation$CreateGroup$Nodes extends JsonSerializable
       _$CreateGroup$Mutation$CreateGroup$NodesFromJson(json);
 
   @override
-  List<Object?> get props =>
-      [id, name, owner, users, requested, screened, location, icon];
+  List<Object?> get props => [
+        id,
+        name,
+        owner,
+        users,
+        requested,
+        screened,
+        private,
+        location,
+        displayLocation,
+        relatedInterests,
+        icon
+      ];
   @override
   Map<String, dynamic> toJson() =>
       _$CreateGroup$Mutation$CreateGroup$NodesToJson(this);
@@ -3553,16 +3645,21 @@ class CreateGroup$Mutation extends JsonSerializable with EquatableMixin {
 @JsonSerializable(explicitToJson: true)
 class GroupInput extends JsonSerializable with EquatableMixin {
   GroupInput(
-      {required this.groupIconId,
+      {required this.displayLocation,
+      required this.groupIconId,
       this.id,
       required this.location,
       required this.name,
       required this.owner,
+      required this.private,
+      required this.relatedInterestIds,
       required this.screened,
       required this.userIds});
 
   factory GroupInput.fromJson(Map<String, dynamic> json) =>
       _$GroupInputFromJson(json);
+
+  late String displayLocation;
 
   late int groupIconId;
 
@@ -3577,13 +3674,27 @@ class GroupInput extends JsonSerializable with EquatableMixin {
 
   late int owner;
 
+  late bool private;
+
+  late List<int> relatedInterestIds;
+
   late bool screened;
 
   late List<int> userIds;
 
   @override
-  List<Object?> get props =>
-      [groupIconId, id, location, name, owner, screened, userIds];
+  List<Object?> get props => [
+        displayLocation,
+        groupIconId,
+        id,
+        location,
+        name,
+        owner,
+        private,
+        relatedInterestIds,
+        screened,
+        userIds
+      ];
   @override
   Map<String, dynamic> toJson() => _$GroupInputToJson(this);
 }
@@ -4294,6 +4405,12 @@ final UPDATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
@@ -4546,11 +4663,42 @@ final UPDATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,
@@ -4968,11 +5116,42 @@ final UPDATE_USER_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,
@@ -7089,6 +7268,12 @@ final REMOVE_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
@@ -8433,6 +8618,12 @@ final ADD_INVITE_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
@@ -8826,6 +9017,12 @@ final CREATE_EVENT_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'coordinates'),
             alias: null,
             arguments: [],
@@ -9173,11 +9370,42 @@ final CREATE_GROUP_MUTATION_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'private'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'location'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'relatedInterests'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: SelectionSetNode(selections: [
+              FieldNode(
+                  name: NameNode(value: 'id'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null),
+              FieldNode(
+                  name: NameNode(value: 'title'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: null)
+            ])),
         FieldNode(
             name: NameNode(value: 'icon'),
             alias: null,

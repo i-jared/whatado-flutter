@@ -3,6 +3,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:whatado/constants.dart';
 import 'package:whatado/models/interest.dart';
 import 'package:whatado/providers/graphql/interest_provider.dart';
+import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/interests/combined_interest_wrap.dart';
 
 class CombinedInterestSearch extends StatelessWidget {
@@ -66,7 +67,15 @@ class CombinedInterestSearch extends StatelessWidget {
                 direction: AxisDirection.up,
                 noItemsFoundBuilder: (context) => SizedBox.shrink(),
                 onSuggestionSelected: (Interest interest) {
-                  if (customInterests.map((val) => val.title).contains(interest.title)) return;
+                  if ([
+                    ...customInterests.map((val) => val.title.toLowerCase()),
+                    ...selectedInterests.map((val) => val.title.toLowerCase())
+                  ].contains(interest.title.toLowerCase())) return;
+                  if (interests.contains(interest)) {
+                    addInterest(interest);
+                    textController.clear();
+                    return;
+                  }
                   addCustomInterest(interest);
                   textController.clear();
                 },

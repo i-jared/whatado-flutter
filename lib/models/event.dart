@@ -18,6 +18,7 @@ class Event {
   DateTime time;
   Gender filterGender;
   String location;
+  String displayLocation;
   GeoJsonPoint coordinates;
   List<int> relatedInterestIds;
   List<Wannago> wannago;
@@ -34,6 +35,7 @@ class Event {
     required this.time,
     required this.relatedInterestIds,
     required this.location,
+    required this.displayLocation,
     required this.coordinates,
     required this.filterGender,
     required this.screened,
@@ -54,7 +56,8 @@ class Event {
       time: DateTime.parse(data['time']).toLocal(),
       relatedInterestIds:
           List<int>.from(data['relatedInterests']?.map((obj) => obj['id']).toList() ?? []),
-      location: data['location'] ?? [],
+      location: data['location'] ?? '',
+      displayLocation: data['displayLocation'] ?? '',
       coordinates: parseCoordinates(data['coordinates']),
       description: data['description'],
       wannago: List<Wannago>.from(

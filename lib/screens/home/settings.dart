@@ -24,13 +24,6 @@ class Settings extends StatelessWidget {
             children: [
               SizedBox(height: 30),
               SettingsItem(
-                  title: 'User Details',
-                  leading: Icon(Icons.manage_accounts_rounded, size: 30),
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditMyProfile(user: userState.user!)))),
-              SettingsItem(
                   title: 'Personal Information',
                   leading: Icon(Icons.person_rounded, size: 30),
                   onPressed: () => Navigator.push(

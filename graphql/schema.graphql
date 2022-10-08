@@ -92,6 +92,7 @@ type Event {
   createdAt: DateTime!
   creator: User!
   description: String!
+  displayLocation: String!
   filterGender: Gender!
   filterLocation: String!
   filterMaxAge: Int!
@@ -125,6 +126,7 @@ input EventFilterInput {
   createdAt: String
   creatorId: Int
   description: String
+  displayLocation: String
   filterGender: Gender
   filterLocation: String
   filterMaxAge: Float
@@ -150,6 +152,7 @@ input EventInput {
   coordinates: Point!
   creatorId: Int!
   description: String!
+  displayLocation: String!
   filterGender: Gender!
   filterLocation: String!
   filterMaxAge: Int!
@@ -219,6 +222,7 @@ enum Gender {
 
 type Group {
   createdAt: DateTime!
+  displayLocation: String!
   events: [Event!]!
   icon: GroupIcon!
   id: Int!
@@ -226,6 +230,8 @@ type Group {
   location: Point
   name: String!
   owner: Int!
+  private: Boolean!
+  relatedInterests: [Interest!]!
   requested: [User!]!
   screened: Boolean!
   updatedAt: DateTime!
@@ -242,11 +248,14 @@ type GroupApiResponse {
 
 input GroupFilterInput {
   createdAt: String
+  displayLocation: String
   groupIconId: Int
   id: Int
   location: Point
   name: String
   owner: Int
+  private: Boolean
+  relatedInterestIds: [Int!]
   requestedIds: [Int!]
   screened: Boolean
   updatedAt: String
@@ -266,11 +275,14 @@ type GroupIconsApiResponse {
 }
 
 input GroupInput {
+  displayLocation: String!
   groupIconId: Int!
   id: Int
   location: Point!
   name: String!
   owner: Int!
+  private: Boolean!
+  relatedInterestIds: [Int!]!
   screened: Boolean!
   userIds: [Int!]!
 }

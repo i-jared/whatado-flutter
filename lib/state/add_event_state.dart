@@ -52,6 +52,7 @@ class AddEventState extends ChangeNotifier {
   bool _screened;
   bool _chatDisabled;
   GeoJsonPoint? _coordinates;
+  String? _displayLocation;
 
   List<Interest> popularInterests = [];
   List<Interest> customInterests = [];
@@ -136,6 +137,12 @@ class AddEventState extends ChangeNotifier {
   GeoJsonPoint? get coordinates => _coordinates;
   set coordinates(GeoJsonPoint? newPoint) {
     _coordinates = newPoint;
+    notifyListeners();
+  }
+
+  String? get displayLocation => _displayLocation;
+  set displayLocation(String? newLocation) {
+    _displayLocation = newLocation;
     notifyListeners();
   }
 
@@ -361,8 +368,9 @@ class AddEventState extends ChangeNotifier {
       final interestsProvider = InterestGqlProvider();
       final interests = await interestsProvider.create(interestsText: [
         ...(customInterests.map((i) => i.title).toList()),
-        if (selectedInterests.isNotEmpty) ...(selectedInterests.map((i) => i.title).toList())
       ]);
+      final relatedInterestIds = List<int>.from(
+          [...(interests.data ?? []), ...selectedInterests.map((v) => v.id).toList()]);
 
       // make query
       final query = CreateEventGqlQuery();
@@ -370,6 +378,7 @@ class AddEventState extends ChangeNotifier {
           eventInput: EventInput(
         creatorId: userId,
         description: descriptionController.text,
+        displayLocation: '',
         filterMinAge: filterAgeStart.toInt(),
         filterMaxAge: filterAgeEnd.toInt(),
         filterGender: selectedGender,
@@ -378,8 +387,7 @@ class AddEventState extends ChangeNotifier {
         privacy: privacy,
         location: locationController.text,
         coordinates: coordinates!,
-        relatedInterestsIds:
-            List<int>.from(interests.data ?? selectedInterests.map((v) => v.id).toList()),
+        relatedInterestsIds: relatedInterestIds,
         time: finalTime,
         pictureUrl: downloadUrl,
         title: textMode ? textModeController.text : titleController.text,
