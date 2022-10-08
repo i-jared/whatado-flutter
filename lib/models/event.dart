@@ -4,6 +4,7 @@ import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/wannago.dart';
+import 'package:whatado/utils/logger.dart';
 
 import '../graphql/queries_graphql_api.graphql.dart';
 

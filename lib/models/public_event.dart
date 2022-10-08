@@ -1,7 +1,3 @@
-import 'dart:convert';
-
-import 'package:geojson/geojson.dart';
-import 'package:geopoint/geopoint.dart';
 import 'package:whatado/models/event.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/wannago.dart';
@@ -15,6 +11,7 @@ class PublicEvent {
   PublicUser creator;
   String title;
   String description;
+  String displayLocation;
   String? imageUrl;
   DateTime time;
   Gender filterGender;
@@ -30,6 +27,7 @@ class PublicEvent {
     required this.creator,
     required this.title,
     required this.description,
+    required this.displayLocation,
     required this.time,
     required this.relatedInterestIds,
     required this.filterGender,
@@ -47,6 +45,7 @@ class PublicEvent {
       creator: PublicUser.fromGqlData(data['creator']),
       title: data['title'] ?? '',
       imageUrl: data['pictureUrl'],
+      displayLocation: data['displayLocation'] ?? '',
       screened: data['screened'] ?? true,
       time: DateTime.parse(data['time']).toLocal(),
       relatedInterestIds:
@@ -66,6 +65,7 @@ class PublicEvent {
     return PublicEvent(
         createdAt: event.createdAt,
         creator: event.creator,
+        displayLocation: event.displayLocation,
         description: event.description,
         filterGender: event.filterGender,
         id: event.id,

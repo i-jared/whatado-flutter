@@ -4,6 +4,7 @@ fragment PublicEventFields on Event {
   updatedAt
   title
   description
+  displayLocation
   creator {
     ...PublicUser
   }

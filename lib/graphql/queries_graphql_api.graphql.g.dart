@@ -163,6 +163,7 @@ Events$Query$Events$Nodes _$Events$Query$Events$NodesFromJson(
           fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
       ..title = json['title'] as String
       ..description = json['description'] as String
+      ..displayLocation = json['displayLocation'] as String
       ..creator = PublicEventFieldsMixin$Creator.fromJson(
           json['creator'] as Map<String, dynamic>)
       ..invited = (json['invited'] as List<dynamic>)
@@ -197,6 +198,7 @@ Map<String, dynamic> _$Events$Query$Events$NodesToJson(
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'title': instance.title,
       'description': instance.description,
+      'displayLocation': instance.displayLocation,
       'creator': instance.creator.toJson(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
@@ -535,6 +537,7 @@ SearchEvents$Query$SearchEvents$Nodes
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
           ..title = json['title'] as String
           ..description = json['description'] as String
+          ..displayLocation = json['displayLocation'] as String
           ..creator = PublicEventFieldsMixin$Creator.fromJson(
               json['creator'] as Map<String, dynamic>)
           ..invited = (json['invited'] as List<dynamic>)
@@ -569,6 +572,7 @@ Map<String, dynamic> _$SearchEvents$Query$SearchEvents$NodesToJson(
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'title': instance.title,
       'description': instance.description,
+      'displayLocation': instance.displayLocation,
       'creator': instance.creator.toJson(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
@@ -640,6 +644,7 @@ OtherEvents$Query$OtherEvents$Nodes
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
           ..title = json['title'] as String
           ..description = json['description'] as String
+          ..displayLocation = json['displayLocation'] as String
           ..creator = PublicEventFieldsMixin$Creator.fromJson(
               json['creator'] as Map<String, dynamic>)
           ..invited = (json['invited'] as List<dynamic>)
@@ -674,6 +679,7 @@ Map<String, dynamic> _$OtherEvents$Query$OtherEvents$NodesToJson(
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'title': instance.title,
       'description': instance.description,
+      'displayLocation': instance.displayLocation,
       'creator': instance.creator.toJson(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
@@ -1543,6 +1549,7 @@ GroupEvents$Query$GroupEvents$Nodes
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
           ..title = json['title'] as String
           ..description = json['description'] as String
+          ..displayLocation = json['displayLocation'] as String
           ..creator = PublicEventFieldsMixin$Creator.fromJson(
               json['creator'] as Map<String, dynamic>)
           ..invited = (json['invited'] as List<dynamic>)
@@ -1577,6 +1584,7 @@ Map<String, dynamic> _$GroupEvents$Query$GroupEvents$NodesToJson(
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'title': instance.title,
       'description': instance.description,
+      'displayLocation': instance.displayLocation,
       'creator': instance.creator.toJson(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),
@@ -2082,6 +2090,7 @@ SuggestedEvents$Query$SuggestedEvents$Nodes
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
           ..title = json['title'] as String
           ..description = json['description'] as String
+          ..displayLocation = json['displayLocation'] as String
           ..creator = PublicEventFieldsMixin$Creator.fromJson(
               json['creator'] as Map<String, dynamic>)
           ..invited = (json['invited'] as List<dynamic>)
@@ -2116,6 +2125,7 @@ Map<String, dynamic> _$SuggestedEvents$Query$SuggestedEvents$NodesToJson(
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'title': instance.title,
       'description': instance.description,
+      'displayLocation': instance.displayLocation,
       'creator': instance.creator.toJson(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),

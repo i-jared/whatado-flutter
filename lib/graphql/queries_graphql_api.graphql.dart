@@ -31,6 +31,7 @@ mixin PublicEventFieldsMixin {
   late DateTime updatedAt;
   late String title;
   late String description;
+  late String displayLocation;
   late PublicEventFieldsMixin$Creator creator;
   late List<PublicEventFieldsMixin$Invited> invited;
   late List<PublicEventFieldsMixin$Wannago> wannago;
@@ -323,6 +324,7 @@ class Events$Query$Events$Nodes extends JsonSerializable
         updatedAt,
         title,
         description,
+        displayLocation,
         creator,
         invited,
         wannago,
@@ -662,6 +664,7 @@ class SearchEvents$Query$SearchEvents$Nodes extends JsonSerializable
         updatedAt,
         title,
         description,
+        displayLocation,
         creator,
         invited,
         wannago,
@@ -753,6 +756,7 @@ class OtherEvents$Query$OtherEvents$Nodes extends JsonSerializable
         updatedAt,
         title,
         description,
+        displayLocation,
         creator,
         invited,
         wannago,
@@ -1561,6 +1565,7 @@ class GroupEvents$Query$GroupEvents$Nodes extends JsonSerializable
         updatedAt,
         title,
         description,
+        displayLocation,
         creator,
         invited,
         wannago,
@@ -2057,6 +2062,7 @@ class SuggestedEvents$Query$SuggestedEvents$Nodes extends JsonSerializable
         updatedAt,
         title,
         description,
+        displayLocation,
         creator,
         invited,
         wannago,
@@ -3498,6 +3504,12 @@ final EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'creator'),
             alias: null,
             arguments: [],
@@ -4024,6 +4036,12 @@ final SEARCH_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'creator'),
             alias: null,
             arguments: [],
@@ -4342,6 +4360,12 @@ final OTHER_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
             alias: null,
             arguments: [],
             directives: [],
@@ -5790,6 +5814,12 @@ final GROUP_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             directives: [],
             selectionSet: null),
         FieldNode(
+            name: NameNode(value: 'displayLocation'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
             name: NameNode(value: 'creator'),
             alias: null,
             arguments: [],
@@ -7016,6 +7046,12 @@ final SUGGESTED_EVENTS_QUERY_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
             alias: null,
             arguments: [],
             directives: [],

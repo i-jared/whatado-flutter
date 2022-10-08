@@ -105,6 +105,7 @@ AddWannago$Mutation$AddWannago$Nodes
               fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
           ..title = json['title'] as String
           ..description = json['description'] as String
+          ..displayLocation = json['displayLocation'] as String
           ..creator = PublicEventFieldsMixin$Creator.fromJson(
               json['creator'] as Map<String, dynamic>)
           ..invited = (json['invited'] as List<dynamic>)
@@ -139,6 +140,7 @@ Map<String, dynamic> _$AddWannago$Mutation$AddWannago$NodesToJson(
       'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
       'title': instance.title,
       'description': instance.description,
+      'displayLocation': instance.displayLocation,
       'creator': instance.creator.toJson(),
       'invited': instance.invited.map((e) => e.toJson()).toList(),
       'wannago': instance.wannago.map((e) => e.toJson()).toList(),

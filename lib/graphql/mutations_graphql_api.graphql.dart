@@ -21,6 +21,7 @@ mixin PublicEventFieldsMixin {
   late DateTime updatedAt;
   late String title;
   late String description;
+  late String displayLocation;
   late PublicEventFieldsMixin$Creator creator;
   late List<PublicEventFieldsMixin$Invited> invited;
   late List<PublicEventFieldsMixin$Wannago> wannago;
@@ -274,6 +275,7 @@ class AddWannago$Mutation$AddWannago$Nodes extends JsonSerializable
         updatedAt,
         title,
         description,
+        displayLocation,
         creator,
         invited,
         wannago,
@@ -4056,6 +4058,12 @@ final ADD_WANNAGO_MUTATION_DOCUMENT = DocumentNode(definitions: [
             selectionSet: null),
         FieldNode(
             name: NameNode(value: 'description'),
+            alias: null,
+            arguments: [],
+            directives: [],
+            selectionSet: null),
+        FieldNode(
+            name: NameNode(value: 'displayLocation'),
             alias: null,
             arguments: [],
             directives: [],

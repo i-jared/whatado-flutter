@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
+import 'package:html/parser.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -140,14 +141,27 @@ class _AddEventDetailsState extends State<AddEventDetails> {
                     onSuggestionSelected: (Map<String, dynamic> place) async {
                       eventState.locationController.text = place['description'];
                       final location = await placesService.placeDetails(place['place_id']);
-                      // TODO: get the city and state here and add it to the event for public location display
-                      if (location['lat'] == null || location['lng'] == null) {
+                      if (location['geometry']['location']['lat'] == null ||
+                          location['geometry']['location']['lng'] == null) {
                         BotToast.showText(text: 'Invalid location; please make another selection.');
                         eventState.locationController.text = '';
                       }
                       eventState.coordinates = GeoJsonPoint(
-                          geoPoint:
-                              GeoPoint(latitude: location['lat'], longitude: location['lng']));
+                          geoPoint: GeoPoint(
+                              latitude: location['geometry']['location']['lat'],
+                              longitude: location['geometry']['location']['lng']));
+
+                      final parsedLocation = parse(location['adr_address']);
+                      final locality = parsedLocation.getElementsByClassName('locality');
+                      final region = parsedLocation.getElementsByClassName('region');
+                      final country = parsedLocation.getElementsByClassName('country-name');
+                      eventState.displayLocation = locality.isEmpty
+                          ? region.isEmpty
+                              ? country.isEmpty
+                                  ? 'N/A'
+                                  : country.first.innerHtml
+                              : region.first.innerHtml
+                          : locality.first.innerHtml;
                     },
                     suggestionsCallback: (String pattern) async {
                       final result =

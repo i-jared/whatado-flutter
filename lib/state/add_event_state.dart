@@ -378,7 +378,7 @@ class AddEventState extends ChangeNotifier {
           eventInput: EventInput(
         creatorId: userId,
         description: descriptionController.text,
-        displayLocation: '',
+        displayLocation: displayLocation ?? 'N/A',
         filterMinAge: filterAgeStart.toInt(),
         filterMaxAge: filterAgeEnd.toInt(),
         filterGender: selectedGender,

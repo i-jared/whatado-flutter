@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:whatado/constants.dart';
 import 'package:whatado/models/public_event.dart';
 import 'package:whatado/screens/home/event_details.dart';
 import 'package:whatado/state/home_state.dart';
@@ -40,8 +41,27 @@ class EventTitle extends StatelessWidget {
                   children: [
                     Text(event.title, style: textFormat),
                     SizedBox(height: 5),
-                    Text(dateFormat.format(event.time.toLocal()),
-                        style: TextStyle(fontSize: 14, color: Colors.grey)),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.location_city_outlined,
+                          color: AppColors.primary,
+                          size: 16,
+                        ),
+                        SizedBox(width: 5),
+                        Text(event.displayLocation,
+                            style: TextStyle(fontSize: 14, color: Colors.grey)),
+                        SizedBox(width: 10),
+                        Icon(
+                          Icons.calendar_month_outlined,
+                          color: AppColors.primary,
+                          size: 16,
+                        ),
+                        SizedBox(width: 5),
+                        Text(dateFormat.format(event.time.toLocal()),
+                            style: TextStyle(fontSize: 14, color: Colors.grey)),
+                      ],
+                    ),
                   ],
                 ),
               ),
