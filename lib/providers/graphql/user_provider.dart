@@ -14,7 +14,6 @@ class UserGqlProvider {
     final query = MeQuery();
     final result = await graphqlClientService.query(query);
     if (result.hasException) {
-      print(result);
       logger.e('client error ${result.exception?.linkException}');
       result.exception?.graphqlErrors.forEach((element) {
         logger.e(element.message);
@@ -492,8 +491,8 @@ class UserGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<bool>> acceptFriend(int id) async {
-    final query = AcceptFriendMutation(variables: AcceptFriendArguments(id: id));
+  Future<MyQueryResponse<bool>> decideFriend(int id, bool accept) async {
+    final query = DecideFriendMutation(variables: DecideFriendArguments(id: id, accept: accept));
     final result = await graphqlClientService.mutate(query);
     if (result.hasException) {
       logger.e('client error ${result.exception?.linkException}');
@@ -502,7 +501,7 @@ class UserGqlProvider {
       });
     }
 
-    final root = result.data?['acceptFriend'];
+    final root = result.data?['decideFriend'];
     final data = root != null ? root['nodes'] : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];

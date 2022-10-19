@@ -15,11 +15,15 @@ fragment UserFields on User {
   friends {
     ...PublicUser
   }
-  requestedFriends {
-    ...PublicUser
+  receivedFriendRequests {
+    requester {
+      ...PublicUser
+    }
   }
-  friendRequests {
-    ...PublicUser
+  sentFriendRequests {
+    requested {
+      ...PublicUser
+    }
   }
   groups {
     ...GroupFields

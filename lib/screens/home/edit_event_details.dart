@@ -18,10 +18,13 @@ import 'package:whatado/services/service_provider.dart';
 import 'package:whatado/state/edit_event_state.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
+import 'package:whatado/utils/dialogs.dart';
 import 'package:whatado/utils/extensions/text.dart';
 import 'package:whatado/utils/logger.dart';
 import 'package:whatado/utils/time_tools.dart';
 import 'package:whatado/widgets/appbars/saving_app_bar.dart';
+import 'package:whatado/widgets/buttons/rounded_delete_button.dart';
+import 'package:whatado/widgets/dialog/confirm_cancel_dialog.dart';
 import 'package:whatado/widgets/events/shadow_box.dart';
 import 'package:whatado/widgets/general/generic_page.dart';
 import 'package:whatado/widgets/input/labeled_outline_text_field.dart';
@@ -244,7 +247,28 @@ class EditEventDetails extends StatelessWidget {
                       ),
                   ],
                 ),
-              )
+              ),
+            RoundedDeleteButton(
+                onPressed: () => showMyDialog(
+                    context,
+                    ConfirmCancelDialog.async(
+                        title: 'Delete Event?',
+                        body:
+                            'Are you sure you want to delete the event? This will delete the event and chat for all members.',
+                        confirmText: 'Delete',
+                        onConfirmAsync: () async {
+                          final provider = EventsGqlProvider();
+                          final result = await provider.deleteEvent(event.id);
+                          if (result.ok) {
+                            await homeState.myEventsRefresh();
+                            Navigator.popUntil(context, (route) => route.isFirst);
+                            BotToast.showText(text: "Successfully deleted event");
+                          } else {
+                            BotToast.showText(text: "Error deleting event");
+                          }
+                        })),
+                text: 'Delete'),
+            SizedBox(height: sectionSpacing),
           ]),
         )));
   }

@@ -1073,12 +1073,13 @@ Me$Query$Me$Nodes _$Me$Query$Me$NodesFromJson(Map<String, dynamic> json) =>
           .map((e) =>
               UserFieldsMixin$Friends.fromJson(e as Map<String, dynamic>))
           .toList()
-      ..requestedFriends = (json['requestedFriends'] as List<dynamic>)
-          .map((e) => UserFieldsMixin$RequestedFriends.fromJson(
-              e as Map<String, dynamic>))
-          .toList()
-      ..friendRequests = (json['friendRequests'] as List<dynamic>)
-          .map((e) => UserFieldsMixin$FriendRequests.fromJson(
+      ..receivedFriendRequests =
+          (json['receivedFriendRequests'] as List<dynamic>)
+              .map((e) => UserFieldsMixin$ReceivedFriendRequests.fromJson(
+                  e as Map<String, dynamic>))
+              .toList()
+      ..sentFriendRequests = (json['sentFriendRequests'] as List<dynamic>)
+          .map((e) => UserFieldsMixin$SentFriendRequests.fromJson(
               e as Map<String, dynamic>))
           .toList()
       ..groups = (json['groups'] as List<dynamic>)
@@ -1118,9 +1119,10 @@ Map<String, dynamic> _$Me$Query$Me$NodesToJson(Me$Query$Me$Nodes instance) =>
       'blockedUsers': instance.blockedUsers.map((e) => e.toJson()).toList(),
       'inverseFriends': instance.inverseFriends.map((e) => e.toJson()).toList(),
       'friends': instance.friends.map((e) => e.toJson()).toList(),
-      'requestedFriends':
-          instance.requestedFriends.map((e) => e.toJson()).toList(),
-      'friendRequests': instance.friendRequests.map((e) => e.toJson()).toList(),
+      'receivedFriendRequests':
+          instance.receivedFriendRequests.map((e) => e.toJson()).toList(),
+      'sentFriendRequests':
+          instance.sentFriendRequests.map((e) => e.toJson()).toList(),
       'groups': instance.groups.map((e) => e.toJson()).toList(),
       'requestedGroups':
           instance.requestedGroups.map((e) => e.toJson()).toList(),
@@ -1227,18 +1229,19 @@ Map<String, dynamic> _$UserFieldsMixin$FriendsToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
-UserFieldsMixin$RequestedFriends _$UserFieldsMixin$RequestedFriendsFromJson(
-        Map<String, dynamic> json) =>
-    UserFieldsMixin$RequestedFriends()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+UserFieldsMixin$ReceivedFriendRequests$Requester
+    _$UserFieldsMixin$ReceivedFriendRequests$RequesterFromJson(
+            Map<String, dynamic> json) =>
+        UserFieldsMixin$ReceivedFriendRequests$Requester()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..photoUrls = json['photoUrls'] as String
+          ..bio = json['bio'] as String
+          ..birthday =
+              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 
-Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
-        UserFieldsMixin$RequestedFriends instance) =>
+Map<String, dynamic> _$UserFieldsMixin$ReceivedFriendRequests$RequesterToJson(
+        UserFieldsMixin$ReceivedFriendRequests$Requester instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -1247,24 +1250,51 @@ Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
-UserFieldsMixin$FriendRequests _$UserFieldsMixin$FriendRequestsFromJson(
-        Map<String, dynamic> json) =>
-    UserFieldsMixin$FriendRequests()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+UserFieldsMixin$ReceivedFriendRequests
+    _$UserFieldsMixin$ReceivedFriendRequestsFromJson(
+            Map<String, dynamic> json) =>
+        UserFieldsMixin$ReceivedFriendRequests()
+          ..requester =
+              UserFieldsMixin$ReceivedFriendRequests$Requester.fromJson(
+                  json['requester'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$UserFieldsMixin$FriendRequestsToJson(
-        UserFieldsMixin$FriendRequests instance) =>
+Map<String, dynamic> _$UserFieldsMixin$ReceivedFriendRequestsToJson(
+        UserFieldsMixin$ReceivedFriendRequests instance) =>
+    <String, dynamic>{
+      'requester': instance.requester.toJson(),
+    };
+
+UserFieldsMixin$SentFriendRequests$Requested
+    _$UserFieldsMixin$SentFriendRequests$RequestedFromJson(
+            Map<String, dynamic> json) =>
+        UserFieldsMixin$SentFriendRequests$Requested()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..photoUrls = json['photoUrls'] as String
+          ..bio = json['bio'] as String
+          ..birthday =
+              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$UserFieldsMixin$SentFriendRequests$RequestedToJson(
+        UserFieldsMixin$SentFriendRequests$Requested instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+UserFieldsMixin$SentFriendRequests _$UserFieldsMixin$SentFriendRequestsFromJson(
+        Map<String, dynamic> json) =>
+    UserFieldsMixin$SentFriendRequests()
+      ..requested = UserFieldsMixin$SentFriendRequests$Requested.fromJson(
+          json['requested'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UserFieldsMixin$SentFriendRequestsToJson(
+        UserFieldsMixin$SentFriendRequests instance) =>
+    <String, dynamic>{
+      'requested': instance.requested.toJson(),
     };
 
 UserFieldsMixin$Groups _$UserFieldsMixin$GroupsFromJson(
@@ -2910,12 +2940,13 @@ FlaggedUsers$Query$FlaggedUsers$Nodes
               .map((e) =>
                   UserFieldsMixin$Friends.fromJson(e as Map<String, dynamic>))
               .toList()
-          ..requestedFriends = (json['requestedFriends'] as List<dynamic>)
-              .map((e) => UserFieldsMixin$RequestedFriends.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..friendRequests = (json['friendRequests'] as List<dynamic>)
-              .map((e) => UserFieldsMixin$FriendRequests.fromJson(
+          ..receivedFriendRequests =
+              (json['receivedFriendRequests'] as List<dynamic>)
+                  .map((e) => UserFieldsMixin$ReceivedFriendRequests.fromJson(
+                      e as Map<String, dynamic>))
+                  .toList()
+          ..sentFriendRequests = (json['sentFriendRequests'] as List<dynamic>)
+              .map((e) => UserFieldsMixin$SentFriendRequests.fromJson(
                   e as Map<String, dynamic>))
               .toList()
           ..groups = (json['groups'] as List<dynamic>)
@@ -2956,9 +2987,10 @@ Map<String, dynamic> _$FlaggedUsers$Query$FlaggedUsers$NodesToJson(
       'blockedUsers': instance.blockedUsers.map((e) => e.toJson()).toList(),
       'inverseFriends': instance.inverseFriends.map((e) => e.toJson()).toList(),
       'friends': instance.friends.map((e) => e.toJson()).toList(),
-      'requestedFriends':
-          instance.requestedFriends.map((e) => e.toJson()).toList(),
-      'friendRequests': instance.friendRequests.map((e) => e.toJson()).toList(),
+      'receivedFriendRequests':
+          instance.receivedFriendRequests.map((e) => e.toJson()).toList(),
+      'sentFriendRequests':
+          instance.sentFriendRequests.map((e) => e.toJson()).toList(),
       'groups': instance.groups.map((e) => e.toJson()).toList(),
       'requestedGroups':
           instance.requestedGroups.map((e) => e.toJson()).toList(),

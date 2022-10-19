@@ -118,8 +118,8 @@ mixin UserFieldsMixin {
   late List<UserFieldsMixin$BlockedUsers> blockedUsers;
   late List<UserFieldsMixin$InverseFriends> inverseFriends;
   late List<UserFieldsMixin$Friends> friends;
-  late List<UserFieldsMixin$RequestedFriends> requestedFriends;
-  late List<UserFieldsMixin$FriendRequests> friendRequests;
+  late List<UserFieldsMixin$ReceivedFriendRequests> receivedFriendRequests;
+  late List<UserFieldsMixin$SentFriendRequests> sentFriendRequests;
   late List<UserFieldsMixin$Groups> groups;
   late List<UserFieldsMixin$RequestedGroups> requestedGroups;
   late List<UserFieldsMixin$Interests> interests;
@@ -1147,8 +1147,8 @@ class Me$Query$Me$Nodes extends JsonSerializable
         blockedUsers,
         inverseFriends,
         friends,
-        requestedFriends,
-        friendRequests,
+        receivedFriendRequests,
+        sentFriendRequests,
         groups,
         requestedGroups,
         interests,
@@ -1255,33 +1255,71 @@ class UserFieldsMixin$Friends extends JsonSerializable
 }
 
 @JsonSerializable(explicitToJson: true)
-class UserFieldsMixin$RequestedFriends extends JsonSerializable
+class UserFieldsMixin$ReceivedFriendRequests$Requester extends JsonSerializable
     with EquatableMixin, PublicUserMixin {
-  UserFieldsMixin$RequestedFriends();
+  UserFieldsMixin$ReceivedFriendRequests$Requester();
 
-  factory UserFieldsMixin$RequestedFriends.fromJson(
+  factory UserFieldsMixin$ReceivedFriendRequests$Requester.fromJson(
           Map<String, dynamic> json) =>
-      _$UserFieldsMixin$RequestedFriendsFromJson(json);
+      _$UserFieldsMixin$ReceivedFriendRequests$RequesterFromJson(json);
 
   @override
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
   Map<String, dynamic> toJson() =>
-      _$UserFieldsMixin$RequestedFriendsToJson(this);
+      _$UserFieldsMixin$ReceivedFriendRequests$RequesterToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
-class UserFieldsMixin$FriendRequests extends JsonSerializable
-    with EquatableMixin, PublicUserMixin {
-  UserFieldsMixin$FriendRequests();
+class UserFieldsMixin$ReceivedFriendRequests extends JsonSerializable
+    with EquatableMixin {
+  UserFieldsMixin$ReceivedFriendRequests();
 
-  factory UserFieldsMixin$FriendRequests.fromJson(Map<String, dynamic> json) =>
-      _$UserFieldsMixin$FriendRequestsFromJson(json);
+  factory UserFieldsMixin$ReceivedFriendRequests.fromJson(
+          Map<String, dynamic> json) =>
+      _$UserFieldsMixin$ReceivedFriendRequestsFromJson(json);
+
+  late UserFieldsMixin$ReceivedFriendRequests$Requester requester;
+
+  @override
+  List<Object?> get props => [requester];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UserFieldsMixin$ReceivedFriendRequestsToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$SentFriendRequests$Requested extends JsonSerializable
+    with EquatableMixin, PublicUserMixin {
+  UserFieldsMixin$SentFriendRequests$Requested();
+
+  factory UserFieldsMixin$SentFriendRequests$Requested.fromJson(
+          Map<String, dynamic> json) =>
+      _$UserFieldsMixin$SentFriendRequests$RequestedFromJson(json);
 
   @override
   List<Object?> get props => [id, name, photoUrls, bio, birthday];
   @override
-  Map<String, dynamic> toJson() => _$UserFieldsMixin$FriendRequestsToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$UserFieldsMixin$SentFriendRequests$RequestedToJson(this);
+}
+
+@JsonSerializable(explicitToJson: true)
+class UserFieldsMixin$SentFriendRequests extends JsonSerializable
+    with EquatableMixin {
+  UserFieldsMixin$SentFriendRequests();
+
+  factory UserFieldsMixin$SentFriendRequests.fromJson(
+          Map<String, dynamic> json) =>
+      _$UserFieldsMixin$SentFriendRequestsFromJson(json);
+
+  late UserFieldsMixin$SentFriendRequests$Requested requested;
+
+  @override
+  List<Object?> get props => [requested];
+  @override
+  Map<String, dynamic> toJson() =>
+      _$UserFieldsMixin$SentFriendRequestsToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -2913,8 +2951,8 @@ class FlaggedUsers$Query$FlaggedUsers$Nodes extends JsonSerializable
         blockedUsers,
         inverseFriends,
         friends,
-        requestedFriends,
-        friendRequests,
+        receivedFriendRequests,
+        sentFriendRequests,
         groups,
         requestedGroups,
         interests,
@@ -5207,22 +5245,36 @@ final ME_QUERY_DOCUMENT = DocumentNode(definitions: [
                   name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
-            name: NameNode(value: 'requestedFriends'),
+            name: NameNode(value: 'receivedFriendRequests'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
-              FragmentSpreadNode(
-                  name: NameNode(value: 'PublicUser'), directives: [])
+              FieldNode(
+                  name: NameNode(value: 'requester'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'PublicUser'), directives: [])
+                  ]))
             ])),
         FieldNode(
-            name: NameNode(value: 'friendRequests'),
+            name: NameNode(value: 'sentFriendRequests'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
-              FragmentSpreadNode(
-                  name: NameNode(value: 'PublicUser'), directives: [])
+              FieldNode(
+                  name: NameNode(value: 'requested'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'PublicUser'), directives: [])
+                  ]))
             ])),
         FieldNode(
             name: NameNode(value: 'groups'),
@@ -8676,22 +8728,36 @@ final FLAGGED_USERS_QUERY_DOCUMENT = DocumentNode(definitions: [
                   name: NameNode(value: 'PublicUser'), directives: [])
             ])),
         FieldNode(
-            name: NameNode(value: 'requestedFriends'),
+            name: NameNode(value: 'receivedFriendRequests'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
-              FragmentSpreadNode(
-                  name: NameNode(value: 'PublicUser'), directives: [])
+              FieldNode(
+                  name: NameNode(value: 'requester'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'PublicUser'), directives: [])
+                  ]))
             ])),
         FieldNode(
-            name: NameNode(value: 'friendRequests'),
+            name: NameNode(value: 'sentFriendRequests'),
             alias: null,
             arguments: [],
             directives: [],
             selectionSet: SelectionSetNode(selections: [
-              FragmentSpreadNode(
-                  name: NameNode(value: 'PublicUser'), directives: [])
+              FieldNode(
+                  name: NameNode(value: 'requested'),
+                  alias: null,
+                  arguments: [],
+                  directives: [],
+                  selectionSet: SelectionSetNode(selections: [
+                    FragmentSpreadNode(
+                        name: NameNode(value: 'PublicUser'), directives: [])
+                  ]))
             ])),
         FieldNode(
             name: NameNode(value: 'groups'),

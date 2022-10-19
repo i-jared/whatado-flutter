@@ -47,8 +47,8 @@ class _StateUserProfile extends State<UserProfile> {
     final userState = Provider.of<UserState>(context);
     final user = userState.user!;
     final friends = user.friends.any((f) => f.id == widget.user.id);
-    final youRequested = user.requestedFriends.any((f) => f.id == widget.user.id);
-    final theyRequested = user.friendRequests.any((f) => f.id == widget.user.id);
+    final youRequested = user.sentFriendRequests.any((f) => f.id == widget.user.id);
+    final theyRequested = user.receivedFriendRequests.any((f) => f.id == widget.user.id);
 
     return GenericPage(
       extendBodyBehindAppBar: true,
@@ -170,7 +170,7 @@ class _StateUserProfile extends State<UserProfile> {
       await provider.unrequestFriend(widget.user.id);
     } else if (theyRequested) {
       // accept
-      await provider.acceptFriend(widget.user.id);
+      await provider.decideFriend(widget.user.id, true);
     } else {
       // send request
       await provider.requestFriend(widget.user.id);

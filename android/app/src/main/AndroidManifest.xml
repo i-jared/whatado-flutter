@@ -2,10 +2,16 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   package="io.whatado"
 >
- <uses-permission android:name="android.permission.WRITE_CALENDAR" />
- <uses-permission android:name="android.permission.READ_CALENDAR" />
- <uses-permission android:name="android.permission.READ_CONTACTS" />
- <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+  <uses-permission android:name="android.permission.READ_CALENDAR" />
+  <uses-permission android:name="android.permission.READ_CONTACTS" />
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+  <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+  <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+  <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+  <uses-permission
+    android:name="com.google.android.gms.permission.AD_ID"
+  />
 
 <queries>
   <intent>
@@ -14,8 +20,14 @@
   </intent>
 </queries>
   <application android:label="whatado" android:icon="@mipmap/ic_launcher">
-      <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_app_id"/>
-   	  <meta-data android:name="com.facebook.sdk.ClientToken" android:value="@string/facebook_client_token"/>
+      <meta-data
+      android:name="com.facebook.sdk.ApplicationId"
+      android:value="@string/facebook_app_id"
+    />
+   	  <meta-data
+      android:name="com.facebook.sdk.ClientToken"
+      android:value="@string/facebook_client_token"
+    />
     <meta-data
       android:name="com.google.firebase.messaging.default_notification_icon"
       android:resource="@mipmap/ic_notification"
@@ -56,12 +68,10 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
       <intent-filter>
-          <action android:name="android.intent.action.VIEW"/>
-          <category android:name="android.intent.category.DEFAULT"/>
-          <category android:name="android.intent.category.BROWSABLE"/>
-          <data
-              android:host="whatado.page.link"
-              android:scheme="https"/>
+          <action android:name="android.intent.action.VIEW" />
+          <category android:name="android.intent.category.DEFAULT" />
+          <category android:name="android.intent.category.BROWSABLE" />
+          <data android:host="whatado.page.link" android:scheme="https" />
       </intent-filter>
     </activity>
     <activity

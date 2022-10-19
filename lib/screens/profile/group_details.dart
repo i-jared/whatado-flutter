@@ -109,34 +109,28 @@ class _GroupDetailsState extends State<GroupDetails> {
                 ),
               ],
             )),
-            if (group.requested.isNotEmpty) ...[
-              SizedBox(height: sectionSpacing),
-              InkWell(
-                onTap: group.requested.isEmpty
-                    ? null
-                    : () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => SelectGroupRequested(group: group))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    group.requested.isEmpty
-                        ? Container(
-                            width: 40,
-                            alignment: Alignment.center,
-                            child: Text("--", style: TextStyle(fontSize: 30)),
-                          )
-                        : PictureWaterfall(radius: 20, loading: false, users: group.requested),
-                    Text('Requests', style: headingStyle)
-                  ],
-                ),
-              ),
-            ],
             SizedBox(height: sectionSpacing),
             EventMap(
               coordinates: group.location,
               zoomGesturesEnabled: true,
               scrollGesturesEnabled: true,
             ),
+            if (group.requested.isNotEmpty) ...[
+              SizedBox(height: sectionSpacing),
+              InkWell(
+                onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => SelectGroupRequested(group: group))),
+                child: ShadowBox(
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Requested').subtitle().semibold(),
+                    DarkDivider(),
+                    PictureWaterfall(radius: 25, loading: false, users: group.requested),
+                  ],
+                )),
+              ),
+            ],
             SizedBox(height: sectionSpacing),
             ShadowBox(
               child: Column(children: [

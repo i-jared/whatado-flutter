@@ -45,11 +45,12 @@ class _SelectGroupRequestedState extends State<SelectGroupRequested> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 20),
           IgnorePointer(
               child: GroupListItem(
             group: widget.group,
           )),
-          SizedBox(height: 10),
+          SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24),
             child:

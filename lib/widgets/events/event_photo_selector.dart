@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:photo_manager/photo_manager.dart';
 import 'package:provider/provider.dart';
 import 'package:whatado/constants.dart';
@@ -75,6 +76,7 @@ class _StateEventPhotoSelector extends State<EventPhotoSelector> {
   void initPhotos(BuildContext context) async {
     final eventState = Provider.of<AddEventState>(context, listen: false);
     var result = await PhotoManager.requestPermissionExtend();
+    logger.wtf(result);
     if (result.isAuth) {
       try {
         eventState.textMode = false;

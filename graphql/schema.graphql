@@ -214,6 +214,15 @@ type ForumsApiResponse {
   ok: Boolean
 }
 
+type FriendRequest {
+  createdAt: String!
+  declined: Boolean!
+  id: Int!
+  requested: User!
+  requester: User!
+  updatedAt: String!
+}
+
 enum Gender {
   BOTH
   FEMALE
@@ -347,7 +356,6 @@ type JwtResponse {
 }
 
 type Mutation {
-  acceptFriend(id: Int!): BoolApiResponse!
   access(id: Int!): BoolApiResponse!
   addInterests(interestsText: [String!]!): BoolApiResponse!
   addInvite(eventId: Int!, userId: Int!): EventApiResponse!
@@ -361,6 +369,7 @@ type Mutation {
   createGroup(options: GroupInput!): GroupApiResponse!
   createInterest(interestsText: [String!]!): IntsApiResponse!
   createReferral(eventId: Int, groupId: Int, phone: String!): BoolApiResponse!
+  decideFriend(accept: Boolean!, id: Int!): BoolApiResponse!
   deleteChat(id: Int!): BoolApiResponse!
   deleteEvent(eventId: Int!): BoolApiResponse!
   deleteInterest(id: Int!): BoolApiResponse!
@@ -374,7 +383,7 @@ type Mutation {
   mute(id: Int!): BoolApiResponse!
   register(options: UserInput!): UserApiResponse!
   removeAccount: BoolApiResponse!
-  removeInvite(eventId: Int!, userId: Int!): EventApiResponse!
+  removeInvite(eventId: Int!, userId: Int!): BoolApiResponse!
   requestFriend(id: Int!): BoolApiResponse!
   requestGroup(id: Int!): BoolApiResponse!
   sendCode: BoolApiResponse!
@@ -476,8 +485,6 @@ type User {
   createdAt: DateTime!
   deviceId: String!
   flags: Int!
-  friendRequests: [User!]!
-  friendRequestsIds: [Int!]!
   friends: [User!]!
   friendsIds: [Int!]!
   gender: Gender!
@@ -495,10 +502,10 @@ type User {
   name: String!
   phone: String!
   photoUrls: String!
+  receivedFriendRequests: [FriendRequest!]!
   refreshCount: Int!
-  requestedFriends: [User!]!
-  requestedFriendsIds: [Int!]!
   requestedGroups: [Group!]!
+  sentFriendRequests: [FriendRequest!]!
   updatedAt: DateTime!
   verified: Boolean!
 }

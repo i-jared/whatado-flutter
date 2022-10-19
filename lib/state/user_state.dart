@@ -141,6 +141,7 @@ class UserState extends ChangeNotifier {
     final response = await query.me();
     if (response.data != null) {
       _user = response.data;
+      _user!.groups.sort((a, b) => b.id.compareTo(a.id));
       await updatePhotos();
       notifyListeners();
     }
@@ -163,9 +164,9 @@ class UserState extends ChangeNotifier {
 
   Future<void> updateFriendRequest(PublicUser newUser, {bool add = true}) async {
     if (add) {
-      user?.requestedFriends.add(newUser);
+      user?.sentFriendRequests.add(newUser);
     } else {
-      user?.requestedFriends.remove(newUser);
+      user?.sentFriendRequests.remove(newUser);
     }
     notifyListeners();
   }

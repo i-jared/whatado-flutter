@@ -42,7 +42,7 @@ class _UserHeadingState extends State<UserHeading> {
   @override
   Widget build(BuildContext context) {
     final userState = Provider.of<UserState>(context);
-    final friendRequests = userState.user!.friendRequests;
+    final friendRequests = userState.user!.receivedFriendRequests;
     final sectionSpacing = 20.0;
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(

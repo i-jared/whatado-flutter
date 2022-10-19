@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +5,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:whatado/state/home_state.dart';
 import 'package:whatado/state/user_state.dart';
-import 'package:whatado/utils/logger.dart';
 import 'package:whatado/widgets/events/all_events_sort_bar.dart';
 import 'package:whatado/widgets/events/event_display.dart';
 import 'package:whatado/widgets/home/calendar_selector.dart';

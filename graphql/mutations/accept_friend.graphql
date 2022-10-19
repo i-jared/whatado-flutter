@@ -1,5 +1,5 @@
-mutation acceptFriend($id: Int!) {
-    acceptFriend(id: $id) {
+mutation decideFriend($id: Int!, $accept: Boolean!) {
+    decideFriend(id: $id, accept: $accept) {
         nodes
         errors {
             field

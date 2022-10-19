@@ -102,7 +102,7 @@ class _AddFriendsState extends State<AddFriends> {
             padding: const EdgeInsets.symmetric(vertical: 8.0),
             child: UserContactItem(user,
                 accepted: userState.user?.friends.any((f) => f.id == user.id) ?? false,
-                requested: userState.user?.requestedFriends.any((f) => f.id == user.id) ?? false),
+                requested: userState.user?.sentFriendRequests.any((f) => f.id == user.id) ?? false),
           );
         });
   }

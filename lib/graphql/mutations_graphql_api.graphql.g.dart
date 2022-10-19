@@ -7,48 +7,48 @@ part of 'mutations_graphql_api.graphql.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AcceptFriend$Mutation$AcceptFriend$Errors
-    _$AcceptFriend$Mutation$AcceptFriend$ErrorsFromJson(
+DecideFriend$Mutation$DecideFriend$Errors
+    _$DecideFriend$Mutation$DecideFriend$ErrorsFromJson(
             Map<String, dynamic> json) =>
-        AcceptFriend$Mutation$AcceptFriend$Errors()
+        DecideFriend$Mutation$DecideFriend$Errors()
           ..field = json['field'] as String?
           ..message = json['message'] as String;
 
-Map<String, dynamic> _$AcceptFriend$Mutation$AcceptFriend$ErrorsToJson(
-        AcceptFriend$Mutation$AcceptFriend$Errors instance) =>
+Map<String, dynamic> _$DecideFriend$Mutation$DecideFriend$ErrorsToJson(
+        DecideFriend$Mutation$DecideFriend$Errors instance) =>
     <String, dynamic>{
       'field': instance.field,
       'message': instance.message,
     };
 
-AcceptFriend$Mutation$AcceptFriend _$AcceptFriend$Mutation$AcceptFriendFromJson(
+DecideFriend$Mutation$DecideFriend _$DecideFriend$Mutation$DecideFriendFromJson(
         Map<String, dynamic> json) =>
-    AcceptFriend$Mutation$AcceptFriend()
+    DecideFriend$Mutation$DecideFriend()
       ..nodes = json['nodes'] as bool?
       ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => AcceptFriend$Mutation$AcceptFriend$Errors.fromJson(
+          ?.map((e) => DecideFriend$Mutation$DecideFriend$Errors.fromJson(
               e as Map<String, dynamic>))
           .toList()
       ..ok = json['ok'] as bool?;
 
-Map<String, dynamic> _$AcceptFriend$Mutation$AcceptFriendToJson(
-        AcceptFriend$Mutation$AcceptFriend instance) =>
+Map<String, dynamic> _$DecideFriend$Mutation$DecideFriendToJson(
+        DecideFriend$Mutation$DecideFriend instance) =>
     <String, dynamic>{
       'nodes': instance.nodes,
       'errors': instance.errors?.map((e) => e.toJson()).toList(),
       'ok': instance.ok,
     };
 
-AcceptFriend$Mutation _$AcceptFriend$MutationFromJson(
+DecideFriend$Mutation _$DecideFriend$MutationFromJson(
         Map<String, dynamic> json) =>
-    AcceptFriend$Mutation()
-      ..acceptFriend = AcceptFriend$Mutation$AcceptFriend.fromJson(
-          json['acceptFriend'] as Map<String, dynamic>);
+    DecideFriend$Mutation()
+      ..decideFriend = DecideFriend$Mutation$DecideFriend.fromJson(
+          json['decideFriend'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$AcceptFriend$MutationToJson(
-        AcceptFriend$Mutation instance) =>
+Map<String, dynamic> _$DecideFriend$MutationToJson(
+        DecideFriend$Mutation instance) =>
     <String, dynamic>{
-      'acceptFriend': instance.acceptFriend.toJson(),
+      'decideFriend': instance.decideFriend.toJson(),
     };
 
 RemoveAccount$Mutation$RemoveAccount$Errors
@@ -790,12 +790,13 @@ UpdateUser$Mutation$UpdateUser$Nodes
               .map((e) =>
                   UserFieldsMixin$Friends.fromJson(e as Map<String, dynamic>))
               .toList()
-          ..requestedFriends = (json['requestedFriends'] as List<dynamic>)
-              .map((e) => UserFieldsMixin$RequestedFriends.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..friendRequests = (json['friendRequests'] as List<dynamic>)
-              .map((e) => UserFieldsMixin$FriendRequests.fromJson(
+          ..receivedFriendRequests =
+              (json['receivedFriendRequests'] as List<dynamic>)
+                  .map((e) => UserFieldsMixin$ReceivedFriendRequests.fromJson(
+                      e as Map<String, dynamic>))
+                  .toList()
+          ..sentFriendRequests = (json['sentFriendRequests'] as List<dynamic>)
+              .map((e) => UserFieldsMixin$SentFriendRequests.fromJson(
                   e as Map<String, dynamic>))
               .toList()
           ..groups = (json['groups'] as List<dynamic>)
@@ -836,9 +837,10 @@ Map<String, dynamic> _$UpdateUser$Mutation$UpdateUser$NodesToJson(
       'blockedUsers': instance.blockedUsers.map((e) => e.toJson()).toList(),
       'inverseFriends': instance.inverseFriends.map((e) => e.toJson()).toList(),
       'friends': instance.friends.map((e) => e.toJson()).toList(),
-      'requestedFriends':
-          instance.requestedFriends.map((e) => e.toJson()).toList(),
-      'friendRequests': instance.friendRequests.map((e) => e.toJson()).toList(),
+      'receivedFriendRequests':
+          instance.receivedFriendRequests.map((e) => e.toJson()).toList(),
+      'sentFriendRequests':
+          instance.sentFriendRequests.map((e) => e.toJson()).toList(),
       'groups': instance.groups.map((e) => e.toJson()).toList(),
       'requestedGroups':
           instance.requestedGroups.map((e) => e.toJson()).toList(),
@@ -957,18 +959,19 @@ Map<String, dynamic> _$UserFieldsMixin$FriendsToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
-UserFieldsMixin$RequestedFriends _$UserFieldsMixin$RequestedFriendsFromJson(
-        Map<String, dynamic> json) =>
-    UserFieldsMixin$RequestedFriends()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+UserFieldsMixin$ReceivedFriendRequests$Requester
+    _$UserFieldsMixin$ReceivedFriendRequests$RequesterFromJson(
+            Map<String, dynamic> json) =>
+        UserFieldsMixin$ReceivedFriendRequests$Requester()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..photoUrls = json['photoUrls'] as String
+          ..bio = json['bio'] as String
+          ..birthday =
+              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
 
-Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
-        UserFieldsMixin$RequestedFriends instance) =>
+Map<String, dynamic> _$UserFieldsMixin$ReceivedFriendRequests$RequesterToJson(
+        UserFieldsMixin$ReceivedFriendRequests$Requester instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -977,24 +980,51 @@ Map<String, dynamic> _$UserFieldsMixin$RequestedFriendsToJson(
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
     };
 
-UserFieldsMixin$FriendRequests _$UserFieldsMixin$FriendRequestsFromJson(
-        Map<String, dynamic> json) =>
-    UserFieldsMixin$FriendRequests()
-      ..id = json['id'] as int
-      ..name = json['name'] as String
-      ..photoUrls = json['photoUrls'] as String
-      ..bio = json['bio'] as String
-      ..birthday =
-          fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+UserFieldsMixin$ReceivedFriendRequests
+    _$UserFieldsMixin$ReceivedFriendRequestsFromJson(
+            Map<String, dynamic> json) =>
+        UserFieldsMixin$ReceivedFriendRequests()
+          ..requester =
+              UserFieldsMixin$ReceivedFriendRequests$Requester.fromJson(
+                  json['requester'] as Map<String, dynamic>);
 
-Map<String, dynamic> _$UserFieldsMixin$FriendRequestsToJson(
-        UserFieldsMixin$FriendRequests instance) =>
+Map<String, dynamic> _$UserFieldsMixin$ReceivedFriendRequestsToJson(
+        UserFieldsMixin$ReceivedFriendRequests instance) =>
+    <String, dynamic>{
+      'requester': instance.requester.toJson(),
+    };
+
+UserFieldsMixin$SentFriendRequests$Requested
+    _$UserFieldsMixin$SentFriendRequests$RequestedFromJson(
+            Map<String, dynamic> json) =>
+        UserFieldsMixin$SentFriendRequests$Requested()
+          ..id = json['id'] as int
+          ..name = json['name'] as String
+          ..photoUrls = json['photoUrls'] as String
+          ..bio = json['bio'] as String
+          ..birthday =
+              fromGraphQLDateTimeToDartDateTime(json['birthday'] as String);
+
+Map<String, dynamic> _$UserFieldsMixin$SentFriendRequests$RequestedToJson(
+        UserFieldsMixin$SentFriendRequests$Requested instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
       'photoUrls': instance.photoUrls,
       'bio': instance.bio,
       'birthday': fromDartDateTimeToGraphQLDateTime(instance.birthday),
+    };
+
+UserFieldsMixin$SentFriendRequests _$UserFieldsMixin$SentFriendRequestsFromJson(
+        Map<String, dynamic> json) =>
+    UserFieldsMixin$SentFriendRequests()
+      ..requested = UserFieldsMixin$SentFriendRequests$Requested.fromJson(
+          json['requested'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$UserFieldsMixin$SentFriendRequestsToJson(
+        UserFieldsMixin$SentFriendRequests instance) =>
+    <String, dynamic>{
+      'requested': instance.requested.toJson(),
     };
 
 UserFieldsMixin$Groups _$UserFieldsMixin$GroupsFromJson(
@@ -1281,6 +1311,49 @@ Unfriend$Mutation _$Unfriend$MutationFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$Unfriend$MutationToJson(Unfriend$Mutation instance) =>
     <String, dynamic>{
       'unfriend': instance.unfriend.toJson(),
+    };
+
+LeaveGroup$Mutation$LeaveGroup$Errors
+    _$LeaveGroup$Mutation$LeaveGroup$ErrorsFromJson(
+            Map<String, dynamic> json) =>
+        LeaveGroup$Mutation$LeaveGroup$Errors()
+          ..field = json['field'] as String?
+          ..message = json['message'] as String;
+
+Map<String, dynamic> _$LeaveGroup$Mutation$LeaveGroup$ErrorsToJson(
+        LeaveGroup$Mutation$LeaveGroup$Errors instance) =>
+    <String, dynamic>{
+      'field': instance.field,
+      'message': instance.message,
+    };
+
+LeaveGroup$Mutation$LeaveGroup _$LeaveGroup$Mutation$LeaveGroupFromJson(
+        Map<String, dynamic> json) =>
+    LeaveGroup$Mutation$LeaveGroup()
+      ..nodes = json['nodes'] as bool?
+      ..errors = (json['errors'] as List<dynamic>?)
+          ?.map((e) => LeaveGroup$Mutation$LeaveGroup$Errors.fromJson(
+              e as Map<String, dynamic>))
+          .toList()
+      ..ok = json['ok'] as bool?;
+
+Map<String, dynamic> _$LeaveGroup$Mutation$LeaveGroupToJson(
+        LeaveGroup$Mutation$LeaveGroup instance) =>
+    <String, dynamic>{
+      'nodes': instance.nodes,
+      'errors': instance.errors?.map((e) => e.toJson()).toList(),
+      'ok': instance.ok,
+    };
+
+LeaveGroup$Mutation _$LeaveGroup$MutationFromJson(Map<String, dynamic> json) =>
+    LeaveGroup$Mutation()
+      ..leaveGroup = LeaveGroup$Mutation$LeaveGroup.fromJson(
+          json['leaveGroup'] as Map<String, dynamic>);
+
+Map<String, dynamic> _$LeaveGroup$MutationToJson(
+        LeaveGroup$Mutation instance) =>
+    <String, dynamic>{
+      'leaveGroup': instance.leaveGroup.toJson(),
     };
 
 CheckValidation$Mutation$CheckValidation$Errors
@@ -2146,74 +2219,6 @@ Map<String, dynamic> _$UpdateWannago$MutationToJson(
       'updateWannago': instance.updateWannago.toJson(),
     };
 
-RemoveInvite$Mutation$RemoveInvite$Nodes
-    _$RemoveInvite$Mutation$RemoveInvite$NodesFromJson(
-            Map<String, dynamic> json) =>
-        RemoveInvite$Mutation$RemoveInvite$Nodes()
-          ..id = json['id'] as int
-          ..createdAt =
-              fromGraphQLDateTimeToDartDateTime(json['createdAt'] as String)
-          ..updatedAt =
-              fromGraphQLDateTimeToDartDateTime(json['updatedAt'] as String)
-          ..title = json['title'] as String
-          ..description = json['description'] as String
-          ..creator = EventFieldsMixin$Creator.fromJson(
-              json['creator'] as Map<String, dynamic>)
-          ..invited = (json['invited'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Invited.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..wannago = (json['wannago'] as List<dynamic>)
-              .map((e) =>
-                  EventFieldsMixin$Wannago.fromJson(e as Map<String, dynamic>))
-              .toList()
-          ..time = fromGraphQLDateTimeToDartDateTime(json['time'] as String)
-          ..location = json['location'] as String
-          ..displayLocation = json['displayLocation'] as String
-          ..coordinates =
-              fromGraphQLPointToDartGeoJsonPoint(json['coordinates'] as String)
-          ..pictureUrl = json['pictureUrl'] as String?
-          ..relatedInterests = (json['relatedInterests'] as List<dynamic>)
-              .map((e) => EventFieldsMixin$RelatedInterests.fromJson(
-                  e as Map<String, dynamic>))
-              .toList()
-          ..privacy = $enumDecode(_$PrivacyEnumMap, json['privacy'],
-              unknownValue: Privacy.artemisUnknown)
-          ..screened = json['screened'] as bool
-          ..filterLocation = json['filterLocation'] as String
-          ..filterRadius = (json['filterRadius'] as num).toDouble()
-          ..filterGender = $enumDecode(_$GenderEnumMap, json['filterGender'],
-              unknownValue: Gender.artemisUnknown)
-          ..filterMinAge = json['filterMinAge'] as int
-          ..filterMaxAge = json['filterMaxAge'] as int;
-
-Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInvite$NodesToJson(
-        RemoveInvite$Mutation$RemoveInvite$Nodes instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'createdAt': fromDartDateTimeToGraphQLDateTime(instance.createdAt),
-      'updatedAt': fromDartDateTimeToGraphQLDateTime(instance.updatedAt),
-      'title': instance.title,
-      'description': instance.description,
-      'creator': instance.creator.toJson(),
-      'invited': instance.invited.map((e) => e.toJson()).toList(),
-      'wannago': instance.wannago.map((e) => e.toJson()).toList(),
-      'time': fromDartDateTimeToGraphQLDateTime(instance.time),
-      'location': instance.location,
-      'displayLocation': instance.displayLocation,
-      'coordinates': fromDartGeoJsonPointToGraphQLPoint(instance.coordinates),
-      'pictureUrl': instance.pictureUrl,
-      'relatedInterests':
-          instance.relatedInterests.map((e) => e.toJson()).toList(),
-      'privacy': _$PrivacyEnumMap[instance.privacy]!,
-      'screened': instance.screened,
-      'filterLocation': instance.filterLocation,
-      'filterRadius': instance.filterRadius,
-      'filterGender': _$GenderEnumMap[instance.filterGender]!,
-      'filterMinAge': instance.filterMinAge,
-      'filterMaxAge': instance.filterMaxAge,
-    };
-
 RemoveInvite$Mutation$RemoveInvite$Errors
     _$RemoveInvite$Mutation$RemoveInvite$ErrorsFromJson(
             Map<String, dynamic> json) =>
@@ -2232,10 +2237,7 @@ RemoveInvite$Mutation$RemoveInvite _$RemoveInvite$Mutation$RemoveInviteFromJson(
         Map<String, dynamic> json) =>
     RemoveInvite$Mutation$RemoveInvite()
       ..ok = json['ok'] as bool?
-      ..nodes = json['nodes'] == null
-          ? null
-          : RemoveInvite$Mutation$RemoveInvite$Nodes.fromJson(
-              json['nodes'] as Map<String, dynamic>)
+      ..nodes = json['nodes'] as bool?
       ..errors = (json['errors'] as List<dynamic>?)
           ?.map((e) => RemoveInvite$Mutation$RemoveInvite$Errors.fromJson(
               e as Map<String, dynamic>))
@@ -2245,7 +2247,7 @@ Map<String, dynamic> _$RemoveInvite$Mutation$RemoveInviteToJson(
         RemoveInvite$Mutation$RemoveInvite instance) =>
     <String, dynamic>{
       'ok': instance.ok,
-      'nodes': instance.nodes?.toJson(),
+      'nodes': instance.nodes,
       'errors': instance.errors?.map((e) => e.toJson()).toList(),
     };
 
@@ -3200,59 +3202,18 @@ Map<String, dynamic> _$GroupInputToJson(GroupInput instance) =>
       'userIds': instance.userIds,
     };
 
-LeaveGroup$Mutation$LeaveGroup$Errors
-    _$LeaveGroup$Mutation$LeaveGroup$ErrorsFromJson(
-            Map<String, dynamic> json) =>
-        LeaveGroup$Mutation$LeaveGroup$Errors()
-          ..field = json['field'] as String?
-          ..message = json['message'] as String;
-
-Map<String, dynamic> _$LeaveGroup$Mutation$LeaveGroup$ErrorsToJson(
-        LeaveGroup$Mutation$LeaveGroup$Errors instance) =>
-    <String, dynamic>{
-      'field': instance.field,
-      'message': instance.message,
-    };
-
-LeaveGroup$Mutation$LeaveGroup _$LeaveGroup$Mutation$LeaveGroupFromJson(
+DecideFriendArguments _$DecideFriendArgumentsFromJson(
         Map<String, dynamic> json) =>
-    LeaveGroup$Mutation$LeaveGroup()
-      ..nodes = json['nodes'] as bool?
-      ..errors = (json['errors'] as List<dynamic>?)
-          ?.map((e) => LeaveGroup$Mutation$LeaveGroup$Errors.fromJson(
-              e as Map<String, dynamic>))
-          .toList()
-      ..ok = json['ok'] as bool?;
-
-Map<String, dynamic> _$LeaveGroup$Mutation$LeaveGroupToJson(
-        LeaveGroup$Mutation$LeaveGroup instance) =>
-    <String, dynamic>{
-      'nodes': instance.nodes,
-      'errors': instance.errors?.map((e) => e.toJson()).toList(),
-      'ok': instance.ok,
-    };
-
-LeaveGroup$Mutation _$LeaveGroup$MutationFromJson(Map<String, dynamic> json) =>
-    LeaveGroup$Mutation()
-      ..leaveGroup = LeaveGroup$Mutation$LeaveGroup.fromJson(
-          json['leaveGroup'] as Map<String, dynamic>);
-
-Map<String, dynamic> _$LeaveGroup$MutationToJson(
-        LeaveGroup$Mutation instance) =>
-    <String, dynamic>{
-      'leaveGroup': instance.leaveGroup.toJson(),
-    };
-
-AcceptFriendArguments _$AcceptFriendArgumentsFromJson(
-        Map<String, dynamic> json) =>
-    AcceptFriendArguments(
+    DecideFriendArguments(
       id: json['id'] as int,
+      accept: json['accept'] as bool,
     );
 
-Map<String, dynamic> _$AcceptFriendArgumentsToJson(
-        AcceptFriendArguments instance) =>
+Map<String, dynamic> _$DecideFriendArgumentsToJson(
+        DecideFriendArguments instance) =>
     <String, dynamic>{
       'id': instance.id,
+      'accept': instance.accept,
     };
 
 AddWannagoArguments _$AddWannagoArgumentsFromJson(Map<String, dynamic> json) =>
@@ -3334,6 +3295,17 @@ UnfriendArguments _$UnfriendArgumentsFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$UnfriendArgumentsToJson(UnfriendArguments instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+    };
+
+LeaveGroupArguments _$LeaveGroupArgumentsFromJson(Map<String, dynamic> json) =>
+    LeaveGroupArguments(
+      id: json['id'] as int,
+    );
+
+Map<String, dynamic> _$LeaveGroupArgumentsToJson(
+        LeaveGroupArguments instance) =>
     <String, dynamic>{
       'id': instance.id,
     };
@@ -3680,15 +3652,4 @@ Map<String, dynamic> _$CreateGroupArgumentsToJson(
         CreateGroupArguments instance) =>
     <String, dynamic>{
       'groupInput': instance.groupInput.toJson(),
-    };
-
-LeaveGroupArguments _$LeaveGroupArgumentsFromJson(Map<String, dynamic> json) =>
-    LeaveGroupArguments(
-      id: json['id'] as int,
-    );
-
-Map<String, dynamic> _$LeaveGroupArgumentsToJson(
-        LeaveGroupArguments instance) =>
-    <String, dynamic>{
-      'id': instance.id,
     };

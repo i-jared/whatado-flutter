@@ -33,14 +33,21 @@ class SearchGroups extends StatelessWidget {
           SizedBox(height: 20),
           Flexible(
             child: ShadowBox(
+              padding: 0,
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Suggested Groups',
-                      style: TextStyle(
-                          fontSize: 16, color: Colors.grey[600], fontWeight: FontWeight.w600)),
-                  DarkDivider(),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 15, left: 15, right: 15),
+                    child: Text('Suggested Groups',
+                        style: TextStyle(
+                            fontSize: 16, color: Colors.grey[600], fontWeight: FontWeight.w600)),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    child: DarkDivider(),
+                  ),
                   getMainWidget(searchState, userState, groupsLength),
                 ],
               ),
@@ -65,7 +72,7 @@ class SearchGroups extends StatelessWidget {
           itemCount: groupsLength,
           itemBuilder: (context, i) {
             return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8.0),
                 child: GroupListItem(
                     noPadding: true,
                     showButton: true,

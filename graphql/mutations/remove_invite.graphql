@@ -1,9 +1,7 @@
 mutation removeInvite($eventId: Int!, $userId: Int!) {
   removeInvite(eventId: $eventId, userId: $userId) {
     ok
-    nodes {
-      ...EventFields 
-    }
+    nodes
     errors {
       field
       message

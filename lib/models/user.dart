@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:geojson/geojson.dart';
 import 'package:geopoint/geopoint.dart';
 import 'package:whatado/models/event_user.dart';
 import 'package:whatado/models/group.dart';
 import 'package:whatado/models/interest.dart';
+import 'package:whatado/utils/logger.dart';
 
 import '../graphql/mutations_graphql_api.graphql.dart';
 
@@ -20,8 +22,8 @@ class User {
   List<String> photoUrls;
   List<PublicUser> blockedUsers;
   List<PublicUser> friends;
-  List<PublicUser> requestedFriends;
-  List<PublicUser> friendRequests;
+  List<PublicUser> sentFriendRequests;
+  List<PublicUser> receivedFriendRequests;
   List<Group> groups;
   List<Group> requestedGroups;
   Gender gender;
@@ -38,8 +40,8 @@ class User {
     required this.interests,
     required this.blockedUsers,
     required this.friends,
-    required this.friendRequests,
-    required this.requestedFriends,
+    required this.receivedFriendRequests,
+    required this.sentFriendRequests,
     required this.groups,
     required this.requestedGroups,
     required this.gender,
@@ -63,10 +65,14 @@ class User {
         ...(data['inverseFriends']?.map((user) => PublicUser.fromGqlData(user)) ?? []),
         ...(data['friends']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? [])
       ]),
-      friendRequests: List<PublicUser>.from(
-          data['friendRequests']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? []),
-      requestedFriends: List<PublicUser>.from(
-          data['requestedFriends']?.map((user) => PublicUser.fromGqlData(user)).toList() ?? []),
+      receivedFriendRequests: List<PublicUser>.from((data['receivedFriendRequests'] as List?)
+              ?.map((item) => PublicUser.fromGqlData(item['requester']))
+              .toList() ??
+          []),
+      sentFriendRequests: List<PublicUser>.from((data['sentFriendRequests'] as List?)
+              ?.map((item) => PublicUser.fromGqlData(item['requested']))
+              .toList() ??
+          []),
       birthday: data['birthday'] == null ? DateTime.now() : DateTime.parse(data['birthday']),
       groups:
           List<Group>.from(data['groups']?.map((group) => Group.fromGqlData(group)).toList() ?? []),

@@ -313,7 +313,7 @@ class EventsGqlProvider {
     );
   }
 
-  Future<MyQueryResponse<Event>> removeInvite({required int eventId, required int userId}) async {
+  Future<MyQueryResponse<bool>> removeInvite({required int eventId, required int userId}) async {
     final mutation =
         RemoveInviteMutation(variables: RemoveInviteArguments(eventId: eventId, userId: userId));
     final result = await graphqlClientService.mutate(mutation);
@@ -325,11 +325,11 @@ class EventsGqlProvider {
     }
 
     final root = result.data?['removeInvite'];
-    final data = root != null && root['nodes'] != null ? Event.fromGqlData(root?['nodes']) : null;
+    final data = root != null ? root['nodes'] : null;
     final ok = root?['ok'] ?? false;
     final errors = root?['errors'];
 
-    return MyQueryResponse<Event>(
+    return MyQueryResponse<bool>(
       ok: ok,
       data: data,
       errors: errors,
@@ -347,7 +347,7 @@ class EventsGqlProvider {
         logger.e(element.message);
       });
     }
-    logger.e('update wannago $result');
+
     final root = result.data?['updateWannago'];
     final data = root?['ok'] ?? false;
     final ok = root?['ok'] ?? false;

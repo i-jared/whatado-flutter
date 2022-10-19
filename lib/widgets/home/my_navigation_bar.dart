@@ -18,7 +18,7 @@ class MyNavigationBar extends StatelessWidget {
     final searchState = Provider.of<SearchState>(context);
     final eventState = Provider.of<AddEventState>(context);
     final userState = Provider.of<UserState>(context);
-    final friendRequests = userState.user!.friendRequests.isNotEmpty;
+    final friendRequests = userState.user!.receivedFriendRequests.isNotEmpty;
     return SafeArea(
       child: Container(
         padding: EdgeInsets.only(left: 20, right: 20, bottom: 0, top: 5),
