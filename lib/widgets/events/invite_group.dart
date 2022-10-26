@@ -6,8 +6,7 @@ class InviteGroups extends StatelessWidget {
   final List<Group>? groups;
   final Group? selectedGroup;
   final Function(Group?) setGroup;
-  InviteGroups(
-      {required this.groups, required this.selectedGroup, required this.setGroup});
+  InviteGroups({required this.groups, required this.selectedGroup, required this.setGroup});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +37,8 @@ class InviteGroups extends StatelessWidget {
                           )),
                           if (selectedGroup == groups![i])
                             Positioned(
-                              left: 0,
-                              top: 0,
+                              left: 15,
+                              top: 15,
                               child: Opacity(
                                 opacity: 0.5,
                                 child: Container(
@@ -54,8 +53,8 @@ class InviteGroups extends StatelessWidget {
                             ),
                           if (selectedGroup == groups![i])
                             Positioned(
-                              left: 0,
-                              top: 0,
+                              left: 15,
+                              top: 15,
                               child: Container(
                                 height: 60,
                                 width: 60,

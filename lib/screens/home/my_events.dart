@@ -168,9 +168,9 @@ class _MyEventsState extends State<MyEvents> with TickerProviderStateMixin {
                                     selectedDayPredicate: (day) =>
                                         dateFormat.format(day) ==
                                         dateFormat.format(homeState.selectedDate ?? DateTime.now()),
-                                    enabledDayPredicate: (day) =>
-                                        homeState.myEvents?.any((e) => isSameDay(e.time, day)) ??
-                                        false,
+                                    // enabledDayPredicate: (day) =>
+                                    // homeState.myEvents?.any((e) => isSameDay(e.time, day)) ??
+                                    // false,
                                     onDaySelected: (selectedDay, focusedDay) =>
                                         homeState.selectedDate = selectedDay,
                                     currentDay: null,
