@@ -82,6 +82,7 @@ dependencies:
   html: ^0.15.0
 
 dev_dependencies:
+  archive: 3.3.8
   flutter_test:
     sdk: flutter
   flutter_launcher_icons: "^0.9.2"
@@ -183,3 +184,6 @@ flutter_native_splash:
 
   # To enable support for Android 12, set the following parameter to true.  Defaults to false.
   #android12: true
+
+dependency_overrides:
+  archive: 3.3.8
